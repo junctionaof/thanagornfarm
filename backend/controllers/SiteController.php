@@ -7,7 +7,7 @@ use yii\web\Controller;
 use common\models\LoginForm;
 use yii\filters\VerbFilter;
 
-/**
+/** test
  * Site controller
  */
 class SiteController extends Controller
