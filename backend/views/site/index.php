@@ -8,7 +8,7 @@ $this->title = 'home thanagornfarm ';
 <div class="site-index ">
 
     <div class="jumbotron">
-        <h1>thanagornfarm  !</h1>
+        <h1>TEST PULL Project  !</h1>
          </div>
 </div>
 </div>
