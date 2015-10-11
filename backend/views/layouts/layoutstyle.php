@@ -243,7 +243,7 @@ $this->registerJs($str, \yii\web\View::POS_READY, 'start-js');
 			<!-- END STYLE CUSTOMIZER -->
 			<!-- BEGIN PAGE HEADER-->
 			<h3 class="page-title">
-			TPBS <small>Backend System</small>
+			
 			</h3>
 
 			<!-- END PAGE HEADER-->
@@ -265,8 +265,7 @@ $this->registerJs($str, \yii\web\View::POS_READY, 'start-js');
 <!-- BEGIN FOOTER -->
 <div class="page-footer">
 	<div class="page-footer-inner">
-		 2015 &copy; TPBS by PPPTeam. <a href="javsScript:;" title="Purchase Metronic just for 27$ and get lifetime updates for free" target="_blank">Purchase Metronic!</a>
-	</div>
+		</div>
 	<div class="scroll-to-top">
 		<i class="icon-arrow-up"></i>
 	</div>

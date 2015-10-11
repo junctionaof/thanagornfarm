@@ -165,7 +165,7 @@ class UserController extends BaseController{
 		$queryauth = AuthItem::find();
 		$queryauth->where(['type' => '2' ]);
 		$modelauth = $queryauth->all();
-		
+		$arrauth = '';
 		foreach ($modelauth as $lst){
 			$arrauth[0] = 'เลือกสิทธิ์ ให้กับ user' ;
 			$arrauth[] = $lst->name;

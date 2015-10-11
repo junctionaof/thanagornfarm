@@ -18,7 +18,7 @@ $user = \Yii::$app->user;
 		<div class="header-inner">
 			<!-- BEGIN LOGO -->  
 			<a class="navbar-brand" href="<?php echo $baseUrl?>/" style="padding-top: 5px; padding-bottom:0px;">
-			 <img src="<?php echo $baseUrl?>/assets/img/cms-logo.png" alt="logo" class="img-responsive" style="height:45px;" />
+			 <img src="<?php echo $baseUrl?>/assets/img" alt="logo" class="img-responsive" style="height:45px;" />
 			</a>
 			<!-- END LOGO -->
 			<!-- BEGIN RESPONSIVE MENU TOGGLER --> 

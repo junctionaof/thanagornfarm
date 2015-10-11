@@ -89,10 +89,6 @@ $this->registerJs($str, \yii\web\View::POS_READY, 'start-js');
 		<?= $content ?>
 	</div>
 	<!-- END LOGIN -->
-	<!-- BEGIN COPYRIGHT -->
-	<div class="copyright">
-		COPYRIGHT &copy;2015  TPBS
-	</div>
 	<!-- END JAVASCRIPTS -->
 </body>
 <?php $this->endBody() ?>

@@ -13,8 +13,7 @@ class LoginForm extends Model
     public $password;
     public $rememberMe = true;
 
-    private $_user;
-
+    private $_user = false;
 
     /**
      * @inheritdoc
@@ -30,6 +29,8 @@ class LoginForm extends Model
             ['password', 'validatePassword'],
         ];
     }
+    
+    
 
     /**
      * Validates the password.
@@ -61,18 +62,19 @@ class LoginForm extends Model
             return false;
         }
     }
-
     /**
      * Finds user by [[username]]
      *
      * @return User|null
      */
-    protected function getUser()
+    public function getUser()
     {
-        if ($this->_user === null) {
+        if ($this->_user === false) {
             $this->_user = User::findByUsername($this->username);
         }
-
+	
         return $this->_user;
     }
 }
+
+

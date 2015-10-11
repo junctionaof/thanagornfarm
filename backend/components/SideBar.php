@@ -20,94 +20,43 @@ class SideBar extends Widget {
 						'rule'  => 'tpbs.home',
 						'icon'  => 'fa-home'
 				),
+				
 				array(
-						'name'  => 'เนื้อหา/ข่าว content',
-						'url'   => $baseUrl.'/content/list',
-						'rule'  => 'tpbs.content',
-						'icon'  => 'fa-pencil-square'
-				),
-				array(
-						'name'  => 'แกลอรี่ (gallery)',
-						'url'   => $baseUrl.'/gallery/list',
-						'rule'  => 'tpbs.gallery',
-						'icon'  => 'fa-camera'
+						'name'  => 'บันทึกการเลี้ยงกุ้ง',
+						'icon'  => 'fa-list-alt',
+						'rule'  => 'tpbs.admin',
+						'sub'   => array(
+		
+								array(
+										'name'  => 'รายการบันทึกการเลี้ยงกุ้ง',
+										'url'   => $baseUrl.'/1',
+										'icon'  => 'fa-user',
+										'rule'  => 'tpbs.admin.user'
+								),
+		
+								array(
+										'name'  => 'วิเคราะห์ผลการเลี้ยง',
+										'url'   => $baseUrl.'/2',
+										'icon'  => 'fa-user',
+										'rule'  => 'tpbs.admin.contentlog'
+								),
+						)
 				),
 				
 				array(
-						'name'  => 'วีดีโอ (video)',
-						'icon'  => 'fa-youtube-play',
-						'rule'  => 'tpbs.gallery',
-						'url'   => $baseUrl.'/video/',
-				),
-				array(
-						'name'  => 'เสียง (audio)',
-						'icon'  => 'fa-volume-up',
-						'rule'  => 'tpbs.gallery',
-						'url'   => $baseUrl.'/audio/',
-				),
-				array(
-						'name'  => 'พยากรณ์อากาศ (weather)',
+						'name'  => 'พญากรอากาศ',
 						'icon'  => 'fa-umbrella',
-						'rule'  => 'tpbs.weather',
-						'url'   => $baseUrl.'/weather/list',
-				),
-				
-				array(
-						'name'  => 'อินโฟกราฟิก (infographic)',
-						'icon'  => 'fa-picture-o',
-						'rule'  => 'tpbs.weather',
-						'url'   => $baseUrl.'/infographic/list',
-				),
-				
-				array(
-						'name'  => 'หัวข้อไทยพีบีเอสโฟกัส ',
-						'icon'  => 'fa-star',
-						'rule'  => 'tpbs.feed',
-						'url'   => $baseUrl.'/feed/list',
-				),
-				array(
-						'name'  => 'เนื้อหาไทยพีบีเอสโฟกัส',
-						'icon'  => 'fa-star-o',
-						'rule'  => 'tpbs.feedcontent',
-						'url'   => $baseUrl.'/feedcontent/list',
-				),
-				array(
-						'name'  => 'คำในข่าว(quote)',
-						'icon'  => 'fa-comments-o',
-						'rule'  => 'tpbs.quote',
-						'url'   => $baseUrl.'/quote/list',
-				),
-				array(
-						'name'  => 'ทันข่าวเด่น',
-						'icon'  => 'fa-clock-o',
-						'rule'  => 'tpbs.quote',
-						'url'   => $baseUrl.'/feedcontent/tunkaowdenlist',
-				),
-				array(
-						'name'  => 'ข้อมูลกำหนดเอง (widget)',
-						'icon'  => 'fa-wrench',
-						'rule'  => 'tpbs.widget',
-						'url'   => $baseUrl.'/widget/list',
-				),
-				array(
-						'name'  => 'ไมโครไซต์ (microsite)',
-						'icon'  => 'fa-qrcode',
-						'rule'  => 'tpbs.microsite',
-						'url'   => $baseUrl.'/microsite/page',
-				),
-				
-				array(
-						'name'  => 'แท็กยอดฮิต (แท็กข่าว)',
-						'icon'  => 'fa-tags',
-						'rule'  => 'tpbs.tag',
-						'url'   => $baseUrl.'/tag/listcloud',
-				),
-				array(
-						'name'  => 'ราคานํ้ามัน',
-						'icon'  => 'fa-truck',
 						'rule'  => 'tpbs.oil',
 						'url'   => $baseUrl.'/web/oil',
 				),
+				
+				array(
+						'name'  => 'ข้อมูลฟาร์ม',
+						'icon'  => 'fa-truck',
+						'rule'  => 'tpbs.oil',
+						'url'   => $baseUrl.'/web/2',
+				),
+				
 				array(
 		
 						'name'  => 'จัดการระบบ',
