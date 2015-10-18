@@ -40,7 +40,7 @@ Purchase: http://themeforest.net/item/metronic-responsive-admin-dashboard-templa
 	<script>
 		jQuery(document).ready(function() {
 		   App.init();
-		   Login.init();
+
 		   App.baseUri = '<?php echo $baseUrl?>/';
 
 		   jQuery.ajaxSetup({
@@ -52,27 +52,104 @@ Purchase: http://themeforest.net/item/metronic-responsive-admin-dashboard-templa
 <?php 
 $str = <<<EOT
 	
+/* fix vertical when not overflow
+call fullscreenFix() if .fullscreen content changes */
+function fullscreenFix(){
+    var h = $('body').height();
+    // set .fullscreen height
+    $(".content-b").each(function(i){
+        if($(this).innerHeight() <= h){
+            $(this).closest(".fullscreen").addClass("not-overflow");
+        }
+    });
+}
+$(window).resize(fullscreenFix);
+fullscreenFix();
+
+/* resize background images */
+function backgroundResize(){
+    var windowH = $(window).height();
+    $(".background").each(function(i){
+        var path = $(this);
+        // variables
+        var contW = path.width();
+        var contH = path.height();
+        var imgW = path.attr("data-img-width");
+        var imgH = path.attr("data-img-height");
+        var ratio = imgW / imgH;
+        // overflowing difference
+        var diff = parseFloat(path.attr("data-diff"));
+        diff = diff ? diff : 0;
+        // remaining height to have fullscreen image only on parallax
+        var remainingH = 0;
+        if(path.hasClass("parallax")){
+            var maxH = contH > windowH ? contH : windowH;
+            remainingH = windowH - contH;
+        }
+        // set img values depending on cont
+        imgH = contH + remainingH + diff;
+        imgW = imgH * ratio;
+        // fix when too large
+        if(contW > imgW){
+            imgW = contW;
+            imgH = imgW / ratio;
+        }
+        //
+        path.data("resized-imgW", imgW);
+        path.data("resized-imgH", imgH);
+        path.css("background-size", imgW + "px " + imgH + "px");
+    });
+}
+$(window).resize(backgroundResize);
+$(window).focus(backgroundResize);
+backgroundResize(); 
+			
     Metronic.init(); // init metronic core components
     Layout.init(); // init current layout
   
 	//QuickSidebar.init(); // init quick sidebar
     Demo.init(); // init demo features
    
-   
-    //TableManaged.init();
-    //FormComponents.init();
-    //ComponentsDropdowns.init();
-    //ComponentsFormTools.init();
-    //ComponentsPickers.init(); 
-        
 EOT;
 
 $this->registerJs($str, \yii\web\View::POS_READY, 'start-js');
-?>
+
+$str = <<<EOT
+/* background setup */
+.background {
+    background-repeat:no-repeat;
+    /* custom background-position */
+    background-position:50% 50%;
+    /* ie8- graceful degradation */
+    background-position:50% 50%\9 !important;
+}
+
+/* fullscreen setup */
+html, body {
+    /* give this to all tags from html to .fullscreen */
+    height:100%;
+}
+.fullscreen,
+.content-a {
+    width:100%;
+    min-height:100%;
+	position: absolute;
+}
+.not-fullscreen,
+.not-fullscreen .content-a,
+.fullscreen.not-overflow,
+.fullscreen.not-overflow .content-a {
+    height:100%;
+    overflow:hidden;
+}
+EOT;
+$this->registerCss($str, [], 'css'); ?>
 </head>	
 <!-- END HEAD -->
 <!-- BEGIN BODY -->
 <body class="login">
+<div class="fullscreen background" style="background-image:url('<?php echo $baseUrl?>/global/img/bg/bbg.jpg'); opacity: 0.3; position:;" data-img-width="1800" data-img-height="1800">
+</div>
 <?php $this->beginBody() ?>
 <div class="clearfix">
 </div>
@@ -81,7 +158,8 @@ $this->registerJs($str, \yii\web\View::POS_READY, 'start-js');
 
 	<!-- BEGIN LOGO -->
 	<div class="logo">
-		<img src="<?php echo $baseUrl?>/assets/img/cms-logo.png" alt="" /> 
+		<!-- <img src="<?php echo $baseUrl?>/global/img/tpbs-org-logo.png" alt="" />  -->
+		<h1><span class="label label-info">THANAKORN</span><span class="label label-warning">FARM</span> </h1>
 	</div>
 	<!-- END LOGO -->
 	<!-- BEGIN LOGIN -->
@@ -89,9 +167,14 @@ $this->registerJs($str, \yii\web\View::POS_READY, 'start-js');
 		<?= $content ?>
 	</div>
 	<!-- END LOGIN -->
+	<!-- BEGIN COPYRIGHT -->
+	<div class="copyright">
+		COPYRIGHT &copy;2015  THANAKORN FARM
+	</div>
 	<!-- END JAVASCRIPTS -->
-</body>
+
 <?php $this->endBody() ?>
 
+</body>
 </html>
 <?php $this->endPage() ?>

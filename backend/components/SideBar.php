@@ -23,24 +23,10 @@ class SideBar extends Widget {
 				
 				array(
 						'name'  => 'บันทึกการเลี้ยงกุ้ง',
+						'url'   => $baseUrl.'/content/list',
 						'icon'  => 'fa-list-alt',
 						'rule'  => 'tpbs.admin',
-						'sub'   => array(
-		
-								array(
-										'name'  => 'รายการบันทึกการเลี้ยงกุ้ง',
-										'url'   => $baseUrl.'/1',
-										'icon'  => 'fa-user',
-										'rule'  => 'tpbs.admin.user'
-								),
-		
-								array(
-										'name'  => 'วิเคราะห์ผลการเลี้ยง',
-										'url'   => $baseUrl.'/2',
-										'icon'  => 'fa-user',
-										'rule'  => 'tpbs.admin.contentlog'
-								),
-						)
+
 				),
 				
 				array(
@@ -69,20 +55,6 @@ class SideBar extends Widget {
 										'url'   => $baseUrl.'/user/list',
 										'icon'  => 'fa-user',
 										'rule'  => 'tpbs.admin.user'
-								),
-		
-								array(
-										'name'  => 'log การใช้งานข่าว',
-										'url'   => $baseUrl.'/log/contentlog',
-										'icon'  => 'fa-user',
-										'rule'  => 'tpbs.admin.contentlog'
-								),
-		
-								array(
-										'name'  => 'log การเข้าสู่ระบบ',
-										'url'   => $baseUrl.'/log/accesslog',
-										'icon'  => 'fa-user',
-										'rule'  => 'tpbs.admin.accesslog'
 								),
 						)
 				),

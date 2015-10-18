@@ -71,7 +71,7 @@ $template = array(
 	                                if ($active) 
 	                                	$li_active_m = ' class="'. $active .'"'; 	                              
 	                            ?>
-	                            <?php //  if (isset($link['rule']) && $user->can($link['rule'])){  //เช็คค่าที่ดึงมาจาก  array = echo $sub_link['rule']; ?>
+	                            <?php   if (isset($link['rule'])){  //เช็คค่าที่ดึงมาจาก  array = echo $sub_link['rule']; ?>
 	                            <li<?php if ($active){echo $li_active_m;}else {echo $li_active;}?>>
 	                                <a href="<?php echo $url; ?>"<?php echo $link_class; ?>>
 	                                <?php echo $icon; ?>
@@ -102,7 +102,6 @@ $template = array(
 	                                            }
 	                                            if ($submenu_link || $active)
 	                                                $link_class = ' class="'. $submenu_link . $active .'"';?>
-	                                        <?php //   if  ($user->can($sub_link['rule'])){  //เช็คค่าที่ดึงมาจาก  array = echo $sub_link['rule']; ?>
 	                                        <li<?php echo $link_class; ?>>
 	                                            <a href="<?php echo $url; ?>"<?php echo $link_class; ?>><?php echo $subicon; ?><?php echo $sub_link['name']; ?></a>
 	                                            <?php if (isset($sub_link['sub']) && $sub_link['sub']) { ?>
@@ -119,13 +118,13 @@ $template = array(
 	                                                </ul>
 	                                            <?php } ?>
 	                                        </li>
-	                                        <?php //  }//end if user can }?>
+	                                       
 	                                        <?php } ?>
 	                                    </ul>
 	                                <?php } ?>
 	                            </li>
-	                            <?php //  }//end if user can } ?>
-	                            <?php } ?>
+	                          <?php } ?>
+	                        <?php } ?>
 			</ul>
 		 <?php } ?>
 		<!-- END SIDEBAR MENU -->

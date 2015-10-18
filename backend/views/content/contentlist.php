@@ -11,7 +11,9 @@ use common\models\ObjectCategory;
 use app\CategoryTree;
 use common\models\Media;
 use app\Entity;
-
+$identity = \Yii::$app->user->getIdentity();
+$baseUrl = \Yii::getAlias('@web');
+$user = \Yii::$app->user;
 $str = <<<EOT
 function postAction(action) {
 
@@ -50,7 +52,28 @@ $this->registerJs($str, View::POS_LOAD, 'form-js');
 
 ActiveForm::begin(['id' => 'dataTable-form']);
 ?>
-
+<!-- BEGIN PAGE HEADER-->
+			<div class="row">
+				<div class="col-md-12">
+					<!-- BEGIN PAGE TITLE & BREADCRUMB-->
+					<h3 class="page-title">
+						THANAKORN <strong>FARM</strong> SYSTEM 
+					</h3>
+					<ul class="page-breadcrumb breadcrumb">
+						<li>
+							<i class="fa fa-home"></i>
+							<a href="<?=$baseUrl?>/index.php">หน้าหลัก</a> 
+							<i class="fa fa-angle-right"></i>
+						</li>
+						<li>
+						<i class="fa fa-file-text"></i>
+							<a href="<?=$baseUrl?>/paymentitem/list">รายการข่าวและค่าตอบแทน</a>
+						</li>
+					</ul>
+					<!-- END PAGE TITLE & BREADCRUMB-->
+				</div>
+			</div>
+<!-- END PAGE HEADER-->
 <div class="col-md-12">
     <!-- BEGIN EXAMPLE TABLE PORTLET-->
     <div class="row" id="filter-search" style="display: none;"> 
@@ -75,7 +98,7 @@ ActiveForm::begin(['id' => 'dataTable-form']);
                         </div>
 <?php endif;?>                        
                         <div class="form-group form-md-line-input has-success">
-                        	<?php echo Html::dropDownList('status', $status, [0=>'สถานะ'] + Workflow::$arrStatusTpbs, ['id'=> 'form_control_1', 'class'=> 'form-control'])?>
+                        	<!--  <?php // echo Html::dropDownList('status', $status, [0=>'สถานะ'] + Workflow::$arrStatusTpbs, ['id'=> 'form_control_1', 'class'=> 'form-control'])?>  -->
                             <div class="form-control-focus">
                             </div>
                         </div>
@@ -85,7 +108,7 @@ ActiveForm::begin(['id' => 'dataTable-form']);
                             </div>
                         </div>
                         <div class="form-group form-md-line-input has-success">
-                        <?php echo Html::dropDownList('categoryId', $categoryId, [0=>'หมวด'] + CategoryTree::getAllRootNode(), ['id'=> 'categoryId', 'class'=> 'form-control'])?>
+                       <!--   <?php // echo Html::dropDownList('categoryId', $categoryId, [0=>'หมวด'] + CategoryTree::getAllRootNode(), ['id'=> 'categoryId', 'class'=> 'form-control'])?> -->
                             <div class="form-control-focus">
                             </div>
                         </div>

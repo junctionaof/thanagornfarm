@@ -4,7 +4,7 @@ Login page
 
 /* logo page */
 .login {
-  background-color: #666 !important;
+  background-color: rgb(231, 233, 244) !important;
 }
 
 .login .logo {
@@ -16,17 +16,20 @@ Login page
 
 
 .login .content {
-  background: url(../../img/bg-white-lock.png) repeat;
-  width: 360px;
-  margin: 0 auto; 
-  margin-bottom: 0px;
-  padding: 30px;  
-  padding-top: 20px;  
-  padding-bottom: 15px;  
+    background:  url(../../img/bg-white-lock.png) repeat;
+    width: 360px;
+    margin: 0 auto;
+    margin-bottom: 0px;
+    padding: 30px;
+    padding-top: 20px;
+    padding-bottom: 15px;
+    box-shadow: 0px 0px 20px rgb(76, 73, 73);
+     -webkit-border-radius: 5px;
+    border-radius: 5px; 
 }
 
 .login .content h3 {
-  color: #eee;
+  color: #D6461B;
 }
 .login .content h4  {
   color: #eee;
@@ -34,7 +37,7 @@ Login page
 
 .login .content p,
 .login .content label {
-  color: #fff;
+  color: #D6461B;
 }
 
 .login .content .login-form,
@@ -141,7 +144,7 @@ Login page
   text-align: center;
   margin: 0 auto; 
   padding: 10px;
-  color: #eee;
+  color: #000;
   font-size: 12px;
 }
 

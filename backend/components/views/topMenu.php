@@ -17,8 +17,8 @@ $user = \Yii::$app->user;
 		<!-- BEGIN TOP NAVIGATION BAR -->
 		<div class="header-inner">
 			<!-- BEGIN LOGO -->  
-			<a class="navbar-brand" href="<?php echo $baseUrl?>/" style="padding-top: 5px; padding-bottom:0px;">
-			 <img src="<?php echo $baseUrl?>/assets/img" alt="logo" class="img-responsive" style="height:45px;" />
+			<a class="navbar-brand" href="<?php echo $baseUrl?>/" style="padding-top: 6px; padding-bottom:0px; opacity:0.8;">
+			<h1 style="margin-top: 0px;"><span class="label label-info" style="border-radius: 0px;">THANAKORN</span><span class="label label-warning" style="border-radius: 0px;">FARM</span> </h1>
 			</a>
 			<!-- END LOGO -->
 			<!-- BEGIN RESPONSIVE MENU TOGGLER --> 
@@ -31,14 +31,14 @@ $user = \Yii::$app->user;
 				<!-- BEGIN NOTIFICATION DROPDOWN -->
 				<li class="dropdown user">
 			          <a href="#" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
-			          <img alt="" src="<?php echo $baseUrl ?>/assets/img/avatar1_small.jpg"/> 
+			          <img alt="" src="<?php echo $baseUrl ?>/global/img/avatar1_small.jpg"/> 
 			          <span class="username"> <?php if($name){ echo $name; }?> </span>
 			          <i class="fa fa-angle-down"></i>
 			          </a>
 					<ul class="dropdown-menu">
 						 <li><a href="<?= Url::toRoute(['/user/edit'])?>?id=<?=$id?>"><i class="fa fa-user"></i> ข้อมูลส่วนตัว</a></li>
 						<li class="divider"></li>
-						<li><a href="http://tpbs.ndev.pw/" target="_blank" id="trigger_fullscreen"><i class="fa fa-home"></i> Visit site</a></li>
+						<li><a href="#" target="_blank" id="trigger_fullscreen"><i class="fa fa-home"></i> Visit site</a></li>
 						<li><a href="<?= Url::to(['site/logout'])?>" data-method="post"><i class="fa fa-key"></i> Log Out</a></li>
 					</ul>
 				</li>

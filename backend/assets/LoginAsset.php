@@ -14,29 +14,30 @@ class LoginAsset extends AssetBundle
     public $css = [
         //'css/site.css',
         //'global/',
+    	'global/css/pages/login-soft.css',
         'global/plugins/font-awesome/css/font-awesome.min.css',
         'global/plugins/bootstrap/css/bootstrap.min.css',
         'global/plugins/uniform/css/uniform.default.css',        
         'global/plugins/clockface/css/clockface.css',
         
         'global/css/components-md.css',
-    	'assets/css/style-metronic.css',
-    	'assets/css/style.css',
-    	'assets/css/style-responsive.css',
+    	'global/css/style-metronic.css',
+    	'global/css/style.css',
+    	'global/css/style-responsive.css',
     	'global/css/plugins.css',
         'global/css/plugins-md.css',
         'admin/layout/css/layout.css',
         'admin/layout/css/themes/darkblue.css',
         'admin/layout/css/custom.css',
-    	'assets/css/pages/login-soft.css',
+
     		
         'global/plugins/bootstrap-select/bootstrap-select.min.css',
-        'assets/plugins/select2/select2_metro.css',
+        'global/plugins/select2/select2_metro.css',
         'global/plugins/jquery-ui/jquery-ui.min.css',
     ];
     public $js = [
-    	'assets/plugins/jquery-1.10.2.min.js',
-    	'assets/plugins/jquery-migrate-1.2.1.min.js',
+    	'global/plugins/jquery.min.js',
+    	'global/plugins/jquery-migrate.min.js',
         'global/plugins/jquery-ui/jquery-ui.min.js',
         'global/plugins/bootstrap/js/bootstrap.min.js',
         'global/plugins/bootstrap-hover-dropdown/bootstrap-hover-dropdown.min.js',
@@ -46,7 +47,8 @@ class LoginAsset extends AssetBundle
         'global/plugins/uniform/jquery.uniform.min.js',
     	
         // component
-        'assets/plugins/jquery-validation/dist/jquery.validate.min.js',
+        
+    	'global/plugins/jquery-validation/js/jquery.validate.min.js',
     	'global/plugins/backstretch/jquery.backstretch.min.js',
         'global/plugins/bootstrap-maxlength/bootstrap-maxlength.min.js',
         'global/plugins/bootstrap-touchspin/bootstrap.touchspin.js',

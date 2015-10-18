@@ -384,7 +384,7 @@ var Metronic = function() {
     // Handles Bootstrap Tooltips.
     var handleTooltips = function() {
         // global tooltips
-        $('.tooltips').tooltip();
+       // $('.tooltips').tooltip();
 
         // portlet tooltips
         $('.portlet > .portlet-title .fullscreen').tooltip({

@@ -36,7 +36,7 @@ class TpbsAsset extends AssetBundle
         //'admin/layout/css/layout.css',
         'css/admin/layout/layout.css',
         //'admin/layout/css/themes/tpbs-darkblue.css',
-        'css/admin/layout/themes/tpbs-themes.css',
+        'css/admin/layout/themes/light2.css',
         'admin/layout/css/custom.css',
         'global/plugins/jquery-tags-input/jquery.tagsinput.css',
         
