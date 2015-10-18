@@ -35,7 +35,7 @@ $this->registerCssFile("$baseUrl/global/plugins/jquery-nestable/jquery.nestable.
 						</li>
 						<li>
 						<i class="fa fa-file-text"></i>
-							<a href="<?=$baseUrl?>/paymentitem/list">พญากรอากาศ</a>
+							<a href="<?=$baseUrl?>/paymentitem/list">พยากรณ์อากาศ </a>
 						</li>
 					</ul>
 					<!-- END PAGE TITLE & BREADCRUMB-->

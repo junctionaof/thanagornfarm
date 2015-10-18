@@ -30,7 +30,7 @@ class SideBar extends Widget {
 				),
 				
 				array(
-						'name'  => 'พญากรอากาศ',
+						'name'  => 'พยากรณ์อากาศ ',
 						'icon'  => 'fa-umbrella',
 						'rule'  => 'tpbs.oil',
 						'url'   => $baseUrl.'/weather/list',
