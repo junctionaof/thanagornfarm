@@ -33,7 +33,7 @@ class SideBar extends Widget {
 						'name'  => 'พญากรอากาศ',
 						'icon'  => 'fa-umbrella',
 						'rule'  => 'tpbs.oil',
-						'url'   => $baseUrl.'/web/oil',
+						'url'   => $baseUrl.'/weather/list',
 				),
 				
 				array(

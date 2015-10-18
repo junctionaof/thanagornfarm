@@ -57,7 +57,7 @@ ActiveForm::begin(['id' => 'dataTable-form']);
 				<div class="col-md-12">
 					<!-- BEGIN PAGE TITLE & BREADCRUMB-->
 					<h3 class="page-title">
-						THANAKORN <strong>FARM</strong> SYSTEM 
+						SHRIMP <strong> RECORD </strong> SYSTEM 
 					</h3>
 					<ul class="page-breadcrumb breadcrumb">
 						<li>

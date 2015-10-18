@@ -66,10 +66,10 @@ $template = array(
 	
 	                                if ($menu_link || $active)
 	                                    $link_class = ' class="'. $menu_link . $active .'"';
-	                                $li_active_m = "";
+	                                $li_active_m = 'class="open"';
 	                                
 	                                if ($active) 
-	                                	$li_active_m = ' class="'. $active .'"'; 	                              
+	                                	$li_active_m = ' class="'. $active .' open"'; 	                              
 	                            ?>
 	                            <?php   if (isset($link['rule'])){  //เช็คค่าที่ดึงมาจาก  array = echo $sub_link['rule']; ?>
 	                            <li<?php if ($active){echo $li_active_m;}else {echo $li_active;}?>>
