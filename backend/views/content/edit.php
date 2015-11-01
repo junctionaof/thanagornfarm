@@ -25,7 +25,7 @@ use backend\components\DocumentListTab;
 
 $contentDate = "";
 $contentTime = "";
-$ts = DateUtil::ParseSQLDate($Content->publishTime);
+/* $ts = DateUtil::ParseSQLDate($Content->publishTime);
 if ($ts) {
 	$contentDate = date('Y-m-d', $ts);
 	$contentTime = date('H:i', $ts);
@@ -50,7 +50,7 @@ if ($ts) {
 	$expireDate = date('Y-m-d', $ts);
 	$expireTime = date('H:i', $ts);
 	
-}
+} */
 
 ?>
 
@@ -62,10 +62,10 @@ $this->registerJsFile($baseUrl  . '/assets/scripts/relatedContent.js', ['positio
 
 ?>
 <div class="col-md-12">
-    <div id="content-main" class="portlet box blue" data-entity="<?php echo Entity::TYPE_CONTENT?>">
+    <div id="content-main" class="portlet box blue" data-entity="<?php // echo Entity::TYPE_CONTENT?>">
         <div class="portlet-title">
             <div class="caption">
-                <i class="fa fa-gift"></i>ข่าว
+                <i class="fa fa-gift"></i>ระบบบันทึกข้อมูลการเลี้ยงกุ้ง
             </div>
             <div class="tools">
                 <a href="javascript:;" class="collapse" data-original-title="" title="">
@@ -80,29 +80,29 @@ $this->registerJsFile($baseUrl  . '/assets/scripts/relatedContent.js', ['positio
             <div class="tabbable tabbable-tabdrop">
                 <ul class="nav nav-pills">
                     <li class="active">
-                        <a href="#tab11" data-toggle="tab" aria-expanded="true">ข้อมูลข่าว</a>
+                        <a href="#tab11" data-toggle="tab" aria-expanded="true">ข้อมูลทั่วไป</a>
                     </li>
                     <li class="">
-                        <a <?php echo $Content->id?'href="#tab12" data-toggle="tab"':'href="javascript:;" ';?> aria-expanded="false">การตีพิมพ์</a>
+                        <a href="#tab12" data-toggle="tab" <?php echo $Content->id?'href="#tab12" data-toggle="tab"':'href="javascript:;" ';?> aria-expanded="false">บันทึกการกินอาหาร</a>
                     </li>
                     <li class="">
-                        <a <?php echo $Content->id?'href="#tab13" data-toggle="tab"':'href="javascript:;" ';?> aria-expanded="false">ข้อมูลภาพข่าว</a>
+                        <a href="#tab13" data-toggle="tab" <?php echo $Content->id?'href="#tab13" data-toggle="tab"':'href="javascript:;" ';?> aria-expanded="false">บันทึกนํ้าหนักเฉลี่ย</a>
                     </li>
                     <li class="">
-                        <a <?php echo $Content->id?'href="#tab14" data-toggle="tab"':'href="javascript:;" ';?> aria-expanded="false">ข้อมูลไฟล์</a>
+                        <a href="#tab14" data-toggle="tab" <?php echo $Content->id?'href="#tab14" data-toggle="tab"':'href="javascript:;" ';?> aria-expanded="false">บันทึกค่าแอมโมเนีย</a>
                     </li>
                     <li class="">
-                        <a <?php echo $Content->id?'href="#tab15" data-toggle="tab"':'href="javascript:;" ';?> aria-expanded="false">ข่าวที่เกี่ยวข้อง</a>
+                        <a href="#tab15" data-toggle="tab" <?php echo $Content->id?'href="#tab15" data-toggle="tab"':'href="javascript:;" ';?> aria-expanded="false">บันทึกค่าอัลคาไลน์</a>
                     </li>
                     <li class="">
-                        <a <?php echo $Content->id?'href="#tab16" data-toggle="tab"':'href="javascript:;" ';?> aria-expanded="false">โปรไฟล์</a>
+                        <a href="#tab16" data-toggle="tab" <?php echo $Content->id?'href="#tab16" data-toggle="tab"':'href="javascript:;" ';?> aria-expanded="false">บันทึกค่า PH</a>
                     </li>
 
                 </ul>
                 <div class="tab-content">
                     <div class="tab-pane active" id="tab11">
-<?php $form = ActiveForm::begin ();?>
-<?php echo Html::hiddenInput('id', $Content->id, array( 'id' => 'id', 'class' => 'form-control select2')) ?>
+				<?php $form = ActiveForm::begin ();?>
+				<?php echo Html::hiddenInput('id', $Content->id, array( 'id' => 'id', 'class' => 'form-control select2')) ?>
                             <!-- start ข้อมูลข่าว -->
                             <div class="row">
                                 <div class="col-md-8">
@@ -129,7 +129,7 @@ $this->registerJsFile($baseUrl  . '/assets/scripts/relatedContent.js', ['positio
 						                            </label>
                                                                             <?php 
                                                                             ?>
-						                            <?php echo Html::hiddenInput('tags', $Content->getTags(), array( 'id' => 'tag_cloud', 'class' => 'form-control select2')) ?>
+						                            <?php // echo Html::hiddenInput('tags', $Content->getTags(), array( 'id' => 'tag_cloud', 'class' => 'form-control select2')) ?>
 						                            <label>Tags - คำสำคัญของอัลบัม เพื่อช่วยเหลือในการค้นหาได้ดียิ่งขึ้น**ให้คั่นแต่ละคำโดยการกดปุ่ม Enter</label>
 						                        </div>
 						                        
@@ -151,7 +151,7 @@ $this->registerJsFile($baseUrl  . '/assets/scripts/relatedContent.js', ['positio
                                             
                                             <div class="actions">					
 													<div class="btn-group pull-right">
-														<a class="btn <?php echo \Yii::$app->params['uiPortletHighlight'] ?>" href="http://news.tpbs.ndev.pw/content/preview?id=<?php echo "{$Content->id}&key=$previewKey" ?>" target="_blank"> 
+														<a class="btn <?php // echo \Yii::$app->params['uiPortletHighlight'] ?>" href="http://news.tpbs.ndev.pw/content/preview?id=<?php // echo "{$Content->id}&key=$previewKey" ?>" target="_blank"> 
 															<i class="fa fa-search"></i> Preview
 														</a>
 
@@ -165,15 +165,15 @@ $this->registerJsFile($baseUrl  . '/assets/scripts/relatedContent.js', ['positio
                                                 <h3 class="form-section">หมวดหมู่ของเนื้อหา</h3>
                                                 <div class="form-group">
                                                     <label class="control-label">ชนิดของเนื้อหา</label>
-                                                   <?php echo Html::activeDropDownList($Content, 'type', Content::$arrTypeTpbs, ['class'=>'form-control select2me', 'data-placeholder'=>'Select...'])?>
+                                                   <?php // echo Html::activeDropDownList($Content, 'type', Content::$arrTypeTpbs, ['class'=>'form-control select2me', 'data-placeholder'=>'Select...'])?>
                                                 </div>
                                                 <div class="form-group">
                                                 	<label class="control-label">หมวดหมู่</label>
-                                                    <?php echo Html::dropDownList('categoryId', $Content->categoryId, [0=>'เลือกหมวดหมู่'] + CategoryTree::getAllRootNode(), ['id'=> 'categoryId', 'class'=> 'form-control select2me'])?>
+                                                    <?php // echo Html::dropDownList('categoryId', $Content->categoryId, [0=>'เลือกหมวดหมู่'] + CategoryTree::getAllRootNode(), ['id'=> 'categoryId', 'class'=> 'form-control select2me'])?>
                                                 </div>
                                                 <div class="form-group">
                                                     <label class="control-label">TPBSFocus</label>
-                                                   <?php echo Html::activeDropDownList($Content, 'tpbsId', [0=> 'เลือกหัวข้อ'] + $arrFeed, ['class'=>'form-control select2me', 'data-placeholder'=>'Select...'])?>
+                                                   <?php // echo Html::activeDropDownList($Content, 'tpbsId', [0=> 'เลือกหัวข้อ'] + $arrFeed, ['class'=>'form-control select2me', 'data-placeholder'=>'Select...'])?>
                                                 </div>
                                             </div>
                                             
@@ -181,15 +181,15 @@ $this->registerJsFile($baseUrl  . '/assets/scripts/relatedContent.js', ['positio
                                                 <h3 class="form-section">เผยแพร่</h3>
                                                 <div class="form-group">
 													<label class="control-label">Credit :</label>
-													<?php echo Html::activeTextInput($Content,'credit',array('class'=>'form-control medium'))?>
+													<?php // echo Html::activeTextInput($Content,'credit',array('class'=>'form-control medium'))?>
 												</div>
                                                 <div class="form-group">
                                                     <label class="control-label">สถานะการแสดง</label>
-                                            <?php if(!$canPublishNews && ($Content->status == Workflow::STATUS_PUBLISHED)):?>
-                                            		<p><?php echo Workflow::$arrStatusTpbs[$Content->status]?></p>
-                                            <?php else :?>
-                                            	<?php echo Html::activeDropDownList($Content, 'status', $arrStatus, ['class'=>'form-control select2me', 'data-placeholder'=>'Select...'])?>
-                                            <?php endif;?>
+                                            <?php // if(!$canPublishNews && ($Content->status == Workflow::STATUS_PUBLISHED)):?>
+                                            		<p><?php // echo Workflow::$arrStatusTpbs[$Content->status]?></p>
+                                            <?php // else :?>
+                                            	<?php // echo Html::activeDropDownList($Content, 'status', $arrStatus, ['class'=>'form-control select2me', 'data-placeholder'=>'Select...'])?>
+                                            <?php // endif;?>
                                                 </div>
                                                 
                                                 <div class="form-group">
@@ -198,13 +198,13 @@ $this->registerJsFile($baseUrl  . '/assets/scripts/relatedContent.js', ['positio
                                                 <div class="row">
                                                 	
 													<div class="col-md-1">
-														<?php echo Html::checkbox('hasVideo',  $hasVideo, ['class'=> 'pull-right'])?>
+														<?php // echo Html::checkbox('hasVideo',  $hasVideo, ['class'=> 'pull-right'])?>
 													</div>
 													<div class="col-md-4">
 														<label>มีวีดีโอ</label>
 													</div>
 													<div class="col-md-1">
-														<?php echo Html::checkbox('hasGallery', $hasGallery, ['class'=> 'pull-right'])?>														
+														<?php // echo Html::checkbox('hasGallery', $hasGallery, ['class'=> 'pull-right'])?>														
 													</div>
 													<div class="col-md-4">
 														<label>มีอัลบั้ม</label>
@@ -212,7 +212,7 @@ $this->registerJsFile($baseUrl  . '/assets/scripts/relatedContent.js', ['positio
 												</div>
 												<div class="row">
 													<div class="col-md-1">
-														<?php echo Html::checkbox('hasComment',  $hasComment, ['class'=> 'pull-right'])?>
+														<?php // echo Html::checkbox('hasComment',  $hasComment, ['class'=> 'pull-right'])?>
 													</div>
 													<div class="col-md-4">
 														<label >comment</label>
@@ -235,9 +235,9 @@ $this->registerJsFile($baseUrl  . '/assets/scripts/relatedContent.js', ['positio
 														<i class="fa fa-calendar"></i> เวลายกเลิกแสดงข่าว
 													</p>
 													<label class="control-label">วันที่</label>
-													<?php echo Html::textInput('expire_date', $expireDate, array('class'=>'form-control form-control-inline  date-picker'))?>
+													<?php // echo Html::textInput('expire_date', $expireDate, array('class'=>'form-control form-control-inline  date-picker'))?>
                                                 	<label class="control-label">เวลา</label>
-                                                	<?php echo Html::textInput('expire_time', $expireTime, array('class'=>'form-control'))?>
+                                                	<?php // echo Html::textInput('expire_time', $expireTime, array('class'=>'form-control'))?>
                                                 </div>
                                                 
                                                 
@@ -264,95 +264,26 @@ $this->registerJsFile($baseUrl  . '/assets/scripts/relatedContent.js', ['positio
 <?php ActiveForm::end() ?>
                     </div>
                     <div class="tab-pane" id="tab12">
-                        <?php echo PublishTab::widget(['_Content'=> $Content,'arrOtherCategory' => $arrOtherCategory]);?>
+                    002
                     </div>
                     <div class="tab-pane" id="tab13">
-                       <p>
-<?php
-            echo MediaListTab::widget(['arrMedia' => $arrMedia,
-                'entity' => $Content,
-                'fileUploadParams' => ['previewWidth' => 320]
-            ]);
-?>
-                        </p>
+					003
                     </div>
                     
                     <div class="tab-pane" id="tab14">
-<?php 
-			echo DocumentListTab::widget(['arrDocument' => $arrDocument,
-					'entity' => $Content,
-			]);
-?>
+					004
                     </div>
-                    
                     <div class="tab-pane" id="tab15">
-                        <div class="col-md-5">
-<?php
-$relatedContent = null;
-Portlet::begin(array(
-		'id' => 'selector-portlet',
-		'title' => 'ข่าวที่เกี่ยวข้อง',
-		'actions' => array(
-				'save',
-		),
-		'attrs' => array(
-			'data-list' => 'related',
-			//'data-section' => 'pol',
-		),
-));
-echo RelatedList::widget(['items' => $contentRef]);
-?>
-<?php Portlet::end(); ?>
-						</div>
-						
-						<div class="col-md-7">
-								<div id="selectable-content">
-<?php
-Portlet::begin(array(
-	'id' => 'selector-general',
-	'iconClass' => 'reorder',
-	'title' => 'เลือกรายการ',
-));
-?>
-								<div class="row">
-										<div class="col-md-7 col-md-offset-5">
-											<div class="input-group">
-											<?php echo Html::textInput('q', '', array('class'=>'form-control', 'placeholder'=>'คีย์เวิร์ด:'));?>
-											<span class="input-group-btn">
-												<?php echo Html::button('ค้นหา', array('class'=>'btn blue', 'name'=>'btn-search', 'id'=>'btn-search'))?>
-											</span>
-											</div>
-											<!-- /input-group -->
-										</div>
-									</div>
 
-<?php
-echo RelatedList::widget(['items' => $arrRelate, 'view' => 'general']);
-?>
-
-<?php Portlet::end(); ?>
-
-								</div>
-							</div>
-							
-							
                     </div>
                     <div class="tab-pane" id="tab16">
-                        <?php echo NewsLog::widget(['_Content'=> $Content, 'entity'=> Entity::TYPE_CONTENT])?>
-                    </div>
-
+                    
+                   </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
-
-<?php 
-echo TinyMCE::widget();
-echo TagCloud::widget([
-'idName'=>'tag_cloud',
-]);
-?>
 
 <script>
 
@@ -396,7 +327,5 @@ $("#title").on("change keyup paste", function(){
 	var availableChar = 140-length;
 	$("#title-available-char").html(availableChar);
 });
-
-
 
 </script>

@@ -173,7 +173,6 @@ class ContentController extends BaseController {
     public function actionEdit() {
     	$request = Yii::$app->request;
     	$identity = \Yii::$app->user->getIdentity();
-    	$canPublishNews = Yii::$app->user->can('tpbs.content.approve');
     	$currentTs =time();
     	
     	$id = $request->post('id', 0);
@@ -184,24 +183,14 @@ class ContentController extends BaseController {
     	
     	if(empty($Content)){
     		$Content = new Content();
-    		$Content->hasComment = 0;
-    		$Content->version = 1;
     		$Content->createBy = $identity->id;
-    		$Content->createTime = date(DateUtil::SQL_DT_FMT, $currentTs);
+    		$Content->createTime = date('Y-m-d H:i:s', $currentTs);
     	} 
-    	
-    	$hasComment = $Content->hasComment;
-    	$hasVideo = $Content->hasVideo;
-    	$hasGallery = $Content->hasGallery;
     	//$Content
     	if ($request->isPost) {
     		$categoryId = $request->post('categoryId', NULL);
     		if (empty($categoryId))
     			$categoryId = $request->get('categoryId', NULL);
-    		
-    		$hasComment = $request->post('hasComment', 0);
-    		if (empty($hasComment))
-    			$hasComment = $request->get('hasComment', 0);
     		
     		$hasVideo = $request->post('hasVideo', 0);
     		if (empty($hasVideo))
@@ -234,7 +223,6 @@ class ContentController extends BaseController {
 			
 			$Content->attributes = $request->post('Content');
     		$Content->categoryId = $categoryId;
-    		$Content->hasComment = $hasComment;
     		$Content->hasGallery = $hasGallery;
     		$Content->hasVideo = $hasVideo;
     		$Content->lastUpdateTime = date(DateUtil::SQL_DT_FMT, $currentTs);
@@ -264,13 +252,9 @@ class ContentController extends BaseController {
     		}
     	}
     	
-    	$Content->content = CmsTextUtil::decode($Content->content);
+ //   	$Content->content = CmsTextUtil::decode($Content->content);
     	
-    	$arrStatus = Workflow::$arrStatusTpbs;
-    	if(!$canPublishNews)
-    		unset($arrStatus[Workflow::STATUS_PUBLISHED]);
-    	
-    	$query = Content::find();
+  /*   	$query = Content::find();
     	$query->andWhere('type=:type AND status=:status', [':type'=> Content::TYPE_ONLINE_NEWS, ':status' => Workflow::STATUS_PUBLISHED]);
     	$query->orderBy("publishTime desc");
     	$query->offset = 0;
@@ -282,10 +266,10 @@ class ContentController extends BaseController {
     	$lst = $query->all();
     	
     	$arrFeed = [];
-    	$arrFeed = ArrayHelper::map($lst, 'id', 'title');
+    	$arrFeed = ArrayHelper::map($lst, 'id', 'title'); */
     	
     	// related content
-    	$contentRef = null;
+/*     	$contentRef = null;
     	if($id){
 	    	$query = ContentRef::find();
 	    	$query->andWhere(['contentId' => $id]);
@@ -299,10 +283,10 @@ class ContentController extends BaseController {
 	    	if($arrContentRefId){
 	    		$contentRef = Content::findAll($arrContentRefId);
 	    	}
-    	}
+    	} */
     	
     	/* Media array */
-    	$arrMedia = [];
+ /*    	$arrMedia = [];
     	$arrDocument = [];
     	if($Content->id){
     		$query = Media::find();
@@ -313,9 +297,9 @@ class ContentController extends BaseController {
     		$arrMedia = Media::getItems($query, $options);
     		
     		$arrDocument = Document::find()->where('type=:type and refId=:refId', [':type'=>Entity::TYPE_CONTENT, ':refId'=>$Content->id])->all();
-    	}
+    	} */
 
-    	$enc = new TrEnc(\Yii::$app->params['crypto'][0][0], \Yii::$app->params['crypto'][0][1]);
+/*     	$enc = new TrEnc(\Yii::$app->params['crypto'][0][0], \Yii::$app->params['crypto'][0][1]);
 		$params = array(
 				'ts' => time() + 3600,
 		);
@@ -326,22 +310,10 @@ class ContentController extends BaseController {
 		$query->andWhere(['refId'=>$Content->id]);
 		$arrOtherCategory = $query->all();
 		if(empty($arrOtherCategory))
-			$arrOtherCategory = [];
+			$arrOtherCategory = []; */
     	
         echo $this->render('edit', [
         								'Content'=> $Content,
-        								'arrMedia'=> $arrMedia, 
-        								'arrDocument'=> $arrDocument, 
-        								'arrRelate'=> $arrRelate, 
-						        		'arrFeed'=>$arrFeed,
-        								'canPublishNews' => $canPublishNews,
-        								'arrStatus' => $arrStatus,				
-						        		'hasComment'=> $hasComment, 
-						        		'hasGallery'=> $hasGallery, 
-						        		'hasVideo'=> $hasVideo, 
-						        		'contentRef'=> $contentRef,
-        								'previewKey' => $previewKey,
-        								'arrOtherCategory' => $arrOtherCategory
        						]);
     }
     

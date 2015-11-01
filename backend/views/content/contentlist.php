@@ -87,28 +87,23 @@ ActiveForm::begin(['id' => 'dataTable-form']);
                 </div>
                 <div class="portlet-body form-inline margin-bottom-40">
                     <!-- <form class="form-inline margin-bottom-40" id="dataTable-form" role="form"> -->
-<?php if(false):?>                    
-                        <div class="md-checkbox md-checkbox-inline has-success">
-                            <input type="checkbox" id="checkbox113" class="md-check">
-                            <label for="checkbox113">
-                                <span></span>
-                                <span class="check"></span>
-                                <span class="box"></span>
-                                ค้นข่าวเก่า </label>
-                        </div>
-<?php endif;?>                        
-                        <div class="form-group form-md-line-input has-success">
+					<?php if(false):?>                    
+					                     <div class="md-checkbox md-checkbox-inline has-success">
+					                          <input type="checkbox" id="checkbox113" class="md-check">
+					                     <label for="checkbox113">
+					                      <span></span>
+					                     <span class="check"></span>
+					                    <span class="box"></span>
+					                              	  ค้นข่าวเก่า </label>
+					                     </div>
+					<?php endif;?>                        
+                       <div class="form-group form-md-line-input has-success">
                         	<!--  <?php // echo Html::dropDownList('status', $status, [0=>'สถานะ'] + Workflow::$arrStatusTpbs, ['id'=> 'form_control_1', 'class'=> 'form-control'])?>  -->
                             <div class="form-control-focus">
                             </div>
                         </div>
-						<div class="form-group form-md-line-input has-success">
-                        <?php echo Html::dropDownList('contentType', $contentType, [0=>'ชนิดข่าว'] + Content::$arrTypeTpbs, ['id'=> 'contentType', 'class'=> 'form-control'])?>
-                            <div class="form-control-focus">
-                            </div>
-                        </div>
                         <div class="form-group form-md-line-input has-success">
-                       <!--   <?php // echo Html::dropDownList('categoryId', $categoryId, [0=>'หมวด'] + CategoryTree::getAllRootNode(), ['id'=> 'categoryId', 'class'=> 'form-control'])?> -->
+                       	<!--   <?php // echo Html::dropDownList('categoryId', $categoryId, [0=>'หมวด'] + CategoryTree::getAllRootNode(), ['id'=> 'categoryId', 'class'=> 'form-control'])?> -->
                             <div class="form-control-focus">
                             </div>
                         </div>
