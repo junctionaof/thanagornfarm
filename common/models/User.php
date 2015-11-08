@@ -245,9 +245,9 @@ class User extends ActiveRecord implements IdentityInterface
 	const position_journalist = 3;
 	
 	public static $arrPosition = array(
-			self::position_admin => 'Admin',
-			self::position_editor => 'Editor',
-			self::position_journalist => 'Content Creator',
+			self::position_admin => 'ผู้ดูแลระบบเว็บ',
+			self::position_editor => 'ผู้ดูแลฟาร์ม',
+			self::position_journalist => 'พนักงานกรอกข้อมูล',
 	);
 	
 	public static $arrStatus = array(

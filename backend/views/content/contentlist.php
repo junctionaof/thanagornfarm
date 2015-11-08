@@ -63,11 +63,11 @@ ActiveForm::begin(['id' => 'dataTable-form']);
 						<li>
 							<i class="fa fa-home"></i>
 							<a href="<?=$baseUrl?>/index.php">หน้าหลัก</a> 
-							<i class="fa fa-angle-right"></i>
+		
 						</li>
 						<li>
 						<i class="fa fa-file-text"></i>
-							<a href="<?=$baseUrl?>/paymentitem/list">รายการข่าวและค่าตอบแทน</a>
+							<a href="<?=$baseUrl?>/content/list">รายการบันทึกข้อมูลบ่อเลี้ยงกุ้ง</a>
 						</li>
 					</ul>
 					<!-- END PAGE TITLE & BREADCRUMB-->
@@ -75,69 +75,10 @@ ActiveForm::begin(['id' => 'dataTable-form']);
 			</div>
 <!-- END PAGE HEADER-->
 <div class="col-md-12">
-    <!-- BEGIN EXAMPLE TABLE PORTLET-->
-    <div class="row" id="filter-search" style="display: none;"> 
-        <div class="col-md-12">
-            <div class="portlet light bordered">
-                <div class="portlet-title">
-                    <div class="caption font-green-haze">
-                        <i class="icon-settings font-green-haze"></i>
-                        <span class="caption-subject bold uppercase"> ค้นหา</span>
-                    </div>
-                </div>
-                <div class="portlet-body form-inline margin-bottom-40">
-                    <!-- <form class="form-inline margin-bottom-40" id="dataTable-form" role="form"> -->
-					<?php if(false):?>                    
-					                     <div class="md-checkbox md-checkbox-inline has-success">
-					                          <input type="checkbox" id="checkbox113" class="md-check">
-					                     <label for="checkbox113">
-					                      <span></span>
-					                     <span class="check"></span>
-					                    <span class="box"></span>
-					                              	  ค้นข่าวเก่า </label>
-					                     </div>
-					<?php endif;?>                        
-                       <div class="form-group form-md-line-input has-success">
-                        	<!--  <?php // echo Html::dropDownList('status', $status, [0=>'สถานะ'] + Workflow::$arrStatusTpbs, ['id'=> 'form_control_1', 'class'=> 'form-control'])?>  -->
-                            <div class="form-control-focus">
-                            </div>
-                        </div>
-                        <div class="form-group form-md-line-input has-success">
-                       	<!--   <?php // echo Html::dropDownList('categoryId', $categoryId, [0=>'หมวด'] + CategoryTree::getAllRootNode(), ['id'=> 'categoryId', 'class'=> 'form-control'])?> -->
-                            <div class="form-control-focus">
-                            </div>
-                        </div>
-                        <div class="form-group form-md-line-input has-success">
-                        <?php echo Html::dropDownList('order', $order, [-1=>'เรียง'] + [0=>'---ทั้งหมด---', 'asc'=>'น้อยไปมาก', 'desc'=>'มากไปน้อย'], ['id'=> 'order', 'class'=> 'form-control'])?>
-                            <div class="form-control-focus">
-                            </div>
-                        </div>
-                        <div class="form-group form-md-line-input has-success">
-                        <?php echo Html::textInput('dateStart', '', array('class'=>'form-control form-control-inline  date-picker', 'placeholder'=> 'วันที่เริ่มต้น..'))?>
-                            <div class="form-control-focus">
-                            </div>
-                        </div>
-                        <div class="form-group form-md-line-input has-success">
-                        <?php echo Html::textInput('dateEnd', '', array('class'=>'form-control form-control-inline  date-picker', 'placeholder'=> 'วันที่สิ้นสุด..'))?>
-                            <div class="form-control-focus">
-                            </div>
-                        </div>
-                        <div class="form-group form-md-line-input has-success">
-                       		<?php echo Html::textInput('q', $q, ['id'=> 'q', 'class'=> 'form-control', 'placeholder'=> 'ค้นหา']);?>
-                            <div class="form-control-focus">
-                            </div>
-                        </div>
-                        <?= Html::hiddenInput('op','',['id'=>'op']);?>
-                        <?php echo Html::submitButton('ค้นหา', ['class'=>'btn btn-success'])?>
-
-                </div>
-            </div>                      
-        </div>
-    </div>
     <div class="portlet box grey-cascade">
         <div class="portlet-title">
             <div class="caption">
-                <i class="fa fa-table"></i>รายการ
+                <i class="fa fa-table"></i>รายการข้อมูลบ่อเลี้ยงกุ้ง
             </div>
             <div class="tools">
                 <a href="javascript:;" class="collapse">
@@ -150,14 +91,11 @@ ActiveForm::begin(['id' => 'dataTable-form']);
                     <div class="col-md-6">
                         <div class="portlet-title">
                                 <div class="actions">
-                                    <a class="btn btn-circle btn-icon-only search" id="filter-bnt" href="javascript:;" title="ค้นหาขั้นสูง">
-                                        <i class="icon-magnifier"></i>
+                                 	<a class="btn  add" href="<?= Url::toRoute(['content/edit'])?>" title="เพิ่ม">
+                                        <i class="icon-plus"> เพิ่มรุ่นในบ่อเลี้ยง</i>
                                     </a>
-                                    <a class="btn btn-circle btn-icon-only add" href="<?= Url::toRoute(['content/edit'])?>" title="เพิ่ม">
-                                        <i class="icon-plus"></i>
-                                    </a>
-                                    <a class="btn btn-circle btn-icon-only listall" href="javascript:;" title="ดูทั้งหมด">
-                                        <i class="icon-list"></i>
+                                    <a class="btn  listall" href="<?= Url::toRoute(['content/typelist'])?>" title="เพิ่ม">
+                                        <i class="icon-plus"> จัดการบ่อเลี้ยงกุ้ง</i>
                                     </a>
                                 </div>
                         </div>
@@ -188,28 +126,28 @@ ActiveForm::begin(['id' => 'dataTable-form']);
                             <input type="checkbox" class="group-checkable" data-set=".table-list .checkboxes"/>
                         </th>
                         <th>
-                            รหัส
+                     		   บ่อที่ 
                         </th>
                         <th>
-                            หัวเรื่อง
+                 		             รุ่นที่
                         </th>
                         <th>
-                            ประเภท
+                    		 วัน/เดือน/ปี
                         </th>
                         <th>
-                            หมวดเนื้อหา
+                          	  จำนวนลูกกุ้ง
                         </th>
                         <th>
-                            สถานะ
+                          	ชนิดลูกกุ้ง
                         </th>
                         <th>
-                            ยอดคนดู
+                           	บริษัทฟาร์มลูกถ้ง
                         </th>
                         <th>
-                            แก้ไขล่าสุด
+                                                                          แก้ไขล่าสุด
                         </th>
                         <th>
-                            ผู้แก้ไข
+                                                                         ผู้แก้ไข
                         </th>
                     </tr>
                 </thead>

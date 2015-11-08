@@ -73,13 +73,13 @@ $this->registerCss($css);
 <?php ActiveForm::begin(['id' => 'dataTable-form'])?>
 <div class="portlet box grey">
 	<div class="portlet-title">
-		<div class="caption"><i class="fa fa-reorder"></i>ผู้ใช้งานระบบ</div>
+		<div class="caption"><i class="fa fa-reorder"></i>รายชื่อพนักงานทั้งหมด</div>
 		<div class="actions">
-			<a href="javascript:;" class="btn search" data-toggle="collapse" data-target="#datatable-toolbar"><i class="fa fa-search"></i> ค้นหา</a> 
+			<a href="javascript:;" class="btn search" data-toggle="collapse" data-target="#datatable-toolbar"><i class="fa fa-search"></i> ค้นหาพนักงาน</a> 
 			
 			<a href="<?= Url::toRoute(['add'])?>"
-						class="btn add"><i class="fa fa-pencil"></i> เพิ่มข้อมูล </a>
-			<a href="<?= Url::toRoute(['list'])?>" class="btn listall"><i class="fa fa-filter"> ดูทั้งหมด</i></a>
+						class="btn add"><i class="fa fa-pencil"></i> เพิ่มข้อมูลพนักงาน </a>
+			<a href="<?= Url::toRoute(['list'])?>" class="btn listall"><i class="fa fa-filter"> ดูข้อมูลทั้งหมด</i></a>
 			<div class="btn-group">
 				<a class="btn action" href="javascript:;" data-toggle="dropdown"> 
 					<i class="fa fa-cogs"></i> รายการที่เลือก
@@ -116,10 +116,10 @@ $this->registerCss($css);
 				<thead>
 					<tr>
 						<th class="text-center">#</th>
-						<th class="text-center">ชื่อผู้ใช้</th>
-						<th class="text-center">ชื่อ</th>
-						<th class="text-center">นามสกุล</th>
-						<th class="text-center">สิทธิ์การใช้งานระบบ</th>
+						<th class="text-center">ชื่อที่ใช้เข้าสู่ระบบ</th>
+						<th class="text-center">ชื่อพนักงาน</th>
+						<th class="text-center">นามสกุลพนักงาน</th>
+						<th class="text-center">ตำแหน่ง</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -129,30 +129,7 @@ $this->registerCss($css);
 						<td><a href="<?= Url::toRoute(['edit'])?>?id=<?=$lst['id'] ?>"><?php echo $lst['username']?></a></td>
 						<td><?php echo $lst['firstName']?></td>
 						<td><?php echo $lst['lastName']?></td>
-						<td><?php
-						$permission = User::getPeremission($lst['username']);
-						if(isset($permission->itemname)){
-							switch ($permission->itemname){
-								
-								case "tpbs.role.admin":
-									$authname = 'Admin';
-									break;
-								case "tpbs.role.editor":
-									$authname = 'Editor';
-									break;
-								case "tpbs.role.journalist":
-									$authname = 'Content Creator';
-									break;
-								default :
-									$authname = 'Author';
-									break;
-							}
-						}else{ $authname = "ไม่ได้ระบุ สิทธิ์ " ;}
-						?>
-						<div class="display-text text-right">
-						<a href="#" class="btn blue editauthen"><?php echo $authname ?> <i class="fa fa-edit"></i></a>
-						</div>						
-						</td>						
+						<td><?php echo User::$arrPosition[$lst['position']];?></td>						
 					</tr>
 					<?php endforeach;?>
 				</tbody>

@@ -42,21 +42,11 @@ class SideBar extends Widget {
 						'rule'  => 'tpbs.oil',
 						'url'   => $baseUrl.'/web/2',
 				),
-				
 				array(
-		
-						'name'  => 'จัดการระบบ',
-						'icon'  => 'fa-list-alt',
-						'rule'  => 'tpbs.admin',
-						'sub'   => array(
-		
-								array(
-										'name'  => 'จัดการผู้ใช้งานระบบ',
-										'url'   => $baseUrl.'/user/list',
-										'icon'  => 'fa-user',
-										'rule'  => 'tpbs.admin.user'
-								),
-						)
+						'name'  => 'จัดการพนักงาน',
+						'url'   => $baseUrl.'/user/list',
+						'icon'  => 'fa-user',
+						'rule'  => 'tpbs.admin.user'
 				),
 		);
 		echo $this->render('sideBar',[

@@ -21,21 +21,6 @@ return [
             'identityClass' => 'common\models\User',
             'enableAutoLogin' => true,
         ],
-        'log' => [
-            'traceLevel' => 0,//YII_DEBUG ? 3 : 0,
-            'targets' => [
-                [
-                    'class' => 'yii\log\FileTarget',
-                    'levels' => ['error', 'warning', 'info'],
-                ],
-            	/* [
-            		'class' => 'yii\mongodb\log\MongoDbTarget',
-            		'levels' => ['info'],
-            		'categories'=>['audit.*'],
-            		'logVars' => [],
-            	], */
-            ],
-        ],
 	        'errorHandler' => [
 	        'errorAction' => 'site/error',
         ],

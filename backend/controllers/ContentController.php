@@ -7,6 +7,7 @@ use yii\web\Controller;
 use yii\data\Pagination;
 
 use common\models\Content;
+use common\models\Typelist;
 use common\models\ContentRef;
 use common\models\Media;
 use app\CategoryTree;
@@ -25,6 +26,7 @@ use app\TrEnc;
 use app\CmsTextUtil;
 use common\models\OtherCategory;
 use yii\base\Object;
+use backend\components\UiMessage;
 
 /**
  * Test controller
@@ -34,6 +36,173 @@ class ContentController extends BaseController {
     public function actionIndex() {
         echo $this->render('index');
     }
+    public function actionTypelist() {
+    	
+    		$currentTs =time();
+    		$request = Yii::$app->request;
+    		$identity = \Yii::$app->user->getIdentity();
+    	
+    		$searchCategory = $request->post('type', $request->get('type', ''));
+    		$searchStatus = $request->post('status', $request->get('status', ''));
+    		$q = trim($request->post('q', $request->get('q', '')));
+    	
+    		$query = Typelist::find();
+    		$query->orderBy(['id'=>SORT_ASC]);
+    	
+    		if ($searchCategory)
+    			$query->andWhere('type = :type',[':type' => $searchCategory]);
+    			
+    	
+    		if ($searchStatus)
+    			$query->andWhere('status = :status',[':status' => $searchStatus]);
+    			
+    		if ($q)
+    			$query->andWhere(['LIKE' ,'name','%'.$q.'%', false]);
+    	
+    	
+    		//actions
+    		switch ($request->post('op')){
+    			case 'publish':
+    				var_dump($model);exit;
+    				$model->status = Workflow::STATUS_PUBLISHED;
+    				$model->save();
+    				break;
+    			case 'unpublish':
+    				$model->status = Workflow::STATUS_REJECTED;
+    				$model->save();
+    				break;
+    			case 'delete':
+    				$this->doDelete();
+    				break;
+    		}
+    	
+    		//paging
+    		$pagination = new Pagination([
+    				'defaultPageSize' => \Yii::$app->params['ui']['defaultPageSize'],
+    				'totalCount' => $query->count(),
+    		]);
+    		$pagination->params = ['status'=>$searchStatus,
+    				'categoryId'=>$searchCategory,
+    				'q'=>$q,
+    				'page'=>$pagination->page,
+    		];
+    		$query->offset($pagination->offset);
+    		$query->limit($pagination->limit);
+    	
+    		$list = $query->all();
+    	
+    		//get users
+    		$arrId = [];
+    		$arrUser = [];
+    		if (!empty($list)){
+    			foreach ($list as $obj){
+    				$arrId[] = $obj->createBy;
+    			}
+    			$modelsUser = User::find()->where(['id'=>$arrId])->all();
+    			if(!empty($modelsUser)){
+    				foreach ($modelsUser as $obj){
+    					$arrUser[$obj->id] = $obj->firstName.' '.$obj->lastName;
+    				}
+    			}
+    		}
+    			
+    		echo $this->render('typelist', [
+    				'lst' => $list,
+    				'pagination' => $pagination,
+    				'arrUser' =>$arrUser,
+    				'q'=>$q,
+    		]);
+    }
+    
+    public function actionEdittype()
+    {
+    	$currentTs = time();
+    	$identity = \Yii::$app->user->getIdentity();
+    	$request = \Yii::$app->request;
+    	$id = $request->get('id', $request->post('id', null));
+    	$query = Typelist::find();
+    	if ($id){
+    		$query->where("id=".$id);
+    		$model = $query->one();
+    
+    
+    	}else{
+    		$model = new Typelist();
+    		$model->createTime = date('Y-m-d H:i:s', $currentTs);
+    		$model->createBy = $identity->id;
+    	}
+    
+    	if($request->isPost){
+    		$model->name = $_POST['Typelist']['name'];
+    		$model->size =$_POST['Typelist']['size'];
+    
+    		if (trim($model->name) == ''){
+    			$model->addError('name', 'ไม่ได้กรอกชื่อบ่อ');
+    		}
+
+    		if (trim($model->size) == ''){
+    			$model->addError('size', 'ไม่ได้กรอกขนาดบ่อ');
+    		}
+    
+    		if (!$model->hasErrors()) {
+    			$model->save();
+    			//UiMessage::setMessage('บันทึกข้อมูลเรียบร้อยแล้ว');
+    			return $this->redirect('typelist');
+    		}
+    		else {
+    			$modelError = '';
+    			$errors = $model->getErrors(null);
+    			if (is_array($errors)) {
+    				foreach($errors as $field => $fieldError) {
+    					$modelError .= "\n$field: " . join(', ', $fieldError);
+    				}
+    			}
+    			UiMessage::setMessage('การบันทึกข้อมูลผิดพลาด:' . $modelError, 'warning');
+    		}
+    
+    	}
+    
+    	echo $this->render('edittype', [
+    			'model' => $model,
+    	]);
+    }
+    
+    private function doDeleteType() {
+    
+    	$currentTs =time();
+    	$identity = \Yii::$app->user->getIdentity();
+    
+    	$arrIds = \Yii::$app->request->post('ids');
+    	if (is_array($arrIds) && !empty($arrIds)) {
+    		$query = Phonebook::find();
+    		$query->where(["id"=> $arrIds]);
+    		$lst = $query->all();
+    
+    		$deleted = 0;
+    
+    		if($lst){
+    			foreach ($lst as $Object){
+    				$Object->status = Workflow::STATUS_REJECTED;
+    				if($Object->save()){
+    					Yii::info(json_encode(array(
+    							'id'=>$Object->id,
+    							'userId'=>$identity->id,
+    							'status'=>$Object->status,
+    							'ts' => $currentTs,
+    					)), 'audit.faq.update.'.$Object->id);
+    					$deleted = $deleted + 1;
+    				}
+    			}
+    		}
+    		if ($deleted > 0) {
+    			UiMessage::setMessage("ลบข้อมูลจำนวน $deleted รายการ", 'success');
+    		}
+    		else {
+    			UiMessage::setMessage('ไม่มีข้อมูลถูกลบ');
+    		}
+    	}
+    }
+    
     public function actionList() {
     	
     	$canPublishNews = Yii::$app->user->can('tpbs.content.approve');

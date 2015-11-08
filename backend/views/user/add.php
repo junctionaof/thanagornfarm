@@ -70,7 +70,7 @@ padding:10px;
 	
 	<div class="portlet box grey">
 						<div class="portlet-title">
-							<div class="caption"><i class="fa fa-reorder"></i>เพิ่มข้อมูลผู้ใช้งาน</div>
+							<div class="caption"><i class="fa fa-reorder"></i>เพิ่มข้อมูลพนักงาน</div>
 							<div class="tools">
 								<a href="javascript:;" class="collapse"></a>
 								<a href="#portlet-config" data-toggle="modal" class="config"></a>
@@ -79,13 +79,13 @@ padding:10px;
 						<div class="portlet-body">
 							<div class="tabbable-custom ">
 								<ul class="nav nav-tabs ">
-									<li class="active"><a href="#tab_5_1" data-toggle="tab">ข้อมูลผู้ใช้งาน</a></li>
+									<li class="active"><a href="#tab_5_1" data-toggle="tab">ข้อมูลส่วนตัวพนักงาน</a></li>
 								</ul>
 								<div class="tab-content">
 											<div class="row">
 											<div class="col-md-5 col-md-offset-1">
 												<div class="form-group">
-													<label class="control-label col-md-3"><span class="required"> * </span>ชื่อผู้ใช้งาน : </label>
+													<label class="control-label col-md-3"><span class="required"> * </span>ชื่อ : </label>
 													<div class="col-md-9">
 														<?= Html::activeInput('text', $model, 'firstName', ['id'=>'firstName','class' => 'form-control', 'required'=>'required' , 'placeholder' => 'กรอกชื่อผู้ใช้งาน..'])?>
 													</div>
@@ -118,19 +118,19 @@ padding:10px;
 											<div class="col-md-5">
 
 												<div class="form-group">
-													<label class="control-label col-md-3"><span class="required"> * </span>สิทธิ์: </label>
+													<label class="control-label col-md-3"><span class="required"> * </span>ตำแหน่ง: </label>
 													<div class="col-md-9">
 														<?= HTML::dropDownList('type',$model['type'], User::$arrPosition, ['id'=>'type','class' => 'form-control select2me','required'=>'required'])?>	
 													</div>
 												</div>
 												<div class="form-group">
-													<label class="control-label col-md-3"><span class="required"> * </span>UserName:</label>
+													<label class="control-label col-md-3"><span class="required"> * </span>ชื่อที่ใช้เข้าสู่ระบบ:</label>
 													<div class="col-md-9">
 														<?= Html::activeInput('text', $model, 'username', ['id'=>'username','class' => 'form-control', 'required'=>'required', 'placeholder' => 'Username...'])?>
 													</div>
 												</div>
 												<div class="form-group">
-													<label class="control-label col-md-3"><span class="required"> * </span>Password:</label>
+													<label class="control-label col-md-3"><span class="required"> * </span>รหัสผ่าน:</label>
 													<div class="col-md-9">
 														<?= Html::passwordInput('password', '', ['class'=>'form-control', 'required'=>'required', 'placeholder'=>'กรุณากรอกรหัสผ่านใหม่'])?>
 														</div>

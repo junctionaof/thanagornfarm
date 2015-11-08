@@ -18,6 +18,7 @@ class ComponentAsset extends AssetBundle
     ];
     public $js = [
         /* Component script */
+    	'global/plugins/bootstrap/js/bootstrap.min.js',
         'global/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js',
         'global/plugins/bootstrap-timepicker/js/bootstrap-timepicker.min.js',
         'global/plugins/clockface/js/clockface.js',
