@@ -21,6 +21,7 @@ use backend\components\OtherHighlight;
 use backend\components\MediaListTab;
 use app\Entity;
 use backend\components\DocumentListTab;
+use common\models\Typelist;
 
 
 $contentDate = "";
@@ -67,9 +68,8 @@ $this->registerJsFile($baseUrl  . '/assets/scripts/relatedContent.js', ['positio
             <div class="caption">
                 <i class="fa fa-gift"></i>ระบบบันทึกข้อมูลการเลี้ยงกุ้ง
             </div>
-            <div class="tools">
-                <a href="javascript:;" class="collapse" data-original-title="" title="">
-                </a>
+            <div class="actions">
+               <a href="<?php echo Url::toRoute('content/list') ?>" class="btn red" > <i class="fa fa-toggle-left"></i> กลับสู่หน้า ข้อมูลทั้งหมด </a>
             </div>
         </div>
         <div class="portlet-body">
@@ -80,7 +80,7 @@ $this->registerJsFile($baseUrl  . '/assets/scripts/relatedContent.js', ['positio
             <div class="tabbable tabbable-tabdrop">
                 <ul class="nav nav-pills">
                     <li class="active">
-                        <a href="#tab11" data-toggle="tab" aria-expanded="true">ข้อมูลทั่วไป</a>
+                        <a href="#tab11" data-toggle="tab" aria-expanded="true">ข้อมูลบ่อ และรุ่น</a>
                     </li>
                     <li class="">
                         <a href="#tab12" data-toggle="tab" <?php echo $Content->id?'href="#tab12" data-toggle="tab"':'href="javascript:;" ';?> aria-expanded="false">บันทึกการกินอาหาร</a>
@@ -110,34 +110,20 @@ $this->registerJsFile($baseUrl  . '/assets/scripts/relatedContent.js', ['positio
                                         <div class="portlet-body form">
                                             <div class="form-body">
                                                 <div class="form-group">
-                                                    <?php echo Html::activeInput('text', $Content, 'title', ['id'=>'title','class' => 'form-control','require', 'maxlength'=>140,'placeholder' => 'กรอกหัวข้อข่าว..','title' => 'กรอกหัวข้อข่าว..']);?>
+                                                	<label class="control-label">กรอกชื่อรุ่น</label>
+                                                    <?php echo Html::activeInput('text', $Content, 'title', ['id'=>'title','class' => 'form-control','require', 'maxlength'=>140,'placeholder' => 'กรอกชื่อรุ่น..','title' => 'ชื่อรุ่น ..']);?>
                                                     <span class="help-block pull-right" id="title-available-char"></span>
                                                     <span class="help-block">
                                                         Maxlength is 140 chars. </span>
                                                 </div>
                                                 <div class="form-group">
-                                                    <label class="control-label">โปรยข่าว</label>
-                                                    <?php echo Html::activeTextarea($Content, 'abstract', ['id'=>'abstract','class' => 'form-control', 'maxlength'=>255,'placeholder' => 'กรอกโปรยข่าว','title' => 'กรอกโปรยข่าว'])?>
-                                                </div>
+													<label class="control-label">เลือกบ่อ</label>
+													<?= Html::dropDownList('type', ' ', $arrTypelist , ['id'=>'type','class' => 'form-control input-medium'])?>	
+												</div>
                                                 <div class="form-group">
-                                                    <label class="control-label">เนื้อหา</label>
+                                                    <label class="control-label">คำอธิบาย ข้อมูลอื่นๆ ของรุ่นนี้</label>
                                                     <?php echo Html::activeTextarea($Content, 'content', ['id'=>'content_textarea','class' => 'form-control', 'rows'=>'20', 'style'=>'font-size:14px;'])?>
-                                                </div>
-                                                <div class="form-group">
-						                            <label class="control-label col-md-3">Tags
-						                                <span class="required">*</span>
-						                            </label>
-                                                                            <?php 
-                                                                            ?>
-						                            <?php // echo Html::hiddenInput('tags', $Content->getTags(), array( 'id' => 'tag_cloud', 'class' => 'form-control select2')) ?>
-						                            <label>Tags - คำสำคัญของอัลบัม เพื่อช่วยเหลือในการค้นหาได้ดียิ่งขึ้น**ให้คั่นแต่ละคำโดยการกดปุ่ม Enter</label>
-						                        </div>
-						                        
-						                        <div class="form-group">
-                                                    <label class="control-label">Editorial Comment - หมายเหตุการแก้ไข</label>
-                                                    <?php echo Html::activeTextarea($Content, 'comment', ['id'=>'comment','class' => 'form-control', 'rows'=>'3', 'placeholder' => 'หมายเหตุการแก้ไข','title' => 'หมายเหตุการแก้ไข'])?>
-                                                </div>
-						                                                                    
+                                                </div>                                            
                                             </div>
                                         </div>
                                     </div>
@@ -146,7 +132,7 @@ $this->registerJsFile($baseUrl  . '/assets/scripts/relatedContent.js', ['positio
                                     <div class="portlet box blue-hoki">
                                         <div class="portlet-title">
                                             <div class="caption">
-                                                <i class="fa fa-gift"></i>ตั้งค่า
+                                                <i class="fa fa-gift"></i>ข้อมูลลูกกุ้ง
                                             </div>
                                             
                                             <div class="actions">					
@@ -162,86 +148,44 @@ $this->registerJsFile($baseUrl  . '/assets/scripts/relatedContent.js', ['positio
                                         <div class="portlet-body form">
 
                                             <div class="form-body">
-                                                <h3 class="form-section">หมวดหมู่ของเนื้อหา</h3>
+                                                <h3 class="form-section">ข้อมูล ลูกกุ้งที่ปล่อยลงในบ่อ</h3>
                                                 <div class="form-group">
-                                                    <label class="control-label">ชนิดของเนื้อหา</label>
+                                                    <label class="control-label">ชนิดของลูกกุ้ง</label>
                                                    <?php // echo Html::activeDropDownList($Content, 'type', Content::$arrTypeTpbs, ['class'=>'form-control select2me', 'data-placeholder'=>'Select...'])?>
                                                 </div>
                                                 <div class="form-group">
-                                                	<label class="control-label">หมวดหมู่</label>
+                                                	<label class="control-label">ราคาของลูกกุ้ง</label>
                                                     <?php // echo Html::dropDownList('categoryId', $Content->categoryId, [0=>'เลือกหมวดหมู่'] + CategoryTree::getAllRootNode(), ['id'=> 'categoryId', 'class'=> 'form-control select2me'])?>
                                                 </div>
                                                 <div class="form-group">
-                                                    <label class="control-label">TPBSFocus</label>
+                                                    <label class="control-label">บริษัท / ฟาร์ม ที่รับมา</label>
                                                    <?php // echo Html::activeDropDownList($Content, 'tpbsId', [0=> 'เลือกหัวข้อ'] + $arrFeed, ['class'=>'form-control select2me', 'data-placeholder'=>'Select...'])?>
                                                 </div>
                                             </div>
                                             
                                             <div class="form-body">
-                                                <h3 class="form-section">เผยแพร่</h3>
+                                                <h3 class="form-section">วันที่ ปล่อยลงบ่อ</h3>
                                                 <div class="form-group">
 													<label class="control-label">Credit :</label>
 													<?php // echo Html::activeTextInput($Content,'credit',array('class'=>'form-control medium'))?>
 												</div>
                                                 <div class="form-group">
-                                                    <label class="control-label">สถานะการแสดง</label>
+                                                    <label class="control-label">สถานะ</label>
                                             <?php // if(!$canPublishNews && ($Content->status == Workflow::STATUS_PUBLISHED)):?>
                                             		<p><?php // echo Workflow::$arrStatusTpbs[$Content->status]?></p>
                                             <?php // else :?>
                                             	<?php // echo Html::activeDropDownList($Content, 'status', $arrStatus, ['class'=>'form-control select2me', 'data-placeholder'=>'Select...'])?>
                                             <?php // endif;?>
                                                 </div>
-                                                
-                                                <div class="form-group">
-                                                
-                                                <label class="control-label">Option</label>
-                                                <div class="row">
-                                                	
-													<div class="col-md-1">
-														<?php // echo Html::checkbox('hasVideo',  $hasVideo, ['class'=> 'pull-right'])?>
-													</div>
-													<div class="col-md-4">
-														<label>มีวีดีโอ</label>
-													</div>
-													<div class="col-md-1">
-														<?php // echo Html::checkbox('hasGallery', $hasGallery, ['class'=> 'pull-right'])?>														
-													</div>
-													<div class="col-md-4">
-														<label>มีอัลบั้ม</label>
-													</div>
-												</div>
-												<div class="row">
-													<div class="col-md-1">
-														<?php // echo Html::checkbox('hasComment',  $hasComment, ['class'=> 'pull-right'])?>
-													</div>
-													<div class="col-md-4">
-														<label >comment</label>
-													</div>
-												</div>
-												</div>
-						
                                                 <div class="form-group">
 	                                                <p class="news-calendar">
-														<i class="fa fa-calendar"></i> กำหนดเวลาแสดงข่าว
+														<i class="fa fa-calendar"></i> กำหนดจับกุ้ง
 													</p>
 													<label class="control-label">วันที่</label>
 													<?php echo Html::textInput('content_date', $contentDate, array('class'=>'form-control form-control-inline  date-picker'))?>
                                                 	<label class="control-label">เวลา</label>
                                                 	<?php echo Html::textInput('content_time', $contentTime, array('class'=>'form-control timepicker-24'))?>
                                                 </div>
-                                                
-                                                <div class="form-group">
-	                                                <p class="news-calendar">
-														<i class="fa fa-calendar"></i> เวลายกเลิกแสดงข่าว
-													</p>
-													<label class="control-label">วันที่</label>
-													<?php // echo Html::textInput('expire_date', $expireDate, array('class'=>'form-control form-control-inline  date-picker'))?>
-                                                	<label class="control-label">เวลา</label>
-                                                	<?php // echo Html::textInput('expire_time', $expireTime, array('class'=>'form-control'))?>
-                                                </div>
-                                                
-                                                
-                                                
                                             </div>
                                         </div>
                                     </div>
@@ -253,7 +197,7 @@ $this->registerJsFile($baseUrl  . '/assets/scripts/relatedContent.js', ['positio
                                             <div class="form-actions top">
                                                 <div class="btn-set pull-right">
                                                     <button type="submit" class="btn green">บันทึก</button>
-                                                    <button type="button" class="btn red">ยกเลิก</button>
+                                                    <a href="<?php echo Url::toRoute('content/list') ?>" class="btn" >ยกเลิก </a>
                                                 </div>
                                             </div>
                                         </div>

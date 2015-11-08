@@ -324,6 +324,8 @@ class ContentController extends BaseController {
 			}
 		}
 		
+		
+		
         echo $this->render(
         			'contentlist', 
         			[
@@ -481,8 +483,18 @@ class ContentController extends BaseController {
 		if(empty($arrOtherCategory))
 			$arrOtherCategory = []; */
     	
+		$query = Typelist::find();
+		$query->orderBy(['id'=>SORT_ASC]);
+		$objTypelist = $query->all();
+		$arrTypelist = [];
+		foreach ($objTypelist as $dataTypelist){
+			$arrTypelist[] = $dataTypelist->name;
+		}
+		
+		
         echo $this->render('edit', [
         								'Content'=> $Content,
+        								'arrTypelist'=>$arrTypelist,
        						]);
     }
     
