@@ -1,5 +1,5 @@
 <?php 
-    use backend\assets\TpbsAsset;
+    use backend\assets\ThanagornAsset;
     use yii\helpers\Url;
     use yii\helpers\Html;
     use yii\bootstrap\Nav;
@@ -13,7 +13,7 @@
     use backend\components\Message;
     
     $baseUrl = \Yii::getAlias('@web');
-    TpbsAsset::register($this);
+    ThanagornAsset::register($this);
 ?>
 <?php $this->beginPage() ?>
 <!DOCTYPE html>
