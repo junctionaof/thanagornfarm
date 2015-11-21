@@ -17,8 +17,8 @@ use common\models\AuthItem;
 class WeatherController extends BaseController{
 	
 	public function init() {
-		parent::init();
-		$this->layout = 'layoutstyle';
+		//parent::init();
+	//	$this->layout = 'layoutstyle';
 	}
 	
 
