@@ -52,29 +52,6 @@ $this->registerJs($str, View::POS_LOAD, 'form-js');
 
 ActiveForm::begin(['id' => 'dataTable-form']);
 ?>
-<!-- BEGIN PAGE HEADER-->
-			<div class="row">
-				<div class="col-md-12">
-					<!-- BEGIN PAGE TITLE & BREADCRUMB-->
-					<h3 class="page-title">
-						SHRIMP <strong> RECORD </strong> SYSTEM 
-					</h3>
-					<ul class="page-breadcrumb breadcrumb">
-						<li>
-							<i class="fa fa-home"></i>
-							<a href="<?=$baseUrl?>/index.php">หน้าหลัก</a> 
-		
-						</li>
-						<li>
-						<i class="fa fa-file-text"></i>
-							<a href="<?=$baseUrl?>/content/list">รายการบันทึกข้อมูลบ่อเลี้ยงกุ้ง</a>
-						</li>
-					</ul>
-					<!-- END PAGE TITLE & BREADCRUMB-->
-				</div>
-			</div>
-<!-- END PAGE HEADER-->
-<div class="col-md-12">
     <div class="portlet box grey-cascade">
         <div class="portlet-title">
             <div class="caption">
@@ -240,7 +217,7 @@ ActiveForm::begin(['id' => 'dataTable-form']);
         </div>
     </div>
     <!-- END EXAMPLE TABLE PORTLET-->
-</div>
+
 
 <?php ActiveForm::end() ?>
 <script>

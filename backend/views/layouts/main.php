@@ -50,14 +50,23 @@ AppAsset::register($this);
             ]);
             NavBar::end(); */
         ?>
-
+    <div class="row">
+	<div class="col-ms-12">
         <div class="container">
         <?php echo Breadcrumbs::widget([
             'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
         ]) ?>
+        </div>
+      </div>
+      </div>
+       <div class="row">
+		<div class="col-md-12">
+		<div class="page-content">
         <?php echo $content ; ?>
         </div>
-    </div>
+        </div>
+        </div>
+  
 
     <footer class="footer">
         <div class="container">

@@ -17,133 +17,59 @@
 ?>
 <?php $this->beginPage() ?>
 <!DOCTYPE html>
-<!-- 
-Template Name: Metronic - Responsive Admin Dashboard Template build with Twitter Bootstrap 3.3.4
-Version: 4.0.2
-Author: KeenThemes
-Website: http://www.keenthemes.com/
-Contact: support@keenthemes.com
-Follow: www.twitter.com/keenthemes
-Like: www.facebook.com/keenthemes
-Purchase: http://themeforest.net/item/metronic-responsive-admin-dashboard-template/4021469?ref=keenthemes
-License: You must have a valid license purchased only from themeforest(the above link) in order to legally use the theme for your project.
--->
 <!--[if IE 8]> <html lang="en" class="ie8 no-js"> <![endif]-->
 <!--[if IE 9]> <html lang="en" class="ie9 no-js"> <![endif]-->
 <!--[if !IE]><!-->
-<html>
-<!--<![endif]-->
-<!-- BEGIN HEAD -->
-<head>
-<meta charset="utf-8"/>
-<title><?php echo Html::encode($this->title); ?></title>
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<meta http-equiv="Content-type" content="text/html; charset=utf-8">
-<meta content="" name="description"/>
-<meta content="" name="author"/>
-<?php $this->head(); ?>
-<script src="<?php echo $baseUrl ?>/assets/global/scripts/app.js"></script>
-	<script>
-		jQuery(document).ready(function() {
-		   App.init();
-		   App.baseUri = '<?php echo $baseUrl?>/';
-		});
-	</script>
-	
-<?php        
-$baseUrlHttp = Url::home('http');;
-$str = <<<EOT
-    if (jQuery().datepicker) {
-        $('.date-picker').datepicker({
-            format: 'yyyy-mm-dd',
-            autoclose: true
-        });
-        $('body').removeClass("modal-open"); // fix bug when inline picker is used in modal
-    }
-    if (jQuery().timepicker) {
-        $('.timepicker-default').timepicker({
-            autoclose: true
-        });
-        $('.timepicker-24').timepicker({
-            autoclose: true,
-            minuteStep: 1,
-            showSeconds: true,
-            showMeridian: false
-        });
-    }    
-
-    Metronic.init(); // init metronic core components
-    Metronic.setBaseUrl('$baseUrlHttp');
-    Layout.init(); // init current layout
-    QuickSidebar.init(); // init quick sidebar
-    Demo.init(); // init demo features
-   
-   
-    TableManaged.init();
-    //FormComponents.init();
-    ComponentsDropdowns.init();
-    ComponentsFormTools.init();
-    ComponentsPickers.init(); 
-        
-EOT;
-
-$this->registerJs($str, \yii\web\View::POS_READY, 'start-js');
-?>
-<link href="http://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700&subset=all" rel="stylesheet" type="text/css"/>
-
-
-<link rel="shortcut icon" href="favicon.ico"/>
-</head>
+<html lang="en">
+    <!--<![endif]-->
+    <!-- BEGIN HEAD -->	
+	<head>
+	 	<title>Thanagorn Farm</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta content="width=device-width, initial-scale=1" name="viewport" />
+        <meta content="" name="description" />
+        <meta content="" name="author" />
+        <!-- BEGIN GLOBAL MANDATORY STYLES -->
+        <link href="http://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700&subset=all" rel="stylesheet" type="text/css" />
+		<?php $this->head(); ?>
+		<link rel="shortcut icon" href="favicon.ico"/>
+	</head>
 <!-- END HEAD -->
-<!-- BEGIN BODY -->
-<!-- DOC: Apply "page-header-fixed-mobile" and "page-footer-fixed-mobile" class to body element to force fixed header or footer in mobile devices -->
-<!-- DOC: Apply "page-sidebar-closed" class to the body and "page-sidebar-menu-closed" class to the sidebar menu element to hide the sidebar by default -->
-<!-- DOC: Apply "page-sidebar-hide" class to the body to make the sidebar completely hidden on toggle -->
-<!-- DOC: Apply "page-sidebar-closed-hide-logo" class to the body element to make the logo hidden on sidebar toggle -->
-<!-- DOC: Apply "page-sidebar-hide" class to body element to completely hide the sidebar on sidebar toggle -->
-<!-- DOC: Apply "page-sidebar-fixed" class to have fixed sidebar -->
-<!-- DOC: Apply "page-footer-fixed" class to the body element to have fixed footer -->
-<!-- DOC: Apply "page-sidebar-reversed" class to put the sidebar on the right side -->
-<!-- DOC: Apply "page-full-width" class to the body element to have full width page without the sidebar menu -->
-<body class="page-md page-header-fixed page-quick-sidebar-over-content ">
+
+<body class="page-container-bg-solid page-header-fixed page-sidebar-closed-hide-logo">
 <?php $this->beginBody() ?>
+<!-- BEGIN HEADER -->
 <?= TopMenu::widget() ?>
-<div class="clearfix">
-</div>
+<!-- END HEADER -->
+ <div class="clearfix"> </div>
+ 
 <!-- BEGIN CONTAINER -->
-<div class="page-container">
+ <div class="page-container">
+    <!-- BEGIN SIDEBAR -->
 	<?= SideBar::widget() ?>
+ 	<!-- END SIDEBAR -->
+	
 	<!-- BEGIN CONTENT -->
 	<div class="page-content-wrapper">
+		<!-- BEGIN CONTENT BODY -->
 		<div class="page-content">
-			<!-- BEGIN SAMPLE PORTLET CONFIGURATION MODAL FORM-->
-			<div class="modal fade" id="portlet-config" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-				<div class="modal-dialog">
-					<div class="modal-content">
-						<div class="modal-header">
-							<button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
-							<h4 class="modal-title">Modal title</h4>
-						</div>
-						<div class="modal-body">
-							 Widget settings form goes here
-						</div>
-						<div class="modal-footer">
-							<button type="button" class="btn blue">Save changes</button>
-							<button type="button" class="btn default" data-dismiss="modal">Close</button>
-						</div>
-					</div>
-					<!-- /.modal-content -->
-				</div>
-				<!-- /.modal-dialog -->
-			</div>
+			<!-- BEGIN PAGE HEAD-->
+			<div class="page-head">
+                 <!-- BEGIN PAGE TITLE -->
+                 <div class="page-title">
+					<!-- BEGIN PAGE TITLE & BREADCRUMB-->
+					<h1>
+							SHRIMP <strong> RECORD </strong> SYSTEM 
+					</h1>
+                  </div>
+            </div>
+            <!-- END PAGE HEAD-->
 			<?php echo Message::widget() ?>
-			<div class="row">
-                            <?php echo $content ?>
-			</div>
+            <?php echo $content ?>
 			<!-- END PAGE CONTENT-->
 		</div>
 	</div>
+	
 	<!-- END CONTENT -->
 	<!-- BEGIN QUICK SIDEBAR -->
 	<a href="javascript:;" class="page-quick-sidebar-toggler"><i class="icon-close"></i></a>

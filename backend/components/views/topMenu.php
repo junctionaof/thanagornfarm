@@ -13,39 +13,77 @@ if(isset($identity)){
 }
 $user = \Yii::$app->user;
 ?>
-	<div class="header navbar navbar-inverse navbar-fixed-top">
-		<!-- BEGIN TOP NAVIGATION BAR -->
-		<div class="header-inner">
-			<!-- BEGIN LOGO -->  
-			<a class="navbar-brand" href="<?php echo $baseUrl?>/" style="padding-top: 6px; padding-bottom:0px; opacity:0.8;">
-			<h1 style="margin-top: 0px;"><span class="label label-info" style="border-radius: 0px;">THANAKORN</span><span class="label label-warning" style="border-radius: 0px;">FARM</span> </h1>
-			</a>
-			<!-- END LOGO -->
-			<!-- BEGIN RESPONSIVE MENU TOGGLER --> 
-			<a href="javascript:;" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-			<img src="<?php echo $baseUrl ?>/assets/img/menu-toggler.png" alt="" />
-			</a> 
-			<!-- END RESPONSIVE MENU TOGGLER -->
-			<!-- BEGIN TOP NAVIGATION MENU -->
-			<ul class="nav navbar-nav pull-right" style=" margin: 0px;">
-				<!-- BEGIN NOTIFICATION DROPDOWN -->
-				<li class="dropdown user">
-			          <a href="#" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
-			          <img alt="" src="<?php echo $baseUrl ?>/global/img/avatar1_small.jpg"/> 
-			          <span class="username"> <?php if($name){ echo $name; }?> </span>
-			          <i class="fa fa-angle-down"></i>
-			          </a>
-					<ul class="dropdown-menu">
-						 <li><a href="<?= Url::toRoute(['/user/edit'])?>?id=<?=$id?>"><i class="fa fa-user"></i> ข้อมูลส่วนตัว</a></li>
-						<li class="divider"></li>
-						<li><a href="#" target="_blank" id="trigger_fullscreen"><i class="fa fa-home"></i> Visit site</a></li>
-						<li><a href="<?= Url::to(['site/logout'])?>" data-method="post"><i class="fa fa-key"></i> Log Out</a></li>
-					</ul>
-				</li>
-				<!-- END USER LOGIN DROPDOWN -->
-			</ul>
-			<!-- END TOP NAVIGATION MENU -->
-		</div>
-		<!-- END TOP NAVIGATION BAR -->
-	</div>
-	<!-- END HEADER -->
+
+	  <div class="page-header navbar navbar-fixed-top">
+            <!-- BEGIN HEADER INNER -->
+              <div class="page-header-inner ">
+                <!-- BEGIN LOGO -->
+                <div class="page-logo">
+                    <a href="<?php echo $baseUrl?>/"></a>
+                    <div class="menu-toggler sidebar-toggler"> 
+                     <!-- DOC: Remove the above "hide" to enable the sidebar toggler button on header -->
+                    </div>
+                </div>
+               <!-- END LOGO -->
+                <!-- BEGIN RESPONSIVE MENU TOGGLER -->
+                <a href="javascript:;" class="menu-toggler responsive-toggler" data-toggle="collapse" data-target=".navbar-collapse"> </a>
+                <!-- END RESPONSIVE MENU TOGGLER -->
+                <div class="page-top">
+                    <!-- BEGIN TOP NAVIGATION MENU -->
+                    <div class="top-menu">
+                        <ul class="nav navbar-nav pull-right">
+                            <li class="separator hide"> </li>
+                            <!-- BEGIN NOTIFICATION DROPDOWN -->
+                            <!-- DOC: Apply "dropdown-dark" class after below "dropdown-extended" to change the dropdown styte -->
+                           <li class="dropdown dropdown-user dropdown-dark">
+                                <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
+                                    <span class="username username-hide-on-mobile"> Nick </span>
+                                    <!-- DOC: Do not remove below empty space(&nbsp;) as its purposely used -->
+                                    <img alt="" class="img-circle" src="<?php echo $baseUrl?>/assets/layouts/layout4/img/avatar9.jpg" /> </a>
+                                <ul class="dropdown-menu dropdown-menu-default">
+                                    <li>
+                                        <a href="page_user_profile_1.html">
+                                            <i class="icon-user"></i> My Profile </a>
+                                    </li>
+                                    <li>
+                                        <a href="app_calendar.html">
+                                            <i class="icon-calendar"></i> My Calendar </a>
+                                    </li>
+                                    <li>
+                                        <a href="app_inbox.html">
+                                            <i class="icon-envelope-open"></i> My Inbox
+                                            <span class="badge badge-danger"> 3 </span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="app_todo_2.html">
+                                            <i class="icon-rocket"></i> My Tasks
+                                            <span class="badge badge-success"> 7 </span>
+                                        </a>
+                                    </li>
+                                    <li class="divider"> </li>
+                                    <li>
+                                        <a href="page_user_lock_1.html">
+                                            <i class="icon-lock"></i> Lock Screen </a>
+                                    </li>
+                                    <li>
+                                        <a href="<?php echo $baseUrl?>/site/logout">
+                                            <i class="icon-key"></i> Log Out </a>
+                                    </li>
+                                </ul>
+                            </li>
+                            <!-- END USER LOGIN DROPDOWN -->
+                            <!-- BEGIN QUICK SIDEBAR TOGGLER -->
+                            <li class="dropdown dropdown-extended quick-sidebar-toggler">
+                                <span class="sr-only">Toggle Quick Sidebar</span>
+                                <i class="icon-logout"></i>
+                            </li>
+                            <!-- END QUICK SIDEBAR TOGGLER -->
+                        </ul>
+                    </div>
+                    <!-- END TOP NAVIGATION MENU -->
+                </div>
+                <!-- END PAGE TOP -->
+            </div>
+            <!-- END HEADER INNER -->
+        </div>

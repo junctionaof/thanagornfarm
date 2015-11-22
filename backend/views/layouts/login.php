@@ -36,19 +36,6 @@ Purchase: http://themeforest.net/item/metronic-responsive-admin-dashboard-templa
 	<meta name="MobileOptimized" content="320">
 	<!-- BEGIN GLOBAL MANDATORY STYLES -->          
 <?php $this->head(); ?>
-<script src="<?php echo $baseUrl ?>/global/scripts/app.js"></script>
-	<script>
-		jQuery(document).ready(function() {
-		   App.init();
-
-		   App.baseUri = '<?php echo $baseUrl?>/';
-
-		   jQuery.ajaxSetup({
-			   cache: false,
-		   });
-
-		});
-	</script>
 <?php 
 $str = <<<EOT
 	
@@ -148,7 +135,7 @@ $this->registerCss($str, [], 'css'); ?>
 <!-- END HEAD -->
 <!-- BEGIN BODY -->
 <body class="login">
-<div class="fullscreen background" style="background-image:url('<?php echo $baseUrl?>/global/img/bg/bbg.jpg'); opacity: 0.3; position:;" data-img-width="1800" data-img-height="1800">
+<div class="fullscreen background" style="background-image:url('<?php echo $baseUrl?>assets/global/img/bg/bbg.jpg'); opacity: 0.3; position:;" data-img-width="1800" data-img-height="1800">
 </div>
 <?php $this->beginBody() ?>
 <div class="clearfix">
@@ -158,7 +145,7 @@ $this->registerCss($str, [], 'css'); ?>
 
 	<!-- BEGIN LOGO -->
 	<div class="logo">
-		<!-- <img src="<?php echo $baseUrl?>/global/img/tpbs-org-logo.png" alt="" />  -->
+		<!-- <img src="<?php echo $baseUrl?>assets/global/img/tpbs-org-logo.png" alt="" />  -->
 		<h1><span class="label label-info">THANAKORN</span><span class="label label-warning">FARM</span> </h1>
 	</div>
 	<!-- END LOGO -->
@@ -174,7 +161,7 @@ $this->registerCss($str, [], 'css'); ?>
 	<!-- END JAVASCRIPTS -->
 
 <?php $this->endBody() ?>
-
+</div>
 </body>
 </html>
 <?php $this->endPage() ?>
