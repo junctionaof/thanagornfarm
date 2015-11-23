@@ -12,63 +12,54 @@ class LoginAsset extends AssetBundle
     public $basePath = '@webroot';
     public $baseUrl = '@web';
     public $css = [
-        //'css/site.css',
-        //'global/',
-    	'assets/global/css/pages/login-soft.css',
-        'assets/global/plugins/font-awesome/css/font-awesome.min.css',
+        // BEGIN GLOBAL MANDATORY STYLES 
+    	'assets/global/plugins/font-awesome/css/font-awesome.min.css',
+        'assets/global/plugins/simple-line-icons/simple-line-icons.min.css',
         'assets/global/plugins/bootstrap/css/bootstrap.min.css',
         'assets/global/plugins/uniform/css/uniform.default.css',        
-        'assets/global/plugins/clockface/css/clockface.css',
-        
-        'assets/global/css/components-md.css',
-    	'assets/global/css/style-metronic.css',
-    	'assets/global/css/style.css',
-    	'assets/global/css/style-responsive.css',
-    	'assets/global/css/plugins.css',
-        'assets/global/css/plugins-md.css',
-        'assets/admin/layout/css/layout.css',
-        'assets/layouts/layout/css/themes/darkblue.css',
-        'assets/layouts/layout/css/custom.css',
-
+    	//END GLOBAL MANDATORY STYLES 
+    	
+    	//BEGIN PAGE LEVEL PLUGINS
+        'assets/global/plugins/select2/css/select2.min.css',
+    	'assets/global/plugins/select2/css/select2-bootstrap.min.css',
+    	//END PAGE LEVEL PLUGINS	
     		
-        'assets/global/plugins/bootstrap-select/bootstrap-select.min.css',
-        'assets/global/plugins/select2/select2_metro.css',
-        'assets/global/plugins/jquery-ui/jquery-ui.min.css',
+    	//BEGIN THEME GLOBAL STYLES	
+    	'assets/global/css/components.min.css',
+    	'assets/global/css/plugins.min.css',
+    	//END THEME GLOBAL STYLES
+    	
+    	//BEGIN PAGE LEVEL STYLES
+    	'assets/pages/css/login-4.min.css',
+    	//END PAGE LEVEL STYLES
     ];
     public $js = [
+    	//BEGIN CORE PLUGINS
     	'assets/global/plugins/jquery.min.js',
-    	'assets/global/plugins/jquery-migrate.min.js',
-        'assets/global/plugins/jquery-ui/jquery-ui.min.js',
-        'assets/global/plugins/bootstrap/js/bootstrap.min.js',
+    	'assets/global/plugins/bootstrap/js/bootstrap.min.js',
+        'assets/global/plugins/js.cookie.min.js',
         'assets/global/plugins/bootstrap-hover-dropdown/bootstrap-hover-dropdown.min.js',
         'assets/global/plugins/jquery-slimscroll/jquery.slimscroll.min.js',
         'assets/global/plugins/jquery.blockui.min.js',
-        'assets/global/plugins/jquery.cokie.min.js',
         'assets/global/plugins/uniform/jquery.uniform.min.js',
-    	
-        // component
+        'assets/global/plugins/bootstrap-switch/js/bootstrap-switch.min.js',
+    	//END CORE PLUGINS 
+        
+        //BEGIN PAGE LEVEL PLUGINS
         
     	'assets/global/plugins/jquery-validation/js/jquery.validate.min.js',
-    	'assets/global/plugins/backstretch/jquery.backstretch.min.js',
-        'assets/global/plugins/bootstrap-maxlength/bootstrap-maxlength.min.js',
-        'assets/global/plugins/bootstrap-touchspin/bootstrap.touchspin.js',
-    	'assets/global/plugins/select2/select2.min.js',
+    	'assets/global/plugins/jquery-validation/js/additional-methods.min.js',
+        'assets/global/plugins/select2/js/select2.full.min.js',
+        'assets/global/plugins/backstretch/jquery.backstretch.min.js',
+    	//END PAGE LEVEL PLUGINS 
         
-        'assets/pages/scripts/components-dropdowns.js',
-        'assets/pages/scripts/components-jqueryui-sliders.js',
+    	// BEGIN THEME GLOBAL SCRIPTS
+        'assets/global/scripts/app.min.js',
+		//END THEME GLOBAL SCRIPTS
         
-        //page component script
-        'assets/global/scripts/metronic.js',
-        'assets/layouts/layout/scripts/layout.js',
-        'assets/layouts/layout/scripts/quick-sidebar.js',
-        'assets/layouts/layout/scripts/demo.js',
-        'assets/pages/scripts/table-managed.js',  
-        'assets/pages/scripts/components-pickers.js',
-        
-        /* Last js my create */
-        //'global/scripts/form-components.js',
-        'assets/global/tpbs-components-form-tools.js',
-        'assets/global/tpbs-js.js',
+        //BEGIN PAGE LEVEL SCRIPTS
+        'assets/pages/scripts/login-4.min.js',
+        // END PAGE LEVEL SCRIPTS
         
     ];
     public $depends = [
