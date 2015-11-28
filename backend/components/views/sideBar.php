@@ -101,7 +101,7 @@ $template = array(
                         <li class="heading">
                             <h3 class="uppercase"> จัดการระบบ</h3>
                         </li>
-                        <li class="nav-item  ">
+                        <li class="nav-item  <?php echo $myUrl == Url::toRoute('user/list')?'active':'';?> ">
                             <a href="<?php echo Url::toRoute('user/list') ?>" class="nav-link nav-toggle">
                                 <i class="icon-user"></i>
                                 <span class="title"> จัดการผู้ใช้งานระบบ</span>
