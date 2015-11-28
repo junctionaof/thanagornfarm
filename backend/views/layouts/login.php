@@ -135,8 +135,7 @@ $this->registerCss($str, [], 'css'); ?>
 <!-- END HEAD -->
 <!-- BEGIN BODY -->
 <body class="login">
-<div class="fullscreen background" style="background-image:url('<?php echo $baseUrl?>assets/global/img/bg/bbg.jpg'); opacity: 0.3; position:;" data-img-width="1800" data-img-height="1800">
-</div>
+
 <?php $this->beginBody() ?>
 <div class="clearfix">
 </div>
