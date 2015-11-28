@@ -55,7 +55,7 @@ class LoginAsset extends AssetBundle
         
     	// BEGIN THEME GLOBAL SCRIPTS
         'assets/global/scripts/app.min.js',
-		//END THEME GLOBAL SCRIPTS
+		//END THEME GLOBAL SCRIPTS /
         
         //BEGIN PAGE LEVEL SCRIPTS
         'assets/pages/scripts/login-4.min.js',
