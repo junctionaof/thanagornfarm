@@ -73,37 +73,11 @@ $this->registerJsFile($baseUrl  . '/assets/scripts/relatedContent.js', ['positio
             </div>
         </div>
         <div class="portlet-body">
-
-            <p>
-                &nbsp;
-            </p>
             <div class="tabbable tabbable-tabdrop">
-                <ul class="nav nav-pills">
-                    <li class="active">
-                        <a href="#tab11" data-toggle="tab" aria-expanded="true">ข้อมูลบ่อ และรุ่น</a>
-                    </li>
-                    <li class="">
-                        <a href="#tab12" data-toggle="tab" <?php echo $Content->id?'href="#tab12" data-toggle="tab"':'href="javascript:;" ';?> aria-expanded="false">บันทึกการกินอาหาร</a>
-                    </li>
-                    <li class="">
-                        <a href="#tab13" data-toggle="tab" <?php echo $Content->id?'href="#tab13" data-toggle="tab"':'href="javascript:;" ';?> aria-expanded="false">บันทึกนํ้าหนักเฉลี่ย</a>
-                    </li>
-                    <li class="">
-                        <a href="#tab14" data-toggle="tab" <?php echo $Content->id?'href="#tab14" data-toggle="tab"':'href="javascript:;" ';?> aria-expanded="false">บันทึกค่าแอมโมเนีย</a>
-                    </li>
-                    <li class="">
-                        <a href="#tab15" data-toggle="tab" <?php echo $Content->id?'href="#tab15" data-toggle="tab"':'href="javascript:;" ';?> aria-expanded="false">บันทึกค่าอัลคาไลน์</a>
-                    </li>
-                    <li class="">
-                        <a href="#tab16" data-toggle="tab" <?php echo $Content->id?'href="#tab16" data-toggle="tab"':'href="javascript:;" ';?> aria-expanded="false">บันทึกค่า PH</a>
-                    </li>
-
-                </ul>
                 <div class="tab-content">
                     <div class="tab-pane active" id="tab11">
 				<?php $form = ActiveForm::begin ();?>
 				<?php echo Html::hiddenInput('id', $Content->id, array( 'id' => 'id', 'class' => 'form-control select2')) ?>
-                            <!-- start ข้อมูลข่าว -->
                             <div class="row">
                                 <div class="col-md-8">
                                     <div class="portlet ">

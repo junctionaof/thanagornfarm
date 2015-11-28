@@ -68,10 +68,10 @@ ActiveForm::begin(['id' => 'dataTable-form']);
                     <div class="col-md-6">
                         <div class="portlet-title">
                                 <div class="actions">
-                                 	<a class="btn  add" href="<?= Url::toRoute(['content/edit'])?>" title="เพิ่ม">
+                                 	<a class="btn  add" href="<?= Url::toRoute(['pond/edit'])?>" title="เพิ่ม">
                                         <i class="icon-plus"> เพิ่มรุ่นในบ่อเลี้ยง</i>
                                     </a>
-                                    <a class="btn  listall" href="<?= Url::toRoute(['content/typelist'])?>" title="เพิ่ม">
+                                    <a class="btn  listall" href="<?= Url::toRoute(['pond/typelist'])?>" title="เพิ่ม">
                                         <i class="icon-plus"> จัดการบ่อเลี้ยงกุ้ง</i>
                                     </a>
                                 </div>

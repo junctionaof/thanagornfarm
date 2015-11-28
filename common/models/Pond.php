@@ -9,7 +9,7 @@ use app\Workflow;
 
 use common\models\Media;
 /**
- * This is the model class for table "Content".
+ * This is the model class for table "Pond".
  *
  * @property string $id
  * @property string $title
@@ -32,14 +32,14 @@ use common\models\Media;
  *
  * @property ContentRef[] $contentRefs
  */
-class Content extends \yii\db\ActiveRecord
+class Pond extends \yii\db\ActiveRecord
 {
     /**
      * @inheritdoc
      */
     public static function tableName()
     {
-        return 'Content';
+        return 'Pond';
     }
 
     /**

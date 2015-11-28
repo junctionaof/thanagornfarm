@@ -35,14 +35,14 @@ $template = array(
                             <h3 class="uppercase">ข้อมูลบ่อเลี้ยงกุ้ง</h3>
                         </li>
                         <li class="nav-item  ">
-                            <a href="<?php echo Url::toRoute('content/typelist') ?>" class="nav-link nav-toggle">
+                            <a href="<?php echo Url::toRoute('pond/typelist') ?>" class="nav-link nav-toggle">
                                 <i class="icon-diamond"></i>
                                 <span class="title">จัดการบ่อ</span>
          
                             </a>
                         </li>
                         <li class="nav-item  ">
-                            <a href="<?php echo Url::toRoute('content/list') ?>" class="nav-link nav-toggle">
+                            <a href="<?php echo Url::toRoute('pond/list') ?>" class="nav-link nav-toggle">
                                 <i class="icon-puzzle"></i>
                                 <span class="title">จัดการรุ่นในบ่อเลี้ยง</span>
                             </a>

@@ -327,7 +327,7 @@ class PondController extends BaseController {
 		
 		
         echo $this->render(
-        			'contentlist', 
+        			'list', 
         			[
         				'lst' => $lst,
         				'arrUser' => $arrUser,
