@@ -31,7 +31,7 @@ use backend\components\UiMessage;
 /**
  * Test controller
  */
-class ContentController extends BaseController {
+class PondController extends BaseController {
 
     public function actionIndex() {
         echo $this->render('index');
