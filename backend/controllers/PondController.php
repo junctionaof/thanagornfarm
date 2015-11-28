@@ -6,9 +6,9 @@ use Yii;
 use yii\web\Controller;
 use yii\data\Pagination;
 
-use common\models\Content;
+use common\models\pond;
 use common\models\Typelist;
-use common\models\ContentRef;
+use common\models\pondRef;
 use common\models\Media;
 use app\CategoryTree;
 use app\Workflow;
@@ -19,7 +19,7 @@ use app\Ui;
 use app\Entity;
 use app\DateUtil;
 use common\models\User;
-use common\models\ContentPublish;
+use common\models\pondPublish;
 use app\TpbsLog;
 use common\models\Document;
 use app\TrEnc;
@@ -205,7 +205,7 @@ class PondController extends BaseController {
     
     public function actionList() {
     	
-    	$canPublishNews = Yii::$app->user->can('tpbs.content.approve');
+    	$canPublishNews = Yii::$app->user->can('tpbs.pond.approve');
     	$request = Yii::$app->request;
     	
     	$op = $request->post('op', '');
@@ -222,9 +222,9 @@ class PondController extends BaseController {
     	if (empty($status))
     		$status = $request->get('status', '');
     	
-    	$contentType = $request->post('contentType', 0);
-    	if (empty($contentType))
-    		$contentType = $request->get('contentType', 0);
+    	$pondType = $request->post('pondType', 0);
+    	if (empty($pondType))
+    		$pondType = $request->get('pondType', 0);
     	
     	$categoryId = $request->post('categoryId', 0);
     	if (empty($categoryId))
@@ -247,14 +247,14 @@ class PondController extends BaseController {
     		$q = $request->get('q', '');
     	
     	
-    	$query = Content::find();
+    	$query = pond::find();
     	
     	if(!empty($status)){
     		$query->andWhere('status=:status', [':status'=> $status]);
     	}
 
-    	if(!empty($contentType)){
-    		$query->andWhere('type=:type', [':type'=> $contentType]);
+    	if(!empty($pondType)){
+    		$query->andWhere('type=:type', [':type'=> $pondType]);
     	}
     	
     	if(!empty($datetStart) && empty($datetEnd)){
@@ -266,11 +266,11 @@ class PondController extends BaseController {
     	}
     	
     	if(!empty($categoryId) && $categoryId != 0){
-    			switch ($contentType) {
-    				case Content::TYPE_ONLINE_NEWS:
+    			switch ($pondType) {
+    				case pond::TYPE_ONLINE_NEWS:
     					$type = 'news';
     					break;
-    				case Content::TYPE_ARTICLE:
+    				case pond::TYPE_ARTICLE:
     					$type = 'column';
     					break;
     				default:
@@ -299,7 +299,7 @@ class PondController extends BaseController {
     	$query->limit($pagination->limit);
     	$lst = $query->all();
    	
-    	$pagination->params = ['page'=> $pagination->page, 'status'=>$status, 'contentType'=> $contentType, 'categoryId'=> $categoryId, 'order'=> $order, 'q'=>$q];
+    	$pagination->params = ['page'=> $pagination->page, 'status'=>$status, 'pondType'=> $pondType, 'categoryId'=> $categoryId, 'order'=> $order, 'q'=>$q];
     	
 		$arrUserId = [];
 		$arrUser = [];
@@ -332,7 +332,7 @@ class PondController extends BaseController {
         				'lst' => $lst,
         				'arrUser' => $arrUser,
         				'status'=>$status,
-        				'contentType'=> $contentType,
+        				'pondType'=> $pondType,
         				'categoryId'=> $categoryId,
         				'order'=> $order,
         				'q'=>$q,
@@ -350,138 +350,53 @@ class PondController extends BaseController {
     	if (empty($id))
     		$id = $request->get('id', 0);
     	
-    	$Content = Content::findOne(['id'=> $id]);
+    	$pond = pond::findOne(['id'=> $id]);
     	
-    	if(empty($Content)){
-    		$Content = new Content();
-    		$Content->createBy = $identity->id;
-    		$Content->createTime = date('Y-m-d H:i:s', $currentTs);
+    	if(empty($pond)){
+    		$pond = new pond();
+    		$pond->createBy = $identity->id;
+    		$pond->createTime = date('Y-m-d H:i:s', $currentTs);
     	} 
-    	//$Content
+    	//$pond
     	if ($request->isPost) {
     		$categoryId = $request->post('categoryId', NULL);
     		if (empty($categoryId))
     			$categoryId = $request->get('categoryId', NULL);
     		
     		$hasVideo = $request->post('hasVideo', 0);
-    		if (empty($hasVideo))
-    			$hasVideo = $request->get('hasVideo', 0);
-    		
-    		$hasGallery = $request->post('hasGallery', 0);
-    		if (empty($hasGallery))
-    			$hasGallery = $request->get('hasGallery', 0);
 			
-			$tags = $request->post('tags', '');
-    		if (empty($tags))
-    			$tags = $request->get('tags', '');
     		
     		$publishTs = $currentTs;
-    		if ($_REQUEST['content_date'] == 'now')
-    			$publishTs = $currentTs;
-    		elseif($_REQUEST['content_date'] && $_REQUEST['content_time'])
-    			$publishTs = DateUtil::parseSqlDate($_REQUEST['content_date'] . ' ' . $_REQUEST['content_time']);
-    		
-    		$expireTs = null;
-    		if($_REQUEST['expire_date'] && $_REQUEST['expire_time'])
-    			$expireTs = DateUtil::parseSqlDate($_REQUEST['expire_date'] . ' ' . $_REQUEST['expire_time']);
-    		
-    		$Content->publishTime = $publishTs?date(DateUtil::SQL_DT_FMT, $publishTs):null;
-    		$Content->expireTime = $expireTs?date(DateUtil::SQL_DT_FMT, $expireTs):null;
-    		
-			// บันทึก Tag
-			$arrTag = preg_split('/\s*,\s*/', $tags, -1, PREG_SPLIT_NO_EMPTY);
-			$Content->tags = empty($arrTag)?NULL:(',' . join(',', $arrTag) . ',');
+    		$pond->publishTime = $publishTs?date(DateUtil::SQL_DT_FMT, $publishTs):null;
 			
-			$Content->attributes = $request->post('Content');
-    		$Content->categoryId = $categoryId;
-    		$Content->hasGallery = $hasGallery;
-    		$Content->hasVideo = $hasVideo;
-    		$Content->lastUpdateTime = date(DateUtil::SQL_DT_FMT, $currentTs);
-    		$Content->lastUpdateBy = $identity->id;
+			$pond->attributes = $request->post('pond');
+    		$pond->categoryId = $categoryId;
+    		$pond->lastUpdateTime = date(DateUtil::SQL_DT_FMT, $currentTs);
+    		$pond->lastUpdateBy = $identity->id;
     		
-    		$Content->content = CmsTextUtil::normalize($Content->content);
+    		$pond->pond = CmsTextUtil::normalize($pond->pond);
     		
     			
-    		if($Content->save()) {
+    		if($pond->save()) {
     			/* Yii::info(json_encode(array(
-					'id'=>$Content->id,
+					'id'=>$pond->id,
 					'userId'=>$identity->id,
-					'status'=>$Content->status,
+					'status'=>$pond->status,
     				'ts' => $currentTs,	
-				)), 'audit.content.update.'.$Content->id); */
+				)), 'audit.pond.update.'.$pond->id); */
     			
     			TpbsLog::info(json_encode(array(
-					'entityType'=>Entity::TYPE_CONTENT,
-					'refId'=>$Content->id,
+					'entityType'=>Entity::TYPE_pond,
+					'refId'=>$pond->id,
 					'userId'=>$identity->id,
-					'status'=>$Content->status,
+					'status'=>$pond->status,
     				'ts' => date(DateUtil::SQL_DT_FMT, $currentTs),
-				)), 'audit.content.update');
+				)), 'audit.pond.update');
     			Ui::setMessage('บันทึกข้อมูลสำเร็จ');
     		}else{
-    			Ui::setMessage(json_encode($Content->getErrors(), JSON_UNESCAPED_UNICODE), 'warning');
+    			Ui::setMessage(json_encode($pond->getErrors(), JSON_UNESCAPED_UNICODE), 'warning');
     		}
     	}
-    	
- //   	$Content->content = CmsTextUtil::decode($Content->content);
-    	
-  /*   	$query = Content::find();
-    	$query->andWhere('type=:type AND status=:status', [':type'=> Content::TYPE_ONLINE_NEWS, ':status' => Workflow::STATUS_PUBLISHED]);
-    	$query->orderBy("publishTime desc");
-    	$query->offset = 0;
-    	$query->limit = 10;
-    	$arrRelate = $query->all();
-    	
-    	$query = Feed::find();
-    	$query->andWhere(['status' => Workflow::STATUS_PUBLISHED]);
-    	$lst = $query->all();
-    	
-    	$arrFeed = [];
-    	$arrFeed = ArrayHelper::map($lst, 'id', 'title'); */
-    	
-    	// related content
-/*     	$contentRef = null;
-    	if($id){
-	    	$query = ContentRef::find();
-	    	$query->andWhere(['contentId' => $id]);
-	    	$contnetRef = $query->all();
-	    	
-	    	$arrContentRefId = [];
-	    	foreach ($contnetRef as $index=>$data){
-	    		$arrContentRefId[] = (int)$data['refId'];
-	    	}
-	    	
-	    	if($arrContentRefId){
-	    		$contentRef = Content::findAll($arrContentRefId);
-	    	}
-    	} */
-    	
-    	/* Media array */
- /*    	$arrMedia = [];
-    	$arrDocument = [];
-    	if($Content->id){
-    		$query = Media::find();
-    		$query->andWhere(['refId'=> $Content->id, 'type'=> Entity::TYPE_CONTENT]);
-
-    		$query->orderBy ( ['itemNo'=> SORT_ASC]);
-    		$options = array(Media::ENCODE_WIDTH => 100, Media::ENCODE_HEIGHT => 82);
-    		$arrMedia = Media::getItems($query, $options);
-    		
-    		$arrDocument = Document::find()->where('type=:type and refId=:refId', [':type'=>Entity::TYPE_CONTENT, ':refId'=>$Content->id])->all();
-    	} */
-
-/*     	$enc = new TrEnc(\Yii::$app->params['crypto'][0][0], \Yii::$app->params['crypto'][0][1]);
-		$params = array(
-				'ts' => time() + 3600,
-		);
-		$previewKey = $enc->encode($params);
-		
-		// OtherCategory
-		$query = OtherCategory::find();
-		$query->andWhere(['refId'=>$Content->id]);
-		$arrOtherCategory = $query->all();
-		if(empty($arrOtherCategory))
-			$arrOtherCategory = []; */
     	
 		$query = Typelist::find();
 		$query->orderBy(['id'=>SORT_ASC]);
@@ -493,13 +408,13 @@ class PondController extends BaseController {
 		
 		
         echo $this->render('edit', [
-        								'Content'=> $Content,
+        								'pond'=> $pond,
         								'arrTypelist'=>$arrTypelist,
        						]);
     }
     
     public function actionSavecategory(){
-    	$id = $_REQUEST['contentid'];
+    	$id = $_REQUEST['pondid'];
     	if(empty($id))
     		return false;
   
@@ -515,7 +430,7 @@ class PondController extends BaseController {
     }
     
     public function actionInstagramapi(){
-    	$json = file_get_contents('http://api.instagram.com/oembed?url='.$_REQUEST['objectName']);
+    	$json = file_get_ponds('http://api.instagram.com/oembed?url='.$_REQUEST['objectName']);
     
     	if($json){
     		\Yii::$app->response->format = 'json';
@@ -532,8 +447,8 @@ class PondController extends BaseController {
     			switch($data[0]) {
     				case 'article':
     				case 'news':
-    				case 'content':
-    					$relType = Entity::TYPE_CONTENT;
+    				case 'pond':
+    					$relType = Entity::TYPE_pond;
     					break;
     				case 'person':
     					$relType = Entity::TYPE_PERSON;
@@ -541,20 +456,19 @@ class PondController extends BaseController {
     			}
     
     			if(!$index) {
-    				$ret = ContentRef::deleteAll('contentId=:contentId AND refType=:refType', [':contentId'=> $_REQUEST['contentId'],':refType'=> $relType]);
+    				$ret = pondRef::deleteAll('pondId=:pondId AND refType=:refType', [':pondId'=> $_REQUEST['pondId'],':refType'=> $relType]);
     			}
     			
-    			$query = ContentRef::find();
-    			$query->andWhere('contentId=:contentId AND refType=:refType AND refId=:refId', [':contentId'=> $_REQUEST['contentId'],':refType'=> $relType,':refId'=> $data[1]]);
+    			$query = pondRef::find();
+    			$query->andWhere('pondId=:pondId AND refType=:refType AND refId=:refId', [':pondId'=>pondEST['pondId'],':refType'=> $relType,':refId'=> $data[1]]);
     			$rc = $query->all();
     			
     			if($rc == null) {
-    				$rc = new ContentRef();
-    				$rc->contentId = $_REQUEST['contentId'];
+    				$rc = new pondRef();
+    				$rc->pondId = $_REQUEST['pondId'];
     				$rc->refType = $relType;
     				$rc->refId = $data[1];
-    				$rc->relationType = Content::RELATIONTYPE_GENERAL;
-    
+    				$rc->relationType = pond::RELATIONTYPE_GENERAL;
     				if($rc->save())
     					$success['success'][] = $rc->refId;
     				else
@@ -563,26 +477,26 @@ class PondController extends BaseController {
     			}
     		}
     	}else{
-    		ContentRef::deleteAll('contentId=:contentId', [':contentId'=> $_REQUEST['contentId']]);
+    		pondRef::deleteAll('pondId=:pondId', [':pondId'=> $_REQUEST['pondId']]);
     	}
     
     }
     
-    public function actionGetcontent(){
+    public function actionGetpond(){
     	if($_REQUEST['id']){
-	    	$model = Content::findOne(['id'=> $_REQUEST['id']]);
+	    	$model = pond::findOne(['id'=> $_REQUEST['id']]);
 	    	\Yii::$app->response->format = 'json';
 	    	echo json_encode(['id'=>$model->id,'title'=>$model->title,'viewCount'=>$model->viewCount]);
     	}
     }
     
-    public function actionSearchcontent(){
+    public function actionSearchpond(){
     	$request =Yii::$app->request;
     	$q = $request->get('q');
     	
     	if (!empty($q)){
     			
-    		$query = Content::find();
+    		$query = pond::find();
     		$query->orderBy('publishTime DESC');
     		$query->andWhere('status=:status', [':status'=> Workflow::STATUS_PUBLISHED]);
     		if(is_numeric($q))
@@ -594,7 +508,7 @@ class PondController extends BaseController {
     		$lst = $query->all();
     			
     	}else{
-			$query = Content::find();
+			$query = pond::find();
 			$query->orderBy('publishTime DESC');
 			$query->andWhere('status=:status', [':status'=> Workflow::STATUS_PUBLISHED]);
 			$query->limit(30);
@@ -617,7 +531,7 @@ class PondController extends BaseController {
     		$id = $request->get('id');
     	 
     	//เพิ่มการแสดงรูปสำหรับ type อื่น เช่น กิจกรรม
-    	//$type = Entity::TYPE_CONTENT;
+    	//$type = Entity::TYPE_pond;
     	$type = $request->get('entity');
     	 
     	$items = array();
@@ -635,19 +549,19 @@ class PondController extends BaseController {
     	 
     }
     
-    public function  actionSavecontentpublish(){
+    public function  actionSavepondpublish(){
     	$request = \Yii::$app->request;
-    	$tweetContent = $request->post('tweetContent', '');
-    	$contentId = $request->post('contentId', '');
+    	$tweetpond = $request->post('tweetpond', '');
+    	$pondId = $request->post('pondId', '');
     
-    	$model = ContentPublish::find()->where('contentId=:contentId', [':contentId'=>$contentId])->one();
+    	$model = pondPublish::find()->where('pondId=:pondId', [':pondId'=>$pondId])->one();
     	if (empty($model)){
-    		$model = new ContentPublish();
-    		$model->contentId = $contentId;
+    		$model = new pondPublish();
+    		$model->pondId = $pondId;
     		$model->twitterBreaking = 1;
     	}
     
-    	$model->tweetContent = $tweetContent;
+    	$model->tweetpond = $tweetpond;
     	$text = "";
     	$result = [];
     	$success = $model->save();
@@ -668,7 +582,7 @@ class PondController extends BaseController {
     	}
     
     
-    	header('Content-Type: application/json');
+    	header('pond-Type: application/json');
     
     	echo json_encode($result);
     }
@@ -683,7 +597,7 @@ class PondController extends BaseController {
     		$arrIds = \Yii::$app->request->get('idCheck', NULL);
     		
     	if (is_array($arrIds) && !empty($arrIds)) {
-    		$query = Content::find();
+    		$query = pond::find();
     		$query->where(["id"=> $arrIds]);
     		$lst = $query->all();
     		//var_dump($lst);exit;
@@ -696,14 +610,11 @@ class PondController extends BaseController {
     							'userId'=>$identity->id,
     							'status'=>$Object->status,
     							'ts' => $currentTs,
-    					)), 'audit.content.update.'.$Object->id);
+    					)), 'audit.pond.update.'.$Object->id);
     					$deleted = $deleted + 1;
     				}
     			}
     		}
-    
-    		
-    
     		if ($deleted > 0) {
     			Ui::setMessage("ลบข้อมูลจำนวน $deleted รายการ" + "บันทึกข้อมูลสำเร็จ");
     		}

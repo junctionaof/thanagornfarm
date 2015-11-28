@@ -18,8 +18,7 @@ use common\models\Media;
  * @property string $tpbsId
  * @property integer $status
  * @property string $abstract
- * @property string $content
- * @property string $tags
+ * @property string $pond
  * @property integer $published
  * @property string $createBy
  * @property string $createTime
@@ -49,12 +48,10 @@ class Pond extends \yii\db\ActiveRecord
     {
         return [
             [['title', 'type', 'categoryId', 'createBy', 'createTime'], 'required'],
-            [['type', 'categoryId', 'status', 'version', 'published', 'createBy', 'lastUpdateBy',], 'integer'],
-            [['abstract', 'content', 'tags', 'comment'], 'string'],
-            [['latitude', 'longitude'], 'number'],
-            [['createTime', 'lastUpdateTime', 'publishTime', 'expireTime'], 'safe'],
+            [['type', 'categoryId', 'status', 'published', 'createBy', 'lastUpdateBy',], 'integer'],
+            [['abstract', 'pond', 'comment'], 'string'],
+            [['createTime', 'lastUpdateTime', 'publishTime'], 'safe'],
             [['title'], 'string', 'max' => 100],
-            [['credit'], 'string', 'max' => 45]
         ];
     }
 
@@ -70,8 +67,7 @@ class Pond extends \yii\db\ActiveRecord
             'categoryId' => 'หมวดหมู่',
             'status' => 'สถานะ',
             'abstract' => 'โปรย',
-            'content' => 'เนื้อหา',
-            'tags' => 'แท็ก',
+            'pond' => 'เนื้อหา',
             'published' => 'Published',
             'createBy' => 'ผู้สร้าง',
             'createTime' => 'เวลาที่สร้าง',

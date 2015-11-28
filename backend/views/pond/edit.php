@@ -5,7 +5,7 @@ use yii\widgets\LinkPager;
 use yii\helpers\Html;
 use yii\web\View;
 
-use common\models\Content;
+use common\models\pond;
 use common\models\ObjectCategory;
 
 use app\DateUtil;
@@ -24,29 +24,29 @@ use backend\components\DocumentListTab;
 use common\models\Typelist;
 
 
-$contentDate = "";
-$contentTime = "";
-/* $ts = DateUtil::ParseSQLDate($Content->publishTime);
+$pondDate = "";
+$pondTime = "";
+/* $ts = DateUtil::ParseSQLDate($pond->publishTime);
 if ($ts) {
-	$contentDate = date('Y-m-d', $ts);
-	$contentTime = date('H:i', $ts);
-	if (substr($contentTime, -3) == ':00')
-		$contentTime = substr($contentTime, 0, -3);
+	$pondDate = date('Y-m-d', $ts);
+	$pondTime = date('H:i', $ts);
+	if (substr($pondTime, -3) == ':00')
+		$pondTime = substr($pondTime, 0, -3);
 }
 
 
-$ts = DateUtil::ParseSQLDate($Content->publishTime);
+$ts = DateUtil::ParseSQLDate($pond->publishTime);
 if ($ts) {
-	$contentDate = date('Y-m-d', $ts);
-	$contentTime = date('H:i', $ts);
-	if (substr($contentTime, -3) == ':00')
-		$contentTime = substr($contentTime, 0, -3);
+	$pondDate = date('Y-m-d', $ts);
+	$pondTime = date('H:i', $ts);
+	if (substr($pondTime, -3) == ':00')
+		$pondTime = substr($pondTime, 0, -3);
 }
 
 // expire Time
 $expireDate = null;
 $expireTime = null;
-$ts = DateUtil::ParseSQLDate($Content->expireTime);
+$ts = DateUtil::ParseSQLDate($pond->expireTime);
 if ($ts) {
 	$expireDate = date('Y-m-d', $ts);
 	$expireTime = date('H:i', $ts);
@@ -69,7 +69,7 @@ $this->registerJsFile($baseUrl  . '/assets/scripts/relatedContent.js', ['positio
                 <i class="fa fa-gift"></i>ระบบบันทึกข้อมูลการเลี้ยงกุ้ง
             </div>
             <div class="actions">
-               <a href="<?php echo Url::toRoute('content/list') ?>" class="btn red" > <i class="fa fa-toggle-left"></i> กลับสู่หน้า ข้อมูลทั้งหมด </a>
+               <a href="<?php echo Url::toRoute('pond/list') ?>" class="btn red" > <i class="fa fa-toggle-left"></i> กลับสู่หน้า ข้อมูลทั้งหมด </a>
             </div>
         </div>
         <div class="portlet-body">
@@ -77,7 +77,7 @@ $this->registerJsFile($baseUrl  . '/assets/scripts/relatedContent.js', ['positio
                 <div class="tab-content">
                     <div class="tab-pane active" id="tab11">
 				<?php $form = ActiveForm::begin ();?>
-				<?php echo Html::hiddenInput('id', $Content->id, array( 'id' => 'id', 'class' => 'form-control select2')) ?>
+				<?php echo Html::hiddenInput('id', $pond->id, array( 'id' => 'id', 'class' => 'form-control select2')) ?>
                             <div class="row">
                                 <div class="col-md-8">
                                     <div class="portlet ">
@@ -85,7 +85,7 @@ $this->registerJsFile($baseUrl  . '/assets/scripts/relatedContent.js', ['positio
                                             <div class="form-body">
                                                 <div class="form-group">
                                                 	<label class="control-label">กรอกชื่อรุ่น</label>
-                                                    <?php echo Html::activeInput('text', $Content, 'title', ['id'=>'title','class' => 'form-control','require', 'maxlength'=>140,'placeholder' => 'กรอกชื่อรุ่น..','title' => 'ชื่อรุ่น ..']);?>
+                                                    <?php echo Html::activeInput('text', $pond, 'title', ['id'=>'title','class' => 'form-control','require', 'maxlength'=>140,'placeholder' => 'กรอกชื่อรุ่น..','title' => 'ชื่อรุ่น ..']);?>
                                                     <span class="help-block pull-right" id="title-available-char"></span>
                                                     <span class="help-block">
                                                         Maxlength is 140 chars. </span>
@@ -96,7 +96,7 @@ $this->registerJsFile($baseUrl  . '/assets/scripts/relatedContent.js', ['positio
 												</div>
                                                 <div class="form-group">
                                                     <label class="control-label">คำอธิบาย ข้อมูลอื่นๆ ของรุ่นนี้</label>
-                                                    <?php echo Html::activeTextarea($Content, 'content', ['id'=>'content_textarea','class' => 'form-control', 'rows'=>'20', 'style'=>'font-size:14px;'])?>
+                                                    <?php echo Html::activeTextarea($pond, 'pond', ['id'=>'content_textarea','class' => 'form-control', 'rows'=>'20', 'style'=>'font-size:14px;'])?>
                                                 </div>                                            
                                             </div>
                                         </div>
@@ -111,7 +111,7 @@ $this->registerJsFile($baseUrl  . '/assets/scripts/relatedContent.js', ['positio
                                             
                                             <div class="actions">					
 													<div class="btn-group pull-right">
-														<a class="btn <?php // echo \Yii::$app->params['uiPortletHighlight'] ?>" href="http://news.tpbs.ndev.pw/content/preview?id=<?php // echo "{$Content->id}&key=$previewKey" ?>" target="_blank"> 
+														<a class="btn <?php // echo \Yii::$app->params['uiPortletHighlight'] ?>" href="http://news.tpbs.ndev.pw/pond/preview?id=<?php // echo "{$pond->id}&key=$previewKey" ?>" target="_blank"> 
 															<i class="fa fa-search"></i> Preview
 														</a>
 
@@ -125,15 +125,15 @@ $this->registerJsFile($baseUrl  . '/assets/scripts/relatedContent.js', ['positio
                                                 <h3 class="form-section">ข้อมูล ลูกกุ้งที่ปล่อยลงในบ่อ</h3>
                                                 <div class="form-group">
                                                     <label class="control-label">ชนิดของลูกกุ้ง</label>
-                                                   <?php // echo Html::activeDropDownList($Content, 'type', Content::$arrTypeTpbs, ['class'=>'form-control select2me', 'data-placeholder'=>'Select...'])?>
+                                                   <?php // echo Html::activeDropDownList($pond, 'type', pond::$arrTypeTpbs, ['class'=>'form-control select2me', 'data-placeholder'=>'Select...'])?>
                                                 </div>
                                                 <div class="form-group">
                                                 	<label class="control-label">ราคาของลูกกุ้ง</label>
-                                                    <?php // echo Html::dropDownList('categoryId', $Content->categoryId, [0=>'เลือกหมวดหมู่'] + CategoryTree::getAllRootNode(), ['id'=> 'categoryId', 'class'=> 'form-control select2me'])?>
+                                                    <?php // echo Html::dropDownList('categoryId', $pond->categoryId, [0=>'เลือกหมวดหมู่'] + CategoryTree::getAllRootNode(), ['id'=> 'categoryId', 'class'=> 'form-control select2me'])?>
                                                 </div>
                                                 <div class="form-group">
                                                     <label class="control-label">บริษัท / ฟาร์ม ที่รับมา</label>
-                                                   <?php // echo Html::activeDropDownList($Content, 'tpbsId', [0=> 'เลือกหัวข้อ'] + $arrFeed, ['class'=>'form-control select2me', 'data-placeholder'=>'Select...'])?>
+                                                   <?php // echo Html::activeDropDownList($pond, 'tpbsId', [0=> 'เลือกหัวข้อ'] + $arrFeed, ['class'=>'form-control select2me', 'data-placeholder'=>'Select...'])?>
                                                 </div>
                                             </div>
                                             
@@ -141,14 +141,14 @@ $this->registerJsFile($baseUrl  . '/assets/scripts/relatedContent.js', ['positio
                                                 <h3 class="form-section">วันที่ ปล่อยลงบ่อ</h3>
                                                 <div class="form-group">
 													<label class="control-label">Credit :</label>
-													<?php // echo Html::activeTextInput($Content,'credit',array('class'=>'form-control medium'))?>
+													<?php // echo Html::activeTextInput($pond,'credit',array('class'=>'form-control medium'))?>
 												</div>
                                                 <div class="form-group">
                                                     <label class="control-label">สถานะ</label>
-                                            <?php // if(!$canPublishNews && ($Content->status == Workflow::STATUS_PUBLISHED)):?>
-                                            		<p><?php // echo Workflow::$arrStatusTpbs[$Content->status]?></p>
+                                            <?php // if(!$canPublishNews && ($pond->status == Workflow::STATUS_PUBLISHED)):?>
+                                            		<p><?php // echo Workflow::$arrStatusTpbs[$pond->status]?></p>
                                             <?php // else :?>
-                                            	<?php // echo Html::activeDropDownList($Content, 'status', $arrStatus, ['class'=>'form-control select2me', 'data-placeholder'=>'Select...'])?>
+                                            	<?php // echo Html::activeDropDownList($pond, 'status', $arrStatus, ['class'=>'form-control select2me', 'data-placeholder'=>'Select...'])?>
                                             <?php // endif;?>
                                                 </div>
                                                 <div class="form-group">
@@ -156,9 +156,9 @@ $this->registerJsFile($baseUrl  . '/assets/scripts/relatedContent.js', ['positio
 														<i class="fa fa-calendar"></i> กำหนดจับกุ้ง
 													</p>
 													<label class="control-label">วันที่</label>
-													<?php echo Html::textInput('content_date', $contentDate, array('class'=>'form-control form-control-inline  date-picker'))?>
+													<?php echo Html::textInput('pond_date', $pondDate, array('class'=>'form-control form-control-inline  date-picker'))?>
                                                 	<label class="control-label">เวลา</label>
-                                                	<?php echo Html::textInput('content_time', $contentTime, array('class'=>'form-control timepicker-24'))?>
+                                                	<?php echo Html::textInput('pond_time', $pondTime, array('class'=>'form-control timepicker-24'))?>
                                                 </div>
                                             </div>
                                         </div>
@@ -171,7 +171,7 @@ $this->registerJsFile($baseUrl  . '/assets/scripts/relatedContent.js', ['positio
                                             <div class="form-actions top">
                                                 <div class="btn-set pull-right">
                                                     <button type="submit" class="btn green">บันทึก</button>
-                                                    <a href="<?php echo Url::toRoute('content/list') ?>" class="btn" >ยกเลิก </a>
+                                                    <a href="<?php echo Url::toRoute('pond/list') ?>" class="btn" >ยกเลิก </a>
                                                 </div>
                                             </div>
                                         </div>
