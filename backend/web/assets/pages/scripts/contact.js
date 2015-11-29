@@ -7,15 +7,15 @@ var Contact = function () {
 			$(document).ready(function(){
 			  map = new GMaps({
 				div: '#gmapbg',
-				lat: -13.004333,
-				lng: -38.494333
+				lat: 7.826983,
+				lng: 100.327778
 			  });
 			   var marker = map.addMarker({
-		            lat: -13.004333,
-					lng: -38.494333,
-		            title: 'Loop, Inc.',
+		            lat: 7.826983,
+					lng: 100.327778,
+		            title: 'ธนกรฟาร์ม',
 		            infoWindow: {
-		                content: "<b>Metronic, Inc.</b> 795 Park Ave, Suite 120<br>San Francisco, CA 94107"
+		                content: "<b>ธนกรฟาร์ม</b> 795 หาดใหญ่, , สงขลา 80455"
 		            }
 		        });
 

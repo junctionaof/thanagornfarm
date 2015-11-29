@@ -26,7 +26,7 @@ class SiteController extends Controller
                         'allow' => true,
                     ],
                     [
-                        'actions' => ['logout', 'index'],
+                        'actions' => ['logout', 'index', 'about' ,'contact'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],
@@ -64,6 +64,18 @@ class SiteController extends Controller
     {
     	$this->layout = 'layoutstyle';
         return $this->render('index');
+    }
+    
+    public function actionAbout()
+    {
+    	$this->layout = 'layoutstyle';
+    	return $this->render('about');
+    }
+    
+    public function actionContact()
+    {
+    	$this->layout = 'layoutstyle';
+    	return $this->render('contact');
     }
 
     public function actionLogin()

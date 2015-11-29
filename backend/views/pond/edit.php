@@ -59,8 +59,21 @@ if ($ts) {
 $identity = \Yii::$app->user->getIdentity();
 $baseUrl = \Yii::getAlias('@web');
 $user = \Yii::$app->user;
-$this->registerJsFile($baseUrl  . '/assets/scripts/relatedContent.js', ['position' => \yii\web\View::POS_END]);
+$this->registerCssFile($baseUrl  . '/assets/global/plugins/bootstrap-daterangepicker/daterangepicker.min.css') ;
+$this->registerCssFile($baseUrl  . '/assets/global/plugins/bootstrap-datepicker/css/bootstrap-datepicker3.min.css') ;
+$this->registerCssFile($baseUrl  . '/assets/global/plugins/bootstrap-timepicker/css/bootstrap-timepicker.min.css') ;
+$this->registerCssFile($baseUrl  . '/assets/global/plugins/bootstrap-datetimepicker/css/bootstrap-datetimepicker.min.css') ;
+$this->registerCssFile($baseUrl  . '/assets/global/plugins/clockface/css/clockface.css') ;
 
+
+$this->registerJsFile($baseUrl  . '/assets/global/plugins/ckeditor/ckeditor.js', ['position' => \yii\web\View::POS_END]);
+$this->registerJsFile($baseUrl  . '/assets/global/plugins/moment.min.js', ['position' => \yii\web\View::POS_END]);
+$this->registerJsFile($baseUrl  . '/assets/global/plugins/bootstrap-daterangepicker/daterangepicker.min.js', ['position' => \yii\web\View::POS_END]);
+$this->registerJsFile($baseUrl  . '/assets/global/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js', ['position' => \yii\web\View::POS_END]);
+$this->registerJsFile($baseUrl  . '/assets/global/plugins/bootstrap-timepicker/js/bootstrap-timepicker.min.js', ['position' => \yii\web\View::POS_END]);
+$this->registerJsFile($baseUrl  . '/assets/global/plugins/bootstrap-datetimepicker/js/bootstrap-datetimepicker.min.js', ['position' => \yii\web\View::POS_END]);
+$this->registerJsFile($baseUrl  . '/assets/global/plugins/clockface/js/clockface.js', ['position' => \yii\web\View::POS_END]);
+$this->registerJsFile($baseUrl  . '/assets/pages/scripts/components-date-time-pickers.min.js', ['position' => \yii\web\View::POS_END]);
 ?>
 <div class="col-md-12">
     <div id="content-main" class="portlet box blue" data-entity="<?php // echo Entity::TYPE_CONTENT?>">
@@ -85,18 +98,15 @@ $this->registerJsFile($baseUrl  . '/assets/scripts/relatedContent.js', ['positio
                                             <div class="form-body">
                                                 <div class="form-group">
                                                 	<label class="control-label">กรอกชื่อรุ่น</label>
-                                                    <?php echo Html::activeInput('text', $pond, 'title', ['id'=>'title','class' => 'form-control','require', 'maxlength'=>140,'placeholder' => 'กรอกชื่อรุ่น..','title' => 'ชื่อรุ่น ..']);?>
-                                                    <span class="help-block pull-right" id="title-available-char"></span>
-                                                    <span class="help-block">
-                                                        Maxlength is 140 chars. </span>
+                                                	<?php echo Html::textInput('title', $pond->title, array('class'=>'form-control','title'=>'ชื่อรุ่น ..','placeholder'=>'กรอกชื่อรุ่น..'))?>
                                                 </div>
                                                 <div class="form-group">
 													<label class="control-label">เลือกบ่อ</label>
-													<?= Html::dropDownList('type', ' ', $arrTypelist , ['id'=>'type','class' => 'form-control input-medium'])?>	
+													<?php echo Html::dropDownList('type', ' ', $arrTypelist , ['id'=>'type','class' => 'form-control input-medium'])?>	
 												</div>
                                                 <div class="form-group">
                                                     <label class="control-label">คำอธิบาย ข้อมูลอื่นๆ ของรุ่นนี้</label>
-                                                    <?php echo Html::activeTextarea($pond, 'pond', ['id'=>'content_textarea','class' => 'form-control', 'rows'=>'20', 'style'=>'font-size:14px;'])?>
+                                                    <?php echo Html::textarea('description', $pond->pond, array('class'=>'ckeditor form-control','rows'=>'20','placeholder'=>'กรอกชื่อรุ่น..'))?>
                                                 </div>                                            
                                             </div>
                                         </div>
@@ -122,44 +132,42 @@ $this->registerJsFile($baseUrl  . '/assets/scripts/relatedContent.js', ['positio
                                         <div class="portlet-body form">
 
                                             <div class="form-body">
-                                                <h3 class="form-section">ข้อมูล ลูกกุ้งที่ปล่อยลงในบ่อ</h3>
+                                                <h3 class="form-section">ลูกกุ้งที่ปล่อยลงในบ่อ</h3>
+                                                <div class="form-group">
+                                                    <label class="control-label">จำนวนลูกกุ้ง</label>
+                                                   <?php echo Html::textInput('larvae', $pond->larvae,  array('id'=>'larvae','class' => 'form-control','placeholder'=>'ระบุจำนวน..'))?>	
+                                                </div>
                                                 <div class="form-group">
                                                     <label class="control-label">ชนิดของลูกกุ้ง</label>
-                                                   <?php // echo Html::activeDropDownList($pond, 'type', pond::$arrTypeTpbs, ['class'=>'form-control select2me', 'data-placeholder'=>'Select...'])?>
+                                                   <?php echo Html::dropDownList('larvaeType', $pond->larvaeType, pond::$larvaeType , ['id'=>'larvaeType','class' => 'form-control input-smail'])?>	
                                                 </div>
                                                 <div class="form-group">
                                                 	<label class="control-label">ราคาของลูกกุ้ง</label>
-                                                    <?php // echo Html::dropDownList('categoryId', $pond->categoryId, [0=>'เลือกหมวดหมู่'] + CategoryTree::getAllRootNode(), ['id'=> 'categoryId', 'class'=> 'form-control select2me'])?>
+                                                    <?php echo Html::textInput('larvaePrice', $pond->larvaePrice, array('class'=>'form-control','title'=>'ราคา ..','placeholder'=>'กรอกราคา..'))?>
                                                 </div>
                                                 <div class="form-group">
                                                     <label class="control-label">บริษัท / ฟาร์ม ที่รับมา</label>
-                                                   <?php // echo Html::activeDropDownList($pond, 'tpbsId', [0=> 'เลือกหัวข้อ'] + $arrFeed, ['class'=>'form-control select2me', 'data-placeholder'=>'Select...'])?>
+                                                      <?php echo Html::textInput('larvaeCompany', $pond->larvaeCompany, array('class'=>'form-control','title'=>'ราคา ..','placeholder'=>'กรอกชื่อบริษัท..'))?>
                                                 </div>
                                             </div>
-                                            
                                             <div class="form-body">
                                                 <h3 class="form-section">วันที่ ปล่อยลงบ่อ</h3>
                                                 <div class="form-group">
-													<label class="control-label">Credit :</label>
-													<?php // echo Html::activeTextInput($pond,'credit',array('class'=>'form-control medium'))?>
-												</div>
-                                                <div class="form-group">
-                                                    <label class="control-label">สถานะ</label>
-                                            <?php // if(!$canPublishNews && ($pond->status == Workflow::STATUS_PUBLISHED)):?>
-                                            		<p><?php // echo Workflow::$arrStatusTpbs[$pond->status]?></p>
-                                            <?php // else :?>
-                                            	<?php // echo Html::activeDropDownList($pond, 'status', $arrStatus, ['class'=>'form-control select2me', 'data-placeholder'=>'Select...'])?>
-                                            <?php // endif;?>
-                                                </div>
-                                                <div class="form-group">
-	                                                <p class="news-calendar">
-														<i class="fa fa-calendar"></i> กำหนดจับกุ้ง
+                                               		<p class="news-calendar">
+														<i class="fa fa-calendar"></i> วันที่ และเวลาปล่อยลูกกุ้ง
 													</p>
-													<label class="control-label">วันที่</label>
-													<?php echo Html::textInput('pond_date', $pondDate, array('class'=>'form-control form-control-inline  date-picker'))?>
-                                                	<label class="control-label">เวลา</label>
-                                                	<?php echo Html::textInput('pond_time', $pondTime, array('class'=>'form-control timepicker-24'))?>
-                                                </div>
+												<div class="input-group date form_meridian_datetime input-large" data-date="">
+                                                  <?php echo Html::textInput('releaseTime', $pond->releaseTime, array('class'=>'form-control','title'=>'วันที่ปล่อย ..','placeholder'=>'ระบุวันที่..'))?>
+                                                      <span class="input-group-btn">
+                                                        <button class="btn default date-reset" type="button">
+                                                           <i class="fa fa-times"></i>
+                                                           </button>
+                                                           <button class="btn default date-set" type="button">
+                                                           <i class="fa fa-calendar"></i>
+                                                        </button>
+                                                      </span>
+                                                  </div>
+												</div>
                                             </div>
                                         </div>
                                     </div>
@@ -179,7 +187,7 @@ $this->registerJsFile($baseUrl  . '/assets/scripts/relatedContent.js', ['positio
                                 </div>
                             </div>
                             <!-- end ข้อมูลข่าว -->
-<?php ActiveForm::end() ?>
+					<?php ActiveForm::end() ?>
                     </div>
                     <div class="tab-pane" id="tab12">
                     002
@@ -202,48 +210,3 @@ $this->registerJsFile($baseUrl  . '/assets/scripts/relatedContent.js', ['positio
         </div>
     </div>
 </div>
-
-<script>
-
-$(document).ready(function() {       
-    $('#maxlength_140').maxlength({
-        limitReachedClass: "label label-danger",
-        threshold: 50
-    });
-    
-    $('#maxlength_255').maxlength({
-        limitReachedClass: "label label-danger",
-        threshold: 55
-    });
-
-    
-    if($('input[name=expire_date]').val() == ""){
-    	$('input[name=expire_time]').val("")
-    }else{
-        $('input[name=expire_time]').addClass("timepicker-24");
-    }
-
-    var length = $("#title").val().length;
-	var availableChar = 140-length;
-	$("#title-available-char").html(availableChar);
-    
-});
-
-$('input[name=expire_date]').on("change", function(){
-	if($('input[name=expire_date]').val() != ""){
-		$('input[name=expire_time]').timepicker({
-            autoclose: true,
-            minuteStep: 1,
-            showSeconds: true,
-            showMeridian: false
-        });
-	}
-});
-
-$("#title").on("change keyup paste", function(){
-    var length = $("#title").val().length;
-	var availableChar = 140-length;
-	$("#title-available-char").html(availableChar);
-});
-
-</script>

@@ -99,6 +99,21 @@ $template = array(
                                     </a>
                                 </li>
                         <li class="heading">
+                            <h3 class="uppercase"> ข้อมูลฟาร์ม</h3>
+                        </li>        
+                         <li class="nav-item  <?php echo $myUrl == Url::toRoute('site/about')?'active':'';?> ">
+                            <a href="<?php echo Url::toRoute('site/about') ?>" class="nav-link nav-toggle">
+                                <i class="icon-user"></i>
+                                <span class="title"> เกี่ยวกับเรา</span>
+                            </a>
+                        </li>
+                         <li class="nav-item  <?php echo $myUrl == Url::toRoute('site/contact')?'active':'';?> ">
+                            <a href="<?php echo Url::toRoute('site/contact') ?>" class="nav-link nav-toggle">
+                                <i class="icon-user"></i>
+                                <span class="title"> ติดต่อเรา</span>
+                            </a>
+                        </li>
+                        <li class="heading">
                             <h3 class="uppercase"> จัดการระบบ</h3>
                         </li>
                         <li class="nav-item  <?php echo $myUrl == Url::toRoute('user/list')?'active':'';?> ">

@@ -4,7 +4,7 @@ use yii\helpers\Url;
 use yii\widgets\LinkPager;
 use yii\helpers\Html;
 use yii\web\View;
-use common\models\Content;
+use common\models\Pond;
 use app\DateUtil;
 use app\Workflow;
 use common\models\ObjectCategory;
@@ -109,7 +109,7 @@ ActiveForm::begin(['id' => 'dataTable-form']);
                  		             รุ่นที่
                         </th>
                         <th>
-                    		 วัน/เดือน/ปี
+                    		 วันที่ปล่อยกุ้ง
                         </th>
                         <th>
                           	  จำนวนลูกกุ้ง
@@ -126,85 +126,63 @@ ActiveForm::begin(['id' => 'dataTable-form']);
                         <th>
                                                                          ผู้แก้ไข
                         </th>
+                        <th>
+                                                                          สร้างเมื่อ
+                        </th>
+                         <th>
+                                                                         ผู้สร้าง
+                        </th>
+
                     </tr>
                 </thead>
                 <tbody>
 <?php 
 	if($lst):
-		foreach ($lst as $Content):
-		$viewCount = $Content->viewCount?number_format($Content->viewCount):0;
-		$node = isset($Content->categoryId)?CategoryTree::getNode($Content->categoryId):'-';
-		
-		$arrStatus = isset(Workflow::$arrStatusTpbsIcon[$Content->status])?Workflow::$arrStatusTpbsIcon[$Content->status]:NULL;
-
-		$query = Media::find();
-		$query->andWhere(['type'=> Entity::TYPE_CONTENT, 'refId'=> $Content->id]);
-		$mediaCount = $query->count();
-		
-		$hasPreview = (bool)$Content->previewRefId;
+		foreach ($lst as $Pond):
 ?>                
                     <tr class="odd">
                         <td>
                         	<?php
                         		$disable = [];
-                        	 	if(!$canPublishNews && $Content->status == Workflow::STATUS_PUBLISHED){
+                        	 	if(!$canPublishNews && $Pond->status == Workflow::STATUS_PUBLISHED){
                         	 		$disable["disabled"] = "disabled";
                         	 	}?>
                         	
-                            <?php echo Html::checkbox('idCheck[]', false, ['value'=> $Content->id, 'class'=> 'checkboxes'] + $disable)?>
+                            <?php echo Html::checkbox('idCheck[]', false, ['value'=> $Pond->id, 'class'=> 'checkboxes'] + $disable)?>
                         </td>
                         <td>
-                            <?php echo $Content->id;?>
+                            <?php echo $Pond->id;?>
                         </td>
                         <td>
-                            <a href="<?= Url::toRoute(['content/edit','id'=>$Content->id])?>"><?php echo $Content->title;?></a>
+                            <a href="<?= Url::toRoute(['pond/edit'])?>?id=<?php echo $Pond->id; ?>"><?php echo $Pond->title;?></a>
                         </td>
                         <td>
-                            <?php echo isset(Content::$arrType[$Content->type])?Content::$arrType[$Content->type]:'-';?>
+                        <?php echo DateUtil::th_date(DateUtil::SDT_FMT_TH, strtotime($Pond->releaseTime));?>
+                            
                         </td>
                         <td class="center">
-                            <?php echo $node->title;?>
+                            <?php echo $Pond->larvae;?>
                         </td>
                         <td>
-                        <?php 
-                        	if($arrStatus):
-                        ?>
-                        	<a href="javascript:;" title="<?php echo Workflow::$arrThStatusTpbs[$Content->status]?>" class="btn btn-icon-only <?php echo $arrStatus['css']?>">
-                                <i class="fa <?php echo $arrStatus['icon']?>"></i>
-                            </a>
-                        <?php 
-                        	endif;
-                        ?>
-						<?php if(false): //$hasPreview?>
-							<a href="javascript:;" title="มีรูปจั่ว" class="btn btn-icon-only green">
-                                <i class="fa fa-star-o"></i>
-                            </a>
-						<?php endif;?>
-						<?php if($mediaCount > 0):?>		
-                            <a href="javascript:;" title="มีรูปแล้ว" class="btn btn-icon-only hasmedia">
-                                <i class="fa fa-picture-o"></i>
-                            </a>
-                        <?php endif;?>
-                        <?php if($Content->hasVideo):?>
-                            <a href="javascript:;" title="มีวีดีโอ" class="btn btn-icon-only hasvideo">
-                                <i class="fa fa-video-camera"></i>
-                            </a>
-                        <?php endif;?>
-                        <?php if($Content->hasComment):?>
-                            <a href="javascript:;" title="มี comment" class="btn btn-icon-only hascomment">
-                                <i class="fa fa-comments"></i>
-                            </a>
-                        <?php endif;?>
+                        <?php echo isset($Pond->larvaeType)?Pond::$larvaeType[$Pond->larvaeType]:'-';?>
                         </td>
                         <td class="center">
-                            <?php echo $viewCount;?> ครั้ง
+							<?php echo $Pond->larvaeCompany;?>
                         </td>
                         <td class="center">
-                           	<?php echo DateUtil::th_date(DateUtil::SDT_FMT_TH, strtotime($Content->lastUpdateTime));?>
+                           	<?php echo DateUtil::th_date(DateUtil::SDT_FMT_TH, strtotime($Pond->lastUpdateTime));?>
                         </td>
                         <td class="center">
-                            <?php echo $arrUser[$Content->lastUpdateBy]?>
+                            <?php echo $arrUser[$Pond->lastUpdateBy]?>
                         </td>
+                        <td class="center">
+                           	<?php echo DateUtil::th_date(DateUtil::SDT_FMT_TH, strtotime($Pond->createTime));?>
+                        </td>
+                         <td class="center">
+                            <?php echo $arrUser[$Pond->createBy]?>
+                        </td>
+
+                        
                     </tr>
 <?php 
 		endforeach;

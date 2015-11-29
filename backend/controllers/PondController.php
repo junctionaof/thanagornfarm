@@ -282,9 +282,6 @@ class PondController extends BaseController {
     	}
     	
     	$query->orderBy('lastUpdateTime DESC');
-    	if(!empty($order) && $order != -1){
-    		$query->orderBy("viewCount $order");
-    	}
     	
     	if(!empty($q)){
     		$query->andWhere(['LIKE', 'title', $q]);
@@ -345,53 +342,57 @@ class PondController extends BaseController {
     	$request = Yii::$app->request;
     	$identity = \Yii::$app->user->getIdentity();
     	$currentTs =time();
-    	
     	$id = $request->post('id', 0);
     	if (empty($id))
     		$id = $request->get('id', 0);
     	
     	$pond = pond::findOne(['id'=> $id]);
     	
+    	$type = $request->post('type', 0);
+    		if (empty($type)) $type = $request->get('type', 0);
+    		
+    	$description= $request->post('description', 0);
+    		if (empty($description)) $description = $request->get('description', 0);
+    	
+    	$larvae = $request->post('larvae', 0);
+    		if (empty($larvae)) $larvae = $request->get('larvae', 0);
+    		 
+    	$larvaeType= $request->post('larvaeType', 0);
+    		if (empty($larvaeType)) $larvaeType = $request->get('larvaeType', 0);
+    		     		
+    	$larvaePrice = $request->post('larvaePrice', 0);
+    		if (empty($larvaePrice)) $larvaePrice = $request->get('larvaePrice', 0);
+    		 
+    	$larvaeCompany = $request->post('larvaeCompany', 0);
+    		if (empty($larvaeCompany)) $larvaeCompany = $request->get('larvaeCompany', 0);
+    		 
+    	$releaseTime = $request->post('releaseTime',$currentTs);
+    		if (empty($releaseTime)) $releaseTime = $request->get('releaseTime',$currentTs);
+    		 
+    		
+    	$title = $request->post('title', 0);
+    		if (empty($title)) $title = $request->get('title', 0);
+    		
     	if(empty($pond)){
     		$pond = new pond();
     		$pond->createBy = $identity->id;
     		$pond->createTime = date('Y-m-d H:i:s', $currentTs);
     	} 
-    	//$pond
+    	
     	if ($request->isPost) {
-    		$categoryId = $request->post('categoryId', NULL);
-    		if (empty($categoryId))
-    			$categoryId = $request->get('categoryId', NULL);
-    		
-    		$hasVideo = $request->post('hasVideo', 0);
-			
-    		
+    				
     		$publishTs = $currentTs;
-    		$pond->publishTime = $publishTs?date(DateUtil::SQL_DT_FMT, $publishTs):null;
-			
-			$pond->attributes = $request->post('pond');
-    		$pond->categoryId = $categoryId;
+    		$pond->title = $title;
+    		$pond->type = $type;
     		$pond->lastUpdateTime = date(DateUtil::SQL_DT_FMT, $currentTs);
     		$pond->lastUpdateBy = $identity->id;
+    		$pond->larvae = $larvae;
+    		$pond->larvaeType = $larvaeType;
+    		$pond->larvaePrice = $larvaePrice;
+    		$pond->larvaeCompany = $larvaeCompany;
+    		$pond->releaseTime = $releaseTime;
     		
-    		$pond->pond = CmsTextUtil::normalize($pond->pond);
-    		
-    			
     		if($pond->save()) {
-    			/* Yii::info(json_encode(array(
-					'id'=>$pond->id,
-					'userId'=>$identity->id,
-					'status'=>$pond->status,
-    				'ts' => $currentTs,	
-				)), 'audit.pond.update.'.$pond->id); */
-    			
-    			TpbsLog::info(json_encode(array(
-					'entityType'=>Entity::TYPE_pond,
-					'refId'=>$pond->id,
-					'userId'=>$identity->id,
-					'status'=>$pond->status,
-    				'ts' => date(DateUtil::SQL_DT_FMT, $currentTs),
-				)), 'audit.pond.update');
     			Ui::setMessage('บันทึกข้อมูลสำเร็จ');
     		}else{
     			Ui::setMessage(json_encode($pond->getErrors(), JSON_UNESCAPED_UNICODE), 'warning');
@@ -486,7 +487,7 @@ class PondController extends BaseController {
     	if($_REQUEST['id']){
 	    	$model = pond::findOne(['id'=> $_REQUEST['id']]);
 	    	\Yii::$app->response->format = 'json';
-	    	echo json_encode(['id'=>$model->id,'title'=>$model->title,'viewCount'=>$model->viewCount]);
+	    	echo json_encode(['id'=>$model->id,'title'=>$model->title]);
     	}
     }
     
@@ -497,7 +498,6 @@ class PondController extends BaseController {
     	if (!empty($q)){
     			
     		$query = pond::find();
-    		$query->orderBy('publishTime DESC');
     		$query->andWhere('status=:status', [':status'=> Workflow::STATUS_PUBLISHED]);
     		if(is_numeric($q))
     			$query->andWhere(['LIKE', 'id', $q]);
@@ -509,7 +509,6 @@ class PondController extends BaseController {
     			
     	}else{
 			$query = pond::find();
-			$query->orderBy('publishTime DESC');
 			$query->andWhere('status=:status', [':status'=> Workflow::STATUS_PUBLISHED]);
 			$query->limit(30);
 			$lst = $query->all();

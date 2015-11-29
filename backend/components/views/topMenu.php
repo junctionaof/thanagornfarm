@@ -19,11 +19,13 @@ $user = \Yii::$app->user;
               <div class="page-header-inner ">
                 <!-- BEGIN LOGO -->
                 <div class="page-logo">
-                    <a href="<?php echo $baseUrl?>/"></a>
-                    <div class="menu-toggler sidebar-toggler"> 
-                     <!-- DOC: Remove the above "hide" to enable the sidebar toggler button on header -->
+                    <a href="<?php echo $baseUrl?>/">
+                        <img src="<?php echo $baseUrl?>/logo.png" alt="logo" class="logo-default"> </a>
+                    <div class="menu-toggler sidebar-toggler">
+                        <!-- DOC: Remove the above "hide" to enable the sidebar toggler button on header -->
                     </div>
                 </div>
+              
                <!-- END LOGO -->
                 <!-- BEGIN RESPONSIVE MENU TOGGLER -->
                 <a href="javascript:;" class="menu-toggler responsive-toggler" data-toggle="collapse" data-target=".navbar-collapse"> </a>
