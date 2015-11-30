@@ -10,7 +10,6 @@ use common\models\pond;
 use common\models\Typelist;
 use common\models\pondRef;
 use common\models\Media;
-use app\CategoryTree;
 use app\Workflow;
 use app\JsonPackage;
 use common\models\Feed;
@@ -22,7 +21,6 @@ use common\models\User;
 use common\models\pondPublish;
 use app\TpbsLog;
 use common\models\Document;
-use app\TrEnc;
 use app\CmsTextUtil;
 use common\models\OtherCategory;
 use yii\base\Object;
@@ -430,58 +428,9 @@ class PondController extends BaseController {
     	}
     }
     
-    public function actionInstagramapi(){
-    	$json = file_get_ponds('http://api.instagram.com/oembed?url='.$_REQUEST['objectName']);
+   
     
-    	if($json){
-    		\Yii::$app->response->format = 'json';
-    		echo $json;
-    	}else{
-    		return false;
-    	}
-    }
-    
-    public function actionSaverelated() {
-    	$success = array();
-    	if(!empty($_REQUEST['ids'])) {
-    		foreach ($_REQUEST['ids'] as $index => $data) {
-    			switch($data[0]) {
-    				case 'article':
-    				case 'news':
-    				case 'pond':
-    					$relType = Entity::TYPE_pond;
-    					break;
-    				case 'person':
-    					$relType = Entity::TYPE_PERSON;
-    					break;
-    			}
-    
-    			if(!$index) {
-    				$ret = pondRef::deleteAll('pondId=:pondId AND refType=:refType', [':pondId'=> $_REQUEST['pondId'],':refType'=> $relType]);
-    			}
-    			
-    			$query = pondRef::find();
-    			$query->andWhere('pondId=:pondId AND refType=:refType AND refId=:refId', [':pondId'=>pondEST['pondId'],':refType'=> $relType,':refId'=> $data[1]]);
-    			$rc = $query->all();
-    			
-    			if($rc == null) {
-    				$rc = new pondRef();
-    				$rc->pondId = $_REQUEST['pondId'];
-    				$rc->refType = $relType;
-    				$rc->refId = $data[1];
-    				$rc->relationType = pond::RELATIONTYPE_GENERAL;
-    				if($rc->save())
-    					$success['success'][] = $rc->refId;
-    				else
-    					$success['fail'][] = $rc->refId;
-    
-    			}
-    		}
-    	}else{
-    		pondRef::deleteAll('pondId=:pondId', [':pondId'=> $_REQUEST['pondId']]);
-    	}
-    
-    }
+ 
     
     public function actionGetpond(){
     	if($_REQUEST['id']){
@@ -522,70 +471,7 @@ class PondController extends BaseController {
     	echo json_encode($arrLst,JSON_UNESCAPED_UNICODE);
     }
     
-    public function actionGetitemsimg(){
-    
-    	$request = \Yii::$app->request;
-    	$id = $request->post('id');
-    	if(empty($id))
-    		$id = $request->get('id');
-    	 
-    	//เพิ่มการแสดงรูปสำหรับ type อื่น เช่น กิจกรรม
-    	//$type = Entity::TYPE_pond;
-    	$type = $request->get('entity');
-    	 
-    	$items = array();
-    	$query = Media::find();
-    	if(empty($id))
-    		$query->andWhere('type=:type', [':type'=>$type]);
-    	else
-    		$query->andWhere('type=:type AND refId=:refId', [':type'=>$type,':refId'=>$id]);
-    	 
-    	$options = [Media::ENCODE_WIDTH => 100];
-    	$items = Media::getItems($query, $options);
-    	 
-    	\Yii::$app->response->format = 'json';
-    	echo json_encode($items);
-    	 
-    }
-    
-    public function  actionSavepondpublish(){
-    	$request = \Yii::$app->request;
-    	$tweetpond = $request->post('tweetpond', '');
-    	$pondId = $request->post('pondId', '');
-    
-    	$model = pondPublish::find()->where('pondId=:pondId', [':pondId'=>$pondId])->one();
-    	if (empty($model)){
-    		$model = new pondPublish();
-    		$model->pondId = $pondId;
-    		$model->twitterBreaking = 1;
-    	}
-    
-    	$model->tweetpond = $tweetpond;
-    	$text = "";
-    	$result = [];
-    	$success = $model->save();
-    
-    	if ($success){
-    		$result['message'] = "บันทึกข้อมูลเรียบร้อยแล้ว";
-    		$result['success'] = true;
-    	}else{
-    		$modelError = '';
-    		$errors = $model->getErrors(null);
-    		if (is_array($errors)) {
-    			foreach($errors as $field => $fieldError) {
-    				$modelError .= "\n$field: " . join(', ', $fieldError);
-    			}
-    		}
-    		$result['message'] = 'การบันทึกข้อมูลผิดพลาด:' . $modelError;
-    		$result['success'] = false;
-    	}
-    
-    
-    	header('pond-Type: application/json');
-    
-    	echo json_encode($result);
-    }
-    
+   
     private function doDelete() {
     	$identity = \Yii::$app->user->getIdentity();
     	$currentTs =time();

@@ -77,10 +77,4 @@ $contentTime = "";
 
 	<?php Portlet::end(); ?>
 </div>
- <script>
-        <?php
-           echo TagCloud::widget([
-              'idName'=>'tag_cloud',
-           ]);
-        ?>
-   </script>         
+ 

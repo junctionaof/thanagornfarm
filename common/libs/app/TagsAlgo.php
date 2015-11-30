@@ -15,10 +15,7 @@ class TagsAlgo {
         $txt = '';
         $turnBackDay = date("Y-m-d", strtotime("-" . $turnBack . " day", strtotime($publicDay)));
 
-        $rsCon = Pond::find()->where('date(publishTime) >= :turnBackDay and date(publishTime) <= :publicDay', [
-                    ':publicDay' => $publicDay,
-                    ':turnBackDay' => $turnBackDay,
-                ])->all();
+        $rsCon = Pond::find()->all();
         foreach ($rsCon as $item) {
             $txt = $txt . $item->tags;
         }
