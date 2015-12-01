@@ -5,6 +5,8 @@ namespace backend\controllers;
 use Yii;
 use yii\web\Controller;
 use yii\data\Pagination;
+use yii\helpers;
+use yii\helpers\Url;
 
 use common\models\pond;
 use common\models\Typelist;
@@ -18,6 +20,7 @@ use app\Ui;
 use app\Entity;
 use app\DateUtil;
 use common\models\User;
+use common\models\food;
 use common\models\pondPublish;
 use app\TpbsLog;
 use common\models\Document;
@@ -445,7 +448,7 @@ class PondController extends BaseController {
     	$searchStatus = $request->post('status', $request->get('status', ''));
     	$q = trim($request->post('q', $request->get('q', '')));
     
-    	$query = Typelist::find();
+    	$query = food::find();
     	$query->orderBy(['id'=>SORT_ASC]);
     
     	if ($searchCategory)
@@ -513,7 +516,7 @@ class PondController extends BaseController {
     				]);
     }
     
-    public function actionEditfoot()
+    public function actionEditfood()
     {
     	$currentTs = time();
     	$identity = \Yii::$app->user->getIdentity();
@@ -526,7 +529,7 @@ class PondController extends BaseController {
     
     
     	}else{
-    		$model = new Typelist();
+    		$model = new food();
     		$model->createTime = date('Y-m-d H:i:s', $currentTs);
     		$model->createBy = $identity->id;
     	}
@@ -560,9 +563,22 @@ class PondController extends BaseController {
     		}
     
     	}
+
+    	$query = Pond::find()->orderBy(['id'=>SORT_ASC]);
+    	$arrTypelist = [0=>'กรุณาเลือกบ่อ  และรุ่นที่ต้องการ'];
+    	$arrTypelist += \yii\helpers\ArrayHelper::map($query->all(), 'id' ,'title','larvaeType');
+    	
+    	/* $query = Typelist::find();
+    	$query->orderBy(['id'=>SORT_ASC]);
+    	$objTypelist = $query->all();
+    	$arrTypelist = [];
+    	foreach ($objTypelist as $dataTypelist){
+    		$arrTypelist[] = $dataTypelist->name;
+    	} */
     
     	echo $this->render('editfood', [
     			'model' => $model,
+    			'arrTypelist'=> $arrTypelist,
     	]);
     }
     // End of Foot

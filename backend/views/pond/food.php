@@ -56,7 +56,7 @@ ActiveForm::begin(['id' => 'dataTable-form']);
     <div class="portlet box grey-cascade">
         <div class="portlet-title">
             <div class="caption">
-                <i class="fa fa-table"></i>จัดการบ่อเลี้ยงกุ้ง
+                <i class="fa fa-table"></i>รายการบันทึกการให้อาหาร
             </div>
             <div class="tools">
                 <a href="javascript:;" class="collapse">
@@ -70,7 +70,7 @@ ActiveForm::begin(['id' => 'dataTable-form']);
                         <div class="portlet-title">
                                 <div class="actions">
                                  	<a class="btn add" href="<?= Url::toRoute(['pond/editfood'])?>" title="เพิ่ม">
-                                        <i class="icon-plus"> เพิ่มบ่อเลี้ยงกุ้ง</i>
+                                        <i class="icon-plus"> บันทึกการให้อาหาร</i>
                                     </a>
                                 </div>
                         </div>
@@ -104,16 +104,16 @@ ActiveForm::begin(['id' => 'dataTable-form']);
                      		   บ่อที่ 
                         </th>
                         <th>
-                 		             ขนาดบ่อ
+                 		             รุ่นที่
                         </th>
                         <th>
-                    		 วัน/เดือน/ปี ที่สร้าง
+                    		 วัน/เดือน/ปี ที่ให้อาหาร
                         </th>
                         <th>
-                                                                          แก้ไขล่าสุด
+                                                                         รายละเอียด
                         </th>
                         <th>
-                                                                         ผู้แก้ไข
+                                                                         ผู้บันทึก
                         </th>
                     </tr>
                 </thead>

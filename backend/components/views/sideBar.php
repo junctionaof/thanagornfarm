@@ -34,14 +34,14 @@ $template = array(
                         <li class="heading">
                             <h3 class="uppercase">ข้อมูลบ่อเลี้ยงกุ้ง</h3>
                         </li>
-                        <li class="nav-item <?php echo $myUrl == Url::toRoute('pond/typelist')?'active':'';?> ">
+                        <li class="nav-item <?php echo $myUrl == Url::toRoute('pond/typelist') || $myUrl == Url::toRoute('pond/edittypelist')?'active':'';?> ">
                             <a href="<?php echo Url::toRoute('pond/typelist') ?>" class="nav-link nav-toggle">
                                 <i class="icon-diamond"></i>
                                 <span class="title">จัดการบ่อ</span>
          
                             </a>
                         </li>
-                        <li class="nav-item <?php echo $myUrl == Url::toRoute('pond/list')?'active':'';?> ">
+                        <li class="nav-item <?php echo $myUrl == Url::toRoute('pond/list') || $myUrl == Url::toRoute('pond/edit')?'active':'';?> ">
                             <a href="<?php echo Url::toRoute('pond/list') ?>" class="nav-link nav-toggle">
                                 <i class="icon-puzzle"></i>
                                 <span class="title">จัดการรุ่นในบ่อเลี้ยง</span>
@@ -50,49 +50,49 @@ $template = array(
                         <li class="heading">
                             <h3 class="uppercase">บันทึกค่าต่างๆ</h3>
                         </li>
-                                <li class="nav-item <?php echo $myUrl == Url::toRoute('pond/food')?'active':'';?>  ">
+                                <li class="nav-item <?php echo $myUrl == Url::toRoute('pond/food') || $myUrl == Url::toRoute('pond/editfood')?'active':'';?>  ">
                                     <a href="<?php echo Url::toRoute('pond/food') ?>" class="nav-link ">
                                     	<i class="fa fa-angle-right"></i>
                                         <span class="title"> บันทึกการให้อาหาร</span>
                                     </a>
                                 </li>
-                                <li class="nav-item <?php echo $myUrl == Url::toRoute('pond/checkyo')?'active':'';?>  ">
+                                <li class="nav-item <?php echo $myUrl == Url::toRoute('pond/checkyo') || $myUrl == Url::toRoute('pond/editcheckyo')?'active':'';?>  ">
                                     <a href="<?php echo Url::toRoute('pond/checkyo') ?>" class="nav-link ">
                                     <i class="fa fa-angle-right"></i>
                                         <span class="title"> บันทึกการเช็คยอ</span>
                                     </a>
                                 </li>
-                                <li class="nav-item <?php echo $myUrl == Url::toRoute('pond/weight')?'active':'';?>  ">
+                                <li class="nav-item <?php echo $myUrl == Url::toRoute('pond/weight') || $myUrl == Url::toRoute('pond/editweight')?'active':'';?>  ">
                                     <a href="<?php echo Url::toRoute('pond/weight') ?>" class="nav-link ">
                                     <i class="fa fa-angle-right"></i>
                                         <span class="title"> บันทึกนํ้าหนักเฉลี่ย</span>
                                     </a>
                                 </li>
-                                <li class="nav-item <?php echo $myUrl == Url::toRoute('pond/oxygen')?'active':'';?>  ">
+                                <li class="nav-item <?php echo $myUrl == Url::toRoute('pond/oxygen') || $myUrl == Url::toRoute('pond/editoxygen')?'active':'';?>  ">
                                     <a href="<?php echo Url::toRoute('pond/oxygen') ?>" class="nav-link ">
                                     <i class="fa fa-angle-right"></i>
                                         <span class="title"> บันทึกต่าออกซิเจนละลายนํ้า</span>
                                     </a>
                                 </li>
-                                <li class="nav-item <?php echo $myUrl == Url::toRoute('pond/ph')?'active':'';?>  ">
+                                <li class="nav-item <?php echo $myUrl == Url::toRoute('pond/ph') || $myUrl == Url::toRoute('pond/editph')?'active':'';?>  ">
                                     <a href="<?php echo Url::toRoute('pond/ph') ?>" class="nav-link ">
                                     <i class="fa fa-angle-right"></i>
                                         <span class="title"> บันทึกค่่า PH </span>
                                     </a>
                                 </li>
-                                <li class="nav-item <?php echo $myUrl == Url::toRoute('pond/alkalinity')?'active':'';?>  ">
+                                <li class="nav-item <?php echo $myUrl == Url::toRoute('pond/alkalinity') || $myUrl == Url::toRoute('pond/editalkalinity')?'active':'';?>  ">
                                     <a href="<?php echo Url::toRoute('pond/alkalinity') ?>" class="nav-link ">
                                     <i class="fa fa-angle-right"></i>
                                         <span class="title"> บันทุกค่าอัลคาไลน์นิติ</span>
                                     </a>
                                 </li>
-                                <li class="nav-item <?php echo $myUrl == Url::toRoute('pond/watertemp')?'active':'';?>  ">
+                                <li class="nav-item <?php echo $myUrl == Url::toRoute('pond/watertemp') || $myUrl == Url::toRoute('pond/editwatertemp') ?'active':'';?>  ">
                                     <a href="<?php echo Url::toRoute('pond/watertemp') ?>" class="nav-link ">
                                     <i class="fa fa-angle-right"></i>
                                         <span class="title"> บันทึกค่าอุณหฤูมมิของนํ้า</span>
                                     </a>
                                 </li>
-                                <li class="nav-item <?php echo $myUrl == Url::toRoute('pond/temp')?'active':'';?>  ">
+                                <li class="nav-item <?php echo $myUrl == Url::toRoute('pond/temp') || $myUrl == Url::toRoute('pond/edittemp') ?'active':'';?>  ">
                                     <a href="<?php echo Url::toRoute('pond/temp') ?>" class="nav-link ">
                                     <i class="fa fa-angle-right"></i>
                                         <span class="title">บันทึกค่าอุณหฤูมมิ</span>
