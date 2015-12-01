@@ -69,7 +69,7 @@ ActiveForm::begin(['id' => 'dataTable-form']);
                     <div class="col-md-6">
                         <div class="portlet-title">
                                 <div class="actions">
-                                 	<a class="btn add" href="<?= Url::toRoute(['pond/edittype'])?>" title="เพิ่ม">
+                                 	<a class="btn add" href="<?= Url::toRoute(['pond/editoxyge'])?>" title="เพิ่ม">
                                         <i class="icon-plus"> เพิ่มบ่อเลี้ยงกุ้ง</i>
                                     </a>
                                 </div>

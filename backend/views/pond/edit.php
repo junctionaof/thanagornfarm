@@ -26,46 +26,21 @@ use common\models\Typelist;
 
 $pondDate = "";
 $pondTime = "";
-/* $ts = DateUtil::ParseSQLDate($pond->publishTime);
-if ($ts) {
-	$pondDate = date('Y-m-d', $ts);
-	$pondTime = date('H:i', $ts);
-	if (substr($pondTime, -3) == ':00')
-		$pondTime = substr($pondTime, 0, -3);
-}
-
-
-$ts = DateUtil::ParseSQLDate($pond->publishTime);
-if ($ts) {
-	$pondDate = date('Y-m-d', $ts);
-	$pondTime = date('H:i', $ts);
-	if (substr($pondTime, -3) == ':00')
-		$pondTime = substr($pondTime, 0, -3);
-}
-
-// expire Time
-$expireDate = null;
-$expireTime = null;
-$ts = DateUtil::ParseSQLDate($pond->expireTime);
-if ($ts) {
-	$expireDate = date('Y-m-d', $ts);
-	$expireTime = date('H:i', $ts);
-	
-} */
-
 ?>
 
 <?php 
 $identity = \Yii::$app->user->getIdentity();
 $baseUrl = \Yii::getAlias('@web');
 $user = \Yii::$app->user;
-$this->registerCssFile($baseUrl  . '/assets/global/plugins/bootstrap-daterangepicker/daterangepicker.min.css') ;
-$this->registerCssFile($baseUrl  . '/assets/global/plugins/bootstrap-datepicker/css/bootstrap-datepicker3.min.css') ;
-$this->registerCssFile($baseUrl  . '/assets/global/plugins/bootstrap-timepicker/css/bootstrap-timepicker.min.css') ;
-$this->registerCssFile($baseUrl  . '/assets/global/plugins/bootstrap-datetimepicker/css/bootstrap-datetimepicker.min.css') ;
-$this->registerCssFile($baseUrl  . '/assets/global/plugins/clockface/css/clockface.css') ;
 
+//register Css
+$this->registerCssFile($baseUrl  . '/assets/global/plugins/bootstrap-daterangepicker/daterangepicker.min.css',['position' => \yii\web\View::POS_HEAD]) ;
+$this->registerCssFile($baseUrl  . '/assets/global/plugins/bootstrap-datepicker/css/bootstrap-datepicker3.min.css',['position' => \yii\web\View::POS_HEAD]) ;
+$this->registerCssFile($baseUrl  . '/assets/global/plugins/bootstrap-timepicker/css/bootstrap-timepicker.min.css',['position' => \yii\web\View::POS_HEAD]) ;
+$this->registerCssFile($baseUrl  . '/assets/global/plugins/bootstrap-datetimepicker/css/bootstrap-datetimepicker.min.css',['position' => \yii\web\View::POS_HEAD]) ;
+$this->registerCssFile($baseUrl  . '/assets/global/plugins/clockface/css/clockface.css',['position' => \yii\web\View::POS_HEAD]) ;
 
+//Register Js
 $this->registerJsFile($baseUrl  . '/assets/global/plugins/ckeditor/ckeditor.js', ['position' => \yii\web\View::POS_END]);
 $this->registerJsFile($baseUrl  . '/assets/global/plugins/moment.min.js', ['position' => \yii\web\View::POS_END]);
 $this->registerJsFile($baseUrl  . '/assets/global/plugins/bootstrap-daterangepicker/daterangepicker.min.js', ['position' => \yii\web\View::POS_END]);
@@ -74,6 +49,7 @@ $this->registerJsFile($baseUrl  . '/assets/global/plugins/bootstrap-timepicker/j
 $this->registerJsFile($baseUrl  . '/assets/global/plugins/bootstrap-datetimepicker/js/bootstrap-datetimepicker.min.js', ['position' => \yii\web\View::POS_END]);
 $this->registerJsFile($baseUrl  . '/assets/global/plugins/clockface/js/clockface.js', ['position' => \yii\web\View::POS_END]);
 $this->registerJsFile($baseUrl  . '/assets/pages/scripts/components-date-time-pickers.min.js', ['position' => \yii\web\View::POS_END]);
+
 ?>
 <div class="col-md-12">
     <div id="content-main" class="portlet box blue" data-entity="<?php // echo Entity::TYPE_CONTENT?>">

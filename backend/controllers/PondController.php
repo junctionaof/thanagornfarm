@@ -34,6 +34,7 @@ class PondController extends BaseController {
     public function actionIndex() {
         echo $this->render('index');
     }
+    
     public function actionTypelist() {
     	
     		$currentTs =time();
@@ -164,6 +165,1077 @@ class PondController extends BaseController {
     			'model' => $model,
     	]);
     }
+    
+    
+    
+    //    หน้า การวิเคราะห์ความเป็นด่าง หรือ อัลคาลินิตี้ (Alkalinity) 
+    //
+    public function actionAlkalinity() {
+    	$currentTs =time();
+    	$request = Yii::$app->request;
+    	$identity = \Yii::$app->user->getIdentity();
+    	 
+    	$searchCategory = $request->post('type', $request->get('type', ''));
+    	$searchStatus = $request->post('status', $request->get('status', ''));
+    	$q = trim($request->post('q', $request->get('q', '')));
+    	 
+    	$query = Typelist::find();
+    	$query->orderBy(['id'=>SORT_ASC]);
+    	 
+    	if ($searchCategory)
+    		$query->andWhere('type = :type',[':type' => $searchCategory]);
+    		 
+    		 
+    		if ($searchStatus)
+    			$query->andWhere('status = :status',[':status' => $searchStatus]);
+    			 
+    			if ($q)
+    				$query->andWhere(['LIKE' ,'name','%'.$q.'%', false]);
+    				 
+    				 
+    				//actions
+    				switch ($request->post('op')){
+    					case 'publish':
+    						var_dump($model);exit;
+    						$model->status = Workflow::STATUS_PUBLISHED;
+    						$model->save();
+    						break;
+    					case 'unpublish':
+    						$model->status = Workflow::STATUS_REJECTED;
+    						$model->save();
+    						break;
+    					case 'delete':
+    						$this->doDelete();
+    						break;
+    				}
+    				 
+    				//paging
+    				$pagination = new Pagination([
+    						'defaultPageSize' => \Yii::$app->params['ui']['defaultPageSize'],
+    						'totalCount' => $query->count(),
+    				]);
+    				$pagination->params = ['status'=>$searchStatus,
+    						'categoryId'=>$searchCategory,
+    						'q'=>$q,
+    						'page'=>$pagination->page,
+    				];
+    				$query->offset($pagination->offset);
+    				$query->limit($pagination->limit);
+    				 
+    				$list = $query->all();
+    				 
+    				//get users
+    				$arrId = [];
+    				$arrUser = [];
+    				if (!empty($list)){
+    					foreach ($list as $obj){
+    						$arrId[] = $obj->createBy;
+    					}
+    					$modelsUser = User::find()->where(['id'=>$arrId])->all();
+    					if(!empty($modelsUser)){
+    						foreach ($modelsUser as $obj){
+    							$arrUser[$obj->id] = $obj->firstName.' '.$obj->lastName;
+    						}
+    					}
+    				}
+    				 
+    				echo $this->render('alkalinity', [
+    						'lst' => $list,
+    						'pagination' => $pagination,
+    						'arrUser' =>$arrUser,
+    						'q'=>$q,
+    				]);
+    }
+    
+    public function actionEditalkalinity()
+    {
+    	$currentTs = time();
+    	$identity = \Yii::$app->user->getIdentity();
+    	$request = \Yii::$app->request;
+    	$id = $request->get('id', $request->post('id', null));
+    	$query = Typelist::find();
+    	if ($id){
+    		$query->where("id=".$id);
+    		$model = $query->one();
+    
+    
+    	}else{
+    		$model = new Typelist();
+    		$model->createTime = date('Y-m-d H:i:s', $currentTs);
+    		$model->createBy = $identity->id;
+    	}
+    
+    	if($request->isPost){
+    		$model->name = $_POST['Typelist']['name'];
+    		$model->size =$_POST['Typelist']['size'];
+    
+    		if (trim($model->name) == ''){
+    			$model->addError('name', 'ไม่ได้กรอกชื่อบ่อ');
+    		}
+    
+    		if (trim($model->size) == ''){
+    			$model->addError('size', 'ไม่ได้กรอกขนาดบ่อ');
+    		}
+    
+    		if (!$model->hasErrors()) {
+    			$model->save();
+    			//UiMessage::setMessage('บันทึกข้อมูลเรียบร้อยแล้ว');
+    			return $this->redirect('typelist');
+    		}
+    		else {
+    			$modelError = '';
+    			$errors = $model->getErrors(null);
+    			if (is_array($errors)) {
+    				foreach($errors as $field => $fieldError) {
+    					$modelError .= "\n$field: " . join(', ', $fieldError);
+    				}
+    			}
+    			UiMessage::setMessage('การบันทึกข้อมูลผิดพลาด:' . $modelError, 'warning');
+    		}
+    
+    	}
+    
+    	echo $this->render('editalkalinity', [
+    			'model' => $model,
+    	]);
+    }
+    // End of Alkalinity
+    
+    
+    // Start Checkyo 
+    public function actionCheckyo() {
+    	$currentTs =time();
+    	$request = Yii::$app->request;
+    	$identity = \Yii::$app->user->getIdentity();
+    
+    	$searchCategory = $request->post('type', $request->get('type', ''));
+    	$searchStatus = $request->post('status', $request->get('status', ''));
+    	$q = trim($request->post('q', $request->get('q', '')));
+    
+    	$query = Typelist::find();
+    	$query->orderBy(['id'=>SORT_ASC]);
+    
+    	if ($searchCategory)
+    		$query->andWhere('type = :type',[':type' => $searchCategory]);
+    		 
+    		 
+    		if ($searchStatus)
+    			$query->andWhere('status = :status',[':status' => $searchStatus]);
+    
+    			if ($q)
+    				$query->andWhere(['LIKE' ,'name','%'.$q.'%', false]);
+    					
+    					
+    				//actions
+    				switch ($request->post('op')){
+    					case 'publish':
+    						var_dump($model);exit;
+    						$model->status = Workflow::STATUS_PUBLISHED;
+    						$model->save();
+    						break;
+    					case 'unpublish':
+    						$model->status = Workflow::STATUS_REJECTED;
+    						$model->save();
+    						break;
+    					case 'delete':
+    						$this->doDelete();
+    						break;
+    				}
+    					
+    				//paging
+    				$pagination = new Pagination([
+    						'defaultPageSize' => \Yii::$app->params['ui']['defaultPageSize'],
+    						'totalCount' => $query->count(),
+    				]);
+    				$pagination->params = ['status'=>$searchStatus,
+    						'categoryId'=>$searchCategory,
+    						'q'=>$q,
+    						'page'=>$pagination->page,
+    				];
+    				$query->offset($pagination->offset);
+    				$query->limit($pagination->limit);
+    					
+    				$list = $query->all();
+    					
+    				//get users
+    				$arrId = [];
+    				$arrUser = [];
+    				if (!empty($list)){
+    					foreach ($list as $obj){
+    						$arrId[] = $obj->createBy;
+    					}
+    					$modelsUser = User::find()->where(['id'=>$arrId])->all();
+    					if(!empty($modelsUser)){
+    						foreach ($modelsUser as $obj){
+    							$arrUser[$obj->id] = $obj->firstName.' '.$obj->lastName;
+    						}
+    					}
+    				}
+    					
+    				echo $this->render('checkyo', [
+    						'lst' => $list,
+    						'pagination' => $pagination,
+    						'arrUser' =>$arrUser,
+    						'q'=>$q,
+    				]);
+    }
+    
+    public function actionEditcheckyo()
+    {
+    	$currentTs = time();
+    	$identity = \Yii::$app->user->getIdentity();
+    	$request = \Yii::$app->request;
+    	$id = $request->get('id', $request->post('id', null));
+    	$query = Typelist::find();
+    	if ($id){
+    		$query->where("id=".$id);
+    		$model = $query->one();
+    
+    
+    	}else{
+    		$model = new Typelist();
+    		$model->createTime = date('Y-m-d H:i:s', $currentTs);
+    		$model->createBy = $identity->id;
+    	}
+    
+    	if($request->isPost){
+    		$model->name = $_POST['Typelist']['name'];
+    		$model->size =$_POST['Typelist']['size'];
+    
+    		if (trim($model->name) == ''){
+    			$model->addError('name', 'ไม่ได้กรอกชื่อบ่อ');
+    		}
+    
+    		if (trim($model->size) == ''){
+    			$model->addError('size', 'ไม่ได้กรอกขนาดบ่อ');
+    		}
+    
+    		if (!$model->hasErrors()) {
+    			$model->save();
+    			//UiMessage::setMessage('บันทึกข้อมูลเรียบร้อยแล้ว');
+    			return $this->redirect('typelist');
+    		}
+    		else {
+    			$modelError = '';
+    			$errors = $model->getErrors(null);
+    			if (is_array($errors)) {
+    				foreach($errors as $field => $fieldError) {
+    					$modelError .= "\n$field: " . join(', ', $fieldError);
+    				}
+    			}
+    			UiMessage::setMessage('การบันทึกข้อมูลผิดพลาด:' . $modelError, 'warning');
+    		}
+    
+    	}
+    
+    	echo $this->render('editcheckyo', [
+    			'model' => $model,
+    	]);
+    }
+    // End of Checkyo
+    
+    
+    // Start Food 
+    public function actionFood() {
+    	$currentTs =time();
+    	$request = Yii::$app->request;
+    	$identity = \Yii::$app->user->getIdentity();
+    
+    	$searchCategory = $request->post('type', $request->get('type', ''));
+    	$searchStatus = $request->post('status', $request->get('status', ''));
+    	$q = trim($request->post('q', $request->get('q', '')));
+    
+    	$query = Typelist::find();
+    	$query->orderBy(['id'=>SORT_ASC]);
+    
+    	if ($searchCategory)
+    		$query->andWhere('type = :type',[':type' => $searchCategory]);
+    		 
+    		 
+    		if ($searchStatus)
+    			$query->andWhere('status = :status',[':status' => $searchStatus]);
+    
+    			if ($q)
+    				$query->andWhere(['LIKE' ,'name','%'.$q.'%', false]);
+    					
+    					
+    				//actions
+    				switch ($request->post('op')){
+    					case 'publish':
+    						var_dump($model);exit;
+    						$model->status = Workflow::STATUS_PUBLISHED;
+    						$model->save();
+    						break;
+    					case 'unpublish':
+    						$model->status = Workflow::STATUS_REJECTED;
+    						$model->save();
+    						break;
+    					case 'delete':
+    						$this->doDelete();
+    						break;
+    				}
+    					
+    				//paging
+    				$pagination = new Pagination([
+    						'defaultPageSize' => \Yii::$app->params['ui']['defaultPageSize'],
+    						'totalCount' => $query->count(),
+    				]);
+    				$pagination->params = ['status'=>$searchStatus,
+    						'categoryId'=>$searchCategory,
+    						'q'=>$q,
+    						'page'=>$pagination->page,
+    				];
+    				$query->offset($pagination->offset);
+    				$query->limit($pagination->limit);
+    					
+    				$list = $query->all();
+    					
+    				//get users
+    				$arrId = [];
+    				$arrUser = [];
+    				if (!empty($list)){
+    					foreach ($list as $obj){
+    						$arrId[] = $obj->createBy;
+    					}
+    					$modelsUser = User::find()->where(['id'=>$arrId])->all();
+    					if(!empty($modelsUser)){
+    						foreach ($modelsUser as $obj){
+    							$arrUser[$obj->id] = $obj->firstName.' '.$obj->lastName;
+    						}
+    					}
+    				}
+    					
+    				echo $this->render('food', [
+    						'lst' => $list,
+    						'pagination' => $pagination,
+    						'arrUser' =>$arrUser,
+    						'q'=>$q,
+    				]);
+    }
+    
+    public function actionEditfoot()
+    {
+    	$currentTs = time();
+    	$identity = \Yii::$app->user->getIdentity();
+    	$request = \Yii::$app->request;
+    	$id = $request->get('id', $request->post('id', null));
+    	$query = Typelist::find();
+    	if ($id){
+    		$query->where("id=".$id);
+    		$model = $query->one();
+    
+    
+    	}else{
+    		$model = new Typelist();
+    		$model->createTime = date('Y-m-d H:i:s', $currentTs);
+    		$model->createBy = $identity->id;
+    	}
+    
+    	if($request->isPost){
+    		$model->name = $_POST['Typelist']['name'];
+    		$model->size =$_POST['Typelist']['size'];
+    
+    		if (trim($model->name) == ''){
+    			$model->addError('name', 'ไม่ได้กรอกชื่อบ่อ');
+    		}
+    
+    		if (trim($model->size) == ''){
+    			$model->addError('size', 'ไม่ได้กรอกขนาดบ่อ');
+    		}
+    
+    		if (!$model->hasErrors()) {
+    			$model->save();
+    			//UiMessage::setMessage('บันทึกข้อมูลเรียบร้อยแล้ว');
+    			return $this->redirect('typelist');
+    		}
+    		else {
+    			$modelError = '';
+    			$errors = $model->getErrors(null);
+    			if (is_array($errors)) {
+    				foreach($errors as $field => $fieldError) {
+    					$modelError .= "\n$field: " . join(', ', $fieldError);
+    				}
+    			}
+    			UiMessage::setMessage('การบันทึกข้อมูลผิดพลาด:' . $modelError, 'warning');
+    		}
+    
+    	}
+    
+    	echo $this->render('editfood', [
+    			'model' => $model,
+    	]);
+    }
+    // End of Foot
+    
+    
+
+    // Start editoxygen
+    public function actionOxygen() {
+    	$currentTs =time();
+    	$request = Yii::$app->request;
+    	$identity = \Yii::$app->user->getIdentity();
+    
+    	$searchCategory = $request->post('type', $request->get('type', ''));
+    	$searchStatus = $request->post('status', $request->get('status', ''));
+    	$q = trim($request->post('q', $request->get('q', '')));
+    
+    	$query = Typelist::find();
+    	$query->orderBy(['id'=>SORT_ASC]);
+    
+    	if ($searchCategory)
+    		$query->andWhere('type = :type',[':type' => $searchCategory]);
+    		 
+    		 
+    		if ($searchStatus)
+    			$query->andWhere('status = :status',[':status' => $searchStatus]);
+    
+    			if ($q)
+    				$query->andWhere(['LIKE' ,'name','%'.$q.'%', false]);
+    					
+    					
+    				//actions
+    				switch ($request->post('op')){
+    					case 'publish':
+    						var_dump($model);exit;
+    						$model->status = Workflow::STATUS_PUBLISHED;
+    						$model->save();
+    						break;
+    					case 'unpublish':
+    						$model->status = Workflow::STATUS_REJECTED;
+    						$model->save();
+    						break;
+    					case 'delete':
+    						$this->doDelete();
+    						break;
+    				}
+    					
+    				//paging
+    				$pagination = new Pagination([
+    						'defaultPageSize' => \Yii::$app->params['ui']['defaultPageSize'],
+    						'totalCount' => $query->count(),
+    				]);
+    				$pagination->params = ['status'=>$searchStatus,
+    						'categoryId'=>$searchCategory,
+    						'q'=>$q,
+    						'page'=>$pagination->page,
+    				];
+    				$query->offset($pagination->offset);
+    				$query->limit($pagination->limit);
+    					
+    				$list = $query->all();
+    					
+    				//get users
+    				$arrId = [];
+    				$arrUser = [];
+    				if (!empty($list)){
+    					foreach ($list as $obj){
+    						$arrId[] = $obj->createBy;
+    					}
+    					$modelsUser = User::find()->where(['id'=>$arrId])->all();
+    					if(!empty($modelsUser)){
+    						foreach ($modelsUser as $obj){
+    							$arrUser[$obj->id] = $obj->firstName.' '.$obj->lastName;
+    						}
+    					}
+    				}
+    					
+    				echo $this->render('oxygen', [
+    						'lst' => $list,
+    						'pagination' => $pagination,
+    						'arrUser' =>$arrUser,
+    						'q'=>$q,
+    				]);
+    }
+    
+    public function actionEditoxygen()
+    {
+    	$currentTs = time();
+    	$identity = \Yii::$app->user->getIdentity();
+    	$request = \Yii::$app->request;
+    	$id = $request->get('id', $request->post('id', null));
+    	$query = Typelist::find();
+    	if ($id){
+    		$query->where("id=".$id);
+    		$model = $query->one();
+    
+    
+    	}else{
+    		$model = new Typelist();
+    		$model->createTime = date('Y-m-d H:i:s', $currentTs);
+    		$model->createBy = $identity->id;
+    	}
+    
+    	if($request->isPost){
+    		$model->name = $_POST['Typelist']['name'];
+    		$model->size =$_POST['Typelist']['size'];
+    
+    		if (trim($model->name) == ''){
+    			$model->addError('name', 'ไม่ได้กรอกชื่อบ่อ');
+    		}
+    
+    		if (trim($model->size) == ''){
+    			$model->addError('size', 'ไม่ได้กรอกขนาดบ่อ');
+    		}
+    
+    		if (!$model->hasErrors()) {
+    			$model->save();
+    			//UiMessage::setMessage('บันทึกข้อมูลเรียบร้อยแล้ว');
+    			return $this->redirect('typelist');
+    		}
+    		else {
+    			$modelError = '';
+    			$errors = $model->getErrors(null);
+    			if (is_array($errors)) {
+    				foreach($errors as $field => $fieldError) {
+    					$modelError .= "\n$field: " . join(', ', $fieldError);
+    				}
+    			}
+    			UiMessage::setMessage('การบันทึกข้อมูลผิดพลาด:' . $modelError, 'warning');
+    		}
+    
+    	}
+    
+    	echo $this->render('editoxygen', [
+    			'model' => $model,
+    	]);
+    }
+    // End of editoxygen
+    
+    
+
+    // Start PH
+    public function actionPh() {
+    	$currentTs =time();
+    	$request = Yii::$app->request;
+    	$identity = \Yii::$app->user->getIdentity();
+    
+    	$searchCategory = $request->post('type', $request->get('type', ''));
+    	$searchStatus = $request->post('status', $request->get('status', ''));
+    	$q = trim($request->post('q', $request->get('q', '')));
+    
+    	$query = Typelist::find();
+    	$query->orderBy(['id'=>SORT_ASC]);
+    
+    	if ($searchCategory)
+    		$query->andWhere('type = :type',[':type' => $searchCategory]);
+    		 
+    		 
+    		if ($searchStatus)
+    			$query->andWhere('status = :status',[':status' => $searchStatus]);
+    
+    			if ($q)
+    				$query->andWhere(['LIKE' ,'name','%'.$q.'%', false]);
+    					
+    					
+    				//actions
+    				switch ($request->post('op')){
+    					case 'publish':
+    						var_dump($model);exit;
+    						$model->status = Workflow::STATUS_PUBLISHED;
+    						$model->save();
+    						break;
+    					case 'unpublish':
+    						$model->status = Workflow::STATUS_REJECTED;
+    						$model->save();
+    						break;
+    					case 'delete':
+    						$this->doDelete();
+    						break;
+    				}
+    					
+    				//paging
+    				$pagination = new Pagination([
+    						'defaultPageSize' => \Yii::$app->params['ui']['defaultPageSize'],
+    						'totalCount' => $query->count(),
+    				]);
+    				$pagination->params = ['status'=>$searchStatus,
+    						'categoryId'=>$searchCategory,
+    						'q'=>$q,
+    						'page'=>$pagination->page,
+    				];
+    				$query->offset($pagination->offset);
+    				$query->limit($pagination->limit);
+    					
+    				$list = $query->all();
+    					
+    				//get users
+    				$arrId = [];
+    				$arrUser = [];
+    				if (!empty($list)){
+    					foreach ($list as $obj){
+    						$arrId[] = $obj->createBy;
+    					}
+    					$modelsUser = User::find()->where(['id'=>$arrId])->all();
+    					if(!empty($modelsUser)){
+    						foreach ($modelsUser as $obj){
+    							$arrUser[$obj->id] = $obj->firstName.' '.$obj->lastName;
+    						}
+    					}
+    				}
+    					
+    				echo $this->render('oxygen', [
+    						'lst' => $list,
+    						'pagination' => $pagination,
+    						'arrUser' =>$arrUser,
+    						'q'=>$q,
+    				]);
+    }
+    
+    public function actionEditph()
+    {
+    	$currentTs = time();
+    	$identity = \Yii::$app->user->getIdentity();
+    	$request = \Yii::$app->request;
+    	$id = $request->get('id', $request->post('id', null));
+    	$query = Typelist::find();
+    	if ($id){
+    		$query->where("id=".$id);
+    		$model = $query->one();
+    
+    
+    	}else{
+    		$model = new Typelist();
+    		$model->createTime = date('Y-m-d H:i:s', $currentTs);
+    		$model->createBy = $identity->id;
+    	}
+    
+    	if($request->isPost){
+    		$model->name = $_POST['Typelist']['name'];
+    		$model->size =$_POST['Typelist']['size'];
+    
+    		if (trim($model->name) == ''){
+    			$model->addError('name', 'ไม่ได้กรอกชื่อบ่อ');
+    		}
+    
+    		if (trim($model->size) == ''){
+    			$model->addError('size', 'ไม่ได้กรอกขนาดบ่อ');
+    		}
+    
+    		if (!$model->hasErrors()) {
+    			$model->save();
+    			//UiMessage::setMessage('บันทึกข้อมูลเรียบร้อยแล้ว');
+    			return $this->redirect('typelist');
+    		}
+    		else {
+    			$modelError = '';
+    			$errors = $model->getErrors(null);
+    			if (is_array($errors)) {
+    				foreach($errors as $field => $fieldError) {
+    					$modelError .= "\n$field: " . join(', ', $fieldError);
+    				}
+    			}
+    			UiMessage::setMessage('การบันทึกข้อมูลผิดพลาด:' . $modelError, 'warning');
+    		}
+    
+    	}
+    
+    	echo $this->render('editph', [
+    			'model' => $model,
+    	]);
+    }
+    // End of PH
+    
+    
+    // Start Temp
+    public function actionTemp() {
+    	$currentTs =time();
+    	$request = Yii::$app->request;
+    	$identity = \Yii::$app->user->getIdentity();
+    
+    	$searchCategory = $request->post('type', $request->get('type', ''));
+    	$searchStatus = $request->post('status', $request->get('status', ''));
+    	$q = trim($request->post('q', $request->get('q', '')));
+    
+    	$query = Typelist::find();
+    	$query->orderBy(['id'=>SORT_ASC]);
+    
+    	if ($searchCategory)
+    		$query->andWhere('type = :type',[':type' => $searchCategory]);
+    		 
+    		 
+    		if ($searchStatus)
+    			$query->andWhere('status = :status',[':status' => $searchStatus]);
+    
+    			if ($q)
+    				$query->andWhere(['LIKE' ,'name','%'.$q.'%', false]);
+    					
+    					
+    				//actions
+    				switch ($request->post('op')){
+    					case 'publish':
+    						var_dump($model);exit;
+    						$model->status = Workflow::STATUS_PUBLISHED;
+    						$model->save();
+    						break;
+    					case 'unpublish':
+    						$model->status = Workflow::STATUS_REJECTED;
+    						$model->save();
+    						break;
+    					case 'delete':
+    						$this->doDelete();
+    						break;
+    				}
+    					
+    				//paging
+    				$pagination = new Pagination([
+    						'defaultPageSize' => \Yii::$app->params['ui']['defaultPageSize'],
+    						'totalCount' => $query->count(),
+    				]);
+    				$pagination->params = ['status'=>$searchStatus,
+    						'categoryId'=>$searchCategory,
+    						'q'=>$q,
+    						'page'=>$pagination->page,
+    				];
+    				$query->offset($pagination->offset);
+    				$query->limit($pagination->limit);
+    					
+    				$list = $query->all();
+    					
+    				//get users
+    				$arrId = [];
+    				$arrUser = [];
+    				if (!empty($list)){
+    					foreach ($list as $obj){
+    						$arrId[] = $obj->createBy;
+    					}
+    					$modelsUser = User::find()->where(['id'=>$arrId])->all();
+    					if(!empty($modelsUser)){
+    						foreach ($modelsUser as $obj){
+    							$arrUser[$obj->id] = $obj->firstName.' '.$obj->lastName;
+    						}
+    					}
+    				}
+    					
+    				echo $this->render('temp', [
+    						'lst' => $list,
+    						'pagination' => $pagination,
+    						'arrUser' =>$arrUser,
+    						'q'=>$q,
+    				]);
+    }
+    
+    public function actionEdittemp()
+    {
+    	$currentTs = time();
+    	$identity = \Yii::$app->user->getIdentity();
+    	$request = \Yii::$app->request;
+    	$id = $request->get('id', $request->post('id', null));
+    	$query = Typelist::find();
+    	if ($id){
+    		$query->where("id=".$id);
+    		$model = $query->one();
+    
+    
+    	}else{
+    		$model = new Typelist();
+    		$model->createTime = date('Y-m-d H:i:s', $currentTs);
+    		$model->createBy = $identity->id;
+    	}
+    
+    	if($request->isPost){
+    		$model->name = $_POST['Typelist']['name'];
+    		$model->size =$_POST['Typelist']['size'];
+    
+    		if (trim($model->name) == ''){
+    			$model->addError('name', 'ไม่ได้กรอกชื่อบ่อ');
+    		}
+    
+    		if (trim($model->size) == ''){
+    			$model->addError('size', 'ไม่ได้กรอกขนาดบ่อ');
+    		}
+    
+    		if (!$model->hasErrors()) {
+    			$model->save();
+    			//UiMessage::setMessage('บันทึกข้อมูลเรียบร้อยแล้ว');
+    			return $this->redirect('typelist');
+    		}
+    		else {
+    			$modelError = '';
+    			$errors = $model->getErrors(null);
+    			if (is_array($errors)) {
+    				foreach($errors as $field => $fieldError) {
+    					$modelError .= "\n$field: " . join(', ', $fieldError);
+    				}
+    			}
+    			UiMessage::setMessage('การบันทึกข้อมูลผิดพลาด:' . $modelError, 'warning');
+    		}
+    
+    	}
+    
+    	echo $this->render('edittemp', [
+    			'model' => $model,
+    	]);
+    }
+    // End of Temp
+    
+    
+    
+
+    // Start watertemp
+    public function actionWatertemp() {
+    	$currentTs =time();
+    	$request = Yii::$app->request;
+    	$identity = \Yii::$app->user->getIdentity();
+    
+    	$searchCategory = $request->post('type', $request->get('type', ''));
+    	$searchStatus = $request->post('status', $request->get('status', ''));
+    	$q = trim($request->post('q', $request->get('q', '')));
+    
+    	$query = Typelist::find();
+    	$query->orderBy(['id'=>SORT_ASC]);
+    
+    	if ($searchCategory)
+    		$query->andWhere('type = :type',[':type' => $searchCategory]);
+    		 
+    		 
+    		if ($searchStatus)
+    			$query->andWhere('status = :status',[':status' => $searchStatus]);
+    
+    			if ($q)
+    				$query->andWhere(['LIKE' ,'name','%'.$q.'%', false]);
+    					
+    					
+    				//actions
+    				switch ($request->post('op')){
+    					case 'publish':
+    						var_dump($model);exit;
+    						$model->status = Workflow::STATUS_PUBLISHED;
+    						$model->save();
+    						break;
+    					case 'unpublish':
+    						$model->status = Workflow::STATUS_REJECTED;
+    						$model->save();
+    						break;
+    					case 'delete':
+    						$this->doDelete();
+    						break;
+    				}
+    					
+    				//paging
+    				$pagination = new Pagination([
+    						'defaultPageSize' => \Yii::$app->params['ui']['defaultPageSize'],
+    						'totalCount' => $query->count(),
+    				]);
+    				$pagination->params = ['status'=>$searchStatus,
+    						'categoryId'=>$searchCategory,
+    						'q'=>$q,
+    						'page'=>$pagination->page,
+    				];
+    				$query->offset($pagination->offset);
+    				$query->limit($pagination->limit);
+    					
+    				$list = $query->all();
+    					
+    				//get users
+    				$arrId = [];
+    				$arrUser = [];
+    				if (!empty($list)){
+    					foreach ($list as $obj){
+    						$arrId[] = $obj->createBy;
+    					}
+    					$modelsUser = User::find()->where(['id'=>$arrId])->all();
+    					if(!empty($modelsUser)){
+    						foreach ($modelsUser as $obj){
+    							$arrUser[$obj->id] = $obj->firstName.' '.$obj->lastName;
+    						}
+    					}
+    				}
+    					
+    				echo $this->render('watertemp', [
+    						'lst' => $list,
+    						'pagination' => $pagination,
+    						'arrUser' =>$arrUser,
+    						'q'=>$q,
+    				]);
+    }
+    
+    public function actionEditwatertemp()
+    {
+    	$currentTs = time();
+    	$identity = \Yii::$app->user->getIdentity();
+    	$request = \Yii::$app->request;
+    	$id = $request->get('id', $request->post('id', null));
+    	$query = Typelist::find();
+    	if ($id){
+    		$query->where("id=".$id);
+    		$model = $query->one();
+    
+    
+    	}else{
+    		$model = new Typelist();
+    		$model->createTime = date('Y-m-d H:i:s', $currentTs);
+    		$model->createBy = $identity->id;
+    	}
+    
+    	if($request->isPost){
+    		$model->name = $_POST['Typelist']['name'];
+    		$model->size =$_POST['Typelist']['size'];
+    
+    		if (trim($model->name) == ''){
+    			$model->addError('name', 'ไม่ได้กรอกชื่อบ่อ');
+    		}
+    
+    		if (trim($model->size) == ''){
+    			$model->addError('size', 'ไม่ได้กรอกขนาดบ่อ');
+    		}
+    
+    		if (!$model->hasErrors()) {
+    			$model->save();
+    			//UiMessage::setMessage('บันทึกข้อมูลเรียบร้อยแล้ว');
+    			return $this->redirect('typelist');
+    		}
+    		else {
+    			$modelError = '';
+    			$errors = $model->getErrors(null);
+    			if (is_array($errors)) {
+    				foreach($errors as $field => $fieldError) {
+    					$modelError .= "\n$field: " . join(', ', $fieldError);
+    				}
+    			}
+    			UiMessage::setMessage('การบันทึกข้อมูลผิดพลาด:' . $modelError, 'warning');
+    		}
+    
+    	}
+    
+    	echo $this->render('editwatertemp', [
+    			'model' => $model,
+    	]);
+    }
+    // End of watertemp
+    
+    
+    // Start Weight
+    public function actionWeight() {
+    	$currentTs =time();
+    	$request = Yii::$app->request;
+    	$identity = \Yii::$app->user->getIdentity();
+    
+    	$searchCategory = $request->post('type', $request->get('type', ''));
+    	$searchStatus = $request->post('status', $request->get('status', ''));
+    	$q = trim($request->post('q', $request->get('q', '')));
+    
+    	$query = Typelist::find();
+    	$query->orderBy(['id'=>SORT_ASC]);
+    
+    	if ($searchCategory)
+    		$query->andWhere('type = :type',[':type' => $searchCategory]);
+    		 
+    		 
+    		if ($searchStatus)
+    			$query->andWhere('status = :status',[':status' => $searchStatus]);
+    
+    			if ($q)
+    				$query->andWhere(['LIKE' ,'name','%'.$q.'%', false]);
+    					
+    					
+    				//actions
+    				switch ($request->post('op')){
+    					case 'publish':
+    						var_dump($model);exit;
+    						$model->status = Workflow::STATUS_PUBLISHED;
+    						$model->save();
+    						break;
+    					case 'unpublish':
+    						$model->status = Workflow::STATUS_REJECTED;
+    						$model->save();
+    						break;
+    					case 'delete':
+    						$this->doDelete();
+    						break;
+    				}
+    					
+    				//paging
+    				$pagination = new Pagination([
+    						'defaultPageSize' => \Yii::$app->params['ui']['defaultPageSize'],
+    						'totalCount' => $query->count(),
+    				]);
+    				$pagination->params = ['status'=>$searchStatus,
+    						'categoryId'=>$searchCategory,
+    						'q'=>$q,
+    						'page'=>$pagination->page,
+    				];
+    				$query->offset($pagination->offset);
+    				$query->limit($pagination->limit);
+    					
+    				$list = $query->all();
+    					
+    				//get users
+    				$arrId = [];
+    				$arrUser = [];
+    				if (!empty($list)){
+    					foreach ($list as $obj){
+    						$arrId[] = $obj->createBy;
+    					}
+    					$modelsUser = User::find()->where(['id'=>$arrId])->all();
+    					if(!empty($modelsUser)){
+    						foreach ($modelsUser as $obj){
+    							$arrUser[$obj->id] = $obj->firstName.' '.$obj->lastName;
+    						}
+    					}
+    				}
+    					
+    				echo $this->render('weight', [
+    						'lst' => $list,
+    						'pagination' => $pagination,
+    						'arrUser' =>$arrUser,
+    						'q'=>$q,
+    				]);
+    }
+    
+    public function actionEditweight()
+    {
+    	$currentTs = time();
+    	$identity = \Yii::$app->user->getIdentity();
+    	$request = \Yii::$app->request;
+    	$id = $request->get('id', $request->post('id', null));
+    	$query = Typelist::find();
+    	if ($id){
+    		$query->where("id=".$id);
+    		$model = $query->one();
+    
+    
+    	}else{
+    		$model = new Typelist();
+    		$model->createTime = date('Y-m-d H:i:s', $currentTs);
+    		$model->createBy = $identity->id;
+    	}
+    
+    	if($request->isPost){
+    		$model->name = $_POST['Typelist']['name'];
+    		$model->size =$_POST['Typelist']['size'];
+    
+    		if (trim($model->name) == ''){
+    			$model->addError('name', 'ไม่ได้กรอกชื่อบ่อ');
+    		}
+    
+    		if (trim($model->size) == ''){
+    			$model->addError('size', 'ไม่ได้กรอกขนาดบ่อ');
+    		}
+    
+    		if (!$model->hasErrors()) {
+    			$model->save();
+    			//UiMessage::setMessage('บันทึกข้อมูลเรียบร้อยแล้ว');
+    			return $this->redirect('typelist');
+    		}
+    		else {
+    			$modelError = '';
+    			$errors = $model->getErrors(null);
+    			if (is_array($errors)) {
+    				foreach($errors as $field => $fieldError) {
+    					$modelError .= "\n$field: " . join(', ', $fieldError);
+    				}
+    			}
+    			UiMessage::setMessage('การบันทึกข้อมูลผิดพลาด:' . $modelError, 'warning');
+    		}
+    
+    	}
+    
+    	echo $this->render('editweight', [
+    			'model' => $model,
+    	]);
+    }
+    // End of Weight
+    
     
     private function doDeleteType() {
     

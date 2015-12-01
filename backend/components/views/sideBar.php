@@ -50,50 +50,50 @@ $template = array(
                         <li class="heading">
                             <h3 class="uppercase">บันทึกค่าต่างๆ</h3>
                         </li>
-                                <li class="nav-item  ">
-                                    <a href="elements_steps.html" class="nav-link ">
+                                <li class="nav-item <?php echo $myUrl == Url::toRoute('pond/food')?'active':'';?>  ">
+                                    <a href="<?php echo Url::toRoute('pond/food') ?>" class="nav-link ">
                                     	<i class="fa fa-angle-right"></i>
                                         <span class="title"> บันทึกการให้อาหาร</span>
                                     </a>
                                 </li>
-                                <li class="nav-item  ">
-                                    <a href="elements_lists.html" class="nav-link ">
+                                <li class="nav-item <?php echo $myUrl == Url::toRoute('pond/checkyo')?'active':'';?>  ">
+                                    <a href="<?php echo Url::toRoute('pond/checkyo') ?>" class="nav-link ">
                                     <i class="fa fa-angle-right"></i>
-                                        <span class="title"> บันทึกหารเช็คยอ</span>
+                                        <span class="title"> บันทึกการเช็คยอ</span>
                                     </a>
                                 </li>
-                                <li class="nav-item  ">
-                                    <a href="elements_ribbons.html" class="nav-link ">
+                                <li class="nav-item <?php echo $myUrl == Url::toRoute('pond/weight')?'active':'';?>  ">
+                                    <a href="<?php echo Url::toRoute('pond/weight') ?>" class="nav-link ">
                                     <i class="fa fa-angle-right"></i>
                                         <span class="title"> บันทึกนํ้าหนักเฉลี่ย</span>
                                     </a>
                                 </li>
-                                <li class="nav-item  ">
-                                    <a href="portlet_boxed.html" class="nav-link ">
+                                <li class="nav-item <?php echo $myUrl == Url::toRoute('pond/oxygen')?'active':'';?>  ">
+                                    <a href="<?php echo Url::toRoute('pond/oxygen') ?>" class="nav-link ">
                                     <i class="fa fa-angle-right"></i>
                                         <span class="title"> บันทึกต่าออกซิเจนละลายนํ้า</span>
                                     </a>
                                 </li>
-                                <li class="nav-item  ">
-                                    <a href="portlet_light.html" class="nav-link ">
+                                <li class="nav-item <?php echo $myUrl == Url::toRoute('pond/ph')?'active':'';?>  ">
+                                    <a href="<?php echo Url::toRoute('pond/ph') ?>" class="nav-link ">
                                     <i class="fa fa-angle-right"></i>
                                         <span class="title"> บันทึกค่่า PH </span>
                                     </a>
                                 </li>
-                                <li class="nav-item  ">
-                                    <a href="portlet_solid.html" class="nav-link ">
+                                <li class="nav-item <?php echo $myUrl == Url::toRoute('pond/alkalinity')?'active':'';?>  ">
+                                    <a href="<?php echo Url::toRoute('pond/alkalinity') ?>" class="nav-link ">
                                     <i class="fa fa-angle-right"></i>
                                         <span class="title"> บันทุกค่าอัลคาไลน์นิติ</span>
                                     </a>
                                 </li>
-                                <li class="nav-item  ">
-                                    <a href="portlet_ajax.html" class="nav-link ">
+                                <li class="nav-item <?php echo $myUrl == Url::toRoute('pond/watertemp')?'active':'';?>  ">
+                                    <a href="<?php echo Url::toRoute('pond/watertemp') ?>" class="nav-link ">
                                     <i class="fa fa-angle-right"></i>
                                         <span class="title"> บันทึกค่าอุณหฤูมมิของนํ้า</span>
                                     </a>
                                 </li>
-                                <li class="nav-item  ">
-                                    <a href="portlet_draggable.html" class="nav-link ">
+                                <li class="nav-item <?php echo $myUrl == Url::toRoute('pond/temp')?'active':'';?>  ">
+                                    <a href="<?php echo Url::toRoute('pond/temp') ?>" class="nav-link ">
                                     <i class="fa fa-angle-right"></i>
                                         <span class="title">บันทึกค่าอุณหฤูมมิ</span>
                                     </a>
