@@ -52,7 +52,7 @@ $this->registerJs($str, View::POS_LOAD, 'form-js');
 
 ActiveForm::begin(['id' => 'dataTable-form']);
 ?>
-    <div class="portlet box grey-cascade">
+    <div class="portlet box blue">
         <div class="portlet-title">
             <div class="caption">
                 <i class="fa fa-table"></i>รายการข้อมูลบ่อเลี้ยงกุ้ง

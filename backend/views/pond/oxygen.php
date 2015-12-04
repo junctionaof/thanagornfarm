@@ -53,7 +53,7 @@ $this->registerJs($str, View::POS_LOAD, 'form-js');
 
 ActiveForm::begin(['id' => 'dataTable-form']);
 ?>
-    <div class="portlet box grey-cascade">
+    <div class="portlet box green">
         <div class="portlet-title">
             <div class="caption">
                 <i class="fa fa-table"></i>จัดการบ่อเลี้ยงกุ้ง
@@ -69,7 +69,7 @@ ActiveForm::begin(['id' => 'dataTable-form']);
                     <div class="col-md-6">
                         <div class="portlet-title">
                                 <div class="actions">
-                                 	<a class="btn add" href="<?= Url::toRoute(['pond/editoxyge'])?>" title="เพิ่ม">
+                                 	<a class="btn add" href="<?= Url::toRoute(['pond/editoxygen'])?>" title="เพิ่ม">
                                         <i class="icon-plus"> เพิ่มบ่อเลี้ยงกุ้ง</i>
                                     </a>
                                 </div>

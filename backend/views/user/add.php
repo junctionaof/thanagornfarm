@@ -68,7 +68,7 @@ padding:10px;
 						]);
 			?>
 	
-	<div class="portlet box grey">
+	<div class="portlet box blue">
 						<div class="portlet-title">
 							<div class="caption"><i class="fa fa-reorder"></i>เพิ่มข้อมูลพนักงาน</div>
 							<div class="tools">

@@ -52,7 +52,7 @@ $this->registerJsFile($baseUrl  . '/assets/pages/scripts/components-date-time-pi
 
 ?>
 <div class="col-md-12">
-    <div id="content-main" class="portlet box blue" data-entity="<?php // echo Entity::TYPE_CONTENT?>">
+    <div id="content-main" class="portlet box green" data-entity="<?php // echo Entity::TYPE_CONTENT?>">
         <div class="portlet-title">
             <div class="caption">
                 <i class="fa fa-gift"></i>ระบบบันทึกข้อมูลการเลี้ยงกุ้ง

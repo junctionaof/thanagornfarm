@@ -48,87 +48,88 @@ $this->registerJsFile($baseUrl  . '/assets/pages/scripts/components-select2.min.
 
 ?>
 <?php echo UiMessage::widget(); ?>
- 
-			   <div class="portlet light portlet-fit portlet-form bordered" id="form_wizard_1">
+
+                    <div class="row">
+                        <div class="col-md-12">
+                            <!-- BEGIN PORTLET-->
+                            <div class="portlet box green">
                                 <div class="portlet-title">
                                     <div class="caption">
-                                        <i class=" icon-layers font-green"></i>
-                                        <span class="caption-subject font-green sbold uppercase">บันทึกการให้อาหารกุ้ง </span>
+                                        <i class="fa fa-gift"></i>บันทึกการให้อาหารกุ้ง </div>
+                                    <div class="tools">
+                                        <a href="javascript:;" class="collapse"> </a>
+                                        <a href="#portlet-config" data-toggle="modal" class="config"> </a>
+                                        <a href="javascript:;" class="reload"> </a>
+                                        <a href="javascript:;" class="remove"> </a>
                                     </div>
                                 </div>
-                                <div class="portlet-body">
+                                <div class="portlet-body form">
                                     <!-- BEGIN FORM-->
-                                    <?php echo Html::beginForm('', 'post', array('class' => 'form-horizontal')) ?>
+                                    <?php echo Html::beginForm('', 'post', array('class' => 'form-horizontal form-bordered')) ?>
                                         <div class="form-body">
-                                            <h4 class="form-section" style=" margin-top: 0px;">ข้อมูลบ่อ และรุ่น</h4>
-                                            <div class="form-group has-warning">
-                                                <label class="control-label col-md-3" for="inputWarning">เลือกบ่อ</label>
-                                                <div class="col-md-4">
-                                                	<?php echo Html::dropDownList('type', ' ', $arrTypelist , ['id'=>'type','class' => 'select2 form-control'])?>	
-                                                    <span class="help-block"> ระบบจะโชว บ่อ เป็นตัวเลข และรุ่นทั้งหมด ในบ่อ  </span>
-                                                </div>
-                                            </div>
-                                            <h4 class="form-section">รายละเอียดการให้อาหาร</h4>
-                                            <div class="row">
-                                            <div class="col-md-5">
+                                        	
                                             <div class="form-group">
+                                                <label class="control-label col-md-3" for="pondId">เลือกบ่อ</label>
+                                                <div class="col-md-4">
+                                                    <div class="input-group input-large" id="defaultrange">
+                                                        <?php echo Html::dropDownList('pondId', ' ', $arrTypelist , ['id'=>'pondId','class' => 'select2 form-control'])?>	
+                                                    </div>
+                                                </div>
+                                            </div>
+                                             <div class="form-group">
                                                 <label class="control-label col-md-3">วันที่</label>
-                                                <div class="col-md-7">
-                                                    <div class="date-picker" data-date-format="mm/dd/yyyy"> </div>
-                                                </div>
+                                                      <div class="input-group input-large date date-picker" data-date-format="dd-mm-yyyy" data-date-start-date="+0d">
+                                                        <input name="foodTime" type="text" class="form-control" readonly>
+                                                        <span class="input-group-btn">
+                                                            <button class="btn default" type="button">
+                                                                <i class="fa fa-calendar"></i>
+                                                            </button>
+                                                        </span>
+                                                  	</div>
                                             </div>
-                                            </div>
-                                            <div class="col-md-7">
-                                            <div class="form-group has-warning">
+                                               <div class="form-group">
                                                 <label class="control-label col-md-3">มื้อที่</label>
-                                                <div class="col-md-7">
-                                                    <div class="input-icon right">
-                                                        <i class="fa fa-exclamation tooltips" data-original-title="please write a valid email"></i>
-                                                        <input type="text" class="form-control" /> </div>
-                                                </div>
+                                                      <div class="input-group input-large ">
+                                                        <input name="foodNo" type="text" class="form-control" /> 
+                                                  	</div>
                                             </div>
-                                            <div class="form-group has-error">
+                                            
+                                            <div class="form-group">
                                                 <label class="control-label col-md-3">อายุลูกกุ้ง</label>
-                                                <div class="col-md-7">
-                                                    <div class="input-icon right">
-                                                        <i class="fa fa-warning tooltips" data-original-title="please write a valid email"></i>
-                                                        <?php // = Html::activeInput('text', $model, 'name', ['class' => 'form-control','id'=>'inputWarning','placeholder' => 'กรุณาระบุ ชื่อบ่อ'])?>
-                                                        <input type="text" class="form-control" /> </div>
-                                                </div>
+                                                      <div class="input-group input-large " >
+                                                        <input  name="age" type="text" class="form-control" /> 
+                                                  	</div>
                                             </div>
-                                            <div class="form-group has-error">
+                                            
+                                             <div class="form-group">
                                                 <label class="control-label col-md-3">เบอร์อาหาร</label>
-                                                <div class="col-md-7">
-                                                    <div class="input-icon right">
-                                                        <i class="fa fa-warning tooltips" data-original-title="please write a valid email"></i>
-                                                        <input type="text" class="form-control" /> </div>
-                                                </div>
+                                                      <div class="input-group input-large " >
+                                                       <input name="foodNum" type="text" class="form-control" /> 
+                                                  	</div>
                                             </div>
-                                            <div class="form-group has-error">
+                                            
+                                            <div class="form-group">
                                                 <label class="control-label col-md-3">จำนวนที่ใช้</label>
-                                                <div class="col-md-7">
-                                                    <div class="input-icon right">
-                                                        <i class="fa fa-warning tooltips" data-original-title="please write a valid email"></i>
-                                                        <input type="text" class="form-control" /> </div>
-                                                </div>
+                                                      <div class="input-group input-large" >
+                                                        <input name="numberOf" type="text" class="form-control" /> 
+                                                  	</div>
                                             </div>
-                                            </div>
-  											</div>
-
                                         </div>
-                                        <?php if ($model->id) {echo Html::hiddenInput('id', $model->id);}?>
                                         <div class="form-actions">
                                             <div class="row">
                                                 <div class="col-md-offset-3 col-md-9">
-                                                    <button type="submit" class="btn green">Submit</button>
+                                                    <button type="submit" class="btn red">
+                                                        <i class="fa fa-check"></i> Submit</button>
                                                     <a href="<?php echo Url::toRoute('content/typelist') ?>" class="btn default" >ยกเลิก </a>
                                                 </div>
                                             </div>
                                         </div>
-                                    <?php echo Html::endForm() ?>
+                                    <?php if ($model->id) {echo Html::hiddenInput('id', $model->id);}?>
+                                    <?php echo Html::endForm() ?>  
                                     <!-- END FORM-->
                                 </div>
                             </div>
-                            <!-- END VALIDATION STATES-->
-
+                            <!-- END PORTLET-->
+                        </div>
+                    </div>
  

@@ -171,6 +171,146 @@ class PondController extends BaseController {
     
     
     
+    
+    // Start Food
+    public function actionFood() {
+    	$currentTs = time();
+    	$request = Yii::$app->request;
+    	$identity = \Yii::$app->user->getIdentity();
+    
+    	$searchCategory = $request->post('type', $request->get('type', ''));
+    	$searchStatus = $request->post('status', $request->get('status', ''));
+    	$q = trim($request->post('q', $request->get('q', '')));
+    
+    	$query = food::find();
+    	$query->orderBy(['id'=>SORT_ASC]);
+    
+    	if ($searchCategory)
+    		$query->andWhere('type = :type',[':type' => $searchCategory]);
+    		 
+    		 
+    		if ($searchStatus)
+    			$query->andWhere('status = :status',[':status' => $searchStatus]);
+    
+    			if ($q)
+    				$query->andWhere(['LIKE' ,'name','%'.$q.'%', false]);
+    					
+    					
+    				//actions
+    				switch ($request->post('op')){
+    					case 'delete':
+    						$this->doDelete();
+    						break;
+    				}
+    					
+    				//paging
+    				$pagination = new Pagination([
+    						'defaultPageSize' => \Yii::$app->params['ui']['defaultPageSize'],
+    						'totalCount' => $query->count(),
+    				]);
+    				$pagination->params = ['status'=>$searchStatus,
+    						'categoryId'=>$searchCategory,
+    						'q'=>$q,
+    						'page'=>$pagination->page,
+    				];
+    				$query->offset($pagination->offset);
+    				$query->limit($pagination->limit);
+    					
+    				$list = $query->all();
+    					
+    				//get users
+    				$arrId = [];
+    				$arrUser = [];
+    				if (!empty($list)){
+    					foreach ($list as $obj){
+    						$arrId[] = $obj->createBy;
+    					}
+    					$modelsUser = User::find()->where(['id'=>$arrId])->all();
+    					if(!empty($modelsUser)){
+    						foreach ($modelsUser as $obj){
+    							$arrUser[$obj->id] = $obj->firstName.' '.$obj->lastName;
+    						}
+    					}
+    				}
+    					
+    				echo $this->render('food', [
+    						'lst' => $list,
+    						'pagination' => $pagination,
+    						'arrUser' =>$arrUser,
+    						'q'=>$q,
+    				]);
+    }
+    
+    public function actionEditfood()
+    {
+    	$currentTs = time();
+    	$identity = \Yii::$app->user->getIdentity();
+    	$request = \Yii::$app->request;
+    	$id = $request->get('id', $request->post('id', null));
+    	$query = Typelist::find();
+    	
+    	if ($id){
+    		$query->where("id=".$id);
+    		$model = $query->one();
+    	}else{
+    		$model = new food();
+    		$model->createTime = date('Y-m-d H:i:s', $currentTs);
+    		$model->createBy = $identity->id;
+    	}
+    
+    	if($request->isPost){
+    		$model->pondId  = $request->get('pondId', $request->post('pondId', null));
+    		$model->foodNo  = $request->get('foodNo', $request->post('foodNo', null));
+    		$model->age  = $request->get('age', $request->post('age', null));
+    		$model->foodNum  = $request->get('foodNum', $request->post('foodNum', null));
+    		$model->foodTime  = $request->get('foodTime', $request->post('foodTime', null));
+    		$model->numberOf  = $request->get('numberOf', $request->post('numberOf', null));
+
+    		if (trim($model->pondId) == ''){
+    			$model->addError('pondId', 'ไม่ได้กรอกชื่อบ่อ');
+    		}
+    
+    		
+    		if (!$model->hasErrors()) {
+    			$model->save();
+    			UiMessage::setMessage('บันทึกข้อมูลเรียบร้อยแล้ว');
+    			return $this->redirect('typelist');
+    		}
+    		else {
+    			$modelError = '';
+    			$errors = $model->getErrors(null);
+    			if (is_array($errors)) {
+    				foreach($errors as $field => $fieldError) {
+    					$modelError .= "\n$field: " . join(', ', $fieldError);
+    				}
+    			}
+    			UiMessage::setMessage('การบันทึกข้อมูลผิดพลาด:' . $modelError, 'warning');
+    		}
+    
+    	}
+    
+    	$query = Pond::find()->orderBy(['id'=>SORT_ASC]);
+    	$arrTypelist = [0=>'กรุณาเลือกบ่อ  และรุ่นที่ต้องการ'];
+    	$arrTypelist += \yii\helpers\ArrayHelper::map($query->all(), 'id' ,'title','larvaeType');
+    	 
+    	/* $query = Typelist::find();
+    	 $query->orderBy(['id'=>SORT_ASC]);
+    	 $objTypelist = $query->all();
+    	 $arrTypelist = [];
+    	 foreach ($objTypelist as $dataTypelist){
+    	 $arrTypelist[] = $dataTypelist->name;
+    	 } */
+    
+    	echo $this->render('editfood', [
+    			'model' => $model,
+    			'arrTypelist'=> $arrTypelist,
+    	]);
+    }
+    // End of Foot
+    
+    
+    
+    
     //    หน้า การวิเคราะห์ความเป็นด่าง หรือ อัลคาลินิตี้ (Alkalinity) 
     //
     public function actionAlkalinity() {
@@ -438,152 +578,7 @@ class PondController extends BaseController {
     // End of Checkyo
     
     
-    // Start Food 
-    public function actionFood() {
-    	$currentTs =time();
-    	$request = Yii::$app->request;
-    	$identity = \Yii::$app->user->getIdentity();
-    
-    	$searchCategory = $request->post('type', $request->get('type', ''));
-    	$searchStatus = $request->post('status', $request->get('status', ''));
-    	$q = trim($request->post('q', $request->get('q', '')));
-    
-    	$query = food::find();
-    	$query->orderBy(['id'=>SORT_ASC]);
-    
-    	if ($searchCategory)
-    		$query->andWhere('type = :type',[':type' => $searchCategory]);
-    		 
-    		 
-    		if ($searchStatus)
-    			$query->andWhere('status = :status',[':status' => $searchStatus]);
-    
-    			if ($q)
-    				$query->andWhere(['LIKE' ,'name','%'.$q.'%', false]);
-    					
-    					
-    				//actions
-    				switch ($request->post('op')){
-    					case 'publish':
-    						var_dump($model);exit;
-    						$model->status = Workflow::STATUS_PUBLISHED;
-    						$model->save();
-    						break;
-    					case 'unpublish':
-    						$model->status = Workflow::STATUS_REJECTED;
-    						$model->save();
-    						break;
-    					case 'delete':
-    						$this->doDelete();
-    						break;
-    				}
-    					
-    				//paging
-    				$pagination = new Pagination([
-    						'defaultPageSize' => \Yii::$app->params['ui']['defaultPageSize'],
-    						'totalCount' => $query->count(),
-    				]);
-    				$pagination->params = ['status'=>$searchStatus,
-    						'categoryId'=>$searchCategory,
-    						'q'=>$q,
-    						'page'=>$pagination->page,
-    				];
-    				$query->offset($pagination->offset);
-    				$query->limit($pagination->limit);
-    					
-    				$list = $query->all();
-    					
-    				//get users
-    				$arrId = [];
-    				$arrUser = [];
-    				if (!empty($list)){
-    					foreach ($list as $obj){
-    						$arrId[] = $obj->createBy;
-    					}
-    					$modelsUser = User::find()->where(['id'=>$arrId])->all();
-    					if(!empty($modelsUser)){
-    						foreach ($modelsUser as $obj){
-    							$arrUser[$obj->id] = $obj->firstName.' '.$obj->lastName;
-    						}
-    					}
-    				}
-    					
-    				echo $this->render('food', [
-    						'lst' => $list,
-    						'pagination' => $pagination,
-    						'arrUser' =>$arrUser,
-    						'q'=>$q,
-    				]);
-    }
-    
-    public function actionEditfood()
-    {
-    	$currentTs = time();
-    	$identity = \Yii::$app->user->getIdentity();
-    	$request = \Yii::$app->request;
-    	$id = $request->get('id', $request->post('id', null));
-    	$query = Typelist::find();
-    	if ($id){
-    		$query->where("id=".$id);
-    		$model = $query->one();
-    
-    
-    	}else{
-    		$model = new food();
-    		$model->createTime = date('Y-m-d H:i:s', $currentTs);
-    		$model->createBy = $identity->id;
-    	}
-    
-    	if($request->isPost){
-    		$model->name = $_POST['Typelist']['name'];
-    		$model->size =$_POST['Typelist']['size'];
-    
-    		if (trim($model->name) == ''){
-    			$model->addError('name', 'ไม่ได้กรอกชื่อบ่อ');
-    		}
-    
-    		if (trim($model->size) == ''){
-    			$model->addError('size', 'ไม่ได้กรอกขนาดบ่อ');
-    		}
-    
-    		if (!$model->hasErrors()) {
-    			$model->save();
-    			//UiMessage::setMessage('บันทึกข้อมูลเรียบร้อยแล้ว');
-    			return $this->redirect('typelist');
-    		}
-    		else {
-    			$modelError = '';
-    			$errors = $model->getErrors(null);
-    			if (is_array($errors)) {
-    				foreach($errors as $field => $fieldError) {
-    					$modelError .= "\n$field: " . join(', ', $fieldError);
-    				}
-    			}
-    			UiMessage::setMessage('การบันทึกข้อมูลผิดพลาด:' . $modelError, 'warning');
-    		}
-    
-    	}
-
-    	$query = Pond::find()->orderBy(['id'=>SORT_ASC]);
-    	$arrTypelist = [0=>'กรุณาเลือกบ่อ  และรุ่นที่ต้องการ'];
-    	$arrTypelist += \yii\helpers\ArrayHelper::map($query->all(), 'id' ,'title','larvaeType');
-    	
-    	/* $query = Typelist::find();
-    	$query->orderBy(['id'=>SORT_ASC]);
-    	$objTypelist = $query->all();
-    	$arrTypelist = [];
-    	foreach ($objTypelist as $dataTypelist){
-    		$arrTypelist[] = $dataTypelist->name;
-    	} */
-    
-    	echo $this->render('editfood', [
-    			'model' => $model,
-    			'arrTypelist'=> $arrTypelist,
-    	]);
-    }
-    // End of Foot
-    
-    
+  
 
     // Start editoxygen
     public function actionOxygen() {

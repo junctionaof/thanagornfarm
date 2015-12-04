@@ -53,7 +53,7 @@ $this->registerJs($str, View::POS_LOAD, 'form-js');
 
 ActiveForm::begin(['id' => 'dataTable-form']);
 ?>
-    <div class="portlet box grey-cascade">
+    <div class="portlet box green">
         <div class="portlet-title">
             <div class="caption">
                 <i class="fa fa-table"></i>รายการบันทึกการให้อาหาร
@@ -126,9 +126,9 @@ ActiveForm::begin(['id' => 'dataTable-form']);
                          <td>                  	
                             <?php echo Html::checkbox('idCheck[]', false, ['value'=> $Content->id, 'class'=> 'checkboxes'])?>
                         </td>
-                        <td><?php echo $Content->name;?> </td>
-                        <td><?php echo $Content->size;?></td>
-                        <td class="text-center"><?php echo DateUtil::th_date(DateUtil::SDT_FMT_TH, strtotime($Content->createTime));?></td>
+                        <td><?php echo $Content->pondId;?> </td>
+                        <td><?php echo $Content->foodNo;?></td>
+                        <td class="text-center"><?php echo DateUtil::th_date(DateUtil::SDT_FMT_TH, strtotime($Content->foodTime));?></td>
                         <td></td>
                         <td class="center"></td>
                     </tr>

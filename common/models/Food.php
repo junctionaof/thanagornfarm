@@ -8,12 +8,16 @@ use Yii;
  * This is the model class for table "Typelist".
  *
  * @property integer $id
- * @property string $name
- * @property string $size
- * @property integer $type
- * @property string $status
- * @property integer $createBy
+ * @property string $pondId
+ * @property string $foodNo
+ * @property integer $age
+ * @property string $foodNum
+ * @property string $numberOf
+ * @property string $createBy
+ * @property string $foodTime
  * @property string $createTime
+ * @property string $lastUpdateTime
+ * @property string $lastUpdateBy
  */
 class Food extends \yii\db\ActiveRecord
 {
@@ -31,11 +35,8 @@ class Food extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['createBy','lastUpdateBy','type'], 'integer'],
-        	[['size'], 'string', 'max' => 100],
-            [['createTime','lastUpdateTime'], 'safe'],
-            [['name'], 'string', 'max' => 100]
-
+            [['pondId','foodNo','age','foodNum','numberOf','createBy','lastUpdateBy'], 'integer'],
+            [['foodTime','createTime','lastUpdateTime'], 'safe'],
         ];
     }
 
@@ -46,12 +47,16 @@ class Food extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'name' => 'Name',
-        	'size' => 'Size',
-        	'type' => 'Type',	
-            'status' => 'Status',
-            'createBy' => 'Create By',
+            'pondId' => 'pondId',
+        	'foodNo' => 'foodNo',
+        	'age' => 'age',	
+            'foodNum' => 'foodNum',
+            'numberOf' => 'numberOf',
+        	'foodTime' => 'foodTime',
+        	'createBy' => 'createBy',
             'createTime' => 'Create Time',
+        	'lastUpdateTime' => 'lastUpdateTime',
+        	'lastUpdateBy' => 'lastUpdateBy',	
         ];
     }
     

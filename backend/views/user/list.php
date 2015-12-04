@@ -71,7 +71,7 @@ $this->registerCss($css);
 ?>
 
 <?php ActiveForm::begin(['id' => 'dataTable-form'])?>
-<div class="portlet box grey">
+<div class="portlet box blue">
 	<div class="portlet-title">
 		<div class="caption"><i class="fa fa-reorder"></i>รายชื่อพนักงานทั้งหมด</div>
 		<div class="actions">
