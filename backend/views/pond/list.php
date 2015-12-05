@@ -16,14 +16,6 @@ $baseUrl = \Yii::getAlias('@web');
 $user = \Yii::$app->user;
 $str = <<<EOT
 function postAction(action) {
-
-		if(action == 'delete'){
-			if(! confirm("คุณแน่ใจว่าต้องการจะลบรายการที่เลือกไว้ ?")){
-				$('div.checker span').removeClass('checked');
-				return false;
-			}
-		}
-
 		$('#op').val(action);
 		$('#dataTable-form').submit();
 }
@@ -151,7 +143,7 @@ ActiveForm::begin(['id' => 'dataTable-form']);
                             <?php echo Html::checkbox('idCheck[]', false, ['value'=> $Pond->id, 'class'=> 'checkboxes'] + $disable)?>
                         </td>
                         <td>
-                            <?php echo $Pond->id;?>
+                            <?php echo $Pond->type;?>
                         </td>
                         <td>
                             <a href="<?= Url::toRoute(['pond/edit'])?>?id=<?php echo $Pond->id; ?>"><?php echo $Pond->title;?></a>
@@ -196,7 +188,7 @@ ActiveForm::begin(['id' => 'dataTable-form']);
     </div>
     <!-- END EXAMPLE TABLE PORTLET-->
 
-
+<?= Html::hiddenInput('op','',['id'=>'op']);?>
 <?php ActiveForm::end() ?>
 <script>
 $(document).ready(function() {       

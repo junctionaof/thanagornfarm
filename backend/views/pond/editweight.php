@@ -11,15 +11,47 @@ use backend\components\UiMessage;
 use backend\components\Portlet;
 use common\models\FAQ;
 use backend\components\TagCloud;
-use common\models\Food;
+use common\models\Weight;
 use common\models\Typelist;
+use common\models\Oxygen;
 
 $baseUrl = \Yii::getAlias('@web');
 $cancelUrl = Url::toRoute('faq/list');
+$csrfParam = Yii::$app->request->csrfParam;
+$csrfToken = Yii::$app->request->csrfToken;
+
+if($model->weightTime == ''){
+	$correntDate =  date( "Y-m-d H:i:s",strtotime("now"));
+}else {
+	$correntDate = $model->weightTime;
+}
 
 $contentDate = "";
 $contentTime = "";
 
+$str = <<<EOT
+
+$(document).ready(function() {
+	$('#pondId').on('change', function() {
+  		// Do someting
+		var id = $(this).val();
+		var jqxhr = $.get( "finpond", {id:id}, function() {
+		  		console.log('success loading');
+			}).done(function(data) {
+			var json = $.parseJSON(data);
+			$('#pond').val(json.pond);
+		    $('#age').val(json.age);
+		 	}).fail(function() {
+		    	console.log('error loading');
+		  	});
+	});
+		$('#weightTime').datepicker();
+});
+		
+
+
+EOT;
+$this->registerJs($str);
 $this->registerCssFile($baseUrl  . '/assets/global/plugins/select2/css/select2.min.css',['position' => \yii\web\View::POS_HEAD]) ;
 $this->registerCssFile($baseUrl  . '/assets/global/plugins/select2/css/select2-bootstrap.min.css',['position' => \yii\web\View::POS_HEAD]) ;
 $this->registerCssFile($baseUrl  . '/assets/global/plugins/bootstrap-datepicker/css/bootstrap-datepicker3.min.css',['position' => \yii\web\View::POS_HEAD]) ;
@@ -39,12 +71,13 @@ $this->registerJsFile($baseUrl  . '/assets/global/plugins/bootstrap-wysihtml5/wy
 $this->registerJsFile($baseUrl  . '/assets/global/plugins/bootstrap-wysihtml5/bootstrap-wysihtml5.js', ['position' => \yii\web\View::POS_END]);
 $this->registerJsFile($baseUrl  . '/assets/global/plugins/ckeditor/ckeditor.js', ['position' => \yii\web\View::POS_END]);
 $this->registerJsFile($baseUrl  . '/assets/global/plugins/bootstrap-markdown/lib/markdown.js', ['position' => \yii\web\View::POS_END]);
-$this->registerJsFile($baseUrl  . '/assets/global/plugins/bootstrap-markdown/js/bootstrap-markdown.js"', ['position' => \yii\web\View::POS_END]);
+$this->registerJsFile($baseUrl  . '/assets/global/plugins/bootstrap-markdown/js/bootstrap-markdown.js', ['position' => \yii\web\View::POS_END]);
 
 $this->registerJsFile($baseUrl  . '/assets/pages/scripts/form-validation.min.js', ['position' => \yii\web\View::POS_END]);
 
 $this->registerJsFile($baseUrl  . '/assets/global/plugins/select2/js/select2.full.min.js', ['position' => \yii\web\View::POS_END]);
 $this->registerJsFile($baseUrl  . '/assets/pages/scripts/components-select2.min.js', ['position' => \yii\web\View::POS_END]);
+
 
 ?>
 <?php echo UiMessage::widget(); ?>
@@ -69,58 +102,57 @@ $this->registerJsFile($baseUrl  . '/assets/pages/scripts/components-select2.min.
                                         <div class="form-body">
                                         	
                                             <div class="form-group">
-                                                <label class="control-label col-md-3" for="pondId">เลือกบ่อ</label>
+                                                <label class="control-label col-md-3" for="pondId">เลือกบ่อและรุ่น</label>
                                                 <div class="col-md-4">
                                                     <div class="input-group input-large" id="defaultrange">
-                                                        <?php // echo Html::dropDownList('pondId', ' ', $arrTypelist , ['id'=>'pondId','class' => 'select2 form-control'])?>	
+                                                        <?php echo Html::dropDownList('pondId', ' ', $arrTypelist , ['id'=>'pondId','class' => 'select2 form-control'])?>	
                                                     </div>
                                                 </div>
                                             </div>
+                                            
+                                            <div class="form-group">
+                                            	<label class="control-label col-md-3">ข้อมูลบ่อ และรุ่น </label>
+                                                      <div class="input-group input-large " >
+                                                      <?= Html::input('text','pond', $model->name,['id'=>'pond','class' => 'form-control', 'disabled' => 'true']);?>
+                                                  	</div>
+                                            </div>
+                                            
+                                            <div class="form-group">
+                                           		<label class="control-label col-md-3">อายุลูกกุ้ง</label>
+                                                      <div class="input-group input-large " >
+                                                       <?= Html::input('text', 'age', $model->age,['id'=>'age','class' => 'form-control']);?>
+                                                  	</div>
+                                            </div>
+                                            
                                              <div class="form-group">
-                                                <label class="control-label col-md-3">วันที่</label>
-                                                      <div class="input-group input-large date date-picker" data-date-format="dd-mm-yyyy" data-date-start-date="+0d">
-                                                        <input type="text" class="form-control" readonly>
-                                                        <span class="input-group-btn">
-                                                            <button class="btn default" type="button">
-                                                                <i class="fa fa-calendar"></i>
-                                                            </button>
-                                                        </span>
+                                                <label class="control-label col-md-3">วันที่สุ่มกุ้ง</label>
+                                                      <div class="input-group input-large" data-date-format="dd-mm-yyyy" data-date-start-date="+0d">
+                                                       <?= Html::input('text', 'weightTime' ,$correntDate ,['id'=>'weightTime','class' => 'form-control']);?>
                                                   	</div>
                                             </div>
                                                <div class="form-group">
-                                                <label class="control-label col-md-3">มื้อที่</label>
+                                                <label class="control-label col-md-3">นํ้าหนักกุ้ง</label>
                                                       <div class="input-group input-large ">
-                                                        <input type="text" class="form-control" /> 
+                                                        <?= Html::input('text', 'weightNo', $model->age,['id'=>'weightNo','class' => 'form-control']);?>
                                                   	</div>
                                             </div>
                                             
-                                            <div class="form-group">
-                                                <label class="control-label col-md-3">อายุลูกกุ้ง</label>
-                                                      <div class="input-group input-large " >
-                                                        <input type="text" class="form-control" /> 
-                                                  	</div>
-                                            </div>
+
                                             
                                              <div class="form-group">
-                                                <label class="control-label col-md-3">เบอร์อาหาร</label>
+                                                <label class="control-label col-md-3">เฉลี่ยตัวละ</label>
                                                       <div class="input-group input-large " >
-                                                       <input type="text" class="form-control" /> 
+                                                       <?= Html::input('text', 'weightNum', $model->weightNum,['id'=>'weightNum','class' => 'form-control']);?>
                                                   	</div>
                                             </div>
-                                            
-                                            <div class="form-group">
-                                                <label class="control-label col-md-3">จำนวนที่ใช้</label>
-                                                      <div class="input-group input-large" >
-                                                        <input type="text" class="form-control" /> 
-                                                  	</div>
-                                            </div>
+
                                         </div>
                                         <div class="form-actions">
                                             <div class="row">
                                                 <div class="col-md-offset-3 col-md-9">
                                                     <button type="submit" class="btn red">
                                                         <i class="fa fa-check"></i> Submit</button>
-                                                    <a href="<?php echo Url::toRoute('content/typelist') ?>" class="btn default" >ยกเลิก </a>
+                                                    <a href="<?php echo Url::toRoute('pond/weight') ?>" class="btn default" >ยกเลิก </a>
                                                 </div>
                                             </div>
                                         </div>
@@ -132,4 +164,3 @@ $this->registerJsFile($baseUrl  . '/assets/pages/scripts/components-select2.min.
                             <!-- END PORTLET-->
                         </div>
                     </div>
- 

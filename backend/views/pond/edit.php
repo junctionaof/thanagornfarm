@@ -33,6 +33,12 @@ $identity = \Yii::$app->user->getIdentity();
 $baseUrl = \Yii::getAlias('@web');
 $user = \Yii::$app->user;
 
+if($pond->releaseTime == ''){
+	$correntDate =  date( "Y-m-d H:i:s",strtotime("now"));
+}else {
+	$correntDate = $pond->releaseTime;
+}
+
 //register Css
 $this->registerCssFile($baseUrl  . '/assets/global/plugins/bootstrap-daterangepicker/daterangepicker.min.css',['position' => \yii\web\View::POS_HEAD]) ;
 $this->registerCssFile($baseUrl  . '/assets/global/plugins/bootstrap-datepicker/css/bootstrap-datepicker3.min.css',['position' => \yii\web\View::POS_HEAD]) ;
@@ -133,7 +139,7 @@ $this->registerJsFile($baseUrl  . '/assets/pages/scripts/components-date-time-pi
 														<i class="fa fa-calendar"></i> วันที่ และเวลาปล่อยลูกกุ้ง
 													</p>
 												<div class="input-group date form_meridian_datetime input-large" data-date="">
-                                                  <?php echo Html::textInput('releaseTime', $pond->releaseTime, array('class'=>'form-control','title'=>'วันที่ปล่อย ..','placeholder'=>'ระบุวันที่..'))?>
+                                                  <?php echo Html::textInput('releaseTime', $correntDate, array('class'=>'form-control','title'=>'วันที่ปล่อย ..','placeholder'=>'ระบุวันที่..'))?>
                                                       <span class="input-group-btn">
                                                         <button class="btn default date-reset" type="button">
                                                            <i class="fa fa-times"></i>

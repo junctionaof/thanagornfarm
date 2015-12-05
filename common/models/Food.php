@@ -8,6 +8,7 @@ use Yii;
  * This is the model class for table "Typelist".
  *
  * @property integer $id
+ * @property string $name
  * @property string $pondId
  * @property string $foodNo
  * @property integer $age
@@ -35,8 +36,9 @@ class Food extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['pondId','foodNo','age','foodNum','numberOf','createBy','lastUpdateBy'], 'integer'],
+            [['pondId','foodNo','foodNum','numberOf','createBy','lastUpdateBy'], 'integer'],
             [['foodTime','createTime','lastUpdateTime'], 'safe'],
+        	[['name','age'], 'string', 'max' => 100],
         ];
     }
 
@@ -47,6 +49,7 @@ class Food extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
+        	'name' => 'Name',
             'pondId' => 'pondId',
         	'foodNo' => 'foodNo',
         	'age' => 'age',	

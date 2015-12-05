@@ -83,7 +83,7 @@ $template = array(
                                 <li class="nav-item <?php echo $myUrl == Url::toRoute('pond/alkalinity') || $myUrl == Url::toRoute('pond/editalkalinity')?'active':'';?>  ">
                                     <a href="<?php echo Url::toRoute('pond/alkalinity') ?>" class="nav-link ">
                                     <i class="fa fa-angle-right"></i>
-                                        <span class="title"> บันทุกค่าอัลคาไลน์นิติ</span>
+                                        <span class="title"> บันทึกค่าอัลคาไลน์นิติ</span>
                                     </a>
                                 </li>
                                 <li class="nav-item <?php echo $myUrl == Url::toRoute('pond/watertemp') || $myUrl == Url::toRoute('pond/editwatertemp') ?'active':'';?>  ">

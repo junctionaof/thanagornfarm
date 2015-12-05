@@ -19,12 +19,8 @@ $str = <<<EOT
 function postAction(action) {
 
 		if(action == 'delete'){
-			if(! confirm("คุณแน่ใจว่าต้องการจะลบรายการที่เลือกไว้ ?")){
-				$('div.checker span').removeClass('checked');
-				return false;
-			}
+		
 		}
-
 		$('#op').val(action);
 		$('#dataTable-form').submit();
 }
@@ -53,10 +49,11 @@ $this->registerJs($str, View::POS_LOAD, 'form-js');
 
 ActiveForm::begin(['id' => 'dataTable-form']);
 ?>
+
     <div class="portlet box green">
         <div class="portlet-title">
             <div class="caption">
-                <i class="fa fa-table"></i>จัดการบ่อเลี้ยงกุ้ง
+                <i class="fa fa-table"></i> รายการบันทึกนํ้าหนักเฉลี่ย
             </div>
             <div class="tools">
                 <a href="javascript:;" class="collapse">
@@ -70,7 +67,7 @@ ActiveForm::begin(['id' => 'dataTable-form']);
                         <div class="portlet-title">
                                 <div class="actions">
                                  	<a class="btn add" href="<?= Url::toRoute(['pond/editweight'])?>" title="เพิ่ม">
-                                        <i class="icon-plus"> เพิ่มบ่อเลี้ยงกุ้ง</i>
+                                        <i class="icon-plus">  บันทึกนํ้าหนักเฉลี่ย</i>
                                     </a>
                                 </div>
                         </div>
@@ -101,19 +98,25 @@ ActiveForm::begin(['id' => 'dataTable-form']);
                             <input type="checkbox" class="group-checkable" data-set=".table-list .checkboxes"/>
                         </th>
                         <th>
-                     		   บ่อที่ 
+                 		            บ่อ - รุ่นที่
                         </th>
                         <th>
-                 		             ขนาดบ่อ
+                    		 วัน/เดือน/ปี ที่ให้อาหาร
                         </th>
                         <th>
-                    		 วัน/เดือน/ปี ที่สร้าง
+                          	  ปริมานที่ให้
                         </th>
                         <th>
-                                                                          แก้ไขล่าสุด
+                          	  เบอร์อาหาร
                         </th>
                         <th>
-                                                                         ผู้แก้ไข
+                          	 มื้อที่
+                        </th>
+                        <th>
+                          	  อายุลูกกุ้ง
+                        </th>
+                        <th>
+                                                                         ผู้บันทึก
                         </th>
                     </tr>
                 </thead>
@@ -123,14 +126,14 @@ ActiveForm::begin(['id' => 'dataTable-form']);
 		foreach ($lst as $Content):
 ?>                
                     <tr class="odd">
-                         <td>                  	
-                            <?php echo Html::checkbox('idCheck[]', false, ['value'=> $Content->id, 'class'=> 'checkboxes'])?>
-                        </td>
-                        <td><?php echo $Content->name;?> </td>
-                        <td><?php echo $Content->size;?></td>
-                        <td class="text-center"><?php echo DateUtil::th_date(DateUtil::SDT_FMT_TH, strtotime($Content->createTime));?></td>
-                        <td></td>
-                        <td class="center"></td>
+                        <td> <?php echo Html::checkbox('idCheck[]', false, ['value'=> $Content->id, 'class'=> 'checkboxes'])?></td>
+                        <td><?php echo $arrPond[$Content->pondId];?></td>
+                        <td class="text-left"><?php echo DateUtil::th_date(DateUtil::LDT_FMT_TH, strtotime($Content->weightTime));?></td>
+                        <td><?php echo $Content->weightNum;?> </td>
+                        <td><?php echo $Content->numberOf;?>   </td>
+                        <td> <?php echo $Content->weightNo;?>  </td>
+                        <td> <?php echo $Content->age;?>  </td>
+                        <td class="center"><?php echo $arrUser[$Content->createBy];?> </td>
                     </tr>
 <?php 
 		endforeach;
@@ -143,7 +146,7 @@ ActiveForm::begin(['id' => 'dataTable-form']);
         </div>
     </div>
     <!-- END EXAMPLE TABLE PORTLET-->
-
+<?= Html::hiddenInput('op','',['id'=>'op']);?>
 <?php ActiveForm::end() ?>
 <script>
 $(document).ready(function() {       

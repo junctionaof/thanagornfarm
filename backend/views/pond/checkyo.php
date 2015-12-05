@@ -4,7 +4,7 @@ use yii\helpers\Url;
 use yii\widgets\LinkPager;
 use yii\helpers\Html;
 use yii\web\View;
-use common\models\Content;
+use common\models\checkyo;
 use common\models\Typelist;
 use app\DateUtil;
 use app\Workflow;
@@ -19,12 +19,8 @@ $str = <<<EOT
 function postAction(action) {
 
 		if(action == 'delete'){
-			if(! confirm("คุณแน่ใจว่าต้องการจะลบรายการที่เลือกไว้ ?")){
-				$('div.checker span').removeClass('checked');
-				return false;
-			}
+		
 		}
-
 		$('#op').val(action);
 		$('#dataTable-form').submit();
 }
@@ -53,10 +49,11 @@ $this->registerJs($str, View::POS_LOAD, 'form-js');
 
 ActiveForm::begin(['id' => 'dataTable-form']);
 ?>
+
     <div class="portlet box green">
         <div class="portlet-title">
             <div class="caption">
-                <i class="fa fa-table"></i>จัดการบ่อเลี้ยงกุ้ง
+                <i class="fa fa-table"></i>รายการบันทึกการเช็คยอ
             </div>
             <div class="tools">
                 <a href="javascript:;" class="collapse">
@@ -70,7 +67,7 @@ ActiveForm::begin(['id' => 'dataTable-form']);
                         <div class="portlet-title">
                                 <div class="actions">
                                  	<a class="btn add" href="<?= Url::toRoute(['pond/editcheckyo'])?>" title="เพิ่ม">
-                                        <i class="icon-plus"> เพิ่มบ่อเลี้ยงกุ้ง</i>
+                                        <i class="icon-plus"> บันทึกการเช็คยอ</i>
                                     </a>
                                 </div>
                         </div>
@@ -101,19 +98,31 @@ ActiveForm::begin(['id' => 'dataTable-form']);
                             <input type="checkbox" class="group-checkable" data-set=".table-list .checkboxes"/>
                         </th>
                         <th>
-                     		   บ่อที่ 
+                 		            บ่อ - รุ่นที่
                         </th>
                         <th>
-                 		             ขนาดบ่อ
+                    		 วัน/เดือน/ปี ที่ให้อาหาร
                         </th>
                         <th>
-                    		 วัน/เดือน/ปี ที่สร้าง
+                          	เช็คยอ มื้อที่
                         </th>
                         <th>
-                                                                          แก้ไขล่าสุด
+                          	ยอ 1
                         </th>
                         <th>
-                                                                         ผู้แก้ไข
+                                                                        ยอ 2
+                        </th>
+                         <th>
+                                                                        ยอ 3
+                        </th>
+                         <th>
+                                                                        ยอ 4
+                        </th>
+                         <th>
+                          	  อายุลูกกุ้ง
+                        </th>
+                        <th>
+                                                                         ผู้บันทึก
                         </th>
                     </tr>
                 </thead>
@@ -123,14 +132,16 @@ ActiveForm::begin(['id' => 'dataTable-form']);
 		foreach ($lst as $Content):
 ?>                
                     <tr class="odd">
-                         <td>                  	
-                            <?php echo Html::checkbox('idCheck[]', false, ['value'=> $Content->id, 'class'=> 'checkboxes'])?>
-                        </td>
-                        <td><?php echo $Content->name;?> </td>
-                        <td><?php echo $Content->size;?></td>
-                        <td class="text-center"><?php echo DateUtil::th_date(DateUtil::SDT_FMT_TH, strtotime($Content->createTime));?></td>
-                        <td></td>
-                        <td class="center"></td>
+                        <td> <?php echo Html::checkbox('idCheck[]', false, ['value'=> $Content->id, 'class'=> 'checkboxes'])?></td>
+                        <td><?php echo $arrPond[$Content->pondId];?></td>
+                        <td class="text-left"><?php echo DateUtil::th_date(DateUtil::LDT_FMT_TH, strtotime($Content->checkyoTime));?></td>
+                        <td><?php echo $Content->checkyoNo;?> </td>
+                        <td><?php echo $Content->yo01;?>   </td>
+                        <td> <?php echo $Content->yo02;?>  </td>
+                        <td> <?php echo $Content->yo03;?>  </td>
+                        <td> <?php echo $Content->yo04;?>  </td>
+                        <td> <?php echo $Content->age;?>  </td>
+                        <td class="center"><?php echo $arrUser[$Content->createBy];?> </td>
                     </tr>
 <?php 
 		endforeach;
@@ -143,7 +154,7 @@ ActiveForm::begin(['id' => 'dataTable-form']);
         </div>
     </div>
     <!-- END EXAMPLE TABLE PORTLET-->
-
+<?= Html::hiddenInput('op','',['id'=>'op']);?>
 <?php ActiveForm::end() ?>
 <script>
 $(document).ready(function() {       
