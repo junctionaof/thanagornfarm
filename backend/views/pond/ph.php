@@ -104,13 +104,7 @@ ActiveForm::begin(['id' => 'dataTable-form']);
                     		 วัน/เดือน/ปี ที่ให้อาหาร
                         </th>
                         <th>
-                          	  ปริมานที่ให้
-                        </th>
-                        <th>
-                          	  เบอร์อาหาร
-                        </th>
-                        <th>
-                          	 มื้อที่
+                          	  ค่าที่วัดได้
                         </th>
                         <th>
                           	  อายุลูกกุ้ง
@@ -127,11 +121,9 @@ ActiveForm::begin(['id' => 'dataTable-form']);
 ?>                
                     <tr class="odd">
                         <td> <?php echo Html::checkbox('idCheck[]', false, ['value'=> $Content->id, 'class'=> 'checkboxes'])?></td>
-                        <td><?php echo $arrPond[$Content->pondId];?></td>
+                        <td> <a href="<?= Url::toRoute(['pond/editph'])?>?id=<?php echo $Content->id; ?>"><?php echo $arrPond[$Content->pondId];?></a></td>
                         <td class="text-left"><?php echo DateUtil::th_date(DateUtil::LDT_FMT_TH, strtotime($Content->phTime));?></td>
                         <td><?php echo $Content->phNum;?> </td>
-                        <td><?php echo $Content->numberOf;?>   </td>
-                        <td> <?php echo $Content->phNo;?>  </td>
                         <td> <?php echo $Content->age;?>  </td>
                         <td class="center"><?php echo $arrUser[$Content->createBy];?> </td>
                     </tr>

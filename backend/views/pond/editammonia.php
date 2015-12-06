@@ -11,7 +11,7 @@ use backend\components\UiMessage;
 use backend\components\Portlet;
 use common\models\FAQ;
 use backend\components\TagCloud;
-use common\models\Food;
+use common\models\Ammonia;
 use common\models\Typelist;
 
 $baseUrl = \Yii::getAlias('@web');
@@ -19,10 +19,10 @@ $cancelUrl = Url::toRoute('faq/list');
 $csrfParam = Yii::$app->request->csrfParam;
 $csrfToken = Yii::$app->request->csrfToken;
 
-if($model->foodTime == ''){
+if($model->ammoniaTime == ''){
 	$correntDate =  date( "Y-m-d H:i:s",strtotime("now"));
 }else {
-	$correntDate = $model->foodTime;
+	$correntDate = $model->ammoniaTime;
 }
 
 $contentDate = "";
@@ -44,7 +44,7 @@ $(document).ready(function() {
 		    	console.log('error loading');
 		  	});
 	});
-		$('#foodTime').datepicker();
+		$('#ammoniaTime').datepicker();
 });
 		
 
@@ -87,7 +87,7 @@ $this->registerJsFile($baseUrl  . '/assets/pages/scripts/components-select2.min.
                             <div class="portlet box green">
                                 <div class="portlet-title">
                                     <div class="caption">
-                                        <i class="fa fa-gift"></i>บันทึกการให้อาหารกุ้ง </div>
+                                        <i class="fa fa-gift"></i>บันทึกค่าแอมโมเนีย  </div>
                                     <div class="tools">
                                         <a href="javascript:;" class="collapse"> </a>
                                         <a href="#portlet-config" data-toggle="modal" class="config"> </a>
@@ -109,10 +109,10 @@ $this->registerJsFile($baseUrl  . '/assets/pages/scripts/components-select2.min.
                                                 </div>
                                             </div>
                                             
-                                            <div class="form-group">
+                                         <div class="form-group">
                                             	<label class="control-label col-md-3">ข้อมูลบ่อ และรุ่น </label>
                                                       <div class="input-group input-large " >
-                                                      <?= Html::input('text','pond', $model->name,['id'=>'pond','class' => 'form-control', 'disabled' => 'true']);?>
+                                                      <?= Html::input('text','name', $model->name,['id'=>'pond','class' => 'form-control']);?>
                                                   	</div>
                                             </div>
                                             
@@ -124,37 +124,19 @@ $this->registerJsFile($baseUrl  . '/assets/pages/scripts/components-select2.min.
                                             </div>
                                             
                                              <div class="form-group">
-                                                <label class="control-label col-md-3">วันที่ให้อาหาร</label>
+                                                <label class="control-label col-md-3">วันที่วัด</label>
                                                       <div class="input-group input-large" data-date-format="dd-mm-yyyy" data-date-start-date="+0d">
-                                                       <?= Html::input('text', 'foodTime' ,$correntDate ,['id'=>'foodTime','class' => 'form-control']);?>
+                                                       <?= Html::input('text', 'ammoniaTime' ,$correntDate ,['id'=>'ammoniaTime','class' => 'form-control']);?>
                                                   	</div>
                                             </div>
-                                               <div class="form-group">
-                                                <label class="control-label col-md-3">มื้อที่</label>
-                                                      <div class="input-group input-large ">
-                                                        <?php echo Html::dropDownList('foodNo',$model->foodNo, Food::$arrMeal , ['id'=>'foodNo','class' => 'select2 form-control'])?>	
-                                                  	</div>
-                                            </div>
-                                            
-
-                                            
                                              <div class="form-group">
-                                                <label class="control-label col-md-3">เบอร์อาหาร</label>
+                                                <label class="control-label col-md-3">ค่าที่วัดได้</label>
                                                       <div class="input-group input-large " >
-                                                      <?php echo Html::dropDownList('numberOf',$model->numberOf, Food::$arrNumberOf , ['id'=>'numberOf','class' => 'select2 form-control'])?>	
-
-                                                  	</div>
-                                            </div>
-                                            
-                                            <div class="form-group">
-                                                <label class="control-label col-md-3">ปริมาณอาหารที่ให้</label>
-                                                      <div class="input-group input-large" >
-                                                       <?= Html::input('text', 'foodNum', $model->foodNum,['id'=>'foodNum','class' => 'form-control']);?>
+                                                       <?= Html::input('text', 'ammoniaNum', $model->ammoniaNum,['id'=>'ammoniaNum','class' => 'form-control']);?>
                                                   	<span class="input-group-addon">
-                                                        <i class="fa"> กิโลกรัม</i>
+                                                        <i class="fa"> Ammonia</i>
                                                     </span>
                                                   	</div>
-                                                  	
                                             </div>
                                         </div>
                                         <div class="form-actions">
@@ -162,7 +144,7 @@ $this->registerJsFile($baseUrl  . '/assets/pages/scripts/components-select2.min.
                                                 <div class="col-md-offset-3 col-md-9">
                                                     <button type="submit" class="btn red">
                                                         <i class="fa fa-check"></i> Submit</button>
-                                                    <a href="<?php echo Url::toRoute('pond/food') ?>" class="btn default" >ยกเลิก </a>
+                                                    <a href="<?php echo Url::toRoute('pond/ammonia') ?>" class="btn default" >ยกเลิก </a>
                                                 </div>
                                             </div>
                                         </div>

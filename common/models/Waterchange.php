@@ -5,29 +5,29 @@ namespace common\models;
 use Yii;
 
 /**
- * This is the model class for table "weight".
+ * This is the model class for table "waterchange".
  *
  * @property integer $id
  * @property integer $pondId
- * @property integer $weightNo
+ * @property integer $waterchangeNo
  * @property string $age
- * @property integer $weightNum
+ * @property integer $ waterchangeNum
  * @property integer $numberOf
  * @property integer $createBy
- * @property string $weightTime
+ * @property string $waterchangeTime
  * @property string $createTime
  * @property string $lastUpdateTime
  * @property string $lastUpdateBy
  * @property string $name
  */
-class Weight extends \yii\db\ActiveRecord
+class Waterchange extends \yii\db\ActiveRecord
 {
     /**
      * @inheritdoc
      */
     public static function tableName()
     {
-        return 'weight';
+        return 'waterchange';
     }
 
     /**
@@ -36,9 +36,9 @@ class Weight extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['pondId', 'weightNo', 'weightNum', 'numberOf', 'createBy', 'lastUpdateBy'], 'integer'],
-            [['weightTime', 'createTime', 'lastUpdateTime'], 'safe'],
-            [['age','name'], 'string', 'max' => 255]
+            [['pondId', 'waterchangeNo', 'waterchangeNum', 'numberOf', 'createBy', 'lastUpdateBy'], 'integer'],
+            [['waterchangeTime', 'createTime', 'lastUpdateTime'], 'safe'],
+            [['age', 'name'], 'string', 'max' => 255]
         ];
     }
 
@@ -50,12 +50,12 @@ class Weight extends \yii\db\ActiveRecord
         return [
             'id' => 'ID',
             'pondId' => 'รหัสรุ่น',
-            'weightNo' => 'มื้อที่',
+            'waterchangeNo' => 'มื้อที่',
             'age' => 'อายุลูกกุ้ง',
-            'weightNum' => 'ปริมาณอาหาร',
-            'numberOf' => 'เบอร์ของอาหาร',
+            'waterchangeNum' => 'ปริมาณ waterchange',
+            'numberOf' => 'เบอร์ของ waterchange',
             'createBy' => 'สร้างโดย',
-            'weightTime' => 'วันที่ให้อาหาร',
+            'waterchangeTime' => 'วันที่วัดค่า',
             'createTime' => 'สร้างเมื่อ',
             'lastUpdateTime' => 'เวลาแก้ไขล่าสุด',
             'lastUpdateBy' => 'ผู้แก้ไขล่าสุด',

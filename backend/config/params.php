@@ -38,8 +38,11 @@ return [
 		'ui.button.default' => 'green',
 		'ui.button.normal' => 'green',
 		
-		'site.url' => 'http://tpbs.ndev.pw/home',
-		'new.url' => 'http://news.tpbs.ndev.pw',
 		
 		'portlets'=>1,
+		
+		
+		
+		
+		
 ];

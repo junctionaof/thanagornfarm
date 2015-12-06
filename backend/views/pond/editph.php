@@ -112,7 +112,7 @@ $this->registerJsFile($baseUrl  . '/assets/pages/scripts/components-select2.min.
                                             <div class="form-group">
                                             	<label class="control-label col-md-3">ข้อมูลบ่อ และรุ่น </label>
                                                       <div class="input-group input-large " >
-                                                      <?= Html::input('text','pond', $model->name,['id'=>'pond','class' => 'form-control', 'disabled' => 'true']);?>
+                                                      <?= Html::input('text','name', $model->name,['id'=>'pond','class' => 'form-control']);?>
                                                   	</div>
                                             </div>
                                             
@@ -124,32 +124,20 @@ $this->registerJsFile($baseUrl  . '/assets/pages/scripts/components-select2.min.
                                             </div>
                                             
                                              <div class="form-group">
-                                                <label class="control-label col-md-3">วันที่ให้อาหาร</label>
+                                                <label class="control-label col-md-3">วันที่วัด</label>
                                                       <div class="input-group input-large" data-date-format="dd-mm-yyyy" data-date-start-date="+0d">
                                                        <?= Html::input('text', 'phTime' ,$correntDate ,['id'=>'phTime','class' => 'form-control']);?>
                                                   	</div>
                                             </div>
-                                               <div class="form-group">
-                                                <label class="control-label col-md-3">มื้อที่</label>
-                                                      <div class="input-group input-large ">
-                                                        <?= Html::input('text', 'phNo', $model->age,['id'=>'phNo','class' => 'form-control']);?>
-                                                  	</div>
-                                            </div>
-                                            
-
-                                            
                                              <div class="form-group">
-                                                <label class="control-label col-md-3">เบอร์อาหาร</label>
+                                                <label class="control-label col-md-3">ค่าที่วัดได้</label>
                                                       <div class="input-group input-large " >
                                                        <?= Html::input('text', 'phNum', $model->phNum,['id'=>'phNum','class' => 'form-control']);?>
+                                                  	<span class="input-group-addon">
+                                                        <i class="fa"> PH</i>
+                                                    </span>
                                                   	</div>
-                                            </div>
-                                            
-                                            <div class="form-group">
-                                                <label class="control-label col-md-3">จำนวนที่ใช้</label>
-                                                      <div class="input-group input-large" >
-                                                       <?= Html::input('text', 'numberOf', $model->numberOf,['id'=>'numberOf','class' => 'form-control']);?>
-                                                  	</div>
+                                                  	
                                             </div>
                                         </div>
                                         <div class="form-actions">

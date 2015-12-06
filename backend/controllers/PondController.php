@@ -8,16 +8,21 @@ use yii\data\Pagination;
 use yii\helpers;
 use yii\helpers\Url;
 
-use common\models\pond;
+use common\models\Pond;
 use common\models\Typelist;
-use common\models\pondRef;
+use common\models\PondRef;
 use common\models\Media;
-use common\models\weight;
+use common\models\Weight;
 use common\models\Oxygen;
-use common\models\ph;
-use common\models\alkalinity;
-use common\models\temp;
-use common\models\watertemp;
+use common\models\Ph;
+use common\models\Alkalinity;
+use common\models\Temp;
+use common\models\Watertemp;
+use common\models\Ammonia;
+use common\models\Nitrite;
+use common\models\Salinity;
+use common\models\Waterchange;
+use common\models\Other;
 
 use app\Workflow;
 use app\JsonPackage;
@@ -145,6 +150,8 @@ class PondController extends BaseController {
     	if($request->isPost){
     		$model->name = $_POST['Typelist']['name'];
     		$model->size =$_POST['Typelist']['size'];
+    		$model->lastUpdateBy = $identity->id;
+    		$model->lastUpdateTime = date('Y-m-d H:i:s', $currentTs);
     
     		if (trim($model->name) == ''){
     			$model->addError('name', 'ไม่ได้กรอกชื่อบ่อ');
@@ -289,6 +296,8 @@ class PondController extends BaseController {
     		$model->foodNum  = $request->get('foodNum', $request->post('foodNum', null));
     		$model->foodTime  = $foodTimeIn;
     		$model->numberOf  = $request->get('numberOf', $request->post('numberOf', null));
+    		$model->lastUpdateBy = $identity->id;
+    		$model->lastUpdateTime = date('Y-m-d H:i:s', $currentTs);
 
     		if (trim($model->pondId) == ''){
     			$model->addError('pondId', 'ไม่ได้เลือก รุ่น และบ่อ');
@@ -308,10 +317,10 @@ class PondController extends BaseController {
     			}
     			UiMessage::setMessage('การบันทึกข้อมูลผิดพลาด:' . $modelError, 'warning');
     		}
-    
     	}
     
-    	$query = Pond::find()->orderBy(['id'=>SORT_ASC]);
+    	$query = Pond::find()->where("status = 1")->orderBy(['type'=>SORT_ASC])->groupBy(['type']);
+    	//var_dump($query->all()); exit();
     	$arrTypelist = [0=>'กรุณาเลือกบ่อ  และรุ่นที่ต้องการ'];
     	$arrTypelist += \yii\helpers\ArrayHelper::map($query->all(), 'id' ,'title','type');
     	 
@@ -415,28 +424,30 @@ class PondController extends BaseController {
     	$identity = \Yii::$app->user->getIdentity();
     	$request = \Yii::$app->request;
     	$id = $request->get('id', $request->post('id', null));
-    	$query = Typelist::find();
+    	$query = Alkalinity::find();
     	
     	if ($id){
     		$query->where("id=".$id);
     		$model = $query->one();
     	}else{
-    		$model = new food();
+    		$model = new Alkalinity();
     		$model->createTime = date('Y-m-d H:i:s', $currentTs);
     		$model->createBy = $identity->id;
     	}
     	
-    	$foodTime = $request->get('foodTime', $request->post('foodTime', null));
-    	$foodTimeIn = date('Y-m-d H:i:s', strtotime($foodTime));
+    	$alkalinityTime = $request->get('alkalinityTime', $request->post('alkalinityTime', null));
+    	$alkalinityTimeIn = date('Y-m-d H:i:s', strtotime($alkalinityTime));
     	
     	if($request->isPost){
     		$model->name  = $request->get('name', $request->post('name', null));
     		$model->pondId  = $request->get('pondId', $request->post('pondId', null));
-    		$model->foodNo  = $request->get('foodNo', $request->post('foodNo', null));
+    		$model->alkalinityNo  = $request->get('alkalinityNo', $request->post('alkalinityNo', null));
     		$model->age  = $request->get('age', $request->post('age', null));
-    		$model->foodNum  = $request->get('foodNum', $request->post('foodNum', null));
-    		$model->foodTime  = $foodTimeIn;
+    		$model->alkalinityNum  = $request->get('alkalinityNum', $request->post('alkalinityNum', null));
+    		$model->alkalinityTime  = $alkalinityTimeIn;
     		$model->numberOf  = $request->get('numberOf', $request->post('numberOf', null));
+    		$model->lastUpdateBy = $identity->id;
+    		$model->lastUpdateTime = date('Y-m-d H:i:s', $currentTs);
 
     		if (trim($model->pondId) == ''){
     			$model->addError('pondId', 'ไม่ได้เลือก รุ่น และบ่อ');
@@ -444,7 +455,7 @@ class PondController extends BaseController {
     
     		if (!$model->hasErrors()) {
     			$model->save();
-    			return $this->redirect('food');
+    			return $this->redirect('alkalinity');
     		}
     		else {
     			$modelError = '';
@@ -459,18 +470,18 @@ class PondController extends BaseController {
     
     	}
     
-    	$query = Pond::find()->orderBy(['id'=>SORT_ASC]);
+    	$query = Pond::find()->where("status = 1")->orderBy(['type'=>SORT_ASC])->groupBy(['type']);
     	$arrTypelist = [0=>'กรุณาเลือกบ่อ  และรุ่นที่ต้องการ'];
     	$arrTypelist += \yii\helpers\ArrayHelper::map($query->all(), 'id' ,'title','type');
     	 
     	
     
-    	echo $this->render('editfood', [
+    	echo $this->render('editalkalinity', [
     			'model' => $model,
     			'arrTypelist'=> $arrTypelist,
     	]);
     }
-    // End of Alkalinity
+    // End of alkalinity
     
     
     // Start Checkyo 
@@ -587,6 +598,8 @@ class PondController extends BaseController {
     		$model->yo02  = $request->get('yo02', $request->post('yo02', null));
     		$model->yo03  = $request->get('yo03', $request->post('yo03', null));
     		$model->yo04  = $request->get('yo04', $request->post('yo04', null));
+    		$model->lastUpdateBy = $identity->id;
+    		$model->lastUpdateTime = date('Y-m-d H:i:s', $currentTs);
     		
     		if (trim($model->pondId) == ''){
     			$model->addError('pondId', 'ไม่ได้เลือก รุ่น และบ่อ');
@@ -609,7 +622,7 @@ class PondController extends BaseController {
     
     	}
     
-    	$query = Pond::find()->orderBy(['id'=>SORT_ASC]);
+    	$query = Pond::find()->where("status = 1")->orderBy(['type'=>SORT_ASC])->groupBy(['type']);
     	$arrTypelist = [0=>'กรุณาเลือกบ่อ  และรุ่นที่ต้องการ'];
     	$arrTypelist += \yii\helpers\ArrayHelper::map($query->all(), 'id' ,'title','type');
     	 
@@ -711,7 +724,7 @@ class PondController extends BaseController {
     	$identity = \Yii::$app->user->getIdentity();
     	$request = \Yii::$app->request;
     	$id = $request->get('id', $request->post('id', null));
-    	$query = Typelist::find();
+    	$query = Oxygen::find();
     	
     	if ($id){
     		$query->where("id=".$id);
@@ -733,6 +746,8 @@ class PondController extends BaseController {
     		$model->oxygenNum  = $request->get('oxygenNum', $request->post('oxygenNum', null));
     		$model->oxygenTime  = $oxygenTimeIn;
     		$model->numberOf  = $request->get('numberOf', $request->post('numberOf', null));
+    		$model->lastUpdateBy = $identity->id;
+    		$model->lastUpdateTime = date('Y-m-d H:i:s', $currentTs);
 
     		if (trim($model->pondId) == ''){
     			$model->addError('pondId', 'ไม่ได้เลือก รุ่น และบ่อ');
@@ -755,15 +770,20 @@ class PondController extends BaseController {
     
     	}
     
-    	$query = Pond::find()->orderBy(['id'=>SORT_ASC]);
+    	$query = Pond::find()->where("status = 1")->orderBy(['type'=>SORT_ASC])->groupBy(['type']);
     	$arrTypelist = [0=>'กรุณาเลือกบ่อ  และรุ่นที่ต้องการ'];
     	$arrTypelist += \yii\helpers\ArrayHelper::map($query->all(), 'id' ,'title','type');
     	 
+    	$queryAll = Pond::find();
+    	$arrAllTypelist = [0=>'กรุณาเลือกบ่อ  และรุ่นที่ต้องการ'];
+    	$arrAllTypelist += \yii\helpers\ArrayHelper::map($queryAll->all(), 'id' ,'title','type');
+    	
     	
     
     	echo $this->render('editoxygen', [
     			'model' => $model,
     			'arrTypelist'=> $arrTypelist,
+    			'arrAllTypelist' => $arrAllTypelist,
     	]);
     }
     // End of editoxygen
@@ -857,7 +877,7 @@ class PondController extends BaseController {
     	$identity = \Yii::$app->user->getIdentity();
     	$request = \Yii::$app->request;
     	$id = $request->get('id', $request->post('id', null));
-    	$query = Typelist::find();
+    	$query = Ph::find();
     	
     	if ($id){
     		$query->where("id=".$id);
@@ -879,6 +899,8 @@ class PondController extends BaseController {
     		$model->phNum  = $request->get('phNum', $request->post('phNum', null));
     		$model->phTime  = $phTimeIn;
     		$model->numberOf  = $request->get('numberOf', $request->post('numberOf', null));
+    		$model->lastUpdateBy = $identity->id;
+    		$model->lastUpdateTime = date('Y-m-d H:i:s', $currentTs);
 
     		if (trim($model->pondId) == ''){
     			$model->addError('pondId', 'ไม่ได้เลือก รุ่น และบ่อ');
@@ -901,7 +923,7 @@ class PondController extends BaseController {
     
     	}
     
-    	$query = Pond::find()->orderBy(['id'=>SORT_ASC]);
+    	$query = Pond::find()->where("status = 1")->orderBy(['type'=>SORT_ASC])->groupBy(['type']);
     	$arrTypelist = [0=>'กรุณาเลือกบ่อ  และรุ่นที่ต้องการ'];
     	$arrTypelist += \yii\helpers\ArrayHelper::map($query->all(), 'id' ,'title','type');
     	 
@@ -1002,7 +1024,7 @@ class PondController extends BaseController {
     	$identity = \Yii::$app->user->getIdentity();
     	$request = \Yii::$app->request;
     	$id = $request->get('id', $request->post('id', null));
-    	$query = Typelist::find();
+    	$query = Temp::find();
     	
     	if ($id){
     		$query->where("id=".$id);
@@ -1024,6 +1046,8 @@ class PondController extends BaseController {
     		$model->tempNum  = $request->get('tempNum', $request->post('tempNum', null));
     		$model->tempTime  = $tempTimeIn;
     		$model->numberOf  = $request->get('numberOf', $request->post('numberOf', null));
+    		$model->lastUpdateBy = $identity->id;
+    		$model->lastUpdateTime = date('Y-m-d H:i:s', $currentTs);
 
     		if (trim($model->pondId) == ''){
     			$model->addError('pondId', 'ไม่ได้เลือก รุ่น และบ่อ');
@@ -1046,7 +1070,7 @@ class PondController extends BaseController {
     
     	}
     
-    	$query = Pond::find()->orderBy(['id'=>SORT_ASC]);
+    	$query = Pond::find()->where("status = 1")->orderBy(['type'=>SORT_ASC])->groupBy(['type']);
     	$arrTypelist = [0=>'กรุณาเลือกบ่อ  และรุ่นที่ต้องการ'];
     	$arrTypelist += \yii\helpers\ArrayHelper::map($query->all(), 'id' ,'title','type');
     	 
@@ -1062,6 +1086,748 @@ class PondController extends BaseController {
     
     
 
+    // Start Ammonia
+    public function actionAmmonia() {
+    	$currentTs = time();
+    	$request = Yii::$app->request;
+    	$identity = \Yii::$app->user->getIdentity();
+    	$arrPond = [];
+    
+    	$searchCategory = $request->post('type', $request->get('type', ''));
+    	$searchStatus = $request->post('status', $request->get('status', ''));
+    	$q = trim($request->post('q', $request->get('q', '')));
+    
+    	$query = Ammonia::find();
+    	$query->orderBy(['id'=>SORT_ASC]);
+    
+    	if ($searchCategory)
+    		$query->andWhere('type = :type',[':type' => $searchCategory]);
+    		 
+    		 
+    		if ($searchStatus)
+    			$query->andWhere('status = :status',[':status' => $searchStatus]);
+    
+    			if ($q)
+    				$query->andWhere(['LIKE' ,'name','%'.$q.'%', false]);
+    					
+    					
+    				//actions
+    				switch ($request->post('op')){
+    					case 'delete':
+    						$this->ammoniaDelete();
+    						break;
+    				}
+    					
+    				//paging
+    				$pagination = new Pagination([
+    						'defaultPageSize' => \Yii::$app->params['ui']['defaultPageSize'],
+    						'totalCount' => $query->count(),
+    				]);
+    				$pagination->params = ['status'=>$searchStatus,
+    						'categoryId'=>$searchCategory,
+    						'q'=>$q,
+    						'page'=>$pagination->page,
+    				];
+    				$query->offset($pagination->offset);
+    				$query->limit($pagination->limit);
+    					
+    				$list = $query->all();
+    					
+    				//get users
+    				$arrId = [];
+    				$arrUser = [];
+    				if (!empty($list)){
+    					foreach ($list as $obj){
+    						$arrId[] = $obj->createBy;
+    					}
+    					$modelsUser = User::find()->where(['id'=>$arrId])->all();
+    					if(!empty($modelsUser)){
+    						foreach ($modelsUser as $obj){
+    							$arrUser[$obj->id] = $obj->firstName.' '.$obj->lastName;
+    						}
+    					}
+    
+    					$objPond = Pond::find()->orderBy(['id'=>SORT_ASC])->all();
+    					foreach ($objPond as $dataPond){
+    						$objTypelist = Typelist::find()->where(['id'=>$dataPond->type])->all();
+    						foreach ($objTypelist as $obj){
+    							$arrPond[$dataPond->id] = $obj->name.' '.$dataPond->title;
+    						}
+    							
+    					}
+    				}
+    
+    
+    					
+    				echo $this->render('ammonia', [
+    						'lst' => $list,
+    						'arrPond' => $arrPond,
+    						'pagination' => $pagination,
+    						'arrUser' =>$arrUser,
+    						'q'=>$q,
+    				]);
+    }
+    
+    public function actionEditammonia()
+    {
+    	$currentTs = time();
+    	$identity = \Yii::$app->user->getIdentity();
+    	$request = \Yii::$app->request;
+    	$id = $request->get('id', $request->post('id', null));
+    	$query = Ammonia::find();
+    	 
+    	if ($id){
+    		$query->where("id=".$id);
+    		$model = $query->one();
+    	}else{
+    		$model = new Ammonia();
+    		$model->createTime = date('Y-m-d H:i:s', $currentTs);
+    		$model->createBy = $identity->id;
+    	}
+    	 
+    	$ammoniaTime = $request->get('ammoniaTime', $request->post('ammoniaTime', null));
+    	$ammoniaTimeIn = date('Y-m-d H:i:s', strtotime($ammoniaTime));
+    	 
+    	if($request->isPost){
+    		$model->name  = $request->get('name', $request->post('name', null));
+    		$model->pondId  = $request->get('pondId', $request->post('pondId', null));
+    		$model->ammoniaNo  = $request->get('ammoniaNo', $request->post('ammoniaNo', null));
+    		$model->age  = $request->get('age', $request->post('age', null));
+    		$model->ammoniaNum  = $request->get('ammoniaNum', $request->post('ammoniaNum', null));
+    		$model->ammoniaTime  = $ammoniaTimeIn;
+    		$model->numberOf  = $request->get('numberOf', $request->post('numberOf', null));
+    		$model->lastUpdateBy = $identity->id;
+    		$model->lastUpdateTime = date('Y-m-d H:i:s', $currentTs);
+    
+    		if (trim($model->pondId) == ''){
+    			$model->addError('pondId', 'ไม่ได้เลือก รุ่น และบ่อ');
+    		}
+    
+    		if (!$model->hasErrors()) {
+    			$model->save();
+    			return $this->redirect('ammonia');
+    		}
+    		else {
+    			$modelError = '';
+    			$errors = $model->getErrors(null);
+    			if (is_array($errors)) {
+    				foreach($errors as $field => $fieldError) {
+    					$modelError .= "\n$field: " . join(', ', $fieldError);
+    				}
+    			}
+    			UiMessage::setMessage('การบันทึกข้อมูลผิดพลาด:' . $modelError, 'warning');
+    		}
+    
+    	}
+    
+    	$query = Pond::find()->where("status = 1")->orderBy(['type'=>SORT_ASC])->groupBy(['type']);
+    	$arrTypelist = [0=>'กรุณาเลือกบ่อ  และรุ่นที่ต้องการ'];
+    	$arrTypelist += \yii\helpers\ArrayHelper::map($query->all(), 'id' ,'title','type');
+    
+    	 
+    
+    	echo $this->render('editammonia', [
+    			'model' => $model,
+    			'arrTypelist'=> $arrTypelist,
+    	]);
+    }
+    // End of ammonia
+    
+    
+    // Start Nitrite
+    public function actionNitrite() {
+    	$currentTs = time();
+    	$request = Yii::$app->request;
+    	$identity = \Yii::$app->user->getIdentity();
+    	$arrPond = [];
+    
+    	$searchCategory = $request->post('type', $request->get('type', ''));
+    	$searchStatus = $request->post('status', $request->get('status', ''));
+    	$q = trim($request->post('q', $request->get('q', '')));
+    
+    	$query = Nitrite::find();
+    	$query->orderBy(['id'=>SORT_ASC]);
+    
+    	if ($searchCategory)
+    		$query->andWhere('type = :type',[':type' => $searchCategory]);
+    		 
+    		 
+    		if ($searchStatus)
+    			$query->andWhere('status = :status',[':status' => $searchStatus]);
+    
+    			if ($q)
+    				$query->andWhere(['LIKE' ,'name','%'.$q.'%', false]);
+    					
+    					
+    				//actions
+    				switch ($request->post('op')){
+    					case 'delete':
+    						$this->nitriteDelete();
+    						break;
+    				}
+    					
+    				//paging
+    				$pagination = new Pagination([
+    						'defaultPageSize' => \Yii::$app->params['ui']['defaultPageSize'],
+    						'totalCount' => $query->count(),
+    				]);
+    				$pagination->params = ['status'=>$searchStatus,
+    						'categoryId'=>$searchCategory,
+    						'q'=>$q,
+    						'page'=>$pagination->page,
+    				];
+    				$query->offset($pagination->offset);
+    				$query->limit($pagination->limit);
+    					
+    				$list = $query->all();
+    					
+    				//get users
+    				$arrId = [];
+    				$arrUser = [];
+    				if (!empty($list)){
+    					foreach ($list as $obj){
+    						$arrId[] = $obj->createBy;
+    					}
+    					$modelsUser = User::find()->where(['id'=>$arrId])->all();
+    					if(!empty($modelsUser)){
+    						foreach ($modelsUser as $obj){
+    							$arrUser[$obj->id] = $obj->firstName.' '.$obj->lastName;
+    						}
+    					}
+    
+    					$objPond = Pond::find()->orderBy(['id'=>SORT_ASC])->all();
+    					foreach ($objPond as $dataPond){
+    						$objTypelist = Typelist::find()->where(['id'=>$dataPond->type])->all();
+    						foreach ($objTypelist as $obj){
+    							$arrPond[$dataPond->id] = $obj->name.' '.$dataPond->title;
+    						}
+    							
+    					}
+    				}
+    
+    
+    					
+    				echo $this->render('nitrite', [
+    						'lst' => $list,
+    						'arrPond' => $arrPond,
+    						'pagination' => $pagination,
+    						'arrUser' =>$arrUser,
+    						'q'=>$q,
+    				]);
+    }
+    
+    public function actionEditnitrite()
+    {
+    	$currentTs = time();
+    	$identity = \Yii::$app->user->getIdentity();
+    	$request = \Yii::$app->request;
+    	$id = $request->get('id', $request->post('id', null));
+    	$query = Nitrite::find();
+    
+    	if ($id){
+    		$query->where("id=".$id);
+    		$model = $query->one();
+    	}else{
+    		$model = new Nitrite();
+    		$model->createTime = date('Y-m-d H:i:s', $currentTs);
+    		$model->createBy = $identity->id;
+    	}
+    
+    	$nitriteTime = $request->get('nitriteTime', $request->post('nitriteTime', null));
+    	$nitriteTimeIn = date('Y-m-d H:i:s', strtotime($nitriteTime));
+    
+    	if($request->isPost){
+    		$model->name  = $request->get('name', $request->post('name', null));
+    		$model->pondId  = $request->get('pondId', $request->post('pondId', null));
+    		$model->nitriteNo  = $request->get('nitriteNo', $request->post('nitriteNo', null));
+    		$model->age  = $request->get('age', $request->post('age', null));
+    		$model->nitriteNum  = $request->get('nitriteNum', $request->post('nitriteNum', null));
+    		$model->nitriteTime  = $nitriteTimeIn;
+    		$model->numberOf  = $request->get('numberOf', $request->post('numberOf', null));
+    		$model->lastUpdateBy = $identity->id;
+    		$model->lastUpdateTime = date('Y-m-d H:i:s', $currentTs);
+    
+    		if (trim($model->pondId) == ''){
+    			$model->addError('pondId', 'ไม่ได้เลือก รุ่น และบ่อ');
+    		}
+    
+    		if (!$model->hasErrors()) {
+    			$model->save();
+    			return $this->redirect('nitrite');
+    		}
+    		else {
+    			$modelError = '';
+    			$errors = $model->getErrors(null);
+    			if (is_array($errors)) {
+    				foreach($errors as $field => $fieldError) {
+    					$modelError .= "\n$field: " . join(', ', $fieldError);
+    				}
+    			}
+    			UiMessage::setMessage('การบันทึกข้อมูลผิดพลาด:' . $modelError, 'warning');
+    		}
+    
+    	}
+    
+    	$query = Pond::find()->where("status = 1")->orderBy(['type'=>SORT_ASC])->groupBy(['type']);
+    	$arrTypelist = [0=>'กรุณาเลือกบ่อ  และรุ่นที่ต้องการ'];
+    	$arrTypelist += \yii\helpers\ArrayHelper::map($query->all(), 'id' ,'title','type');
+    
+    
+    
+    	echo $this->render('editnitrite', [
+    			'model' => $model,
+    			'arrTypelist'=> $arrTypelist,
+    	]);
+    }
+    // End of nitrite
+    
+    // Start other
+    public function actionOther() {
+    	$currentTs = time();
+    	$request = Yii::$app->request;
+    	$identity = \Yii::$app->user->getIdentity();
+    	$arrPond = [];
+    
+    	$searchCategory = $request->post('type', $request->get('type', ''));
+    	$searchStatus = $request->post('status', $request->get('status', ''));
+    	$q = trim($request->post('q', $request->get('q', '')));
+    
+    	$query = Other::find();
+    	$query->orderBy(['id'=>SORT_ASC]);
+    
+    	if ($searchCategory)
+    		$query->andWhere('type = :type',[':type' => $searchCategory]);
+    		 
+    		 
+    		if ($searchStatus)
+    			$query->andWhere('status = :status',[':status' => $searchStatus]);
+    
+    			if ($q)
+    				$query->andWhere(['LIKE' ,'name','%'.$q.'%', false]);
+    					
+    					
+    				//actions
+    				switch ($request->post('op')){
+    					case 'delete':
+    						$this->otherDelete();
+    						break;
+    				}
+    					
+    				//paging
+    				$pagination = new Pagination([
+    						'defaultPageSize' => \Yii::$app->params['ui']['defaultPageSize'],
+    						'totalCount' => $query->count(),
+    				]);
+    				$pagination->params = ['status'=>$searchStatus,
+    						'categoryId'=>$searchCategory,
+    						'q'=>$q,
+    						'page'=>$pagination->page,
+    				];
+    				$query->offset($pagination->offset);
+    				$query->limit($pagination->limit);
+    					
+    				$list = $query->all();
+    					
+    				//get users
+    				$arrId = [];
+    				$arrUser = [];
+    				if (!empty($list)){
+    					foreach ($list as $obj){
+    						$arrId[] = $obj->createBy;
+    					}
+    					$modelsUser = User::find()->where(['id'=>$arrId])->all();
+    					if(!empty($modelsUser)){
+    						foreach ($modelsUser as $obj){
+    							$arrUser[$obj->id] = $obj->firstName.' '.$obj->lastName;
+    						}
+    					}
+    
+    					$objPond = Pond::find()->orderBy(['id'=>SORT_ASC])->all();
+    					foreach ($objPond as $dataPond){
+    						$objTypelist = Typelist::find()->where(['id'=>$dataPond->type])->all();
+    						foreach ($objTypelist as $obj){
+    							$arrPond[$dataPond->id] = $obj->name.' '.$dataPond->title;
+    						}
+    							
+    					}
+    				}
+    
+    
+    					
+    				echo $this->render('other', [
+    						'lst' => $list,
+    						'arrPond' => $arrPond,
+    						'pagination' => $pagination,
+    						'arrUser' =>$arrUser,
+    						'q'=>$q,
+    				]);
+    }
+    
+    public function actionEditother()
+    {
+    	$currentTs = time();
+    	$identity = \Yii::$app->user->getIdentity();
+    	$request = \Yii::$app->request;
+    	$id = $request->get('id', $request->post('id', null));
+    	$query = Other::find();
+    
+    	if ($id){
+    		$query->where("id=".$id);
+    		$model = $query->one();
+    	}else{
+    		$model = new Other();
+    		$model->createTime = date('Y-m-d H:i:s', $currentTs);
+    		$model->createBy = $identity->id;
+    	}
+    
+    	$otherTime = $request->get('otherTime', $request->post('otherTime', null));
+    	$otherTimeIn = date('Y-m-d H:i:s', strtotime($otherTime));
+    
+    	if($request->isPost){
+    		$model->name  = $request->get('name', $request->post('name', null));
+    		$model->pondId  = $request->get('pondId', $request->post('pondId', null));
+    		$model->otherNo  = $request->get('otherNo', $request->post('otherNo', null));
+    		$model->age  = $request->get('age', $request->post('age', null));
+    		$model->otherNum  = $request->get('otherNum', $request->post('otherNum', null));
+    		$model->otherTime  = $otherTimeIn;
+    		$model->numberOf  = $request->get('numberOf', $request->post('numberOf', null));
+    		$model->lastUpdateBy = $identity->id;
+    		$model->lastUpdateTime = date('Y-m-d H:i:s', $currentTs);
+    
+    		if (trim($model->pondId) == ''){
+    			$model->addError('pondId', 'ไม่ได้เลือก รุ่น และบ่อ');
+    		}
+    
+    		if (!$model->hasErrors()) {
+    			$model->save();
+    			return $this->redirect('other');
+    		}
+    		else {
+    			$modelError = '';
+    			$errors = $model->getErrors(null);
+    			if (is_array($errors)) {
+    				foreach($errors as $field => $fieldError) {
+    					$modelError .= "\n$field: " . join(', ', $fieldError);
+    				}
+    			}
+    			UiMessage::setMessage('การบันทึกข้อมูลผิดพลาด:' . $modelError, 'warning');
+    		}
+    
+    	}
+    
+    	$query = Pond::find()->where("status = 1")->orderBy(['type'=>SORT_ASC])->groupBy(['type']);
+    	$arrTypelist = [0=>'กรุณาเลือกบ่อ  และรุ่นที่ต้องการ'];
+    	$arrTypelist += \yii\helpers\ArrayHelper::map($query->all(), 'id' ,'title','type');
+    
+    
+    
+    	echo $this->render('editother', [
+    			'model' => $model,
+    			'arrTypelist'=> $arrTypelist,
+    	]);
+    }
+    // End of other
+    
+    
+    
+    // Start Salinity
+    public function actionSalinity() {
+    	$currentTs = time();
+    	$request = Yii::$app->request;
+    	$identity = \Yii::$app->user->getIdentity();
+    	$arrPond = [];
+    
+    	$searchCategory = $request->post('type', $request->get('type', ''));
+    	$searchStatus = $request->post('status', $request->get('status', ''));
+    	$q = trim($request->post('q', $request->get('q', '')));
+    
+    	$query = Salinity::find();
+    	$query->orderBy(['id'=>SORT_ASC]);
+    
+    	if ($searchCategory)
+    		$query->andWhere('type = :type',[':type' => $searchCategory]);
+    		 
+    		 
+    		if ($searchStatus)
+    			$query->andWhere('status = :status',[':status' => $searchStatus]);
+    
+    			if ($q)
+    				$query->andWhere(['LIKE' ,'name','%'.$q.'%', false]);
+    					
+    					
+    				//actions
+    				switch ($request->post('op')){
+    					case 'delete':
+    						$this->salinityDelete();
+    						break;
+    				}
+    					
+    				//paging
+    				$pagination = new Pagination([
+    						'defaultPageSize' => \Yii::$app->params['ui']['defaultPageSize'],
+    						'totalCount' => $query->count(),
+    				]);
+    				$pagination->params = ['status'=>$searchStatus,
+    						'categoryId'=>$searchCategory,
+    						'q'=>$q,
+    						'page'=>$pagination->page,
+    				];
+    				$query->offset($pagination->offset);
+    				$query->limit($pagination->limit);
+    					
+    				$list = $query->all();
+    					
+    				//get users
+    				$arrId = [];
+    				$arrUser = [];
+    				if (!empty($list)){
+    					foreach ($list as $obj){
+    						$arrId[] = $obj->createBy;
+    					}
+    					$modelsUser = User::find()->where(['id'=>$arrId])->all();
+    					if(!empty($modelsUser)){
+    						foreach ($modelsUser as $obj){
+    							$arrUser[$obj->id] = $obj->firstName.' '.$obj->lastName;
+    						}
+    					}
+    
+    					$objPond = Pond::find()->orderBy(['id'=>SORT_ASC])->all();
+    					foreach ($objPond as $dataPond){
+    						$objTypelist = Typelist::find()->where(['id'=>$dataPond->type])->all();
+    						foreach ($objTypelist as $obj){
+    							$arrPond[$dataPond->id] = $obj->name.' '.$dataPond->title;
+    						}
+    							
+    					}
+    				}
+    
+    
+    					
+    				echo $this->render('salinity', [
+    						'lst' => $list,
+    						'arrPond' => $arrPond,
+    						'pagination' => $pagination,
+    						'arrUser' =>$arrUser,
+    						'q'=>$q,
+    				]);
+    }
+    
+    public function actionEditsalinity()
+    {
+    	$currentTs = time();
+    	$identity = \Yii::$app->user->getIdentity();
+    	$request = \Yii::$app->request;
+    	$id = $request->get('id', $request->post('id', null));
+    	$query = Salinity::find();
+    
+    	if ($id){
+    		$query->where("id=".$id);
+    		$model = $query->one();
+    	}else{
+    		$model = new Salinity();
+    		$model->createTime = date('Y-m-d H:i:s', $currentTs);
+    		$model->createBy = $identity->id;
+    	}
+    
+    	$salinityTime = $request->get('salinityTime', $request->post('salinityTime', null));
+    	$salinityTimeIn = date('Y-m-d H:i:s', strtotime($salinityTime));
+    
+    	if($request->isPost){
+    		$model->name  = $request->get('name', $request->post('name', null));
+    		$model->pondId  = $request->get('pondId', $request->post('pondId', null));
+    		$model->salinityNo  = $request->get('salinityNo', $request->post('salinityNo', null));
+    		$model->age  = $request->get('age', $request->post('age', null));
+    		$model->salinityNum  = $request->get('salinityNum', $request->post('salinityNum', null));
+    		$model->salinityTime  = $salinityTimeIn;
+    		$model->numberOf  = $request->get('numberOf', $request->post('numberOf', null));
+    		$model->lastUpdateBy = $identity->id;
+    		$model->lastUpdateTime = date('Y-m-d H:i:s', $currentTs);
+    
+    		if (trim($model->pondId) == ''){
+    			$model->addError('pondId', 'ไม่ได้เลือก รุ่น และบ่อ');
+    		}
+    
+    		if (!$model->hasErrors()) {
+    			$model->save();
+    			return $this->redirect('salinity');
+    		}
+    		else {
+    			$modelError = '';
+    			$errors = $model->getErrors(null);
+    			if (is_array($errors)) {
+    				foreach($errors as $field => $fieldError) {
+    					$modelError .= "\n$field: " . join(', ', $fieldError);
+    				}
+    			}
+    			UiMessage::setMessage('การบันทึกข้อมูลผิดพลาด:' . $modelError, 'warning');
+    		}
+    
+    	}
+    
+    	$query = Pond::find()->where("status = 1")->orderBy(['type'=>SORT_ASC])->groupBy(['type']);
+    	$arrTypelist = [0=>'กรุณาเลือกบ่อ  และรุ่นที่ต้องการ'];
+    	$arrTypelist += \yii\helpers\ArrayHelper::map($query->all(), 'id' ,'title','type');
+    
+    
+    
+    	echo $this->render('editsalinity', [
+    			'model' => $model,
+    			'arrTypelist'=> $arrTypelist,
+    	]);
+    }
+    // End of salinity
+    
+    
+
+    // Start Waterchange
+    public function actionWaterchange() {
+    	$currentTs = time();
+    	$request = Yii::$app->request;
+    	$identity = \Yii::$app->user->getIdentity();
+    	$arrPond = [];
+    
+    	$searchCategory = $request->post('type', $request->get('type', ''));
+    	$searchStatus = $request->post('status', $request->get('status', ''));
+    	$q = trim($request->post('q', $request->get('q', '')));
+    
+    	$query = Waterchange::find();
+    	$query->orderBy(['id'=>SORT_ASC]);
+    
+    	if ($searchCategory)
+    		$query->andWhere('type = :type',[':type' => $searchCategory]);
+    		 
+    		 
+    		if ($searchStatus)
+    			$query->andWhere('status = :status',[':status' => $searchStatus]);
+    
+    			if ($q)
+    				$query->andWhere(['LIKE' ,'name','%'.$q.'%', false]);
+    					
+    					
+    				//actions
+    				switch ($request->post('op')){
+    					case 'delete':
+    						$this->waterchangeDelete();
+    						break;
+    				}
+    					
+    				//paging
+    				$pagination = new Pagination([
+    						'defaultPageSize' => \Yii::$app->params['ui']['defaultPageSize'],
+    						'totalCount' => $query->count(),
+    				]);
+    				$pagination->params = ['status'=>$searchStatus,
+    						'categoryId'=>$searchCategory,
+    						'q'=>$q,
+    						'page'=>$pagination->page,
+    				];
+    				$query->offset($pagination->offset);
+    				$query->limit($pagination->limit);
+    					
+    				$list = $query->all();
+    					
+    				//get users
+    				$arrId = [];
+    				$arrUser = [];
+    				if (!empty($list)){
+    					foreach ($list as $obj){
+    						$arrId[] = $obj->createBy;
+    					}
+    					$modelsUser = User::find()->where(['id'=>$arrId])->all();
+    					if(!empty($modelsUser)){
+    						foreach ($modelsUser as $obj){
+    							$arrUser[$obj->id] = $obj->firstName.' '.$obj->lastName;
+    						}
+    					}
+    
+    					$objPond = Pond::find()->orderBy(['id'=>SORT_ASC])->all();
+    					foreach ($objPond as $dataPond){
+    						$objTypelist = Typelist::find()->where(['id'=>$dataPond->type])->all();
+    						foreach ($objTypelist as $obj){
+    							$arrPond[$dataPond->id] = $obj->name.' '.$dataPond->title;
+    						}
+    							
+    					}
+    				}
+    
+    
+    					
+    				echo $this->render('waterchange', [
+    						'lst' => $list,
+    						'arrPond' => $arrPond,
+    						'pagination' => $pagination,
+    						'arrUser' =>$arrUser,
+    						'q'=>$q,
+    				]);
+    }
+    
+    public function actionEditwaterchange()
+    {
+    	$currentTs = time();
+    	$identity = \Yii::$app->user->getIdentity();
+    	$request = \Yii::$app->request;
+    	$id = $request->get('id', $request->post('id', null));
+    	$query = Waterchange::find();
+    	$arrPond =[];
+    	if ($id){
+    		$query->where("id=".$id);
+    		$model = $query->one();
+    	}else{
+    		$model = new waterchange();
+    		$model->createTime = date('Y-m-d H:i:s', $currentTs);
+    		$model->createBy = $identity->id;
+    	}
+    
+    	$waterchangeTime = $request->get('waterchangeTime', $request->post('waterchangeTime', null));
+    	$waterchangeTimeIn = date('Y-m-d H:i:s', strtotime($waterchangeTime));
+    
+    	if($request->isPost){
+    		$model->name  = $request->get('name', $request->post('name', null));
+    		$model->pondId  = $request->get('pondId', $request->post('pondId', null));
+    		$model->waterchangeNo  = $request->get('waterchangeNo', $request->post('waterchangeNo', null));
+    		$model->age  = $request->get('age', $request->post('age', null));
+    		$model->waterchangeNum  = $request->get('waterchangeNum', $request->post('waterchangeNum', null));
+    		$model->waterchangeTime  = $waterchangeTimeIn;
+    		$model->numberOf  = $request->get('numberOf', $request->post('numberOf', null));
+    		$model->lastUpdateBy = $identity->id;
+    		$model->lastUpdateTime = date('Y-m-d H:i:s', $currentTs);
+    
+    		if (trim($model->pondId) == ''){
+    			$model->addError('pondId', 'ไม่ได้เลือก รุ่น และบ่อ');
+    		}
+    
+    		if (!$model->hasErrors()) {
+    			$model->save();
+    			return $this->redirect('waterchange');
+    		}
+    		else {
+    			$modelError = '';
+    			$errors = $model->getErrors(null);
+    			if (is_array($errors)) {
+    				foreach($errors as $field => $fieldError) {
+    					$modelError .= "\n$field: " . join(', ', $fieldError);
+    				}
+    			}
+    			UiMessage::setMessage('การบันทึกข้อมูลผิดพลาด:' . $modelError, 'warning');
+    		}
+    
+    	}
+    
+    	$query = Pond::find()->where("status = 1")->orderBy(['type'=>SORT_ASC])->groupBy(['type']);
+    	$arrTypelist = [0=>'กรุณาเลือกบ่อ  และรุ่นที่ต้องการ'];
+    	$arrTypelist += \yii\helpers\ArrayHelper::map($query->all(), 'id' ,'title','type');
+    
+    
+    
+    	echo $this->render('editwaterchange', [
+    			'arrPond' => $arrPond,
+    			'model' => $model,
+    			'arrTypelist'=> $arrTypelist,
+    	]);
+    }
+    // End of waterchange
+    
+    
     // Start watertemp
     public function actionWatertemp() {
     	$currentTs = time();
@@ -1072,7 +1838,7 @@ class PondController extends BaseController {
     	$searchStatus = $request->post('status', $request->get('status', ''));
     	$q = trim($request->post('q', $request->get('q', '')));
     
-    	$query = watertemp::find();
+    	$query = Watertemp::find();
     	$query->orderBy(['id'=>SORT_ASC]);
     
     	if ($searchCategory)
@@ -1149,7 +1915,7 @@ class PondController extends BaseController {
     	$identity = \Yii::$app->user->getIdentity();
     	$request = \Yii::$app->request;
     	$id = $request->get('id', $request->post('id', null));
-    	$query = Typelist::find();
+    	$query = Watertemp::find();
     	
     	if ($id){
     		$query->where("id=".$id);
@@ -1166,11 +1932,13 @@ class PondController extends BaseController {
     	if($request->isPost){
     		$model->name  = $request->get('name', $request->post('name', null));
     		$model->pondId  = $request->get('pondId', $request->post('pondId', null));
-    		$model->watertempNo  = $request->get('foodNo', $request->post('foodNo', null));
+    		$model->watertempNo  = $request->get('watertempNo', $request->post('watertempNo', null));
     		$model->age  = $request->get('age', $request->post('age', null));
-    		$model->foodNum  = $request->get('foodNum', $request->post('foodNum', null));
-    		$model->foodTime  = $foodTimeIn;
+    		$model->watertempNum  = $request->get('watertempNum', $request->post('watertempNum', null));
+    		$model->watertempTime  = $watertempTimeIn;
     		$model->numberOf  = $request->get('numberOf', $request->post('numberOf', null));
+    		$model->lastUpdateBy = $identity->id;
+    		$model->lastUpdateTime = date('Y-m-d H:i:s', $currentTs);
 
     		if (trim($model->pondId) == ''){
     			$model->addError('pondId', 'ไม่ได้เลือก รุ่น และบ่อ');
@@ -1178,7 +1946,7 @@ class PondController extends BaseController {
     
     		if (!$model->hasErrors()) {
     			$model->save();
-    			return $this->redirect('food');
+    			return $this->redirect('watertemp');
     		}
     		else {
     			$modelError = '';
@@ -1193,13 +1961,13 @@ class PondController extends BaseController {
     
     	}
     
-    	$query = Pond::find()->orderBy(['id'=>SORT_ASC]);
+    	$query = Pond::find()->where("status = 1")->orderBy(['type'=>SORT_ASC])->groupBy(['type']);
     	$arrTypelist = [0=>'กรุณาเลือกบ่อ  และรุ่นที่ต้องการ'];
     	$arrTypelist += \yii\helpers\ArrayHelper::map($query->all(), 'id' ,'title','type');
     	 
     	
     
-    	echo $this->render('editfood', [
+    	echo $this->render('editwatertemp', [
     			'model' => $model,
     			'arrTypelist'=> $arrTypelist,
     	]);
@@ -1217,7 +1985,7 @@ class PondController extends BaseController {
     	$searchStatus = $request->post('status', $request->get('status', ''));
     	$q = trim($request->post('q', $request->get('q', '')));
     
-    	$query = weight::find();
+    	$query = Weight::find();
     	$query->orderBy(['id'=>SORT_ASC]);
     
     	if ($searchCategory)
@@ -1293,13 +2061,13 @@ class PondController extends BaseController {
     	$identity = \Yii::$app->user->getIdentity();
     	$request = \Yii::$app->request;
     	$id = $request->get('id', $request->post('id', null));
-    	$query = Typelist::find();
+    	$query = Weight::find();
     	
     	if ($id){
     		$query->where("id=".$id);
     		$model = $query->one();
     	}else{
-    		$model = new weight();
+    		$model = new Weight();
     		$model->createTime = date('Y-m-d H:i:s', $currentTs);
     		$model->createBy = $identity->id;
     	}
@@ -1314,13 +2082,15 @@ class PondController extends BaseController {
     		$model->age  = $request->get('age', $request->post('age', null));
     		$model->weightNum  = $request->get('weightNum', $request->post('weightNum', null));
     		$model->weightTime  = $weightTimeIn;
-    		$model->numberOf  = $request->get('numberOf', $request->post('numberOf', null));
+    		
+    		$model->lastUpdateBy = $identity->id;
+    		$model->lastUpdateTime = date('Y-m-d H:i:s', $currentTs);
 
     		if (trim($model->pondId) == ''){
     			$model->addError('pondId', 'ไม่ได้เลือก รุ่น และบ่อ');
     		}
     
-    		if (!$model->hasErrors()) {
+    		if (!$model->hasErrors()) { 
     			$model->save();
     			return $this->redirect('weight');
     		}
@@ -1337,7 +2107,7 @@ class PondController extends BaseController {
     
     	}
     
-    	$query = Pond::find()->orderBy(['id'=>SORT_ASC]);
+    	$query = Pond::find()->where("status = 1")->orderBy(['type'=>SORT_ASC])->groupBy(['type']);
     	$arrTypelist = [0=>'กรุณาเลือกบ่อ  และรุ่นที่ต้องการ'];
     	$arrTypelist += \yii\helpers\ArrayHelper::map($query->all(), 'id' ,'title','type');
     	 
@@ -1542,6 +2312,8 @@ class PondController extends BaseController {
     		$pond = new pond();
     		$pond->createBy = $identity->id;
     		$pond->createTime = date('Y-m-d H:i:s', $currentTs);
+    		
+    		$pond->status = 1; 
     	} 
     	
     	if ($request->isPost) {
@@ -1557,8 +2329,11 @@ class PondController extends BaseController {
     		$pond->larvaePrice = $larvaePrice;
     		$pond->larvaeCompany = $larvaeCompany;
     		$pond->releaseTime = $releaseTime;
+
     		
     		if($pond->save()) {
+    			//เซ็ตให้ status รุ่นเก่า เป็น 0 = ไม่ active  ให้หมด 
+    			\Yii::$app->db->createCommand("UPDATE pond SET status = 0 WHERE type = $type AND id != $pond->id ")->execute();
     			Ui::setMessage('บันทึกข้อมูลสำเร็จ');
     			return $this->redirect('list');
     		}else{
@@ -1690,6 +2465,267 @@ class PondController extends BaseController {
     			}
     		}
     }
+    
+    private function oxygenDelete() {
+    	$identity = \Yii::$app->user->getIdentity();
+    	$currentTs =time();
+    	$deleted = 0;
+    	$arrIds = \Yii::$app->request->post('idCheck', NULL);
+    	if(empty($arrIds))
+    		$arrIds = \Yii::$app->request->get('idCheck', NULL);
+    
+    		if (is_array($arrIds) && !empty($arrIds)) {
+    
+    			foreach ($arrIds as $lst){
+    				$queryUser = Oxygen::find();
+    				$Food = $queryUser->where(['id' => $lst])->one()->delete();
+    				$deleted = $deleted + 1;
+    			}
+    
+    			if ($deleted > 0) {
+    				Ui::setMessage("ลบข้อมูลจำนวน  $deleted รายการ" + "บันทึกข้อมูลสำเร็จ");
+    					
+    			}
+    			else {
+    				Ui::setMessage('ไม่มีข้อมูลถูกลบ');
+    			}
+    		}
+    }
+    
+    private function phDelete() {
+    	$identity = \Yii::$app->user->getIdentity();
+    	$currentTs =time();
+    	$deleted = 0;
+    	$arrIds = \Yii::$app->request->post('idCheck', NULL);
+    	if(empty($arrIds))
+    		$arrIds = \Yii::$app->request->get('idCheck', NULL);
+    
+    		if (is_array($arrIds) && !empty($arrIds)) {
+    
+    			foreach ($arrIds as $lst){
+    				$queryUser = Ph::find();
+    				$Food = $queryUser->where(['id' => $lst])->one()->delete();
+    				$deleted = $deleted + 1;
+    			}
+    
+    			if ($deleted > 0) {
+    				Ui::setMessage("ลบข้อมูลจำนวน  $deleted รายการ" + "บันทึกข้อมูลสำเร็จ");
+    					
+    			}
+    			else {
+    				Ui::setMessage('ไม่มีข้อมูลถูกลบ');
+    			}
+    		}
+    }
+    
+    private function alkalinityDelete() {
+    	$identity = \Yii::$app->user->getIdentity();
+    	$currentTs =time();
+    	$deleted = 0;
+    	$arrIds = \Yii::$app->request->post('idCheck', NULL);
+    	if(empty($arrIds))
+    		$arrIds = \Yii::$app->request->get('idCheck', NULL);
+    
+    		if (is_array($arrIds) && !empty($arrIds)) {
+    
+    			foreach ($arrIds as $lst){
+    				$queryUser = Alkalinity::find();
+    				$Food = $queryUser->where(['id' => $lst])->one()->delete();
+    				$deleted = $deleted + 1;
+    			}
+    
+    			if ($deleted > 0) {
+    				Ui::setMessage("ลบข้อมูลจำนวน  $deleted รายการ" + "บันทึกข้อมูลสำเร็จ");
+    					
+    			}
+    			else {
+    				Ui::setMessage('ไม่มีข้อมูลถูกลบ');
+    			}
+    		}
+    }
+    
+    private function watertempDelete() {
+    	$identity = \Yii::$app->user->getIdentity();
+    	$currentTs =time();
+    	$deleted = 0;
+    	$arrIds = \Yii::$app->request->post('idCheck', NULL);
+    	if(empty($arrIds))
+    		$arrIds = \Yii::$app->request->get('idCheck', NULL);
+    
+    		if (is_array($arrIds) && !empty($arrIds)) {
+    
+    			foreach ($arrIds as $lst){
+    				$queryUser = Watertemp::find();
+    				$Food = $queryUser->where(['id' => $lst])->one()->delete();
+    				$deleted = $deleted + 1;
+    			}
+    
+    			if ($deleted > 0) {
+    				Ui::setMessage("ลบข้อมูลจำนวน  $deleted รายการ" + "บันทึกข้อมูลสำเร็จ");
+    					
+    			}
+    			else {
+    				Ui::setMessage('ไม่มีข้อมูลถูกลบ');
+    			}
+    		}
+    }
+    
+    private function tempDelete() {
+    	$identity = \Yii::$app->user->getIdentity();
+    	$currentTs =time();
+    	$deleted = 0;
+    	$arrIds = \Yii::$app->request->post('idCheck', NULL);
+    	if(empty($arrIds))
+    		$arrIds = \Yii::$app->request->get('idCheck', NULL);
+    
+    		if (is_array($arrIds) && !empty($arrIds)) {
+    
+    			foreach ($arrIds as $lst){
+    				$queryUser = Temp::find();
+    				$Food = $queryUser->where(['id' => $lst])->one()->delete();
+    				$deleted = $deleted + 1;
+    			}
+    
+    			if ($deleted > 0) {
+    				Ui::setMessage("ลบข้อมูลจำนวน  $deleted รายการ" + "บันทึกข้อมูลสำเร็จ");
+    					
+    			}
+    			else {
+    				Ui::setMessage('ไม่มีข้อมูลถูกลบ');
+    			}
+    		}
+    }
+    
+    private function ammoniaDelete() {
+    	$identity = \Yii::$app->user->getIdentity();
+    	$currentTs =time();
+    	$deleted = 0;
+    	$arrIds = \Yii::$app->request->post('idCheck', NULL);
+    	if(empty($arrIds))
+    		$arrIds = \Yii::$app->request->get('idCheck', NULL);
+    
+    		if (is_array($arrIds) && !empty($arrIds)) {
+    
+    			foreach ($arrIds as $lst){
+    				$queryUser = Ammonia::find();
+    				$Food = $queryUser->where(['id' => $lst])->one()->delete();
+    				$deleted = $deleted + 1;
+    			}
+    
+    			if ($deleted > 0) {
+    				Ui::setMessage("ลบข้อมูลจำนวน  $deleted รายการ" + "บันทึกข้อมูลสำเร็จ");
+    					
+    			}
+    			else {
+    				Ui::setMessage('ไม่มีข้อมูลถูกลบ');
+    			}
+    		}
+    }
+    
+    private function nitriteDelete() {
+    	$identity = \Yii::$app->user->getIdentity();
+    	$currentTs =time();
+    	$deleted = 0;
+    	$arrIds = \Yii::$app->request->post('idCheck', NULL);
+    	if(empty($arrIds))
+    		$arrIds = \Yii::$app->request->get('idCheck', NULL);
+    
+    		if (is_array($arrIds) && !empty($arrIds)) {
+    
+    			foreach ($arrIds as $lst){
+    				$queryUser = Nitrite::find();
+    				$Food = $queryUser->where(['id' => $lst])->one()->delete();
+    				$deleted = $deleted + 1;
+    			}
+    
+    			if ($deleted > 0) {
+    				Ui::setMessage("ลบข้อมูลจำนวน  $deleted รายการ" + "บันทึกข้อมูลสำเร็จ");
+    					
+    			}
+    			else {
+    				Ui::setMessage('ไม่มีข้อมูลถูกลบ');
+    			}
+    		}
+    }
+    
+    private function salinityDelete() {
+    	$identity = \Yii::$app->user->getIdentity();
+    	$currentTs =time();
+    	$deleted = 0;
+    	$arrIds = \Yii::$app->request->post('idCheck', NULL);
+    	if(empty($arrIds))
+    		$arrIds = \Yii::$app->request->get('idCheck', NULL);
+    
+    		if (is_array($arrIds) && !empty($arrIds)) {
+    
+    			foreach ($arrIds as $lst){
+    				$queryUser = Salinity::find();
+    				$Food = $queryUser->where(['id' => $lst])->one()->delete();
+    				$deleted = $deleted + 1;
+    			}
+    
+    			if ($deleted > 0) {
+    				Ui::setMessage("ลบข้อมูลจำนวน  $deleted รายการ" + "บันทึกข้อมูลสำเร็จ");
+    					
+    			}
+    			else {
+    				Ui::setMessage('ไม่มีข้อมูลถูกลบ');
+    			}
+    		}
+    }
+    
+    private function waterchangeDelete() {
+    	$identity = \Yii::$app->user->getIdentity();
+    	$currentTs =time();
+    	$deleted = 0;
+    	$arrIds = \Yii::$app->request->post('idCheck', NULL);
+    	if(empty($arrIds))
+    		$arrIds = \Yii::$app->request->get('idCheck', NULL);
+    
+    		if (is_array($arrIds) && !empty($arrIds)) {
+    
+    			foreach ($arrIds as $lst){
+    				$queryUser = Waterchange::find();
+    				$Food = $queryUser->where(['id' => $lst])->one()->delete();
+    				$deleted = $deleted + 1;
+    			}
+    
+    			if ($deleted > 0) {
+    				Ui::setMessage("ลบข้อมูลจำนวน  $deleted รายการ" + "บันทึกข้อมูลสำเร็จ");
+    					
+    			}
+    			else {
+    				Ui::setMessage('ไม่มีข้อมูลถูกลบ');
+    			}
+    		}
+    }
+    
+    private function otherDelete() {
+    	$identity = \Yii::$app->user->getIdentity();
+    	$currentTs =time();
+    	$deleted = 0;
+    	$arrIds = \Yii::$app->request->post('idCheck', NULL);
+    	if(empty($arrIds))
+    		$arrIds = \Yii::$app->request->get('idCheck', NULL);
+    
+    		if (is_array($arrIds) && !empty($arrIds)) {
+    
+    			foreach ($arrIds as $lst){
+    				$queryUser = Other::find();
+    				$Food = $queryUser->where(['id' => $lst])->one()->delete();
+    				$deleted = $deleted + 1;
+    			}
+    
+    			if ($deleted > 0) {
+    				Ui::setMessage("ลบข้อมูลจำนวน  $deleted รายการ" + "บันทึกข้อมูลสำเร็จ");
+    					
+    			}
+    			else {
+    				Ui::setMessage('ไม่มีข้อมูลถูกลบ');
+    			}
+    		}
+    }
+    
     
     private function pondDelete() {
     	$identity = \Yii::$app->user->getIdentity();

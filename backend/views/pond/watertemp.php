@@ -53,7 +53,7 @@ ActiveForm::begin(['id' => 'dataTable-form']);
     <div class="portlet box green">
         <div class="portlet-title">
             <div class="caption">
-                <i class="fa fa-table"></i>รายการ บันทึกค่าอุณหฤูมมิของนํ้า
+                <i class="fa fa-table"></i>รายการ บันทึกค่าอุณหภูมิของน้ำ
             </div>
             <div class="tools">
                 <a href="javascript:;" class="collapse">
@@ -67,7 +67,7 @@ ActiveForm::begin(['id' => 'dataTable-form']);
                         <div class="portlet-title">
                                 <div class="actions">
                                  	<a class="btn add" href="<?= Url::toRoute(['pond/editwatertemp'])?>" title="เพิ่ม">
-                                        <i class="icon-plus">  บันทึกค่าอุณหฤูมมิของนํ้า</i>
+                                        <i class="icon-plus">  บันทึกค่าอุณหภูมิของน้ำ</i>
                                     </a>
                                 </div>
                         </div>
@@ -104,14 +104,9 @@ ActiveForm::begin(['id' => 'dataTable-form']);
                     		 วัน/เดือน/ปี ที่ให้อาหาร
                         </th>
                         <th>
-                          	  ปริมานที่ให้
+                          	 ค่าที่วัดได้ 
                         </th>
-                        <th>
-                          	  เบอร์อาหาร
-                        </th>
-                        <th>
-                          	 มื้อที่
-                        </th>
+                  
                         <th>
                           	  อายุลูกกุ้ง
                         </th>
@@ -127,11 +122,9 @@ ActiveForm::begin(['id' => 'dataTable-form']);
 ?>                
                     <tr class="odd">
                         <td> <?php echo Html::checkbox('idCheck[]', false, ['value'=> $Content->id, 'class'=> 'checkboxes'])?></td>
-                        <td><?php echo $arrPond[$Content->pondId];?></td>
+                        <td><a href="<?= Url::toRoute(['pond/editwatertemp'])?>?id=<?php echo $Content->id; ?>"><?php echo $arrPond[$Content->pondId];?></td>
                         <td class="text-left"><?php echo DateUtil::th_date(DateUtil::LDT_FMT_TH, strtotime($Content->watertempTime));?></td>
                         <td><?php echo $Content->watertempNum;?> </td>
-                        <td><?php echo $Content->numberOf;?>   </td>
-                        <td> <?php echo $Content->watertempNo;?>  </td>
                         <td> <?php echo $Content->age;?>  </td>
                         <td class="center"><?php echo $arrUser[$Content->createBy];?> </td>
                     </tr>

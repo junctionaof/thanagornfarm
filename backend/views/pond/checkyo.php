@@ -50,8 +50,8 @@ $this->registerJs($str, View::POS_LOAD, 'form-js');
 ActiveForm::begin(['id' => 'dataTable-form']);
 ?>
 
-    <div class="portlet box green">
-        <div class="portlet-title">
+    	<div class="portlet box green">
+        	<div class="portlet-title">
             <div class="caption">
                 <i class="fa fa-table"></i>รายการบันทึกการเช็คยอ
             </div>
@@ -59,9 +59,9 @@ ActiveForm::begin(['id' => 'dataTable-form']);
                 <a href="javascript:;" class="collapse">
                 </a>
             </div>
-        </div>
-        <div class="portlet-body">
-            <div class="table-toolbar">
+        	</div>
+        	<div class="portlet-body">
+            	<div class="table-toolbar">
                 <div class="row">
                     <div class="col-md-6">
                         <div class="portlet-title">
@@ -88,65 +88,47 @@ ActiveForm::begin(['id' => 'dataTable-form']);
 								</ul>
 							</div>
 						</div>
-                    </div>
-                </div>
-            </div>
-            <table class="table table-striped table-bordered table-hover table-list" id="">
+                  	  </div>
+                	</div>
+            	</div>
+            	<table class="table table-striped table-bordered table-hover table-list" id="">
                 <thead>
-                    <tr>
-                     	<th class="table-checkbox">
-                            <input type="checkbox" class="group-checkable" data-set=".table-list .checkboxes"/>
-                        </th>
-                        <th>
-                 		            บ่อ - รุ่นที่
-                        </th>
-                        <th>
-                    		 วัน/เดือน/ปี ที่ให้อาหาร
-                        </th>
-                        <th>
-                          	เช็คยอ มื้อที่
-                        </th>
-                        <th>
-                          	ยอ 1
-                        </th>
-                        <th>
-                                                                        ยอ 2
-                        </th>
-                         <th>
-                                                                        ยอ 3
-                        </th>
-                         <th>
-                                                                        ยอ 4
-                        </th>
-                         <th>
-                          	  อายุลูกกุ้ง
-                        </th>
-                        <th>
-                                                                         ผู้บันทึก
-                        </th>
-                    </tr>
+                    	<tr>
+		                     	<th class="table-checkbox">
+		                            <input type="checkbox" class="group-checkable" data-set=".table-list .checkboxes"/>
+		                        </th>
+		                        <th>บ่อ-รุ่นที่ </th>
+		                        <th>วัน/เดือน/ปี ที่ให้อาหาร </th>
+		                        <th>มื้อที่ </th>
+		                        <th>ยอ 1</th>
+		                        <th>ยอ 2</th>
+		                        <th>ยอ 3</th>
+		                        <th>ยอ 4</th>
+		                        <th>อายุลูกกุ้ง </th>
+		                        <th>ผู้บันทึก </th>	
+                    	</tr>
                 </thead>
                 <tbody>
-<?php 
-	if($lst):
-		foreach ($lst as $Content):
-?>                
-                    <tr class="odd">
-                        <td> <?php echo Html::checkbox('idCheck[]', false, ['value'=> $Content->id, 'class'=> 'checkboxes'])?></td>
-                        <td><?php echo $arrPond[$Content->pondId];?></td>
-                        <td class="text-left"><?php echo DateUtil::th_date(DateUtil::LDT_FMT_TH, strtotime($Content->checkyoTime));?></td>
-                        <td><?php echo $Content->checkyoNo;?> </td>
-                        <td><?php echo $Content->yo01;?>   </td>
-                        <td> <?php echo $Content->yo02;?>  </td>
-                        <td> <?php echo $Content->yo03;?>  </td>
-                        <td> <?php echo $Content->yo04;?>  </td>
-                        <td> <?php echo $Content->age;?>  </td>
-                        <td class="center"><?php echo $arrUser[$Content->createBy];?> </td>
-                    </tr>
-<?php 
-		endforeach;
-	endif;
-?>                    
+					<?php 
+					if($lst):
+						foreach ($lst as $Content):
+					?>                
+				          <tr class="odd">
+				                 <td> <?php echo Html::checkbox('idCheck[]', false, ['value'=> $Content->id, 'class'=> 'checkboxes'])?></td>
+				                 <td><?php echo $arrPond[$Content->pondId];?></td>
+				                 <td class="text-left"><?php echo DateUtil::th_date(DateUtil::LDT_FMT_TH, strtotime($Content->checkyoTime));?></td>
+				                 <td><?php echo $Content->checkyoNo;?> </td>
+				                 <td><?php echo $Content->yo01;?>   </td>
+				                 <td> <?php echo $Content->yo02;?>  </td>
+				                 <td> <?php echo $Content->yo03;?>  </td>
+				                 <td> <?php echo $Content->yo04;?>  </td>
+				                 <td> <?php echo $Content->age;?>  </td>
+				                 <td class="center"><?php echo $arrUser[$Content->createBy];?> </td>
+				         </tr>
+					<?php 
+					endforeach;
+					endif;
+					?>                    
                 </tbody>
             </table>
             
@@ -154,12 +136,12 @@ ActiveForm::begin(['id' => 'dataTable-form']);
         </div>
     </div>
     <!-- END EXAMPLE TABLE PORTLET-->
-<?= Html::hiddenInput('op','',['id'=>'op']);?>
-<?php ActiveForm::end() ?>
-<script>
-$(document).ready(function() {       
-    $( "#filter-bnt" ).live( "click", function() {
-        $('#filter-search').toggle(500);
-    });
-});
-</script>
+	<?= Html::hiddenInput('op','',['id'=>'op']);?>
+	<?php ActiveForm::end() ?>
+	<script>
+	$(document).ready(function() {       
+	    $( "#filter-bnt" ).live( "click", function() {
+	        $('#filter-search').toggle(500);
+	    });
+	});
+	</script>

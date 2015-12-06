@@ -123,14 +123,12 @@ ActiveForm::begin(['id' => 'dataTable-form']);
 		foreach ($lst as $Content):
 ?>                
                     <tr class="odd">
-                         <td>                  	
-                            <?php echo Html::checkbox('idCheck[]', false, ['value'=> $Content->id, 'class'=> 'checkboxes'])?>
-                        </td>
-                        <td><?php echo $Content->name;?> </td>
+                         <td> <?php echo Html::checkbox('idCheck[]', false, ['value'=> $Content->id, 'class'=> 'checkboxes'])?></td>
+                        <td> <a href="<?= Url::toRoute(['pond/edittype'])?>?id=<?php echo $Content->id; ?>"><?php echo $Content->name;?></a> </td>
                         <td><?php echo $Content->size;?></td>
                         <td class="text-center"><?php echo DateUtil::th_date(DateUtil::SDT_FMT_TH, strtotime($Content->createTime));?></td>
-                        <td></td>
-                        <td class="center"></td>
+                        <td><?php echo DateUtil::th_date(DateUtil::SDT_FMT_TH, strtotime($Content->lastUpdateTime));?></td>
+                        <td class="center"><?php echo $Content->lastUpdateBy;?></td>
                     </tr>
 <?php 
 		endforeach;

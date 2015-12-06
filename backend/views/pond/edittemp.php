@@ -87,7 +87,7 @@ $this->registerJsFile($baseUrl  . '/assets/pages/scripts/components-select2.min.
                             <div class="portlet box green">
                                 <div class="portlet-title">
                                     <div class="caption">
-                                        <i class="fa fa-gift"></i>บันทึกค่าอุณหฤูมมิ  </div>
+                                        <i class="fa fa-gift"></i>บันทึกค่าอุณหภูมิ  </div>
                                     <div class="tools">
                                         <a href="javascript:;" class="collapse"> </a>
                                         <a href="#portlet-config" data-toggle="modal" class="config"> </a>
@@ -109,10 +109,10 @@ $this->registerJsFile($baseUrl  . '/assets/pages/scripts/components-select2.min.
                                                 </div>
                                             </div>
                                             
-                                            <div class="form-group">
+                                         <div class="form-group">
                                             	<label class="control-label col-md-3">ข้อมูลบ่อ และรุ่น </label>
                                                       <div class="input-group input-large " >
-                                                      <?= Html::input('text','pond', $model->name,['id'=>'pond','class' => 'form-control', 'disabled' => 'true']);?>
+                                                      <?= Html::input('text','name', $model->name,['id'=>'pond','class' => 'form-control']);?>
                                                   	</div>
                                             </div>
                                             
@@ -124,31 +124,18 @@ $this->registerJsFile($baseUrl  . '/assets/pages/scripts/components-select2.min.
                                             </div>
                                             
                                              <div class="form-group">
-                                                <label class="control-label col-md-3">วันที่ให้อาหาร</label>
+                                                <label class="control-label col-md-3">วันที่วัด</label>
                                                       <div class="input-group input-large" data-date-format="dd-mm-yyyy" data-date-start-date="+0d">
                                                        <?= Html::input('text', 'tempTime' ,$correntDate ,['id'=>'tempTime','class' => 'form-control']);?>
                                                   	</div>
                                             </div>
-                                               <div class="form-group">
-                                                <label class="control-label col-md-3">มื้อที่</label>
-                                                      <div class="input-group input-large ">
-                                                        <?= Html::input('text', 'tempNo', $model->age,['id'=>'tempNo','class' => 'form-control']);?>
-                                                  	</div>
-                                            </div>
-                                            
-
-                                            
                                              <div class="form-group">
-                                                <label class="control-label col-md-3">เบอร์อาหาร</label>
+                                                <label class="control-label col-md-3">ค่าที่วัดได้</label>
                                                       <div class="input-group input-large " >
                                                        <?= Html::input('text', 'tempNum', $model->tempNum,['id'=>'tempNum','class' => 'form-control']);?>
-                                                  	</div>
-                                            </div>
-                                            
-                                            <div class="form-group">
-                                                <label class="control-label col-md-3">จำนวนที่ใช้</label>
-                                                      <div class="input-group input-large" >
-                                                       <?= Html::input('text', 'numberOf', $model->numberOf,['id'=>'numberOf','class' => 'form-control']);?>
+                                                  	<span class="input-group-addon">
+                                                        <i class="fa"> องศาเซลเซียส</i>
+                                                    </span>
                                                   	</div>
                                             </div>
                                         </div>

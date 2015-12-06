@@ -6,7 +6,7 @@ use yii\helpers\Html;
 use yii\web\View;
 use common\models\Content;
 use common\models\Typelist;
-use common\models\Oxygen;
+use common\models\Waterchange;
 use app\DateUtil;
 use app\Workflow;
 use common\models\ObjectCategory;
@@ -47,14 +47,13 @@ EOT;
 
 $this->registerCss($css);
 $this->registerJs($str, View::POS_LOAD, 'form-js');
-
 ActiveForm::begin(['id' => 'dataTable-form']);
 ?>
 
     <div class="portlet box green">
         <div class="portlet-title">
             <div class="caption">
-                <i class="fa fa-table"></i> รายการบันทึกต่าออกซิเจนละลายนํ้า
+                <i class="fa fa-table"></i>รายการ บันทึกการเปลี่ยนถ่ายนํ้า
             </div>
             <div class="tools">
                 <a href="javascript:;" class="collapse">
@@ -67,8 +66,8 @@ ActiveForm::begin(['id' => 'dataTable-form']);
                     <div class="col-md-6">
                         <div class="portlet-title">
                                 <div class="actions">
-                                 	<a class="btn add" href="<?= Url::toRoute(['pond/editoxygen'])?>" title="เพิ่ม">
-                                        <i class="icon-plus">  บันทึกต่าออกซิเจนละลายนํ้า</i>
+                                 	<a class="btn add" href="<?= Url::toRoute(['pond/editwaterchange'])?>" title="เพิ่ม">
+                                        <i class="icon-plus"> บันทึกการเปลี่ยนถ่ายนํ้า</i>
                                     </a>
                                 </div>
                         </div>
@@ -92,7 +91,7 @@ ActiveForm::begin(['id' => 'dataTable-form']);
                     </div>
                 </div>
             </div>
-            <table class="table table-striped table-bordered table-hover table-list" id="">
+ <table class="table table-striped table-bordered table-hover table-list" id="">
                 <thead>
                     <tr>
                      	<th class="table-checkbox">
@@ -105,8 +104,9 @@ ActiveForm::begin(['id' => 'dataTable-form']);
                     		 วัน/เดือน/ปี ที่ให้อาหาร
                         </th>
                         <th>
-                          	  ค่าที่วัดได้ (mg/L)
+                          	 ค่าที่วัดได้ 
                         </th>
+                  
                         <th>
                           	  อายุลูกกุ้ง
                         </th>
@@ -122,9 +122,9 @@ ActiveForm::begin(['id' => 'dataTable-form']);
 ?>                
                     <tr class="odd">
                         <td> <?php echo Html::checkbox('idCheck[]', false, ['value'=> $Content->id, 'class'=> 'checkboxes'])?></td>
-                        <td> <a href="<?= Url::toRoute(['pond/editoxygen'])?>?id=<?php echo $Content->id; ?>"><?php  echo $arrPond[$Content->pondId];?></a></td>
-                        <td class="text-left"><?php echo DateUtil::th_date(DateUtil::LDT_FMT_TH, strtotime($Content->oxygenTime));?></td>
-                        <td><?php echo $Content->numberOf;?>   </td>
+                        <td><a href="<?= Url::toRoute(['pond/editwaterchange'])?>?id=<?php echo $Content->id; ?>"><?php echo $Content->name;?></td>
+                        <td class="text-left"><?php echo DateUtil::th_date(DateUtil::LDT_FMT_TH, strtotime($Content->waterchangeTime));?></td>
+                        <td><?php echo $Content->waterchangeNum;?> </td>
                         <td> <?php echo $Content->age;?>  </td>
                         <td class="center"><?php echo $arrUser[$Content->createBy];?> </td>
                     </tr>

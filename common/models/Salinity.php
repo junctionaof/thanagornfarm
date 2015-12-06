@@ -5,29 +5,29 @@ namespace common\models;
 use Yii;
 
 /**
- * This is the model class for table "weight".
+ * This is the model class for table "salinity".
  *
  * @property integer $id
  * @property integer $pondId
- * @property integer $weightNo
+ * @property integer $salinityNo
  * @property string $age
- * @property integer $weightNum
+ * @property integer $salinityNum
  * @property integer $numberOf
  * @property integer $createBy
- * @property string $weightTime
+ * @property string $salinityTime
  * @property string $createTime
  * @property string $lastUpdateTime
  * @property string $lastUpdateBy
  * @property string $name
  */
-class Weight extends \yii\db\ActiveRecord
+class Salinity extends \yii\db\ActiveRecord
 {
     /**
      * @inheritdoc
      */
     public static function tableName()
     {
-        return 'weight';
+        return 'salinity';
     }
 
     /**
@@ -36,9 +36,9 @@ class Weight extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['pondId', 'weightNo', 'weightNum', 'numberOf', 'createBy', 'lastUpdateBy'], 'integer'],
-            [['weightTime', 'createTime', 'lastUpdateTime'], 'safe'],
-            [['age','name'], 'string', 'max' => 255]
+            [['pondId', 'salinityNo', 'salinityNum', 'numberOf', 'createBy', 'lastUpdateBy'], 'integer'],
+            [['salinityTime', 'createTime', 'lastUpdateTime'], 'safe'],
+            [['age', 'name'], 'string', 'max' => 255]
         ];
     }
 
@@ -50,12 +50,12 @@ class Weight extends \yii\db\ActiveRecord
         return [
             'id' => 'ID',
             'pondId' => 'รหัสรุ่น',
-            'weightNo' => 'มื้อที่',
+            'salinityNo' => 'มื้อที่',
             'age' => 'อายุลูกกุ้ง',
-            'weightNum' => 'ปริมาณอาหาร',
-            'numberOf' => 'เบอร์ของอาหาร',
+            'salinityNum' => 'ปริมาณ salinity',
+            'numberOf' => 'เบอร์ของ salinity',
             'createBy' => 'สร้างโดย',
-            'weightTime' => 'วันที่ให้อาหาร',
+            'salinityTime' => 'วันที่วัดค่า',
             'createTime' => 'สร้างเมื่อ',
             'lastUpdateTime' => 'เวลาแก้ไขล่าสุด',
             'lastUpdateBy' => 'ผู้แก้ไขล่าสุด',

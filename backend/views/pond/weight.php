@@ -104,13 +104,10 @@ ActiveForm::begin(['id' => 'dataTable-form']);
                     		 วัน/เดือน/ปี ที่ให้อาหาร
                         </th>
                         <th>
-                          	  ปริมานที่ให้
+                          	นํ้าหนักกุ้ง
                         </th>
                         <th>
-                          	  เบอร์อาหาร
-                        </th>
-                        <th>
-                          	 มื้อที่
+                          	เฉลี่ยตัวละ
                         </th>
                         <th>
                           	  อายุลูกกุ้ง
@@ -127,10 +124,9 @@ ActiveForm::begin(['id' => 'dataTable-form']);
 ?>                
                     <tr class="odd">
                         <td> <?php echo Html::checkbox('idCheck[]', false, ['value'=> $Content->id, 'class'=> 'checkboxes'])?></td>
-                        <td><?php echo $arrPond[$Content->pondId];?></td>
+                        <td><a href="<?= Url::toRoute(['pond/editweight'])?>?id=<?php echo $Content->id; ?>"><?php echo $Content->name;?></a></td>
                         <td class="text-left"><?php echo DateUtil::th_date(DateUtil::LDT_FMT_TH, strtotime($Content->weightTime));?></td>
                         <td><?php echo $Content->weightNum;?> </td>
-                        <td><?php echo $Content->numberOf;?>   </td>
                         <td> <?php echo $Content->weightNo;?>  </td>
                         <td> <?php echo $Content->age;?>  </td>
                         <td class="center"><?php echo $arrUser[$Content->createBy];?> </td>

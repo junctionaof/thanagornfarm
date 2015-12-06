@@ -53,7 +53,7 @@ ActiveForm::begin(['id' => 'dataTable-form']);
     <div class="portlet box green">
         <div class="portlet-title">
             <div class="caption">
-                <i class="fa fa-table"></i>รายการ บันทึกค่าอุณหฤูมมิ
+                <i class="fa fa-table"></i>รายการ บันทึกค่าอุณหภูมิแวดล้อม
             </div>
             <div class="tools">
                 <a href="javascript:;" class="collapse">
@@ -67,7 +67,7 @@ ActiveForm::begin(['id' => 'dataTable-form']);
                         <div class="portlet-title">
                                 <div class="actions">
                                  	<a class="btn add" href="<?= Url::toRoute(['pond/edittemp'])?>" title="เพิ่ม">
-                                        <i class="icon-plus"> บันทึกค่าอุณหฤูมมิ</i>
+                                        <i class="icon-plus"> บันทึกค่าอุณหภูมิแวดล้อม</i>
                                     </a>
                                 </div>
                         </div>
@@ -91,7 +91,7 @@ ActiveForm::begin(['id' => 'dataTable-form']);
                     </div>
                 </div>
             </div>
-            <table class="table table-striped table-bordered table-hover table-list" id="">
+ <table class="table table-striped table-bordered table-hover table-list" id="">
                 <thead>
                     <tr>
                      	<th class="table-checkbox">
@@ -104,14 +104,9 @@ ActiveForm::begin(['id' => 'dataTable-form']);
                     		 วัน/เดือน/ปี ที่ให้อาหาร
                         </th>
                         <th>
-                          	  ปริมานที่ให้
+                          	 ค่าที่วัดได้ 
                         </th>
-                        <th>
-                          	  เบอร์อาหาร
-                        </th>
-                        <th>
-                          	 มื้อที่
-                        </th>
+                  
                         <th>
                           	  อายุลูกกุ้ง
                         </th>
@@ -127,11 +122,9 @@ ActiveForm::begin(['id' => 'dataTable-form']);
 ?>                
                     <tr class="odd">
                         <td> <?php echo Html::checkbox('idCheck[]', false, ['value'=> $Content->id, 'class'=> 'checkboxes'])?></td>
-                        <td><?php echo $arrPond[$Content->pondId];?></td>
+                        <td><a href="<?= Url::toRoute(['pond/edittemp'])?>?id=<?php echo $Content->id; ?>"><?php echo $arrPond[$Content->pondId];?></td>
                         <td class="text-left"><?php echo DateUtil::th_date(DateUtil::LDT_FMT_TH, strtotime($Content->tempTime));?></td>
                         <td><?php echo $Content->tempNum;?> </td>
-                        <td><?php echo $Content->numberOf;?>   </td>
-                        <td> <?php echo $Content->tempNo;?>  </td>
                         <td> <?php echo $Content->age;?>  </td>
                         <td class="center"><?php echo $arrUser[$Content->createBy];?> </td>
                     </tr>
@@ -148,10 +141,3 @@ ActiveForm::begin(['id' => 'dataTable-form']);
     <!-- END EXAMPLE TABLE PORTLET-->
 <?= Html::hiddenInput('op','',['id'=>'op']);?>
 <?php ActiveForm::end() ?>
-<script>
-$(document).ready(function() {       
-    $( "#filter-bnt" ).live( "click", function() {
-        $('#filter-search').toggle(500);
-    });
-});
-</script>

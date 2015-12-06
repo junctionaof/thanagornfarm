@@ -52,80 +52,52 @@ $this->registerJsFile($baseUrl  . '/assets/pages/scripts/components-select2.min.
                     <div class="row">
                         <div class="col-md-12">
                             <!-- BEGIN PORTLET-->
-                            <div class="portlet box green">
+                            <div class="portlet box blue">
                                 <div class="portlet-title">
                                     <div class="caption">
                                         <i class="fa fa-gift"></i>บันทึกการให้อาหารกุ้ง </div>
-                                    <div class="tools">
-                                        <a href="javascript:;" class="collapse"> </a>
-                                        <a href="#portlet-config" data-toggle="modal" class="config"> </a>
-                                        <a href="javascript:;" class="reload"> </a>
-                                        <a href="javascript:;" class="remove"> </a>
-                                    </div>
                                 </div>
                                 <div class="portlet-body form">
                                     <!-- BEGIN FORM-->
-                                    <?php echo Html::beginForm('', 'post', array('class' => 'form-horizontal form-bordered')) ?>
-                                        <div class="form-body">
-                                        	
-                                            <div class="form-group">
-                                                <label class="control-label col-md-3" for="pondId">เลือกบ่อ</label>
-                                                <div class="col-md-4">
-                                                    <div class="input-group input-large" id="defaultrange">
-                                                        <?php //echo Html::dropDownList('pondId', ' ', $arrTypelist , ['id'=>'pondId','class' => 'select2 form-control']) ?>	
-                                                    </div>
-                                                </div>
-                                            </div>
-                                             <div class="form-group">
-                                                <label class="control-label col-md-3">วันที่</label>
-                                                      <div class="input-group input-large date date-picker" data-date-format="dd-mm-yyyy" data-date-start-date="+0d">
-                                                        <input type="text" class="form-control" readonly>
-                                                        <span class="input-group-btn">
-                                                            <button class="btn default" type="button">
-                                                                <i class="fa fa-calendar"></i>
-                                                            </button>
-                                                        </span>
-                                                  	</div>
-                                            </div>
-                                               <div class="form-group">
-                                                <label class="control-label col-md-3">มื้อที่</label>
-                                                      <div class="input-group input-large ">
-                                                        <input type="text" class="form-control" /> 
-                                                  	</div>
-                                            </div>
-                                            
-                                            <div class="form-group">
-                                                <label class="control-label col-md-3">อายุลูกกุ้ง</label>
-                                                      <div class="input-group input-large " >
-                                                        <input type="text" class="form-control" /> 
-                                                  	</div>
-                                            </div>
-                                            
-                                             <div class="form-group">
-                                                <label class="control-label col-md-3">เบอร์อาหาร</label>
-                                                      <div class="input-group input-large " >
-                                                       <input type="text" class="form-control" /> 
-                                                  	</div>
-                                            </div>
-                                            
-                                            <div class="form-group">
-                                                <label class="control-label col-md-3">จำนวนที่ใช้</label>
-                                                      <div class="input-group input-large" >
-                                                        <input type="text" class="form-control" /> 
-                                                  	</div>
-                                            </div>
-                                        </div>
-                                        <div class="form-actions">
-                                            <div class="row">
-                                                <div class="col-md-offset-3 col-md-9">
-                                                    <button type="submit" class="btn red">
-                                                        <i class="fa fa-check"></i> Submit</button>
-                                                    <a href="<?php echo Url::toRoute('content/typelist') ?>" class="btn default" >ยกเลิก </a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    <?php if ($model->id) {echo Html::hiddenInput('id', $model->id);}?>
-                                    <?php echo Html::endForm() ?>  
+                                   <?php echo Html::beginForm('', 'post', array('class' => 'form-horizontal')) ?>
+									<div class="row">
+									
+										<div class="col-md-7 col-md-offset-1  margin-top-20">
+										
+											<div class="form-group">
+												<label class="control-label col-md-3">ชื่อบ่อ<span class="required">*</span></label>
+												<div class="col-md-9">
+													<?= Html::activeInput('text', $model, 'name', ['class' => 'form-control', 'placeholder' => 'กรุณาระบุ ชื่อบ่อ'])?>
+												</div>
+											</div>
+											
+											<div class="form-group">
+												<label class="control-label col-md-3">ขนาดบ่อ<span class="required">*</span></label>
+												<div class="col-md-9">
+													<?= Html::activeInput('text', $model, 'size', ['class' => 'form-control', 'placeholder' => 'กรุณาระบุ  ขนาดของบ่อ'])?>
+												</div>
+											</div>
+											
+											<div class="form-group">
+												<label class="control-label col-md-3"></label>
+												<div class="col-md-9">
+													<?php 
+														if ($model->id) {
+															echo Html::hiddenInput('id', $model->id);
+														}
+													?>
+													
+													<button type="submit" class="btn btn-primary">บันทึก</button>
+													<a href="<?php echo Url::toRoute('pond/typelist') ?>" class="btn" >ยกเลิก </a>
+												</div>
+											</div>
+											
+										</div>
+									
+										
+										
+									</div>
+									<?php echo Html::endForm() ?>
                                     <!-- END FORM-->
                                 </div>
                             </div>

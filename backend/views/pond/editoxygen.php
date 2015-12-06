@@ -1,5 +1,4 @@
 <?php
-
 use yii\helpers\Url;
 use yii\web\View;
 use yii\helpers\Html;
@@ -28,6 +27,8 @@ if($model->oxygenTime == ''){
 $contentDate = "";
 $contentTime = "";
 
+
+
 $str = <<<EOT
 
 $(document).ready(function() {
@@ -47,7 +48,6 @@ $(document).ready(function() {
 		$('#oxygenTime').datepicker();
 });
 		
-
 
 EOT;
 $this->registerJs($str);
@@ -104,7 +104,7 @@ $this->registerJsFile($baseUrl  . '/assets/pages/scripts/components-select2.min.
                                                 <label class="control-label col-md-3" for="pondId">เลือกบ่อและรุ่น</label>
                                                 <div class="col-md-4">
                                                     <div class="input-group input-large" id="defaultrange">
-                                                        <?php echo Html::dropDownList('pondId', ' ', $arrTypelist , ['id'=>'pondId','class' => 'select2 form-control'])?>	
+                                                        <?php echo Html::dropDownList('pondId','',$arrTypelist , ['id'=>'pondId','class' => 'select2 form-control'])?>	
                                                     </div>
                                                 </div>
                                             </div>
@@ -112,7 +112,7 @@ $this->registerJsFile($baseUrl  . '/assets/pages/scripts/components-select2.min.
                                             <div class="form-group">
                                             	<label class="control-label col-md-3">ข้อมูลบ่อ และรุ่น </label>
                                                       <div class="input-group input-large " >
-                                                      <?= Html::input('text','pond', $model->name,['id'=>'pond','class' => 'form-control', 'disabled' => 'true']);?>
+                                                      <?= Html::input('text','name', $model->name,['id'=>'pond','class' => 'form-control']);?>
                                                   	</div>
                                             </div>
                                             
@@ -124,32 +124,20 @@ $this->registerJsFile($baseUrl  . '/assets/pages/scripts/components-select2.min.
                                             </div>
                                             
                                              <div class="form-group">
-                                                <label class="control-label col-md-3">วันที่ให้อาหาร</label>
+                                                <label class="control-label col-md-3">วันที่บันทึก</label>
                                                       <div class="input-group input-large" data-date-format="dd-mm-yyyy" data-date-start-date="+0d">
                                                        <?= Html::input('text', 'oxygenTime' ,$correntDate ,['id'=>'oxygenTime','class' => 'form-control']);?>
                                                   	</div>
                                             </div>
-                                               <div class="form-group">
-                                                <label class="control-label col-md-3">มื้อที่</label>
-                                                      <div class="input-group input-large ">
-                                                        <?= Html::input('text', 'oxygenNo', $model->age,['id'=>'oxygenNo','class' => 'form-control']);?>
-                                                  	</div>
-                                            </div>
-                                            
-
-                                            
-                                             <div class="form-group">
-                                                <label class="control-label col-md-3">เบอร์อาหาร</label>
-                                                      <div class="input-group input-large " >
-                                                       <?= Html::input('text', 'oxygenNum', $model->oxygenNum,['id'=>'oxygenNum','class' => 'form-control']);?>
-                                                  	</div>
-                                            </div>
-                                            
                                             <div class="form-group">
-                                                <label class="control-label col-md-3">จำนวนที่ใช้</label>
+                                                <label class="control-label col-md-3">ค่าที่วัดได้</label>
                                                       <div class="input-group input-large" >
                                                        <?= Html::input('text', 'numberOf', $model->numberOf,['id'=>'numberOf','class' => 'form-control']);?>
+                                                  	<span class="input-group-addon">
+                                                        <i class="fa"> mg/L</i>
+                                                    </span>
                                                   	</div>
+                                                  	
                                             </div>
                                         </div>
                                         <div class="form-actions">

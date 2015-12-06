@@ -112,7 +112,7 @@ $this->registerJsFile($baseUrl  . '/assets/pages/scripts/components-select2.min.
                                             <div class="form-group">
                                             	<label class="control-label col-md-3">ข้อมูลบ่อ และรุ่น </label>
                                                       <div class="input-group input-large " >
-                                                      <?= Html::input('text','pond', $model->name,['id'=>'pond','class' => 'form-control', 'disabled' => 'true']);?>
+                                                      <?= Html::input('text','name', $model->name,['id'=>'name','class' => 'form-control', 'disabled' => 'true']);?>
                                                   	</div>
                                             </div>
                                             
@@ -124,7 +124,7 @@ $this->registerJsFile($baseUrl  . '/assets/pages/scripts/components-select2.min.
                                             </div>
                                             
                                              <div class="form-group">
-                                                <label class="control-label col-md-3">วันที่ให้อาหาร</label>
+                                                <label class="control-label col-md-3">วันที่เช็คยอ</label>
                                                       <div class="input-group input-large" data-date-format="dd-mm-yyyy" data-date-start-date="+0d">
                                                        <?= Html::input('text', 'checkyoTime' ,$correntDate ,['id'=>'checkyoTime','class' => 'form-control']);?>
                                                   	</div>
@@ -132,7 +132,7 @@ $this->registerJsFile($baseUrl  . '/assets/pages/scripts/components-select2.min.
                                                <div class="form-group">
                                                 <label class="control-label col-md-3">เช็คยอมื้อที่</label>
                                                       <div class="input-group input-large ">
-                                                        <?= Html::input('text', 'checkyoNo', $model->age,['id'=>'checkyoNo','class' => 'form-control']);?>
+                                                        <?php echo Html::dropDownList('checkyoNo',$model->checkyoNo, Checkyo::$arrMeal , ['id'=>'checkyoNo','class' => 'select2 form-control'])?>	
                                                   	</div>
                                             </div>
                                             
@@ -141,26 +141,26 @@ $this->registerJsFile($baseUrl  . '/assets/pages/scripts/components-select2.min.
                                              <div class="form-group">
                                                 <label class="control-label col-md-3">ยอที่ 1</label>
                                                       <div class="input-group input-large " >
-                                                       <?= Html::input('text', 'yo01', $model->yo01,['id'=>'yo01','class' => 'form-control']);?>
+                                                       <?php echo Html::dropDownList('yo01',$model->yo01, Checkyo::$arrCheck , ['id'=>'yo01','class' => 'select2 form-control'])?>	
                                                   	</div>
                                             </div>
                                             
                                             <div class="form-group">
                                                 <label class="control-label col-md-3">ยอที่ 2</label>
                                                       <div class="input-group input-large" >
-                                                       <?= Html::input('text', 'yo02', $model->yo02,['id'=>'yo02','class' => 'form-control']);?>
+                                                      <?php echo Html::dropDownList('yo02',$model->yo02, Checkyo::$arrCheck , ['id'=>'yo02','class' => 'select2 form-control'])?>	
                                                   	</div>
                                             </div>
                                             <div class="form-group">
                                                 <label class="control-label col-md-3">ยอที่ 3</label>
                                                       <div class="input-group input-large" >
-                                                       <?= Html::input('text', 'yo03', $model->yo03,['id'=>'yo03','class' => 'form-control']);?>
+													<?php echo Html::dropDownList('yo03',$model->yo03, Checkyo::$arrCheck , ['id'=>'yo03','class' => 'select2 form-control'])?>	
                                                   	</div>
                                             </div>
                                             <div class="form-group">
                                                 <label class="control-label col-md-3">ยอที่ 4</label>
                                                       <div class="input-group input-large" >
-                                                       <?= Html::input('text', 'yo04', $model->yo04,['id'=>'yo04','class' => 'form-control']);?>
+                                                      <?php echo Html::dropDownList('yo04',$model->yo04, Checkyo::$arrCheck , ['id'=>'yo04','class' => 'select2 form-control'])?>	
                                                   	</div>
                                             </div>
                                         </div>
