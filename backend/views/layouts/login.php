@@ -145,7 +145,7 @@ $this->registerCss($str, [], 'css'); ?>
 	<!-- BEGIN LOGO -->
 	<div class="logo">
 		<!-- <img src="<?php echo $baseUrl?>assets/global/img/tpbs-org-logo.png" alt="" />  -->
-		<h1><span class="label label-info">THANAKORN</span><span class="label label-warning">FARM</span> </h1>
+		<h1><span class="label label-info">THANAGORN</span><span class="label label-warning">FARM</span> </h1>
 	</div>
 	<!-- END LOGO -->
 	<!-- BEGIN LOGIN -->
@@ -155,7 +155,7 @@ $this->registerCss($str, [], 'css'); ?>
 	<!-- END LOGIN -->
 	<!-- BEGIN COPYRIGHT -->
 	<div class="copyright">
-		COPYRIGHT &copy;2015  THANAKORN FARM
+		COPYRIGHT &copy;2015  THANAGORN FARM
 	</div>
 	<!-- END JAVASCRIPTS -->
 
