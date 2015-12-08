@@ -51,6 +51,50 @@ class PondController extends BaseController {
         echo $this->render('index');
     }
     
+    public function actionShrimp() {
+    	$currentTs = time();
+    	$identity = \Yii::$app->user->getIdentity();
+    	$request = \Yii::$app->request;
+    	$id = $request->get('id', $request->post('id', null));
+    	
+    	$query = Typelist::find();
+    	if ($id){ 
+    		$query->where("id=".$id);
+    		$model = $query->one();
+    	}
+    	
+    	$pond = Pond::find()->andwhere('type='.$id)->andwhere('status=1')->one();
+
+    	
+    	// นั้าหนักเฉลี่ยกุ้ง 
+    	$objweightavg = Weight::find()->andwhere('pondId='.$pond->id)->one(); 
+
+    	$weightavg = $objweightavg->weightNum;
+    	
+    	//คาดการผลผลิตระหว่างการเลี้ยง
+    	$weight = \Yii::$app->params['eatperweight'][$weightavg]; // เอานํ้าหนักมาเทียบกับตาราง จะได้ค่า อัตราการกินอหาร
+    	$now = date("Y-m-d");  // วันปัจจุบัน
+    	$command = Yii::$app->db->createCommand("SELECT sum(foodNum) FROM  food Where foodTime Like  '%$now%' and pondId = ".$pond->id); 
+    	$sumfood = $command->queryScalar(); // ผลรวม นํ้าหนักอาหาร ต่อวันปัจจุบัน
+    	$outputOnprocess = (100/$weight)* $sumfood ;  // ผลผลิตระหว่างการเลี้ยง  
+		
+    	// % อัตราการรอดตาย
+    	$larvae = $pond->larvae;//จํานวนลูกกุ้งที่ปล่อย
+ 		$survive = (($outputOnprocess * 1000)/$weightavg) / $larvae * 100 ;
+    	
+ 		
+ 		
+    	
+    	echo $this->render('shrimp', [
+    			'model' => $model,
+    			'pond' => $pond,
+    			'outputOnprocess' => $outputOnprocess,
+    			'survive' => $survive,
+    			'weightavg' => $weightavg,
+    	]);
+    }
+    
+    
     public function actionTypelist() {
     	
     		$currentTs =time();
@@ -136,9 +180,7 @@ class PondController extends BaseController {
     	$request = \Yii::$app->request;
     	$id = $request->get('id', $request->post('id', null));
     	$query = Typelist::find();
-    	if ($id){
-    		$query->where("id=".$id);
-    		$model = $query->one();
+    	if ($id){ $query->where("id=".$id);$model = $query->one();
     
     
     	}else{
