@@ -192,25 +192,22 @@ $title = $pond->title ? $pond->title : 'ไม่ระบุ';
                                         <table class="table table-hover table-light">
                                             <thead>
                                                 <tr class="uppercase">
-                                                    <th > ชื่อรุ่น </th>
+                                                    <th >รุ่น </th>
                                                     <th> วันที่ปล่อยกุ้ง </th>
                                                     <th> จำนวนลูกกุ้ง	 </th>
-                                                    <th> ชนิดลูกกุ้ง </th>
                                                     <th> บริษัท </th>
                                                 </tr>
                                             </thead>
-                                            <tr>
-
+                                            <?php foreach($arrPond as $lsd):?>
+                                             <tr>
                                                 <td>
-                                                    <a href="javascript:;" class="primary-link">Brain</a>
+                                                    <a href="javascript:;" class="primary-link"><?=$lsd->title?></a>
                                                 </td>
-                                                <td> $345 </td>
-                                                <td> 45 </td>
-                                                <td> 124 </td>
-                                                <td>
-                                                    <span class="bold theme-font">80%</span>
-                                                </td>
+                                                <td> <?=$lsd->releaseTime?> </td>
+                                                <td> <?=$lsd->larvae?> </td>
+                                                <td> <?=$lsd->larvaeCompany?> </td>
                                             </tr>
+                                            <?php endforeach;?>
                                         </table>
                                     </div>
                                 </div>
@@ -249,6 +246,7 @@ $title = $pond->title ? $pond->title : 'ไม่ระบุ';
                                         <div class="tab-pane active" id="tab_1_1">
                                             <div class="scroller" style="height: 339px;" data-always-visible="1" data-rail-visible="0">
                                                 <ul class="feeds">
+                                                    <?php foreach ($food As $lstfood): ?>
                                                     <li>
                                                         <div class="col1">
                                                             <div class="cont">
@@ -258,34 +256,16 @@ $title = $pond->title ? $pond->title : 'ไม่ระบุ';
                                                                     </div>
                                                                 </div>
                                                                 <div class="cont-col2">
-                                                                    <div class="desc">รายการให้อาหาร มื้อที่ 1
+                                                                    <div class="desc"><?php echo DateUtil::th_date(DateUtil::LDT_FMT_TH, strtotime($lstfood->foodTime));?>
                                                                     </div>
                                                                 </div>
                                                             </div>
                                                         </div>
                                                         <div class="col2">
-                                                            <div class="date"> Just now </div>
+                                                            <div class="date">มื้อที่ <?php echo $lstfood->foodNo ?> </div>
                                                         </div>
                                                     </li>
-                                                    <li>
-                                                        <a href="javascript:;">
-                                                            <div class="col1">
-                                                                <div class="cont">
-                                                                    <div class="cont-col1">
-                                                                        <div class="label label-sm label-success">
-                                                                            <i class="fa fa-bell-o"></i>
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="cont-col2">
-                                                                        <div class="desc"> รายการให้อาหาร มื้อที่ 2 </div>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                            <div class="col2">
-                                                                <div class="date"> 20 mins </div>
-                                                            </div>
-                                                        </a>
-                                                    </li>
+                                                    <?php endforeach;?>
                                                 </ul>
                                             </div>
                                         </div>

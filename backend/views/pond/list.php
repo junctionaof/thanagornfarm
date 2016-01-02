@@ -165,13 +165,13 @@ ActiveForm::begin(['id' => 'dataTable-form']);
                            	<?php echo DateUtil::th_date(DateUtil::SDT_FMT_TH, strtotime($Pond->lastUpdateTime));?>
                         </td>
                         <td class="center">
-                            <?php echo $arrUser[$Pond->lastUpdateBy]?>
+                            <?php echo  isset($arrUser[$Pond->lastUpdateBy]) ? $arrUser[$Pond->lastUpdateBy] : 'anonymous'; ?>
                         </td>
                         <td class="center">
                            	<?php echo DateUtil::th_date(DateUtil::SDT_FMT_TH, strtotime($Pond->createTime));?>
                         </td>
                          <td class="center">
-                            <?php echo $arrUser[$Pond->createBy]?>
+                            <?php echo  isset($arrUser[$Pond->createBy]) ?$arrUser[$Pond->createBy] : 'anonymous'; ?>
                         </td>
 
                         

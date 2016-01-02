@@ -124,7 +124,7 @@ ActiveForm::begin(['id' => 'dataTable-form']);
                         <td><a href="<?= Url::toRoute(['pond/editother'])?>?id=<?php echo $Content->id; ?>"><?php echo $arrPond[$Content->pondId];?></td>
                         <td class="text-left"><?php echo DateUtil::th_date(DateUtil::LDT_FMT_TH, strtotime($Content->otherTime));?></td>
                         <td> <?php echo $Content->age;?>  </td>
-                        <td class="center"><?php echo $arrUser[$Content->createBy];?> </td>
+                        <td class="center"><?php echo  isset($arrUser[$Content->createBy]) ? $arrUser[$Content->createBy] : 'anonymous'; ?>  </td>
                     </tr>
 <?php 
 		endforeach;

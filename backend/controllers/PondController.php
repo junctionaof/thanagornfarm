@@ -55,6 +55,7 @@ class PondController extends BaseController {
     	$currentTs = time();
     	$identity = \Yii::$app->user->getIdentity();
     	$request = \Yii::$app->request;
+    	$params = \Yii::$app->params;
     	$id = $request->get('id', $request->post('id', null));
     	
     	$query = Typelist::find();
@@ -68,24 +69,72 @@ class PondController extends BaseController {
     	
     	// นั้าหนักเฉลี่ยกุ้ง 
     	$objweightavg = Weight::find()->andwhere('pondId='.$pond->id)->one(); 
-
-    	$weightavg = $objweightavg->weightNum;
+    	$weightavg = isset($objweightavg->weightNum)?$objweightavg->weightNum : 0 ;
+    	
+    	
     	
     	//คาดการผลผลิตระหว่างการเลี้ยง
-    	$weight = \Yii::$app->params['eatperweight'][$weightavg]; // เอานํ้าหนักมาเทียบกับตาราง จะได้ค่า อัตราการกินอหาร
+    	$weight = isset($params['eatperweight'][$weightavg])?$params['eatperweight'][$weightavg] : 0 ;
+    	 // เอานํ้าหนักมาเทียบกับตาราง จะได้ค่า อัตราการกินอหาร
     	$now = date("Y-m-d");  // วันปัจจุบัน
     	$command = Yii::$app->db->createCommand("SELECT sum(foodNum) FROM  food Where foodTime Like  '%$now%' and pondId = ".$pond->id); 
     	$sumfood = $command->queryScalar(); // ผลรวม นํ้าหนักอาหาร ต่อวันปัจจุบัน
-    	$outputOnprocess = (100/$weight)* $sumfood ;  // ผลผลิตระหว่างการเลี้ยง  
+    	$outputOnprocess = $weight != 0 ? (100/$weight)* $sumfood : 0 ;  // ผลผลิตระหว่างการเลี้ยง  
 		
+    	
     	// % อัตราการรอดตาย
     	$larvae = $pond->larvae;//จํานวนลูกกุ้งที่ปล่อย
- 		$survive = (($outputOnprocess * 1000)/$weightavg) / $larvae * 100 ;
+ 		$survive = $weightavg != 0 ? (($outputOnprocess * 1000)/$weightavg) / $larvae * 100 : 0 ;
     	
- 		
- 		
+
+
+ 		// หารุ่น
+ 		$queryPond = Pond::find();
+ 		$queryPond->where("type=".$id);
+ 		$queryPond->orderBy(['id'=>SORT_ASC]);
+ 		$modelPond = $queryPond->all();
+ 		$arrPond = [];
+ 		$arrfood = [];
+ 		$arrPondid = [];
+ 		foreach($modelPond AS $objPond){
+ 			$arrPond[] = $objPond;
+ 			$arrPondid[] = $objPond->id;
+    		}
+    		
+    	// การให้อาหาร
+    	$queryfood = food::find();
+    	$queryfood->andWhere(['in', 'pondId', $arrPondid]);
+    	$queryfood->orderBy(['id'=>SORT_ASC]);
+    	$food = $queryfood->all();
     	
+    	// การเช็คยอ
+    	$queryfood = food::find();
+    	$queryfood->andWhere(['in', 'pondId', $arrPondid]);
+    	$queryfood->orderBy(['id'=>SORT_ASC]);
+    	$food = $queryfood->all();
+    	
+    	// การวัดนํ้าหนักเฉลี่ย
+    	$queryfood = food::find();
+    	$queryfood->andWhere(['in', 'pondId', $arrPondid]);
+    	$queryfood->orderBy(['id'=>SORT_ASC]);
+    	$food = $queryfood->all();
+    	
+    	// ออกซิเจนละลายนํ้า
+    	$queryfood = food::find();
+    	$queryfood->andWhere(['in', 'pondId', $arrPondid]);
+    	$queryfood->orderBy(['id'=>SORT_ASC]);
+    	$food = $queryfood->all();
+    	
+    	// ค่้า PH
+    	$queryfood = food::find();
+    	$queryfood->andWhere(['in', 'pondId', $arrPondid]);
+    	$queryfood->orderBy(['id'=>SORT_ASC]);
+    	$food = $queryfood->all();
+    	
+
     	echo $this->render('shrimp', [
+    			'food' => $food,
+    			'arrPond'=> $arrPond,
     			'model' => $model,
     			'pond' => $pond,
     			'outputOnprocess' => $outputOnprocess,

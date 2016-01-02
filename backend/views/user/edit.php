@@ -133,7 +133,7 @@ padding:10px;
 															<div class="form-group">
 																<label class="control-label col-md-3">สิทธิ์ : </label>
 																<div class="col-md-9">
-																	<?php // HTML::dropDownList('type',$model['type'], [''=> '---- เลือกตำแหน่งผู้ใช้ ----'] + User::$arrPosition, ['id'=>'type','class' => 'form-control input-large','disable'=>!\Yii::$app->user->can('billing.role.admin')])?>	
+																	<?=HTML::dropDownList('type',$model['type'], [''=> '---- เลือกตำแหน่งผู้ใช้ ----'] + User::$arrPosition, ['id'=>'type','class' => 'form-control input-large','disable'=>!\Yii::$app->user->can('billing.role.admin')])?>	
 																</div>
 															</div>
 																										

@@ -128,7 +128,7 @@ ActiveForm::begin(['id' => 'dataTable-form']);
                         <td><?php echo $Content->size;?></td>
                         <td class="text-center"><?php echo DateUtil::th_date(DateUtil::SDT_FMT_TH, strtotime($Content->createTime));?></td>
                         <td><?php echo DateUtil::th_date(DateUtil::SDT_FMT_TH, strtotime($Content->lastUpdateTime));?></td>
-                        <td class="center"><?php echo $Content->lastUpdateBy;?></td>
+                        <td class="center"><?php echo  isset($arrUser[$Content->lastUpdateBy]) ? $arrUser[$Content->lastUpdateBy] : 'anonymous'; ?> </td>
                     </tr>
 <?php 
 		endforeach;

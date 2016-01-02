@@ -123,7 +123,7 @@ ActiveForm::begin(['id' => 'dataTable-form']);
 				                 <td> <?php echo $Content->yo03;?>  </td>
 				                 <td> <?php echo $Content->yo04;?>  </td>
 				                 <td> <?php echo $Content->age;?>  </td>
-				                 <td class="center"><?php echo $arrUser[$Content->createBy];?> </td>
+				                 <td class="center"><?php echo  isset($arrUser[$Content->createBy]) ? $arrUser[$Content->createBy] : 'anonymous'; ?>  </td>
 				         </tr>
 					<?php 
 					endforeach;

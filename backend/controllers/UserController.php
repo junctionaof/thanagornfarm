@@ -96,7 +96,7 @@ class UserController extends BaseController{
 					$model->setPassword($password);
 					$model->generateAuthKey();
 				}
-				if($model->save()){
+				if($model->save()){		
 					if (\Yii::$app->request->post('type')){
 						switch (\Yii::$app->request->post('type')){
 							case 1:
@@ -109,6 +109,7 @@ class UserController extends BaseController{
 								$auth = 'tpbs.role.journalist';
 								break;
 						}
+						
 						$query = AuthAssignment::find();
 						$query->andWhere(['userid' => $user]);
 						$modelauth = $query->one();
