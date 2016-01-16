@@ -86,8 +86,6 @@ class PondController extends BaseController {
     	$larvae = $pond->larvae;//จํานวนลูกกุ้งที่ปล่อย
  		$survive = $weightavg != 0 ? (($outputOnprocess * 1000)/$weightavg) / $larvae * 100 : 0 ;
     	
-
-
  		// หารุ่น
  		$queryPond = Pond::find();
  		$queryPond->where("type=".$id);
@@ -100,40 +98,98 @@ class PondController extends BaseController {
  			$arrPond[] = $objPond;
  			$arrPondid[] = $objPond->id;
     		}
-    		
-    	// การให้อาหาร
+    	// ข้อมูลการให้อาหาร
     	$queryfood = food::find();
     	$queryfood->andWhere(['in', 'pondId', $arrPondid]);
     	$queryfood->orderBy(['id'=>SORT_ASC]);
     	$food = $queryfood->all();
     	
-    	// การเช็คยอ
-    	$queryfood = food::find();
-    	$queryfood->andWhere(['in', 'pondId', $arrPondid]);
-    	$queryfood->orderBy(['id'=>SORT_ASC]);
-    	$food = $queryfood->all();
+    	// ข้อมูลการเช็คยอ
+    	$queryCheckyo = Checkyo::find();
+    	$queryCheckyo->andWhere(['in', 'pondId', $arrPondid]);
+    	$queryCheckyo->orderBy(['id'=>SORT_ASC]);
+    	$checkyo = $queryCheckyo->all();
     	
-    	// การวัดนํ้าหนักเฉลี่ย
-    	$queryfood = food::find();
-    	$queryfood->andWhere(['in', 'pondId', $arrPondid]);
-    	$queryfood->orderBy(['id'=>SORT_ASC]);
-    	$food = $queryfood->all();
+    	// ข้อมูลการวัดนํ้าหนักเฉลี่ย
+    	$queryWeight = Weight::find();
+    	$queryWeight->andWhere(['in', 'pondId', $arrPondid]);
+    	$queryWeight->orderBy(['id'=>SORT_ASC]);
+    	$weight = $queryWeight->all();
     	
-    	// ออกซิเจนละลายนํ้า
-    	$queryfood = food::find();
-    	$queryfood->andWhere(['in', 'pondId', $arrPondid]);
-    	$queryfood->orderBy(['id'=>SORT_ASC]);
-    	$food = $queryfood->all();
+    	// ข้อมูลออกซิเจนละลายนํ้า
+    	$queryOxygen = Oxygen::find();
+    	$queryOxygen->andWhere(['in', 'pondId', $arrPondid]);
+    	$queryOxygen->orderBy(['id'=>SORT_ASC]);
+    	$oxygen = $queryOxygen->all();
     	
-    	// ค่้า PH
-    	$queryfood = food::find();
-    	$queryfood->andWhere(['in', 'pondId', $arrPondid]);
-    	$queryfood->orderBy(['id'=>SORT_ASC]);
-    	$food = $queryfood->all();
+    	// ข้อมูล ค่้า PH
+    	$queryPh = Ph::find();
+    	$queryPh->andWhere(['in', 'pondId', $arrPondid]);
+    	$queryPh->orderBy(['id'=>SORT_ASC]);
+    	$ph = $queryPh->all();
     	
+    	// ข้อมูลค่า ค่าอัลคาไลน์นิติ
+    	$queryAlkalinity = Alkalinity::find();
+    	$queryAlkalinity->andWhere(['in', 'pondId', $arrPondid]);
+    	$queryAlkalinity->orderBy(['id'=>SORT_ASC]);
+    	$alkalinity = $queryAlkalinity->all();
+    	
+    	// ข้อมูล ค่าอุณหภูมิของน้ำ
+    	$queryWatertemp = Watertemp::find();
+    	$queryWatertemp->andWhere(['in', 'pondId', $arrPondid]);
+    	$queryWatertemp->orderBy(['id'=>SORT_ASC]);
+    	$watertemp = $queryWatertemp->all();
 
+    	// ข้อมูล ค่าอุณหภูมิแวดล้อม
+    	$queryTemp = Temp::find();
+    	$queryTemp->andWhere(['in', 'pondId', $arrPondid]);
+    	$queryTemp->orderBy(['id'=>SORT_ASC]);
+    	$temp = $queryTemp->all();
+    	
+    	// ข้อมูล ค่าแอมโมเนีย
+    	$queryAmmonia = Ammonia::find();
+    	$queryAmmonia->andWhere(['in', 'pondId', $arrPondid]);
+    	$queryAmmonia->orderBy(['id'=>SORT_ASC]);
+    	$ammonia = $queryAmmonia->all();
+    	
+    	// ข้อมูล ค่าไนไตรท์
+    	$queryNitrite = Nitrite::find();
+    	$queryNitrite->andWhere(['in', 'pondId', $arrPondid]);
+    	$queryNitrite->orderBy(['id'=>SORT_ASC]);
+    	$nitrite = $queryNitrite->all();
+    	
+    	// ข้อมูล ค่าความเค็มของนํ้า
+    	$querySalinity = Salinity::find();
+    	$querySalinity->andWhere(['in', 'pondId', $arrPondid]);
+    	$querySalinity->orderBy(['id'=>SORT_ASC]);
+    	$salinity = $querySalinity->all();
+    	
+    	// ข้อมูล การเปลี่ยนถ่ายนํ้า
+    	$queryWaterchange = Waterchange::find();
+    	$queryWaterchange->andWhere(['in', 'pondId', $arrPondid]);
+    	$queryWaterchange->orderBy(['id'=>SORT_ASC]);
+    	$waterchange = $queryWaterchange->all();
+    	
+    	//ข้อมูล อื่นๆ
+    	$queryOther = Other::find();
+    	$queryOther->andWhere(['in', 'pondId', $arrPondid]);
+    	$queryOther->orderBy(['id'=>SORT_ASC]);
+    	$other = $queryOther->all();
+    	
     	echo $this->render('shrimp', [
+    			'alkalinity' => $alkalinity,
+    			'watertemp' => $watertemp,
+    			'temp' => $temp,
+    			'ammonia' => $ammonia,
+    			'nitrite' => $nitrite,
+    			'salinity' => $salinity,
+    			'waterchange' => $waterchange,
+    			'other' => $other,
     			'food' => $food,
+    			'checkyo' => $checkyo,
+    			'weight' => $weight,
+    			'oxygen' => $oxygen,
+    			'ph' => $ph,
     			'arrPond'=> $arrPond,
     			'model' => $model,
     			'pond' => $pond,

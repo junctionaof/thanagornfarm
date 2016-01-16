@@ -241,13 +241,11 @@ class User extends ActiveRecord implements IdentityInterface
 	}
 	
 	const position_admin = 1;
-	const position_editor = 2;
-	const position_journalist = 3;
+	const position_staff = 2;
 	
 	public static $arrPosition = array(
-			self::position_admin => 'ผู้ดูแลระบบเว็บ',
-			self::position_editor => 'ผู้ดูแลฟาร์ม',
-			self::position_journalist => 'พนักงานกรอกข้อมูล',
+			self::position_admin => 'ผู้ดูแลระบบ',
+			self::position_staff => 'พนักงาน',
 	);
 	
 	public static $arrStatus = array(

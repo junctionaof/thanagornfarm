@@ -41,13 +41,10 @@ class UserController extends BaseController{
 				if (\Yii::$app->request->post('type')){
 					switch (\Yii::$app->request->post('type')){
 							case 1:
-								$auth = 'tpbs.role.admin';
+								$auth = 'thanagorn.role.admin';
 								break;
 							case 2:
-								$auth = 'tpbs.role.editor';
-								break;
-							case 3:
-								$auth = 'tpbs.role.journalist';
+								$auth = 'thanagorn.role.staff';
 								break;
 						}
 					$modelauth = new AuthAssignment();

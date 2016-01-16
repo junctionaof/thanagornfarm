@@ -214,7 +214,28 @@ $title = $pond->title ? $pond->title : 'ไม่ระบุ';
                             </div>
                         </div>
                         
-                          <div class="col-md-6 col-sm-6">
+                         <div class="col-md-6 col-sm-6">
+                            <!-- BEGIN PORTLET-->
+                         <div class="portlet light bordered">
+                              <div class="portlet-title tabbable-line">
+                                    <div class="caption">
+                                        <i class="icon-globe font-green-sharp"></i>
+                                        <span class="caption-subject font-green-sharp bold uppercase">กราฟอัตราการเจริญเติบโต ลูกกุ้ง</span>
+                                    </div>
+                         	</div>
+                         <div class="portlet-body">
+                          <div class="clearfix">                             
+                                        <div class="portlet-body">
+                                            <div id="chart_3" class="chart" style="height: 240px;"> </div>
+                                        </div>
+                          </div>
+                        </div>
+                        </div>
+                        </div>
+                        </div>
+                        
+                           <div class="row">
+                          <div class="col-md-12 col-sm-12">
                             <!-- BEGIN PORTLET-->
                             <div class="portlet light bordered">
                                 <div class="portlet-title tabbable-line">
@@ -237,6 +258,12 @@ $title = $pond->title ? $pond->title : 'ไม่ระบุ';
                                         </li>
                                           <li>
                                             <a href="#tab_1_5" data-toggle="tab">  ค่า ph </a>
+                                        </li>
+                                         <li>
+                                            <a href="#tab_1_5" data-toggle="tab"> ค่าอัลคาไลน์นิติ</a>
+                                        </li>
+                                        <li>
+                                            <a href="#tab_1_5" data-toggle="tab"> ค่าอุณหภูมิขิงนํ้า</a>
                                         </li>
                                     </ul>
                                 </div>
@@ -464,7 +491,262 @@ $title = $pond->title ? $pond->title : 'ไม่ระบุ';
                             </div>
                             <!-- END PORTLET-->
                         </div>
-                        
+                        </div>
+                       <div class="row">
+                       <div class="col-md-12 col-sm-12">
+                            <!-- BEGIN PORTLET-->
+                            <div class="portlet light bordered">
+                                <div class="portlet-title tabbable-line">
+                                    <div class="caption">
+                                        <i class="icon-globe font-green-sharp"></i>
+                                        <span class="caption-subject font-green-sharp bold uppercase">รายละเอียดที่บันทึก </span>
+                                    </div>
+                                    <ul class="nav nav-tabs">
+                                        <li>
+                                            <a href="#tab_1_3" data-toggle="tab"> อุณหภูมิแวดล้อม </a>
+                                        </li>
+                                        <li>
+                                            <a href="#tab_1_4" data-toggle="tab">  ค่าแอมโมเนีย </a>
+                                        </li> 
+                                        <li>
+                                            <a href="#tab_1_5" data-toggle="tab">  ค่าไนไตรท์ </a>
+                                        </li>
+                                           <li>
+                                            <a href="#tab_1_5" data-toggle="tab">  ค่าความเค็มของนํ้า </a>
+                                        </li>
+                                        <li class="active">
+                                            <a href="#tab_1_1"  data-toggle="tab"> การเปลี่ยนถ่ายนํ้า</a>
+                                        </li> 
+                                       <li>
+                                            <a href="#tab_1_5" data-toggle="tab">  อื่นๆ</a>
+                                        </li>
+
+                                    </ul>
+                                </div>
+                                <div class="portlet-body">
+                                    <!--BEGIN TABS-->
+                                    <div class="tab-content">
+                                        <div class="tab-pane active" id="tab_1_1">
+                                            <div class="scroller" style="height: 339px;" data-always-visible="1" data-rail-visible="0">
+                                                <ul class="feeds">
+                                                    <?php foreach ($food As $lstfood): ?>
+                                                    <li>
+                                                        <div class="col1">
+                                                            <div class="cont">
+                                                                <div class="cont-col1">
+                                                                    <div class="label label-sm label-success">
+                                                                        <i class="fa fa-bell-o"></i>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="cont-col2">
+                                                                    <div class="desc"><?php echo DateUtil::th_date(DateUtil::LDT_FMT_TH, strtotime($lstfood->foodTime));?>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col2">
+                                                            <div class="date">มื้อที่ <?php echo $lstfood->foodNo ?> </div>
+                                                        </div>
+                                                    </li>
+                                                    <?php endforeach;?>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                        <div class="tab-pane" id="tab_1_2">
+                                            <div class="scroller" style="height: 290px;" data-always-visible="1" data-rail-visible1="1">
+                                                <ul class="feeds">
+                                                    <li>
+                                                        <a href="javascript:;">
+                                                            <div class="col1">
+                                                                <div class="cont">
+                                                                    <div class="cont-col1">
+                                                                        <div class="label label-sm label-success">
+                                                                            <i class="fa fa-bell-o"></i>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="cont-col2">
+                                                                        <div class="desc"> เช็คยอครั้งที่ 1 </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col2">
+                                                                <div class="date"> Just now </div>
+                                                            </div>
+                                                        </a>
+                                                    </li>
+                                                    <li>
+                                                        <a href="javascript:;">
+                                                            <div class="col1">
+                                                                <div class="cont">
+                                                                    <div class="cont-col1">
+                                                                        <div class="label label-sm label-success">
+                                                                            <i class="fa fa-bell-o"></i>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="cont-col2">
+                                                                        <div class="desc"> เช็คยอ ครั้งที่ 2</div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col2">
+                                                                <div class="date"> 10 mins </div>
+                                                            </div>
+                                                        </a>
+                                                    </li>
+                                                   
+                                                </ul>
+                                            </div>
+                                        </div>
+                                        
+                                           <div class="tab-pane" id="tab_1_3">
+                                            <div class="scroller" style="height: 290px;" data-always-visible="1" data-rail-visible1="1">
+                                                <ul class="feeds">
+                                                    <li>
+                                                        <a href="javascript:;">
+                                                            <div class="col1">
+                                                                <div class="cont">
+                                                                    <div class="cont-col1">
+                                                                        <div class="label label-sm label-success">
+                                                                            <i class="fa fa-bell-o"></i>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="cont-col2">
+                                                                        <div class="desc"> วัดนั้าหนัก ครั้งที่ 1 </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col2">
+                                                                <div class="date"> Just now </div>
+                                                            </div>
+                                                        </a>
+                                                    </li>
+                                                    <li>
+                                                        <a href="javascript:;">
+                                                            <div class="col1">
+                                                                <div class="cont">
+                                                                    <div class="cont-col1">
+                                                                        <div class="label label-sm label-success">
+                                                                            <i class="fa fa-bell-o"></i>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="cont-col2">
+                                                                        <div class="desc"> วัดนั้าหนัก  ครั้งที่ 2</div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col2">
+                                                                <div class="date"> 10 mins </div>
+                                                            </div>
+                                                        </a>
+                                                    </li>
+                                                   
+                                                </ul>
+                                            </div>
+                                        </div>
+                                        
+                                        
+                                        
+                                           <div class="tab-pane" id="tab_1_4">
+                                            <div class="scroller" style="height: 290px;" data-always-visible="1" data-rail-visible1="1">
+                                                <ul class="feeds">
+                                                    <li>
+                                                        <a href="javascript:;">
+                                                            <div class="col1">
+                                                                <div class="cont">
+                                                                    <div class="cont-col1">
+                                                                        <div class="label label-sm label-success">
+                                                                            <i class="fa fa-bell-o"></i>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="cont-col2">
+                                                                        <div class="desc">วัดค่า ครั้งที่ 1 </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col2">
+                                                                <div class="date"> Just now </div>
+                                                            </div>
+                                                        </a>
+                                                    </li>
+                                                    <li>
+                                                        <a href="javascript:;">
+                                                            <div class="col1">
+                                                                <div class="cont">
+                                                                    <div class="cont-col1">
+                                                                        <div class="label label-sm label-success">
+                                                                            <i class="fa fa-bell-o"></i>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="cont-col2">
+                                                                        <div class="desc"> วัดค่า ครั้งที่ 2</div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col2">
+                                                                <div class="date"> 10 mins </div>
+                                                            </div>
+                                                        </a>
+                                                    </li>
+                                                   
+                                                </ul>
+                                            </div>
+                                        </div>
+                                        
+                                        
+                                        
+                                           <div class="tab-pane" id="tab_1_5">
+                                            <div class="scroller" style="height: 290px;" data-always-visible="1" data-rail-visible1="1">
+                                                <ul class="feeds">
+                                                    <li>
+                                                        <a href="javascript:;">
+                                                            <div class="col1">
+                                                                <div class="cont">
+                                                                    <div class="cont-col1">
+                                                                        <div class="label label-sm label-success">
+                                                                            <i class="fa fa-bell-o"></i>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="cont-col2">
+                                                                        <div class="desc"> วัดค่า PH ครั้งที่ 1 </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col2">
+                                                                <div class="date"> Just now </div>
+                                                            </div>
+                                                        </a>
+                                                    </li>
+                                                    <li>
+                                                        <a href="javascript:;">
+                                                            <div class="col1">
+                                                                <div class="cont">
+                                                                    <div class="cont-col1">
+                                                                        <div class="label label-sm label-success">
+                                                                            <i class="fa fa-bell-o"></i>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="cont-col2">
+                                                                        <div class="desc">  วัดค่า PH ครั้งที่ 2 </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col2">
+                                                                <div class="date"> 10 mins </div>
+                                                            </div>
+                                                        </a>
+                                                    </li>
+                                                   
+                                                </ul>
+                                            </div>
+                                        </div>
+                                        
+                                        
+                                    </div>
+                                    <!--END TABS-->
+                                </div>
+                            </div>
+                            <!-- END PORTLET-->
+                        </div>
                         
                     </div>
                   
