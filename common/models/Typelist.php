@@ -14,6 +14,7 @@ use Yii;
  * @property string $status
  * @property integer $createBy
  * @property string $createTime
+ * @property string $attendant
  */
 class Typelist extends \yii\db\ActiveRecord
 {
@@ -31,7 +32,7 @@ class Typelist extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['createBy','lastUpdateBy','type'], 'integer'],
+            [['createBy','attendant','lastUpdateBy','type'], 'integer'],
         	[['size'], 'string', 'max' => 100],
             [['createTime','lastUpdateTime'], 'safe'],
             [['name'], 'string', 'max' => 100]
@@ -49,6 +50,7 @@ class Typelist extends \yii\db\ActiveRecord
             'name' => 'Name',
         	'size' => 'Size',
         	'type' => 'Type',	
+        	'attendant' => 'Attendant',
             'status' => 'Status',
             'createBy' => 'Create By',
             'createTime' => 'Create Time',

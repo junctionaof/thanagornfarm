@@ -55,15 +55,12 @@ $this->registerJsFile($baseUrl  . '/assets/pages/scripts/components-select2.min.
                             <div class="portlet box blue">
                                 <div class="portlet-title">
                                     <div class="caption">
-                                        <i class="fa fa-gift"></i>บันทึกการให้อาหารกุ้ง </div>
+                                        <i class="fa fa-gift"></i>บันทึกบ่อเลี้ยงกุ้ง </div>
                                 </div>
                                 <div class="portlet-body form">
                                     <!-- BEGIN FORM-->
-                                   <?php echo Html::beginForm('', 'post', array('class' => 'form-horizontal')) ?>
-									<div class="row">
-									
-										<div class="col-md-7 col-md-offset-1  margin-top-20">
-										
+                                   <?php echo Html::beginForm('', 'post', array('class' => 'form-horizontal form-bordered')) ?>
+										<div class="form-body">
 											<div class="form-group">
 												<label class="control-label col-md-3">ชื่อบ่อ<span class="required">*</span></label>
 												<div class="col-md-9">
@@ -77,7 +74,12 @@ $this->registerJsFile($baseUrl  . '/assets/pages/scripts/components-select2.min.
 													<?= Html::activeInput('text', $model, 'size', ['class' => 'form-control', 'placeholder' => 'กรุณาระบุ  ขนาดของบ่อ'])?>
 												</div>
 											</div>
-											
+											 <div class="form-group">
+													<label class="control-label col-md-3">ผู้ดูแลบ่อ</label>
+													<div class="col-md-9">
+													<?php echo Html::dropDownList('user', ' ',['ไม่ระบุ']+$arrUser , ['id'=>'type','class' => 'form-control input-medium'])?>	
+													</div>
+												</div>
 											<div class="form-group">
 												<label class="control-label col-md-3"></label>
 												<div class="col-md-9">
@@ -90,12 +92,7 @@ $this->registerJsFile($baseUrl  . '/assets/pages/scripts/components-select2.min.
 													<button type="submit" class="btn btn-primary">บันทึก</button>
 													<a href="<?php echo Url::toRoute('pond/typelist') ?>" class="btn" >ยกเลิก </a>
 												</div>
-											</div>
-											
-										</div>
-									
-										
-										
+										</div>	
 									</div>
 									<?php echo Html::endForm() ?>
                                     <!-- END FORM-->

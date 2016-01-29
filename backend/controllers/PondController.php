@@ -325,9 +325,17 @@ class PondController extends BaseController {
     		}
     
     	}
-    
+    	
+    	$arrUser = [];
+    		$modelsUser = User::find()->all();
+    		if(!empty($modelsUser)){
+    			foreach ($modelsUser as $obj){
+    				$arrUser[$obj->id] = $obj->firstName.' '.$obj->lastName;
+    			}
+    		}
     	echo $this->render('edittype', [
     			'model' => $model,
+    			'arrUser' =>$arrUser,
     	]);
     }
     
