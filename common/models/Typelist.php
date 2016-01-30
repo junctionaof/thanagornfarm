@@ -14,7 +14,7 @@ use Yii;
  * @property string $status
  * @property integer $createBy
  * @property string $createTime
- * @property string $attendant
+ * @property string $keeper
  */
 class Typelist extends \yii\db\ActiveRecord
 {
@@ -31,11 +31,13 @@ class Typelist extends \yii\db\ActiveRecord
      */
     public function rules()
     {
+    	
         return [
-            [['createBy','attendant','lastUpdateBy','type'], 'integer'],
+            [['createBy','lastUpdateBy','type'], 'integer'],
         	[['size'], 'string', 'max' => 100],
             [['createTime','lastUpdateTime'], 'safe'],
-            [['name'], 'string', 'max' => 100]
+            [['name'], 'string', 'max' => 100],
+        	[['keeper'], 'string', 'max' => 100]
 
         ];
     }
@@ -49,8 +51,8 @@ class Typelist extends \yii\db\ActiveRecord
             'id' => 'ID',
             'name' => 'Name',
         	'size' => 'Size',
+        	'keeper' => 'Keeper',
         	'type' => 'Type',	
-        	'attendant' => 'Attendant',
             'status' => 'Status',
             'createBy' => 'Create By',
             'createTime' => 'Create Time',

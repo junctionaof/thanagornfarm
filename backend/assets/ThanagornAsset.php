@@ -24,7 +24,7 @@ class ThanagornAsset extends AssetBundle
     	'assets/global/plugins/bootstrap-daterangepicker/daterangepicker.min.css',
     	'assets/global/plugins/morris/morris.css',
     	'assets/global/plugins/fullcalendar/fullcalendar.min.css',
-    	'assets/global/plugins/jqvmap/jqvmap/jqvmap.css',
+    	//'assets/global/plugins/jqvmap/jqvmap/jqvmap.css',
     	// END PAGE LEVEL PLUGINS
     	
     	//BEGIN THEME GLOBAL STYLES	
@@ -65,8 +65,8 @@ class ThanagornAsset extends AssetBundle
     	'assets/global/plugins/amcharts/amcharts/themes/light.js',
     	'assets/global/plugins/amcharts/amcharts/themes/patterns.js',
     	'assets/global/plugins/amcharts/amcharts/themes/chalk.js',
-    	'assets/global/plugins/amcharts/ammap/ammap.js',
-    	'assets/global/plugins/amcharts/ammap/maps/js/worldLow.js',
+    	//'assets/global/plugins/amcharts/ammap/ammap.js',
+    	//'assets/global/plugins/amcharts/ammap/maps/js/worldLow.js',
     	'assets/global/plugins/amcharts/amstockcharts/amstock.js',
     	'assets/global/plugins/fullcalendar/fullcalendar.min.js',
     	'assets/global/plugins/flot/jquery.flot.min.js',
@@ -74,13 +74,13 @@ class ThanagornAsset extends AssetBundle
     	'assets/global/plugins/flot/jquery.flot.categories.min.js',
     	'assets/global/plugins/jquery-easypiechart/jquery.easypiechart.min.js',
     	'assets/global/plugins/jquery.sparkline.min.js',
-    	'assets/global/plugins/jqvmap/jqvmap/jquery.vmap.js',
-    	'assets/global/plugins/jqvmap/jqvmap/maps/jquery.vmap.russia.js',
-    	'assets/global/plugins/jqvmap/jqvmap/maps/jquery.vmap.world.js',
-    	'assets/global/plugins/jqvmap/jqvmap/maps/jquery.vmap.europe.js',
-    	'assets/global/plugins/jqvmap/jqvmap/maps/jquery.vmap.germany.js',
-    	'assets/global/plugins/jqvmap/jqvmap/maps/jquery.vmap.usa.js',
-    	'assets/global/plugins/jqvmap/jqvmap/data/jquery.vmap.sampledata.js',
+    	//'assets/global/plugins/jqvmap/jqvmap/jquery.vmap.js',
+    	//'assets/global/plugins/jqvmap/jqvmap/maps/jquery.vmap.russia.js',
+    	//'assets/global/plugins/jqvmap/jqvmap/maps/jquery.vmap.world.js',
+    	//'assets/global/plugins/jqvmap/jqvmap/maps/jquery.vmap.europe.js',
+    	//'assets/global/plugins/jqvmap/jqvmap/maps/jquery.vmap.germany.js',
+    	//'assets/global/plugins/jqvmap/jqvmap/maps/jquery.vmap.usa.js',
+    	//'assets/global/plugins/jqvmap/jqvmap/data/jquery.vmap.sampledata.js',
     	//END PAGE LEVEL PLUGINS
     	
     	//BEGIN THEME GLOBAL SCRIPTS

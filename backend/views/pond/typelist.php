@@ -50,6 +50,20 @@ EOT;
 
 $this->registerCss($css);
 $this->registerJs($str, View::POS_LOAD, 'form-js');
+//-- BEGIN PAGE LEVEL PLUGINS -->
+$this->registerCssFile($baseUrl  . '/assets/global/plugins/datatables/datatables.min.css',['position' => \yii\web\View::POS_HEAD]) ;
+$this->registerCssFile($baseUrl  . '/assets/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.css',['position' => \yii\web\View::POS_HEAD]) ;
+//-- END PAGE LEVEL PLUGINS -->
+
+//-- BEGIN PAGE LEVEL PLUGINS -->
+$this->registerJsFile($baseUrl  . '/assets/global/scripts/datatable.js', ['position' => \yii\web\View::POS_END]);
+$this->registerJsFile($baseUrl  . '/assets/global/plugins/datatables/datatables.min.js', ['position' => \yii\web\View::POS_END]);
+$this->registerJsFile($baseUrl  . '/assets/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.js', ['position' => \yii\web\View::POS_END]);
+//-- END PAGE LEVEL PLUGINS -->
+
+//-- BEGIN PAGE LEVEL SCRIPTS -->
+$this->registerJsFile($baseUrl  . '/assets/pages/scripts/table-datatables-buttons.min.js', ['position' => \yii\web\View::POS_END]);
+//-- END PAGE LEVEL SCRIPTS -->
 
 ActiveForm::begin(['id' => 'dataTable-form']);
 ?>
@@ -58,19 +72,16 @@ ActiveForm::begin(['id' => 'dataTable-form']);
             <div class="caption">
                 <i class="fa fa-table"></i>จัดการบ่อเลี้ยงกุ้ง
             </div>
-            <div class="tools">
-                <a href="javascript:;" class="collapse">
-                </a>
-            </div>
+ 			<div class="tools"> </div>
         </div>
         <div class="portlet-body">
-            <div class="table-toolbar">
+         <div class="table-toolbar">
                 <div class="row">
                     <div class="col-md-6">
                         <div class="portlet-title">
                                 <div class="actions">
-                                 	<a class="btn add" href="<?= Url::toRoute(['pond/edittype'])?>" title="เพิ่ม">
-                                        <i class="icon-plus"> เพิ่มบ่อเลี้ยงกุ้ง</i>
+                                 	<a class="btn add" href="<?= Url::toRoute(['pond/edittype'])?>" title="เน€เธ�เธดเน�เธก">
+                                        <i class="icon-plus"> เพิ่มบ่อ</i>
                                     </a>
                                 </div>
                         </div>
@@ -80,22 +91,21 @@ ActiveForm::begin(['id' => 'dataTable-form']);
                         <div class="actions">					
 							<div class="btn-group pull-right">
 								<a class="btn  action" href="#"
-									data-toggle="dropdown"> <i class="fa fa-cogs"></i> รายการที่เลือก
+									data-toggle="dropdown"> <i class="fa fa-cogs"></i> จัดการรายการที่เลือก
 									<i class="fa fa-angle-down"></i>
 								</a>
 								<ul class="dropdown-menu pull-right">
-									<!-- <li><a href="javascript:;" data-action="publish"><i class="fa fa-check"></i> แสดงผล</a></li>
-									<li><a href="javascript:;" data-action="unpublish"><i class="fa fa-ban"></i> ไม่แสดงผล</a></li> -->
 									<li class="divider"></li>
-									<li><a href="javascript:void(0);" data-action="delete"><i class="fa fa-trash-o"></i> ลบข้อมูล</a></li>
+									<li><a href="javascript:void(0);" data-action="delete"><i class="fa fa-trash-o"></i> ลบบ่อ</a></li>
 								</ul>
 							</div>
 						</div>
                     </div>
                 </div>
             </div>
-            <table class="table table-striped table-bordered table-hover table-list" id="">
-                <thead>
+         <table class="table table-striped table-bordered table-hover" id="sample_2">
+
+               <thead>
                     <tr>
                      	<th class="table-checkbox">
                             <input type="checkbox" class="group-checkable" data-set=".table-list .checkboxes"/>
@@ -113,7 +123,10 @@ ActiveForm::begin(['id' => 'dataTable-form']);
                                                                           แก้ไขล่าสุด
                         </th>
                         <th>
-                                                                         ผู้แก้ไข
+                                                                        ผู้ดูแลบ่อ
+                        </th>
+                        <th>
+                           Status
                         </th>
                     </tr>
                 </thead>
@@ -128,7 +141,24 @@ ActiveForm::begin(['id' => 'dataTable-form']);
                         <td><?php echo $Content->size;?></td>
                         <td class="text-center"><?php echo DateUtil::th_date(DateUtil::SDT_FMT_TH, strtotime($Content->createTime));?></td>
                         <td><?php echo DateUtil::th_date(DateUtil::SDT_FMT_TH, strtotime($Content->lastUpdateTime));?></td>
-                        <td class="center"><?php echo  isset($arrUser[$Content->lastUpdateBy]) ? $arrUser[$Content->lastUpdateBy] : 'anonymous'; ?> </td>
+                        <td class="center">
+                        <?php 
+                        if ($Content->keeper){
+                        	$keeper = unserialize($Content->keeper); 
+                        	$i = '1';
+                        	$label = array("label-info","label-danger","label-success","label-warning","label-primary");
+                        	foreach ($keeper AS $user){
+                        		$labelColor = array_rand($label,1);
+                        		echo "<span class='label label-sm ".$label[$i]."'>".$arrAllUser[$user]."</span> ";
+                        		$i++;
+                        	}
+                        }else {
+                        echo  '<spam class="label label-sm label-success"> ยังไม่ได้กำหนดผู้ดูแล </spam>'; 
+                        }
+                        ?> </td>
+                        <td><a href="<?= Url::toRoute(['pond/edittype'])?>?id=<?php echo $Content->id; ?>" class="btn btn-outline btn-circle btn-sm blue"><i class="fa fa-edit"></i> Edit </a>  
+                        <a href="<?= Url::toRoute(['pond/shrimp'])?>?id=<?php echo $Content->id; ?>"  class="btn dark btn-sm btn-outline sbold uppercase"><i class="fa fa-share"></i> View </a>
+                        </td>
                     </tr>
 <?php 
 		endforeach;

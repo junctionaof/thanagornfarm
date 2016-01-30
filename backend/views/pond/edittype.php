@@ -28,10 +28,7 @@ $this->registerCssFile($baseUrl  . '/assets/global/plugins/bootstrap-markdown/cs
 
 $this->registerCssFile($baseUrl  . '/assets/global/css/components-md.min.css',['position' => \yii\web\View::POS_HEAD]) ;
 $this->registerCssFile($baseUrl  . '/assets/global/css/plugins-md.min.css',['position' => \yii\web\View::POS_HEAD]) ;
-$this->registerCssFile($baseUrl  . '/assets/global/plugins/select2/css/select2.min.css',['position' => \yii\web\View::POS_HEAD]) ;
-$this->registerCssFile($baseUrl  . '/assets/global/plugins/select2/css/select2-bootstrap.min.css',['position' => \yii\web\View::POS_HEAD]) ;
 
-$this->registerJsFile($baseUrl  . '/assets/global/plugins/select2/js/select2.full.min.js', ['position' => \yii\web\View::POS_END]);
 $this->registerJsFile($baseUrl  . '/assets/global/plugins/jquery-validation/js/jquery.validate.min.js', ['position' => \yii\web\View::POS_END]);
 $this->registerJsFile($baseUrl  . '/assets/global/plugins/jquery-validation/js/additional-methods.min.js', ['position' => \yii\web\View::POS_END]);
 $this->registerJsFile($baseUrl  . '/assets/global/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js', ['position' => \yii\web\View::POS_END]);
@@ -48,7 +45,6 @@ $this->registerJsFile($baseUrl  . '/assets/pages/scripts/components-select2.min.
 
 ?>
 <?php echo UiMessage::widget(); ?>
-
                     <div class="row">
                         <div class="col-md-12">
                             <!-- BEGIN PORTLET-->
@@ -77,18 +73,17 @@ $this->registerJsFile($baseUrl  . '/assets/pages/scripts/components-select2.min.
 											 <div class="form-group">
 													<label class="control-label col-md-3">ผู้ดูแลบ่อ</label>
 													<div class="col-md-9">
-													<?php echo Html::dropDownList('user', ' ',['ไม่ระบุ']+$arrUser , ['id'=>'type','class' => 'form-control input-medium'])?>	
+													<?php echo Html::dropDownList('user[]',unserialize($model->keeper),$arrUser , ['id'=>'type','class' => 'form-control select2-multiple','multiple'=>''])?>	
 													</div>
 												</div>
 											<div class="form-group">
 												<label class="control-label col-md-3"></label>
 												<div class="col-md-9">
-													<?php 
+													<?php
 														if ($model->id) {
 															echo Html::hiddenInput('id', $model->id);
 														}
 													?>
-													
 													<button type="submit" class="btn btn-primary">บันทึก</button>
 													<a href="<?php echo Url::toRoute('pond/typelist') ?>" class="btn" >ยกเลิก </a>
 												</div>

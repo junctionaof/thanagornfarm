@@ -202,6 +202,7 @@ class PondController extends BaseController {
     
     public function actionTypelist() {
     	
+    		
     		$currentTs =time();
     		$request = Yii::$app->request;
     		$identity = \Yii::$app->user->getIdentity();
@@ -269,25 +270,36 @@ class PondController extends BaseController {
     				}
     			}
     		}
+    		
+    		$arrAllUser = [];
+    		$modelsAllUser = User::find()->all();
+    		if(!empty($modelsAllUser)){
+    			foreach ($modelsAllUser as $obj){
+    				$arrAllUser[$obj->id] = $obj->firstName.' '.$obj->lastName;
+    			}
+    		}
     			
     		echo $this->render('typelist', [
     				'lst' => $list,
     				'pagination' => $pagination,
     				'arrUser' =>$arrUser,
+    				'arrAllUser' => $arrAllUser,
     				'q'=>$q,
     		]);
     }
     
     public function actionEdittype()
     {
+
     	$currentTs = time();
     	$identity = \Yii::$app->user->getIdentity();
     	$request = \Yii::$app->request;
+    	
+    	
     	$id = $request->get('id', $request->post('id', null));
     	$query = Typelist::find();
     	if ($id){ $query->where("id=".$id);$model = $query->one();
-    
-    
+   
     	}else{
     		$model = new Typelist();
     		$model->createTime = date('Y-m-d H:i:s', $currentTs);
@@ -295,21 +307,15 @@ class PondController extends BaseController {
     	}
     
     	if($request->isPost){
+
+    		$user = $request->get('user', $request->post('user', null));
     		$model->name = $_POST['Typelist']['name'];
     		$model->size =$_POST['Typelist']['size'];
+    		$model->keeper = serialize($user);
     		$model->lastUpdateBy = $identity->id;
     		$model->lastUpdateTime = date('Y-m-d H:i:s', $currentTs);
-    
-    		if (trim($model->name) == ''){
-    			$model->addError('name', 'ไม่ได้กรอกชื่อบ่อ');
-    		}
 
-    		if (trim($model->size) == ''){
-    			$model->addError('size', 'ไม่ได้กรอกขนาดบ่อ');
-    		}
-    
-    		if (!$model->hasErrors()) {
-    			$model->save();
+    		if ($model->save()) {
     			//UiMessage::setMessage('บันทึกข้อมูลเรียบร้อยแล้ว');
     			return $this->redirect('typelist');
     		}
@@ -333,13 +339,12 @@ class PondController extends BaseController {
     				$arrUser[$obj->id] = $obj->firstName.' '.$obj->lastName;
     			}
     		}
+    		
     	echo $this->render('edittype', [
     			'model' => $model,
     			'arrUser' =>$arrUser,
     	]);
     }
-    
-    
     
     
     // Start Food
