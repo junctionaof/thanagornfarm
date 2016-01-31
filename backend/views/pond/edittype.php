@@ -16,6 +16,7 @@ use common\models\Typelist;
 
 $baseUrl = \Yii::getAlias('@web');
 $cancelUrl = Url::toRoute('faq/list');
+$identity = \Yii::$app->user->getIdentity();
 
 $contentDate = "";
 $contentTime = "";

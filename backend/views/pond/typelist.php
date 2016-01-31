@@ -137,7 +137,17 @@ ActiveForm::begin(['id' => 'dataTable-form']);
 ?>                
                     <tr class="odd">
                          <td> <?php echo Html::checkbox('idCheck[]', false, ['value'=> $Content->id, 'class'=> 'checkboxes'])?></td>
-                        <td> <a href="<?= Url::toRoute(['pond/edittype'])?>?id=<?php echo $Content->id; ?>"><?php echo $Content->name;?></a> </td>
+                        <td> 
+                        <?php  if ($Content->keeper){ 
+                        			$arrkeeper = unserialize($Content->keeper);
+                        				if(in_array($identity->id, $arrkeeper)) { ?>
+                        <a href="<?= Url::toRoute(['pond/edittype'])?>?id=<?php echo $Content->id; ?>"><?php echo $Content->name;?></a>
+                        <?php }else{ ?>
+                        	<?php echo $Content->name;?>
+                        <?php } }else { ?>
+                              <?php echo $Content->name;?>
+                              <?php } ?>
+                        </td>
                         <td><?php echo $Content->size;?></td>
                         <td class="text-center"><?php echo DateUtil::th_date(DateUtil::SDT_FMT_TH, strtotime($Content->createTime));?></td>
                         <td><?php echo DateUtil::th_date(DateUtil::SDT_FMT_TH, strtotime($Content->lastUpdateTime));?></td>
@@ -146,7 +156,7 @@ ActiveForm::begin(['id' => 'dataTable-form']);
                         if ($Content->keeper){
                         	$keeper = unserialize($Content->keeper); 
                         	$i = '1';
-                        	$label = array("label-info","label-danger","label-success","label-warning","label-primary");
+                        	$label = array("label-primary","label-success","label-danger","label-warning","label-info");
                         	foreach ($keeper AS $user){
                         		$labelColor = array_rand($label,1);
                         		echo "<span class='label label-sm ".$label[$i]."'>".$arrAllUser[$user]."</span> ";
@@ -154,10 +164,20 @@ ActiveForm::begin(['id' => 'dataTable-form']);
                         	}
                         }else {
                         echo  '<spam class="label label-sm label-success"> ยังไม่ได้กำหนดผู้ดูแล </spam>'; 
-                        }
-                        ?> </td>
-                        <td><a href="<?= Url::toRoute(['pond/edittype'])?>?id=<?php echo $Content->id; ?>" class="btn btn-outline btn-circle btn-sm blue"><i class="fa fa-edit"></i> Edit </a>  
+                        }?> 
+                        </td>
+                        <td>
+                        <?php  if ($Content->keeper){ 
+                        	$arrkeeper = unserialize($Content->keeper);
+                        	if(in_array($identity->id, $arrkeeper)) { ?>
+                        <a href="<?= Url::toRoute(['pond/edittype'])?>?id=<?php echo $Content->id; ?>" class="btn btn-outline btn-circle btn-sm blue"><i class="fa fa-edit"></i> Edit </a>  
                         <a href="<?= Url::toRoute(['pond/shrimp'])?>?id=<?php echo $Content->id; ?>"  class="btn dark btn-sm btn-outline sbold uppercase"><i class="fa fa-share"></i> View </a>
+                        <?php }else{ ?>
+                        	<spam class="label label-sm label-danger">คุณไม่มีสิทธิ์จัดการบ่อนี้</spam>
+                        <?php } }else { ?>
+                            <spam class="label label-sm label-danger">คุณไม่มีสิทธิ์จัดการบ่อนี้ </spam>
+                              <?php } ?>
+                       
                         </td>
                     </tr>
 <?php 

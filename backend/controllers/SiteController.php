@@ -102,11 +102,14 @@ class SiteController extends Controller
     {
     	       $objTypelist = Typelist::find()->all();
     				foreach ($objTypelist as $dataTypelist){
+    						//$arrTypelist[] = 
     					    $objPond = Pond::find()->andwhere("status = 1")->andwhere(['type'=>$dataTypelist->id])->all();
     						foreach ($objPond as $dataPond){
-    							$arrPorn[] = ['typeId'=>$dataTypelist->id,'typelist'=>$dataTypelist->name,'title'=>$dataPond->title,'larvae'=>$dataPond->larvae,];
+    							$arrPorn[] = ['typeId'=>$dataTypelist->id,'typelist'=>$dataTypelist,'title'=>$dataPond->title,'larvae'=>$dataPond->larvae,];
     						}
     					}
+    					
+    					
     					
     	$this->layout = 'layoutstyle';
         return $this->render('index',[

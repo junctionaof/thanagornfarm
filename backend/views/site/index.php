@@ -16,6 +16,7 @@ $baseUrl = \Yii::getAlias('@web');
 $user = \Yii::$app->user;
 $session = \Yii::$app->session;
 $this->title = 'home thanagornfarm ';
+$identity = \Yii::$app->user->getIdentity();
 ?>
 
  					<!-- BEGIN PAGE BREADCRUMB -->
@@ -25,7 +26,7 @@ $this->title = 'home thanagornfarm ';
                             <i class="fa fa-circle"></i>
                         </li>
                         <li>
-                            <span class="active">Dashboard</span>
+                            <span class="active">บ่อทะเงหมดที่ปล่อยกุ้งลงไป</span>
                         </li>
                     </ul>
                     <!-- END PAGE BREADCRUMB -->
@@ -35,7 +36,7 @@ $this->title = 'home thanagornfarm ';
 					
 					<?php foreach ($arrPorn as $value) { ?>
 					
-                        <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+                          <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
                             <div class="dashboard-stat blue">
                                 <div class="visual">
                                     <i class="fa fa-comments"></i>
@@ -43,13 +44,15 @@ $this->title = 'home thanagornfarm ';
                                 <div class="details">
                                     <div class="number">
                                         <span data-counter="counterup" data-value="<?php echo $value["larvae"]; ?>">0</span> ตัว</div>
-                                    <div class="desc"><?php echo $value["typelist"]; ?>   </div>
+                                    <div class="desc"><?php echo $value["typelist"]->name; ?>   </div>
                                 </div>
                                 <a class="more" href="<?= Url::toRoute(['pond/shrimp'])?>?id=<?=$value["typeId"]?>"> View more
                                     <i class="m-icon-swapright m-icon-white"></i>
                                 </a>
                             </div>
                         </div>
+					
+
 					<?php }?>
 
                     </div>
