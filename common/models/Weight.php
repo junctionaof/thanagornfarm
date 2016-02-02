@@ -37,6 +37,7 @@ class Weight extends \yii\db\ActiveRecord
     {
         return [
             [['pondId', 'weightNo', 'weightNum', 'numberOf', 'createBy', 'lastUpdateBy'], 'integer'],
+        	[['weightNum'], 'number'],
             [['weightTime', 'createTime', 'lastUpdateTime'], 'safe'],
             [['age','name'], 'string', 'max' => 255]
         ];

@@ -40,7 +40,8 @@ class Checkyo extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['pondId', 'checkyoNo', 'checkyoNum', 'numberOf', 'createBy', 'lastUpdateBy'], 'integer'],
+            [['pondId', 'checkyoNo','numberOf', 'createBy', 'lastUpdateBy'], 'integer'],
+        	[['checkyoNum'], 'number'],
             [['checkyoTime', 'createTime', 'lastUpdateTime'], 'safe'],
             [['age', 'name','yo01','yo02','yo03','yo04'], 'string', 'max' => 255]
         ];

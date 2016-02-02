@@ -464,6 +464,7 @@ class PondController extends BaseController {
     		}
     
     		if (!$model->hasErrors()) {
+    			//var_dump($model); exit();
     			$model->save();
     			return $this->redirect('food');
     		}

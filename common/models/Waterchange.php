@@ -37,6 +37,7 @@ class Waterchange extends \yii\db\ActiveRecord
     {
         return [
             [['pondId', 'waterchangeNo', 'waterchangeNum', 'numberOf', 'createBy', 'lastUpdateBy'], 'integer'],
+        	[['waterchangeNum'], 'number'],
             [['waterchangeTime', 'createTime', 'lastUpdateTime'], 'safe'],
             [['age', 'name'], 'string', 'max' => 255]
         ];

@@ -37,6 +37,7 @@ class Temp extends \yii\db\ActiveRecord
     {
         return [
             [['pondId', 'tempNo', 'tempNum', 'numberOf', 'createBy', 'lastUpdateBy'], 'integer'],
+        	[['tempNum'], 'number'],
             [['tempTime', 'createTime', 'lastUpdateTime'], 'safe'],
             [['age', 'name'], 'string', 'max' => 255]
         ];

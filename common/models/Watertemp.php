@@ -37,6 +37,7 @@ class Watertemp extends \yii\db\ActiveRecord
     {
         return [
             [['pondId', 'watertempNo', 'watertempNum', 'numberOf', 'createBy', 'lastUpdateBy'], 'integer'],
+        	[['watertempNum'], 'number'],
             [['watertempTime', 'createTime', 'lastUpdateTime'], 'safe'],
             [['age', 'name'], 'string', 'max' => 255]
         ];

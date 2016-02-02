@@ -11,7 +11,7 @@ use Yii;
  * @property integer $pondId
  * @property integer $phNo
  * @property string $age
- * @property integer $phNum
+ * @property double $phNum
  * @property integer $numberOf
  * @property integer $createBy
  * @property string $phTime
@@ -36,7 +36,8 @@ class Ph extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['pondId', 'phNo', 'phNum', 'numberOf', 'createBy', 'lastUpdateBy'], 'integer'],
+            [['pondId', 'phNo', 'numberOf', 'createBy', 'lastUpdateBy'], 'integer'],
+            [['phNum'], 'number'],
             [['phTime', 'createTime', 'lastUpdateTime'], 'safe'],
             [['age', 'name'], 'string', 'max' => 255]
         ];
@@ -49,16 +50,16 @@ class Ph extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'pondId' => 'รหัสรุ่น',
-            'phNo' => 'มื้อที่',
-            'age' => 'อายุลูกกุ้ง',
-            'phNum' => 'ปริมาณอาหาร',
-            'numberOf' => 'เบอร์ของอาหาร',
-            'createBy' => 'สร้างโดย',
-            'phTime' => 'วันที่ให้อาหาร',
-            'createTime' => 'สร้างเมื่อ',
-            'lastUpdateTime' => 'เวลาแก้ไขล่าสุด',
-            'lastUpdateBy' => 'ผู้แก้ไขล่าสุด',
+            'pondId' => 'Pond ID',
+            'phNo' => 'Ph No',
+            'age' => 'Age',
+            'phNum' => 'Ph Num',
+            'numberOf' => 'Number Of',
+            'createBy' => 'Create By',
+            'phTime' => 'Ph Time',
+            'createTime' => 'Create Time',
+            'lastUpdateTime' => 'Last Update Time',
+            'lastUpdateBy' => 'Last Update By',
             'name' => 'Name',
         ];
     }
