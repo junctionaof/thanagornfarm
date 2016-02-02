@@ -115,7 +115,7 @@ ActiveForm::begin(['id' => 'dataTable-form']);
 					?>                
 				          <tr class="odd">
 				                 <td> <?php echo Html::checkbox('idCheck[]', false, ['value'=> $Content->id, 'class'=> 'checkboxes'])?></td>
-				                 <td><?php echo $arrPond[$Content->pondId];?></td>
+				                 <td><?php echo isset($arrPond[$Content->pondId])?$arrPond[$Content->pondId]:'ไม่ได้เลือกบ่อ รุ่น ';?></td>
 				                 <td class="text-left"><?php echo DateUtil::th_date(DateUtil::LDT_FMT_TH, strtotime($Content->checkyoTime));?></td>
 				                 <td><?php echo $Content->checkyoNo;?> </td>
 				                 <td><?php echo $Content->yo01;?>   </td>
