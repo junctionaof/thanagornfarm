@@ -19,7 +19,7 @@ $cancelUrl = Url::toRoute('faq/list');
 $csrfParam = Yii::$app->request->csrfParam;
 $csrfToken = Yii::$app->request->csrfToken;
 
-if($model->foodTime == ''){
+if(!isset($model->foodTime)){
 	$correntDate =  date( "Y-m-d H:i:s",strtotime("now"));
 }else {
 	$correntDate = $model->foodTime;
@@ -77,7 +77,6 @@ $this->registerJsFile($baseUrl  . '/assets/pages/scripts/form-validation.min.js'
 $this->registerJsFile($baseUrl  . '/assets/global/plugins/select2/js/select2.full.min.js', ['position' => \yii\web\View::POS_END]);
 $this->registerJsFile($baseUrl  . '/assets/pages/scripts/components-select2.min.js', ['position' => \yii\web\View::POS_END]);
 
-
 ?>
 <?php echo UiMessage::widget(); ?>
 
@@ -104,7 +103,7 @@ $this->registerJsFile($baseUrl  . '/assets/pages/scripts/components-select2.min.
                                                 <label class="control-label col-md-3" for="pondId">เลือกบ่อและรุ่น</label>
                                                 <div class="col-md-4">
                                                     <div class="input-group input-large" id="defaultrange">
-                                                        <?php echo Html::dropDownList('pondId', ' ', $arrTypelist , ['id'=>'pondId','class' => 'select2 form-control'])?>	
+                                                        <?php echo Html::dropDownList('pondId', isset($model->pondId)?$model->pondId:'0', $arrTypelist , ['id'=>'pondId','class' => 'select2 form-control'])?>	
                                                     </div>
                                                 </div>
                                             </div>

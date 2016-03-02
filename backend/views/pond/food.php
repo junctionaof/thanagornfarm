@@ -127,7 +127,7 @@ ActiveForm::begin(['id' => 'dataTable-form']);
 ?>                
                     <tr class="odd">
                         <td> <?php echo Html::checkbox('idCheck[]', false, ['value'=> $Content->id, 'class'=> 'checkboxes'])?></td>
-                        <td><?php echo $arrPond[$Content->pondId];?></td>
+                        <td><a href="<?= Url::toRoute(['pond/editfood'])?>?id=<?=$Content->id?>"><?php echo $arrPond[$Content->pondId];?></td>
                         <td class="text-left"><?php echo DateUtil::th_date(DateUtil::LDT_FMT_TH, strtotime($Content->foodTime));?></td>
                         <td><?php echo $Content->foodNum;?> </td>
                         <td><?php echo $Content->numberOf;?>   </td>

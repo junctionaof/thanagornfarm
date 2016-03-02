@@ -123,7 +123,7 @@ ActiveForm::begin(['id' => 'dataTable-form']);
 ?>                
                     <tr class="odd">
                         <td> <?php echo Html::checkbox('idCheck[]', false, ['value'=> $Content->id, 'class'=> 'checkboxes'])?></td>
-                        <td><a href="<?= Url::toRoute(['pond/editnitrite'])?>?id=<?php echo $Content->id; ?>"><?php echo $arrPond[$Content->pondId];?></td>
+                        <td><a href="<?= Url::toRoute(['pond/editnitrite'])?>?id=<?php echo $Content->id; ?>"><?php echo isset($arrPond[$Content->pondId])?$arrPond[$Content->pondId]:'-';?></td>
                         <td class="text-left"><?php echo DateUtil::th_date(DateUtil::LDT_FMT_TH, strtotime($Content->nitriteTime));?></td>
                         <td><?php echo $Content->nitriteNum;?> </td>
                         <td> <?php echo $Content->age;?>  </td>

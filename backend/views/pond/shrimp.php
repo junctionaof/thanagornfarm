@@ -284,7 +284,7 @@ $title = $pond->title ? $pond->title : 'ไม่ระบุ';
 	                                        <li>
 	                                            <a href="#tab_2_3"  data-toggle="tab"> การเปลี่ยนถ่ายนํ้า</a>
 	                                        </li> 
-	                                       <li>
+	                                       	<li>
 	                                            <a href="#tab_2_4" data-toggle="tab">  อื่นๆ</a>
 	                                        </li>
                                            
@@ -314,93 +314,521 @@ $title = $pond->title ? $pond->title : 'ไม่ระบุ';
                                                     </li>
                                                     <?php endforeach;?>
                                                 </ul>
+                                                <div class="row">
+														<div class="btn-group col-md-5 col-sm-12">
+															<div class="dataTables_info" id="sample_1_info">รายการที่ <?= $pagesfood->offset+1?> - <?= $pagesfood->offset+30?> จากทั้งหมด <?= $countfood?></div>
+														</div>
+														<div class="btn-group col-md-7 col-sm-12">
+															<?php echo LinkPager::widget(['pagination' => $pagesfood, 'options' => ['class'=> 'pagination pull-right']])?>		
+														</div>
+												</div>
                                             </div>
                                         </div>
                                         <div class="tab-pane" id="tab_1_2">
-                                            <div class="scroller" style="height: 290px;" data-always-visible="1" data-rail-visible1="1">
-                                                <ul class="feeds">
-                                                    <li>
-                                                        <a href="javascript:;">
-                                                            <div class="col1">
-                                                                <div class="cont">
-                                                                    <div class="cont-col1">
-                                                                        <div class="label label-sm label-success">
-                                                                            <i class="fa fa-bell-o"></i>
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="cont-col2">
-                                                                        <div class="desc"> เช็คยอครั้งที่ 1 </div>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                            <div class="col2">
-                                                                <div class="date"> Just now </div>
-                                                            </div>
-                                                        </a>
-                                                    </li>
-                                                    <li>
-                                                        <a href="javascript:;">
-                                                            <div class="col1">
-                                                                <div class="cont">
-                                                                    <div class="cont-col1">
-                                                                        <div class="label label-sm label-success">
-                                                                            <i class="fa fa-bell-o"></i>
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="cont-col2">
-                                                                        <div class="desc"> เช็คยอ ครั้งที่ 2</div>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                            <div class="col2">
-                                                                <div class="date"> 10 mins </div>
-                                                            </div>
-                                                        </a>
-                                                    </li>
-                                                   
-                                                </ul>
-                                            </div>
-                                        </div>  
+			                                <div class="portlet light ">
+			                                <div class="portlet-body">
+			                                    <div class="">
+			                                        <table class="table table-hover table-light">
+			                                            <thead>
+			                                                <tr>
+			                                                    <th> วัน เวลา เช็ค </th>
+			                                                    <th> ยอที่ 1 วัดได้ </th>
+			                                                    <th> ยอที่ 2 วัดได้  </th>
+			                                                    <th> ยอที่ 3 วัดได้  </th>
+			                                                    <th>ยอที่ 4 วัดได้  </th>
+			                                                    <th>มื้อที่ </th>
+			                                                </tr>
+			                                            </thead>
+			                                            <tbody>
+			                                             <?php foreach ($checkyo As $lstcheckyo): ?>
+			                                                <tr>
+			                                                    <td> <?php echo DateUtil::th_date(DateUtil::LDT_FMT_TH, strtotime($lstcheckyo->checkyoTime));?> </td>
+			                                                    <td> <?php echo $lstcheckyo->yo01 ?>/4 </td>
+			                                                    <td> <?php echo $lstcheckyo->yo02 ?>/4 </td>                           
+			                                                    <td> <?php echo $lstcheckyo->yo03 ?>/4 </td>
+			                                                    <td> <?php echo $lstcheckyo->yo04 ?>/4 </td>
+			                                                    <td>
+			                                                        <span class="label label-sm label-success"> มื้อที่ <?php echo $lstcheckyo->checkyoNo ?> </span>
+			                                                    </td>
+			                                                </tr>
+			                                             <?php endforeach;?>
+			                                            </tbody>
+			                                        </table>
+			                                      <div class="row">
+														<div class="btn-group col-md-5 col-sm-12">
+															<div class="dataTables_info" id="sample_1_info">รายการที่ <?= $pagesCheckyo->offset+1?> - <?= $pagesCheckyo->offset+30?> จากทั้งหมด <?= $countCheckyo?></div>
+														</div>
+														<div class="btn-group col-md-7 col-sm-12">
+															<?php echo LinkPager::widget(['pagination' => $pagesCheckyo, 'options' => ['class'=> 'pagination pull-right']])?>		
+														</div>
+												 </div>
+			                                    </div>
+			                                    </div>
+			                                </div>
+			                            </div>
                                        <div class="tab-pane" id="tab_1_3">
-                                            <div class="scroller" style="height: 290px;" data-always-visible="1" data-rail-visible1="1">    
-                                            </div>
+ 											<div class="portlet light ">
+			                                <div class="portlet-body">
+			                                    <div class="">
+			                                        <table class="table table-hover table-light">
+			                                            <thead>
+			                                                <tr>
+			                                                    <th> วัน เวลา วัด </th>
+			                                                    <th> บ่อ</th>
+			                                                    <th> มื้อที่  </th>
+			                                                    <th> ปริมาณอาหาร  </th>
+			                                                    <th> เบอร์อาหาร </th>
+			                                                    <th> อายุลูกกุ้ง</th>
+			                                                </tr>
+			                                            </thead>
+			                                            <tbody>
+			                                             <?php foreach ($weight As $lstweight): ?>
+			                                                <tr>
+			                                                    <td> <?php echo DateUtil::th_date(DateUtil::LDT_FMT_TH, strtotime($lstweight->weightTime));?> </td>
+			                                                    <td> <?php echo $lstweight->name ?> </td>
+			                                                    <td> <?php echo $lstweight->weightNo ?></td>                           
+			                                                    <td> <?php echo $lstweight->weightNum ?> </td>
+			                                                    <td> <?php echo $lstweight->numberOf ?> </td>
+			                                                    <td>
+			                                                        <span class="label label-sm label-success"><?php echo $lstweight->age ?> </span>
+			                                                    </td>
+			                                                </tr>
+			                                             <?php endforeach;?>
+			                                            </tbody>
+			                                        </table>
+			                                      <div class="row">
+														<div class="btn-group col-md-5 col-sm-12">
+															<div class="dataTables_info" id="sample_1_info">รายการที่ <?= $pagesWeight->offset+1?> - <?= $pagesWeight->offset+30?> จากทั้งหมด <?= $countWeight?></div>
+														</div>
+														<div class="btn-group col-md-7 col-sm-12">
+															<?php echo LinkPager::widget(['pagination' => $pagesWeight, 'options' => ['class'=> 'pagination pull-right']])?>		
+														</div>
+												 </div>
+			                                    </div>
+			                                 </div>
+			                                </div>
                                         </div>
                                         <div class="tab-pane" id="tab_1_4">
-                                        <div class="scroller" style="height: 290px;" data-always-visible="1" data-rail-visible1="1">    
+                                       <div class="portlet light ">
+			                                <div class="portlet-body">
+			                                    <div class="">
+			                                        <table class="table table-hover table-light">
+			                                            <thead>
+			                                                <tr>
+			                                                    <th> วัน เวลา วัด </th>
+			                                                    <th> บ่อ</th>
+			                                                    <th> มื้อที่  </th>
+			                                                    <th> ปริออกซิเจนละลานรํ้า  </th>
+			                                                    <th> เบอร์</th>
+			                                                    <th> อายุลูกกุ้ง</th>
+			                                                </tr>
+			                                            </thead>
+			                                            <tbody>
+			                                             <?php foreach ($oxygen As $lstoxygen): ?>
+			                                                <tr>
+			                                                    <td> <?php echo DateUtil::th_date(DateUtil::LDT_FMT_TH, strtotime($lstoxygen->oxygenTime));?> </td>
+			                                                    <td> <?php echo $lstoxygen->name ?> </td>
+			                                                    <td> <?php echo $lstoxygen->oxygenNo ?></td>                           
+			                                                    <td> <?php echo $lstoxygen->oxygenNum ?> </td>
+			                                                    <td> <?php echo $lstoxygen->numberOf ?> </td>
+			                                                    <td>
+			                                                        <span class="label label-sm label-success"><?php echo $lstoxygen->numberOf ?> </span>
+			                                                    </td>
+			                                                </tr>
+			                                             <?php endforeach;?>
+			                                            </tbody>
+			                                        </table>
+			                                      <div class="row">
+														<div class="btn-group col-md-5 col-sm-12">
+															<div class="dataTables_info" id="sample_1_info">รายการที่ <?= $pagesOxygen->offset+1?> - <?= $pagesOxygen->offset+30?> จากทั้งหมด <?= $countOxygen?></div>
+														</div>
+														<div class="btn-group col-md-7 col-sm-12">
+															<?php echo LinkPager::widget(['pagination' => $pagesOxygen, 'options' => ['class'=> 'pagination pull-right']])?>		
+														</div>
+												 </div>
+			                                    </div>
+			                                 </div>
+			                                </div>
                                         </div>
+                                        <div class="tab-pane" id="tab_1_5">
+                                       <div class="portlet light ">
+			                                <div class="portlet-body">
+			                                    <div class="">
+			                                        <table class="table table-hover table-light">
+			                                            <thead>
+			                                                <tr>
+			                                                    <th> วัน เวลา วัด </th>
+			                                                    <th> บ่อ</th>
+			                                                    <th> มื้อที่  </th>
+			                                                    <th> ปริมาณอาหาร  </th>
+			                                                    <th> เบอร์อาหาร </th>
+			                                                    <th> อายุลูกกุ้ง</th>
+			                                                </tr>
+			                                            </thead>
+			                                            <tbody>
+			                                             <?php foreach ($ph As $lstph): ?>
+			                                                <tr>
+			                                                    <td> <?php echo DateUtil::th_date(DateUtil::LDT_FMT_TH, strtotime($lstph->phTime));?> </td>
+			                                                    <td> <?php echo $lstph->age ?> </td>
+			                                                    <td> <?php echo $lstph->phNo ?></td>                           
+			                                                    <td> <?php echo $lstph->phNum ?> </td>
+			                                                    <td> <?php echo $lstph->numberOf ?> </td>
+			                                                    <td>
+			                                                        <span class="label label-sm label-success"><?php echo $lstph->age ?> </span>
+			                                                    </td>
+			                                                </tr>
+			                                             <?php endforeach;?>
+			                                            </tbody>
+			                                        </table>
+			                                      <div class="row">
+														<div class="btn-group col-md-5 col-sm-12">
+															<div class="dataTables_info" id="sample_1_info">รายการที่ <?= $pagesPh->offset+1?> - <?= $pagesPh->offset+30?> จากทั้งหมด <?= $countPh?></div>
+														</div>
+														<div class="btn-group col-md-7 col-sm-12">
+															<?php echo LinkPager::widget(['pagination' => $pagesPh, 'options' => ['class'=> 'pagination pull-right']])?>		
+														</div>
+												 </div>
+			                                    </div>
+			                                 </div>
+			                                </div>
                                         </div>
-                                        <div class="tab-pane" id="tab_1_6">
-                                        <div class="scroller" style="height: 290px;" data-always-visible="1" data-rail-visible1="1">
+                                         <div class="tab-pane" id="tab_1_6">
+											<div class="portlet light ">
+			                                <div class="portlet-body">
+			                                    <div class="">
+			                                        <table class="table table-hover table-light">
+			                                            <thead>
+			                                                <tr>
+			                                                    <th> วัน เวลา วัด </th>
+			                                                    <th> บ่อ</th>
+			                                                    <th> มื้อที่  </th>
+			                                                    <th> ปริมาณอาหาร  </th>
+			                                                    <th> เบอร์อาหาร </th>
+			                                                    <th> อายุลูกกุ้ง</th>
+			                                                </tr>
+			                                            </thead>
+			                                            <tbody>
+			                                             <?php foreach ($alkalinity As $lstalkalinity): ?>
+			                                                <tr>
+			                                                    <td> <?php echo DateUtil::th_date(DateUtil::LDT_FMT_TH, strtotime($lstalkalinity->weightTime));?> </td>
+			                                                    <td> <?php echo $lstalkalinity->name ?> </td>
+			                                                    <td> <?php echo $lstalkalinity->weightNo ?></td>                           
+			                                                    <td> <?php echo $lstalkalinity->weightNum ?> </td>
+			                                                    <td> <?php echo $lstalkalinity->numberOf ?> </td>
+			                                                    <td>
+			                                                        <span class="label label-sm label-success"><?php echo $lstalkalinity->age ?> </span>
+			                                                    </td>
+			                                                </tr>
+			                                             <?php endforeach;?>
+			                                            </tbody>
+			                                        </table>
+			                                      <div class="row">
+														<div class="btn-group col-md-5 col-sm-12">
+															<div class="dataTables_info" id="sample_1_info">รายการที่ <?= $pagesAlkalinity->offset+1?> - <?= $pagesAlkalinity->offset+30?> จากทั้งหมด <?= $countAlkalinity?></div>
+														</div>
+														<div class="btn-group col-md-7 col-sm-12">
+															<?php echo LinkPager::widget(['pagination' => $pagesAlkalinity, 'options' => ['class'=> 'pagination pull-right']])?>		
+														</div>
+												 </div>
+			                                    </div>
+			                                 </div>
+			                                </div>
                                         </div>
-                                        </div>
-                                         <div class="tab-pane" id="tab_1_7">
-                                        <div class="scroller" style="height: 290px;" data-always-visible="1" data-rail-visible1="1">
-                                        </div>
+                                        <div class="tab-pane" id="tab_1_7">
+                                        <div class="portlet light ">
+			                                <div class="portlet-body">
+			                                    <div class="">
+			                                        <table class="table table-hover table-light">
+			                                            <thead>
+			                                                <tr>
+			                                                    <th> วัน เวลา วัด </th>
+			                                                    <th> บ่อ</th>
+			                                                    <th> มื้อที่  </th>
+			                                                    <th> ปริมาณอาหาร  </th>
+			                                                    <th> เบอร์อาหาร </th>
+			                                                    <th> อายุลูกกุ้ง</th>
+			                                                </tr>
+			                                            </thead>
+			                                            <tbody>
+			                                             <?php foreach ($weight As $lstweight): ?>
+			                                                <tr>
+			                                                    <td> <?php echo DateUtil::th_date(DateUtil::LDT_FMT_TH, strtotime($lstweight->weightTime));?> </td>
+			                                                    <td> <?php echo $lstweight->name ?> </td>
+			                                                    <td> <?php echo $lstweight->weightNo ?></td>                           
+			                                                    <td> <?php echo $lstweight->weightNum ?> </td>
+			                                                    <td> <?php echo $lstweight->numberOf ?> </td>
+			                                                    <td>
+			                                                        <span class="label label-sm label-success"><?php echo $lstweight->age ?> </span>
+			                                                    </td>
+			                                                </tr>
+			                                             <?php endforeach;?>
+			                                            </tbody>
+			                                        </table>
+			                                      <div class="row">
+														<div class="btn-group col-md-5 col-sm-12">
+															<div class="dataTables_info" id="sample_1_info">รายการที่ <?= $pagesWeight->offset+1?> - <?= $pagesWeight->offset+30?> จากทั้งหมด <?= $countWeight?></div>
+														</div>
+														<div class="btn-group col-md-7 col-sm-12">
+															<?php echo LinkPager::widget(['pagination' => $pagesWeight, 'options' => ['class'=> 'pagination pull-right']])?>		
+														</div>
+												 </div>
+			                                    </div>
+			                                 </div>
+			                                </div>
                                         </div>
                                         <div class="tab-pane" id="tab_1_8">
-                                        <div class="scroller" style="height: 290px;" data-always-visible="1" data-rail-visible1="1">
-                                        </div>
+                                        <div class="portlet light ">
+			                                <div class="portlet-body">
+			                                    <div class="">
+			                                        <table class="table table-hover table-light">
+			                                            <thead>
+			                                                <tr>
+			                                                    <th> วัน เวลา วัด </th>
+			                                                    <th> บ่อ</th>
+			                                                    <th> มื้อที่  </th>
+			                                                    <th> ปริมาณอาหาร  </th>
+			                                                    <th> เบอร์อาหาร </th>
+			                                                    <th> อายุลูกกุ้ง</th>
+			                                                </tr>
+			                                            </thead>
+			                                            <tbody>
+			                                             <?php foreach ($weight As $lstweight): ?>
+			                                                <tr>
+			                                                    <td> <?php echo DateUtil::th_date(DateUtil::LDT_FMT_TH, strtotime($lstweight->weightTime));?> </td>
+			                                                    <td> <?php echo $lstweight->name ?> </td>
+			                                                    <td> <?php echo $lstweight->weightNo ?></td>                           
+			                                                    <td> <?php echo $lstweight->weightNum ?> </td>
+			                                                    <td> <?php echo $lstweight->numberOf ?> </td>
+			                                                    <td>
+			                                                        <span class="label label-sm label-success"><?php echo $lstweight->age ?> </span>
+			                                                    </td>
+			                                                </tr>
+			                                             <?php endforeach;?>
+			                                            </tbody>
+			                                        </table>
+			                                      <div class="row">
+														<div class="btn-group col-md-5 col-sm-12">
+															<div class="dataTables_info" id="sample_1_info">รายการที่ <?= $pagesWeight->offset+1?> - <?= $pagesWeight->offset+30?> จากทั้งหมด <?= $countWeight?></div>
+														</div>
+														<div class="btn-group col-md-7 col-sm-12">
+															<?php echo LinkPager::widget(['pagination' => $pagesWeight, 'options' => ['class'=> 'pagination pull-right']])?>		
+														</div>
+												 </div>
+			                                    </div>
+			                                 </div>
+			                                </div>
                                         </div>
                                         <div class="tab-pane" id="tab_1_9">
-                                        <div class="scroller" style="height: 290px;" data-always-visible="1" data-rail-visible1="1">
-                                        </div>
+                                        <div class="portlet light ">
+			                                <div class="portlet-body">
+			                                    <div class="">
+			                                        <table class="table table-hover table-light">
+			                                            <thead>
+			                                                <tr>
+			                                                    <th> วัน เวลา วัด </th>
+			                                                    <th> บ่อ</th>
+			                                                    <th> มื้อที่  </th>
+			                                                    <th> ปริมาณอาหาร  </th>
+			                                                    <th> เบอร์อาหาร </th>
+			                                                    <th> อายุลูกกุ้ง</th>
+			                                                </tr>
+			                                            </thead>
+			                                            <tbody>
+			                                             <?php foreach ($weight As $lstweight): ?>
+			                                                <tr>
+			                                                    <td> <?php echo DateUtil::th_date(DateUtil::LDT_FMT_TH, strtotime($lstweight->weightTime));?> </td>
+			                                                    <td> <?php echo $lstweight->name ?> </td>
+			                                                    <td> <?php echo $lstweight->weightNo ?></td>                           
+			                                                    <td> <?php echo $lstweight->weightNum ?> </td>
+			                                                    <td> <?php echo $lstweight->numberOf ?> </td>
+			                                                    <td>
+			                                                        <span class="label label-sm label-success"><?php echo $lstweight->age ?> </span>
+			                                                    </td>
+			                                                </tr>
+			                                             <?php endforeach;?>
+			                                            </tbody>
+			                                        </table>
+			                                      <div class="row">
+														<div class="btn-group col-md-5 col-sm-12">
+															<div class="dataTables_info" id="sample_1_info">รายการที่ <?= $pagesWeight->offset+1?> - <?= $pagesWeight->offset+30?> จากทั้งหมด <?= $countWeight?></div>
+														</div>
+														<div class="btn-group col-md-7 col-sm-12">
+															<?php echo LinkPager::widget(['pagination' => $pagesWeight, 'options' => ['class'=> 'pagination pull-right']])?>		
+														</div>
+												 </div>
+			                                    </div>
+			                                 </div>
+			                                </div>
                                         </div>
                                         <div class="tab-pane" id="tab_2_1">
-                                        <div class="scroller" style="height: 290px;" data-always-visible="1" data-rail-visible1="1">
-                                        </div>
+                                       <div class="portlet light ">
+			                                <div class="portlet-body">
+			                                    <div class="">
+			                                        <table class="table table-hover table-light">
+			                                            <thead>
+			                                                <tr>
+			                                                    <th> วัน เวลา วัด </th>
+			                                                    <th> บ่อ</th>
+			                                                    <th> มื้อที่  </th>
+			                                                    <th> ปริมาณอาหาร  </th>
+			                                                    <th> เบอร์อาหาร </th>
+			                                                    <th> อายุลูกกุ้ง</th>
+			                                                </tr>
+			                                            </thead>
+			                                            <tbody>
+			                                             <?php foreach ($weight As $lstweight): ?>
+			                                                <tr>
+			                                                    <td> <?php echo DateUtil::th_date(DateUtil::LDT_FMT_TH, strtotime($lstweight->weightTime));?> </td>
+			                                                    <td> <?php echo $lstweight->name ?> </td>
+			                                                    <td> <?php echo $lstweight->weightNo ?></td>                           
+			                                                    <td> <?php echo $lstweight->weightNum ?> </td>
+			                                                    <td> <?php echo $lstweight->numberOf ?> </td>
+			                                                    <td>
+			                                                        <span class="label label-sm label-success"><?php echo $lstweight->age ?> </span>
+			                                                    </td>
+			                                                </tr>
+			                                             <?php endforeach;?>
+			                                            </tbody>
+			                                        </table>
+			                                      <div class="row">
+														<div class="btn-group col-md-5 col-sm-12">
+															<div class="dataTables_info" id="sample_1_info">รายการที่ <?= $pagesWeight->offset+1?> - <?= $pagesWeight->offset+30?> จากทั้งหมด <?= $countWeight?></div>
+														</div>
+														<div class="btn-group col-md-7 col-sm-12">
+															<?php echo LinkPager::widget(['pagination' => $pagesWeight, 'options' => ['class'=> 'pagination pull-right']])?>		
+														</div>
+												 </div>
+			                                    </div>
+			                                 </div>
+			                                </div>
                                         </div>
                                         <div class="tab-pane" id="tab_2_2">
-                                        <div class="scroller" style="height: 290px;" data-always-visible="1" data-rail-visible1="1">
+                                       <div class="portlet light ">
+			                                <div class="portlet-body">
+			                                    <div class="">
+			                                        <table class="table table-hover table-light">
+			                                            <thead>
+			                                                <tr>
+			                                                    <th> วัน เวลา วัด </th>
+			                                                    <th> บ่อ</th>
+			                                                    <th> มื้อที่  </th>
+			                                                    <th> ปริมาณอาหาร  </th>
+			                                                    <th> เบอร์อาหาร </th>
+			                                                    <th> อายุลูกกุ้ง</th>
+			                                                </tr>
+			                                            </thead>
+			                                            <tbody>
+			                                             <?php foreach ($weight As $lstweight): ?>
+			                                                <tr>
+			                                                    <td> <?php echo DateUtil::th_date(DateUtil::LDT_FMT_TH, strtotime($lstweight->weightTime));?> </td>
+			                                                    <td> <?php echo $lstweight->name ?> </td>
+			                                                    <td> <?php echo $lstweight->weightNo ?></td>                           
+			                                                    <td> <?php echo $lstweight->weightNum ?> </td>
+			                                                    <td> <?php echo $lstweight->numberOf ?> </td>
+			                                                    <td>
+			                                                        <span class="label label-sm label-success"><?php echo $lstweight->age ?> </span>
+			                                                    </td>
+			                                                </tr>
+			                                             <?php endforeach;?>
+			                                            </tbody>
+			                                        </table>
+			                                      <div class="row">
+														<div class="btn-group col-md-5 col-sm-12">
+															<div class="dataTables_info" id="sample_1_info">รายการที่ <?= $pagesWeight->offset+1?> - <?= $pagesWeight->offset+30?> จากทั้งหมด <?= $countWeight?></div>
+														</div>
+														<div class="btn-group col-md-7 col-sm-12">
+															<?php echo LinkPager::widget(['pagination' => $pagesWeight, 'options' => ['class'=> 'pagination pull-right']])?>		
+														</div>
+												 </div>
+			                                    </div>
+			                                 </div>
+			                                </div>
                                         </div>
-                                        </div>
-                                        <div class="tab-pane" id="tab_2_3">
-                                        <div class="scroller" style="height: 290px;" data-always-visible="1" data-rail-visible1="1">
-                                        </div>
-                                        </div>
-                                        <div class="tab-pane" id="tab_2_4">
-                                        <div class="scroller" style="height: 290px;" data-always-visible="1" data-rail-visible1="1">
-                                        </div>
+                                     <div class="tab-pane" id="tab_2_3">
+                                     <div class="portlet light ">
+			                                <div class="portlet-body">
+			                                    <div class="">
+			                                        <table class="table table-hover table-light">
+			                                            <thead>
+			                                                <tr>
+			                                                    <th> วัน เวลา วัด </th>
+			                                                    <th> บ่อ</th>
+			                                                    <th> มื้อที่  </th>
+			                                                    <th> ปริมาณอาหาร  </th>
+			                                                    <th> เบอร์อาหาร </th>
+			                                                    <th> อายุลูกกุ้ง</th>
+			                                                </tr>
+			                                            </thead>
+			                                            <tbody>
+			                                             <?php foreach ($weight As $lstweight): ?>
+			                                                <tr>
+			                                                    <td> <?php echo DateUtil::th_date(DateUtil::LDT_FMT_TH, strtotime($lstweight->weightTime));?> </td>
+			                                                    <td> <?php echo $lstweight->name ?> </td>
+			                                                    <td> <?php echo $lstweight->weightNo ?></td>                           
+			                                                    <td> <?php echo $lstweight->weightNum ?> </td>
+			                                                    <td> <?php echo $lstweight->numberOf ?> </td>
+			                                                    <td>
+			                                                        <span class="label label-sm label-success"><?php echo $lstweight->age ?> </span>
+			                                                    </td>
+			                                                </tr>
+			                                             <?php endforeach;?>
+			                                            </tbody>
+			                                        </table>
+			                                      <div class="row">
+														<div class="btn-group col-md-5 col-sm-12">
+															<div class="dataTables_info" id="sample_1_info">รายการที่ <?= $pagesWeight->offset+1?> - <?= $pagesWeight->offset+30?> จากทั้งหมด <?= $countWeight?></div>
+														</div>
+														<div class="btn-group col-md-7 col-sm-12">
+															<?php echo LinkPager::widget(['pagination' => $pagesWeight, 'options' => ['class'=> 'pagination pull-right']])?>		
+														</div>
+												 </div>
+			                                    </div>
+			                                 </div>
+			                                </div>
                                         </div>                                       
+                                        
+                                    <div class="tab-pane" id="tab_2_4">
+                                     <div class="portlet light ">
+			                                <div class="portlet-body">
+			                                    <div class="">
+			                                        <table class="table table-hover table-light">
+			                                            <thead>
+			                                                <tr>
+			                                                    <th> วัน เวลา วัด </th>
+			                                                    <th> บ่อ</th>
+			                                                    <th> มื้อที่  </th>
+			                                                    <th> ปริมาณอาหาร  </th>
+			                                                    <th> เบอร์อาหาร </th>
+			                                                    <th> อายุลูกกุ้ง</th>
+			                                                </tr>
+			                                            </thead>
+			                                            <tbody>
+			                                             <?php foreach ($weight As $lstweight): ?>
+			                                                <tr>
+			                                                    <td> <?php echo DateUtil::th_date(DateUtil::LDT_FMT_TH, strtotime($lstweight->weightTime));?> </td>
+			                                                    <td> <?php echo $lstweight->name ?> </td>
+			                                                    <td> <?php echo $lstweight->weightNo ?></td>                           
+			                                                    <td> <?php echo $lstweight->weightNum ?> </td>
+			                                                    <td> <?php echo $lstweight->numberOf ?> </td>
+			                                                    <td>
+			                                                        <span class="label label-sm label-success"><?php echo $lstweight->age ?> </span>
+			                                                    </td>
+			                                                </tr>
+			                                             <?php endforeach;?>
+			                                            </tbody>
+			                                        </table>
+			                                      <div class="row">
+														<div class="btn-group col-md-5 col-sm-12">
+															<div class="dataTables_info" id="sample_1_info">รายการที่ <?= $pagesWeight->offset+1?> - <?= $pagesWeight->offset+30?> จากทั้งหมด <?= $countWeight?></div>
+														</div>
+														<div class="btn-group col-md-7 col-sm-12">
+															<?php echo LinkPager::widget(['pagination' => $pagesWeight, 'options' => ['class'=> 'pagination pull-right']])?>		
+														</div>
+												 </div>
+			                                    </div>
+			                                 </div>
+			                                </div>
+                                        </div> 
                                         
                                     </div>
                                     <!--END TABS CONTENT-->

@@ -104,7 +104,7 @@ $this->registerJsFile($baseUrl  . '/assets/pages/scripts/components-select2.min.
                                                 <label class="control-label col-md-3" for="pondId">เลือกบ่อและรุ่น</label>
                                                 <div class="col-md-4">
                                                     <div class="input-group input-large" id="defaultrange">
-                                                        <?php echo Html::dropDownList('pondId', ' ', $arrTypelist , ['id'=>'pondId','class' => 'select2 form-control'])?>	
+                                                        <?php echo Html::dropDownList('pondId',  $model->pondId, $arrTypelist , ['id'=>'pondId','class' => 'select2 form-control'])?>	
                                                     </div>
                                                 </div>
                                             </div>

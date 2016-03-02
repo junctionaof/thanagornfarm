@@ -98,83 +98,180 @@ class PondController extends BaseController {
  			$arrPond[] = $objPond;
  			$arrPondid[] = $objPond->id;
     		}
+    		
     	// ข้อมูลการให้อาหาร
     	$queryfood = food::find();
     	$queryfood->andWhere(['in', 'pondId', $arrPondid]);
     	$queryfood->orderBy(['id'=>SORT_ASC]);
+    	$countQueryfood = clone $queryfood;
+    	$countfood = $countQueryfood->count();
+    	$pagesfood = new Pagination([
+    			'defaultPageSize' => 8,
+    			'totalCount' => $countfood,
+    	]);
+    	$queryfood->offset($pagesfood->offset)->limit($pagesfood->limit);
     	$food = $queryfood->all();
     	
     	// ข้อมูลการเช็คยอ
     	$queryCheckyo = Checkyo::find();
     	$queryCheckyo->andWhere(['in', 'pondId', $arrPondid]);
     	$queryCheckyo->orderBy(['id'=>SORT_ASC]);
+    	
+    	$countQueryCheckyo = clone $queryCheckyo;
+    	$countCheckyo = $countQueryCheckyo->count();
+    	$pagesCheckyo = new Pagination([
+    			'defaultPageSize' => 20,
+    			'totalCount' => $countCheckyo,
+    	]);
+    	$queryCheckyo->offset($pagesCheckyo->offset)->limit($pagesCheckyo->limit);
     	$checkyo = $queryCheckyo->all();
     	
     	// ข้อมูลการวัดนํ้าหนักเฉลี่ย
     	$queryWeight = Weight::find();
     	$queryWeight->andWhere(['in', 'pondId', $arrPondid]);
     	$queryWeight->orderBy(['id'=>SORT_ASC]);
+    	$countQueryWeight = clone $queryWeight;
+    	$countWeight = $countQueryWeight->count();
+    	$pagesWeight = new Pagination([
+    			'defaultPageSize' => 20,
+    			'totalCount' => $countWeight,
+    	]);
+    	$queryWeight->offset($pagesWeight->offset)->limit($pagesWeight->limit);
     	$weight = $queryWeight->all();
+    	
     	
     	// ข้อมูลออกซิเจนละลายนํ้า
     	$queryOxygen = Oxygen::find();
     	$queryOxygen->andWhere(['in', 'pondId', $arrPondid]);
     	$queryOxygen->orderBy(['id'=>SORT_ASC]);
+    	$countQueryOxygen = clone $queryOxygen;
+    	$countOxygen = $countQueryOxygen->count();
+    	$pagesOxygen = new Pagination([
+    			'defaultPageSize' => 20,
+    			'totalCount' => $countOxygen,
+    	]);
+    	$queryOxygen->offset($pagesOxygen->offset)->limit($pagesOxygen->limit);
     	$oxygen = $queryOxygen->all();
+    	
     	
     	// ข้อมูล ค่้า PH
     	$queryPh = Ph::find();
     	$queryPh->andWhere(['in', 'pondId', $arrPondid]);
     	$queryPh->orderBy(['id'=>SORT_ASC]);
+    	$countQueryPh = clone $queryPh;
+    	$countPh = $countQueryPh->count();
+    	$pagesPh = new Pagination([
+    			'defaultPageSize' => 20,
+    			'totalCount' => $countPh,
+    	]);
+    	$queryPh->offset($pagesPh->offset)->limit($pagesPh->limit);
     	$ph = $queryPh->all();
+    	
     	
     	// ข้อมูลค่า ค่าอัลคาไลน์นิติ
     	$queryAlkalinity = Alkalinity::find();
     	$queryAlkalinity->andWhere(['in', 'pondId', $arrPondid]);
     	$queryAlkalinity->orderBy(['id'=>SORT_ASC]);
+    	$countQueryAlkalinity = clone $queryAlkalinity;
+    	$countAlkalinity = $countQueryAlkalinity->count();
+    	$pagesAlkalinity = new Pagination([
+    			'defaultPageSize' => 20,
+    			'totalCount' => $countAlkalinity,
+    	]);
+    	$queryAlkalinity->offset($pagesAlkalinity->offset)->limit($pagesAlkalinity->limit);
     	$alkalinity = $queryAlkalinity->all();
     	
     	// ข้อมูล ค่าอุณหภูมิของน้ำ
     	$queryWatertemp = Watertemp::find();
     	$queryWatertemp->andWhere(['in', 'pondId', $arrPondid]);
     	$queryWatertemp->orderBy(['id'=>SORT_ASC]);
+    	$countQueryWatertemp = clone $queryWatertemp;
+    	$countWatertemp = $countQueryWatertemp->count();
+    	$pagesWatertemp = new Pagination([
+    			'defaultPageSize' => 20,
+    			'totalCount' => $countWatertemp,
+    	]);
+    	$queryWatertemp->offset($pagesWatertemp->offset)->limit($pagesWatertemp->limit);
     	$watertemp = $queryWatertemp->all();
-
+    	
     	// ข้อมูล ค่าอุณหภูมิแวดล้อม
     	$queryTemp = Temp::find();
     	$queryTemp->andWhere(['in', 'pondId', $arrPondid]);
     	$queryTemp->orderBy(['id'=>SORT_ASC]);
+    	$countQueryTemp = clone $queryTemp;
+    	$countTemp = $countQueryTemp->count();
+    	$pagesTemp = new Pagination([
+    			'defaultPageSize' => 20,
+    			'totalCount' => $countTemp,
+    	]);
+    	$queryTemp->offset($pagesTemp->offset)->limit($pagesTemp->limit);
     	$temp = $queryTemp->all();
     	
     	// ข้อมูล ค่าแอมโมเนีย
     	$queryAmmonia = Ammonia::find();
     	$queryAmmonia->andWhere(['in', 'pondId', $arrPondid]);
     	$queryAmmonia->orderBy(['id'=>SORT_ASC]);
+    	$countQueryAmmonia = clone $queryAmmonia;
+    	$countAmmonia = $countQueryAmmonia->count();
+    	$pagesAmmonia = new Pagination([
+    			'defaultPageSize' => 20,
+    			'totalCount' => $countQueryAmmonia,
+    	]);
+    	//$queryAmmonia->offset($pagesAmmonia->offset)->limit($pagesAmmonia->limit);
     	$ammonia = $queryAmmonia->all();
     	
     	// ข้อมูล ค่าไนไตรท์
     	$queryNitrite = Nitrite::find();
     	$queryNitrite->andWhere(['in', 'pondId', $arrPondid]);
     	$queryNitrite->orderBy(['id'=>SORT_ASC]);
+    	$countQueryNitrite = clone $queryNitrite;
+    	$countNitrite = $countQueryNitrite->count();
+    	$pagesNitrite = new Pagination([
+    			'defaultPageSize' => 20,
+    			'totalCount' => $countNitrite,
+    	]);
+    	$queryNitrite->offset($pagesNitrite->offset)->limit($pagesNitrite->limit);
     	$nitrite = $queryNitrite->all();
     	
     	// ข้อมูล ค่าความเค็มของนํ้า
     	$querySalinity = Salinity::find();
     	$querySalinity->andWhere(['in', 'pondId', $arrPondid]);
     	$querySalinity->orderBy(['id'=>SORT_ASC]);
+    	$countQuerySalinity = clone $querySalinity;
+    	$countSalinity = $countQuerySalinity->count();
+    	$pagesSalinity = new Pagination([
+    			'defaultPageSize' => 20,
+    			'totalCount' => $countSalinity,
+    	]);
+    	$querySalinity->offset($pagesSalinity->offset)->limit($pagesSalinity->limit);
     	$salinity = $querySalinity->all();
     	
     	// ข้อมูล การเปลี่ยนถ่ายนํ้า
     	$queryWaterchange = Waterchange::find();
     	$queryWaterchange->andWhere(['in', 'pondId', $arrPondid]);
     	$queryWaterchange->orderBy(['id'=>SORT_ASC]);
+    	$countQueryWaterchange = clone $queryWaterchange;
+    	$countWaterchange = $countQueryWaterchange->count();
+    	$pagesWaterchange = new Pagination([
+    			'defaultPageSize' => 20,
+    			'totalCount' => $countWaterchange,
+    	]);
+    	$queryWaterchange->offset($pagesWaterchange->offset)->limit($pagesWaterchange->limit);
     	$waterchange = $queryWaterchange->all();
     	
     	//ข้อมูล อื่นๆ
     	$queryOther = Other::find();
     	$queryOther->andWhere(['in', 'pondId', $arrPondid]);
     	$queryOther->orderBy(['id'=>SORT_ASC]);
+    	$countQueryOther = clone $queryOther;
+    	$countOther = $countQueryOther->count();
+    	$pagesOther = new Pagination([
+    			'defaultPageSize' => 20,
+    			'totalCount' => $countOther,
+    	]);
+    	$queryOther->offset($pagesOther->offset)->limit($pagesOther->limit);
     	$other = $queryOther->all();
+    	
     	
     	echo $this->render('shrimp', [
     			'alkalinity' => $alkalinity,
@@ -196,6 +293,32 @@ class PondController extends BaseController {
     			'outputOnprocess' => $outputOnprocess,
     			'survive' => $survive,
     			'weightavg' => $weightavg,
+    			'countOther' => $countOther,
+    			'pagesOther' => $pagesOther,
+    			'countWaterchange' => $countWaterchange,
+    			'pagesWaterchange' => $pagesWaterchange,
+    			'countSalinity' => $countSalinity,
+    			'pagesSalinity' => $pagesSalinity,
+    			'countNitrite' => $countNitrite,
+    			'pagesNitrite' => $pagesNitrite,
+    			'countAmmonia' => $countAmmonia,
+    			'pagesAmmonia' => $pagesAmmonia,
+    			'countTemp' => $countTemp,
+    			'pagesTemp' => $pagesTemp,
+    			'countWatertemp' => $countWatertemp,
+    			'pagesWatertemp' => $pagesWatertemp,
+    			'pagesfood' => $pagesfood,
+    			'countfood' => $countfood,
+    			'pagesCheckyo' => $pagesCheckyo,
+    			'countCheckyo' => $countCheckyo,
+    			'pagesWeight' => $pagesWeight,
+    			'countWeight' => $countWeight,
+    			'pagesOxygen' => $pagesOxygen,
+    			'countOxygen' => $countOxygen,
+    			'pagesPh' => $pagesPh,
+    			'countPh' => $countPh,
+    			'pagesAlkalinity' => $pagesAlkalinity,
+    			'countAlkalinity' => $countAlkalinity,	
     	]);
     }
     
@@ -434,7 +557,7 @@ class PondController extends BaseController {
     	$identity = \Yii::$app->user->getIdentity();
     	$request = \Yii::$app->request;
     	$id = $request->get('id', $request->post('id', null));
-    	$query = Typelist::find();
+    	$query = Food::find();
     	
     	if ($id){
     		$query->where("id=".$id);
@@ -1464,6 +1587,9 @@ class PondController extends BaseController {
     						}
     							
     					}
+    				
+    					
+    					
     				}
     
     
