@@ -30,6 +30,8 @@ $contentTime = "";
 
 $str = <<<EOT
 
+
+		
 $(document).ready(function() {
 	$('#pondId').on('change', function() {
   		// Do someting
@@ -44,10 +46,9 @@ $(document).ready(function() {
 		    	console.log('error loading');
 		  	});
 	});
-		$('#foodTime').datepicker();
+
 });
 		
-
 
 EOT;
 $this->registerJs($str);
@@ -66,6 +67,9 @@ $this->registerJsFile($baseUrl  . '/assets/global/plugins/select2/js/select2.ful
 $this->registerJsFile($baseUrl  . '/assets/global/plugins/jquery-validation/js/jquery.validate.min.js', ['position' => \yii\web\View::POS_END]);
 $this->registerJsFile($baseUrl  . '/assets/global/plugins/jquery-validation/js/additional-methods.min.js', ['position' => \yii\web\View::POS_END]);
 $this->registerJsFile($baseUrl  . '/assets/global/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js', ['position' => \yii\web\View::POS_END]);
+$this->registerJsFile($baseUrl  . '/assets/global/plugins/bootstrap-timepicker/js/bootstrap-timepicker.min.js', ['position' => \yii\web\View::POS_END]);
+$this->registerJsFile($baseUrl  . '/assets/global/plugins/bootstrap-datetimepicker/js/bootstrap-datetimepicker.min.js', ['position' => \yii\web\View::POS_END]);
+
 $this->registerJsFile($baseUrl  . '/assets/global/plugins/bootstrap-wysihtml5/wysihtml5-0.3.0.js', ['position' => \yii\web\View::POS_END]);
 $this->registerJsFile($baseUrl  . '/assets/global/plugins/bootstrap-wysihtml5/bootstrap-wysihtml5.js', ['position' => \yii\web\View::POS_END]);
 $this->registerJsFile($baseUrl  . '/assets/global/plugins/ckeditor/ckeditor.js', ['position' => \yii\web\View::POS_END]);
@@ -74,6 +78,7 @@ $this->registerJsFile($baseUrl  . '/assets/global/plugins/bootstrap-markdown/js/
 
 $this->registerJsFile($baseUrl  . '/assets/pages/scripts/form-validation.min.js', ['position' => \yii\web\View::POS_END]);
 
+$this->registerJsFile($baseUrl  . '/assets/pages/scripts/components-date-time-pickers.min.js', ['position' => \yii\web\View::POS_END]);
 $this->registerJsFile($baseUrl  . '/assets/global/plugins/select2/js/select2.full.min.js', ['position' => \yii\web\View::POS_END]);
 $this->registerJsFile($baseUrl  . '/assets/pages/scripts/components-select2.min.js', ['position' => \yii\web\View::POS_END]);
 
@@ -124,8 +129,8 @@ $this->registerJsFile($baseUrl  . '/assets/pages/scripts/components-select2.min.
                                             
                                              <div class="form-group">
                                                 <label class="control-label col-md-3">วันที่ให้อาหาร</label>
-                                                      <div class="input-group input-large" data-date-format="dd-mm-yyyy" data-date-start-date="+0d">
-                                                       <?= Html::input('text', 'foodTime' ,$correntDate ,['id'=>'foodTime','class' => 'form-control']);?>
+                                                      <div class="input-group input-large">
+                                                       <?= Html::input('text', 'foodTime' ,$correntDate ,['id'=>'foodTime','class' => 'form-control form-control-inline input-medium date-picker']);?>
                                                   	</div>
                                             </div>
                                                <div class="form-group">

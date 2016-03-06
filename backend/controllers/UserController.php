@@ -114,7 +114,7 @@ class UserController extends BaseController{
 						$modelauth->userid =  $user['username'];
 						$modelauth->data = 'N;';
 						if($modelauth->save()){
-							AuthController::reassign();
+							//AuthController::reassign();
 						}else {
 							Ui::setMessage('ไม่สามารถ กำหนนดสิทธิ์ ได้','warning');
 						}

@@ -159,7 +159,11 @@ ActiveForm::begin(['id' => 'dataTable-form']);
                         	$label = array("label-primary","label-success","label-danger","label-warning","label-info");
                         	foreach ($keeper AS $user){
                         		$labelColor = array_rand($label,1);
+                        		if(isset($arrAllUser[$user])){
                         		echo "<span class='label label-sm ".$label[$i]."'>".$arrAllUser[$user]."</span> ";
+                        		}else{
+                        		echo " ไม่ระบุ ";
+                        		}
                         		$i++;
                         	}
                         }else {
