@@ -586,21 +586,14 @@ class PondController extends BaseController {
     			$model->addError('pondId', 'ไม่ได้เลือก รุ่น และบ่อ');
     		}
     
-    		if (!$model->hasErrors()) {
-    			//var_dump($model); exit();
-    			$model->save();
+    		if($model->save()) {
+    			//เซ็ตให้ status รุ่นเก่า เป็น 0 = ไม่ active  ให้หมด
+    			Ui::setMessage('บันทึกข้อมูลสำเร็จ');
     			return $this->redirect('food');
+    		}else{
+    			Ui::setMessage(json_encode($model->getErrors(), JSON_UNESCAPED_UNICODE), 'warning');
     		}
-    		else {
-    			$modelError = '';
-    			$errors = $model->getErrors(null);
-    			if (is_array($errors)) {
-    				foreach($errors as $field => $fieldError) {
-    					$modelError .= "\n$field: " . join(', ', $fieldError);
-    				}
-    			}
-    			UiMessage::setMessage('การบันทึกข้อมูลผิดพลาด:' . $modelError, 'warning');
-    		}
+
     	}
     
     	$query = Pond::find()->where("status = 1")->orderBy(['type'=>SORT_ASC])->groupBy(['type']);
@@ -737,20 +730,14 @@ class PondController extends BaseController {
     			$model->addError('pondId', 'ไม่ได้เลือก รุ่น และบ่อ');
     		}
     
-    		if (!$model->hasErrors()) {
-    			$model->save();
+    		if($model->save()) {
+    			//เซ็ตให้ status รุ่นเก่า เป็น 0 = ไม่ active  ให้หมด
+    			Ui::setMessage('บันทึกข้อมูลสำเร็จ');
     			return $this->redirect('alkalinity');
+    		}else{
+    			Ui::setMessage(json_encode($model->getErrors(), JSON_UNESCAPED_UNICODE), 'warning');
     		}
-    		else {
-    			$modelError = '';
-    			$errors = $model->getErrors(null);
-    			if (is_array($errors)) {
-    				foreach($errors as $field => $fieldError) {
-    					$modelError .= "\n$field: " . join(', ', $fieldError);
-    				}
-    			}
-    			UiMessage::setMessage('การบันทึกข้อมูลผิดพลาด:' . $modelError, 'warning');
-    		}
+    		
     
     	}
     
@@ -889,20 +876,15 @@ class PondController extends BaseController {
     			$model->addError('pondId', 'ไม่ได้เลือก รุ่น และบ่อ');
     		}
     
-    		if (!$model->hasErrors()) {
-    			$model->save();
+    		
+    		if($model->save()) {
+    			//เซ็ตให้ status รุ่นเก่า เป็น 0 = ไม่ active  ให้หมด
+    			Ui::setMessage('บันทึกข้อมูลสำเร็จ');
     			return $this->redirect('checkyo');
+    		}else{
+    			Ui::setMessage(json_encode($model->getErrors(), JSON_UNESCAPED_UNICODE), 'warning');
     		}
-    		else {
-    			$modelError = '';
-    			$errors = $model->getErrors(null);
-    			if (is_array($errors)) {
-    				foreach($errors as $field => $fieldError) {
-    					$modelError .= "\n$field: " . join(', ', $fieldError);
-    				}
-    			}
-    			UiMessage::setMessage('การบันทึกข้อมูลผิดพลาด:' . $modelError, 'warning');
-    		}
+    		
     
     	}
     
@@ -1036,20 +1018,13 @@ class PondController extends BaseController {
     		if (trim($model->pondId) == ''){
     			$model->addError('pondId', 'ไม่ได้เลือก รุ่น และบ่อ');
     		}
-    
-    		if (!$model->hasErrors()) {
-    			$model->save();
+
+    		if($model->save()) {
+    			//เซ็ตให้ status รุ่นเก่า เป็น 0 = ไม่ active  ให้หมด
+    			Ui::setMessage('บันทึกข้อมูลสำเร็จ');
     			return $this->redirect('oxygen');
-    		}
-    		else {
-    			$modelError = '';
-    			$errors = $model->getErrors(null);
-    			if (is_array($errors)) {
-    				foreach($errors as $field => $fieldError) {
-    					$modelError .= "\n$field: " . join(', ', $fieldError);
-    				}
-    			}
-    			UiMessage::setMessage('การบันทึกข้อมูลผิดพลาด:' . $modelError, 'warning');
+    		}else{
+    			Ui::setMessage(json_encode($model->getErrors(), JSON_UNESCAPED_UNICODE), 'warning');
     		}
     
     	}
@@ -1189,30 +1164,19 @@ class PondController extends BaseController {
     		if (trim($model->pondId) == ''){
     			$model->addError('pondId', 'ไม่ได้เลือก รุ่น และบ่อ');
     		}
-    
-    		if (!$model->hasErrors()) {
-    			$model->save();
+    		if($model->save()) {
+    			//เซ็ตให้ status รุ่นเก่า เป็น 0 = ไม่ active  ให้หมด
+    			Ui::setMessage('บันทึกข้อมูลสำเร็จ');
     			return $this->redirect('ph');
+    		}else{
+    			Ui::setMessage(json_encode($model->getErrors(), JSON_UNESCAPED_UNICODE), 'warning');
     		}
-    		else {
-    			$modelError = '';
-    			$errors = $model->getErrors(null);
-    			if (is_array($errors)) {
-    				foreach($errors as $field => $fieldError) {
-    					$modelError .= "\n$field: " . join(', ', $fieldError);
-    				}
-    			}
-    			UiMessage::setMessage('การบันทึกข้อมูลผิดพลาด:' . $modelError, 'warning');
-    		}
-    
     	}
     
     	$query = Pond::find()->where("status = 1")->orderBy(['type'=>SORT_ASC])->groupBy(['type']);
     	$arrTypelist = [0=>'กรุณาเลือกบ่อ  และรุ่นที่ต้องการ'];
     	$arrTypelist += \yii\helpers\ArrayHelper::map($query->all(), 'id' ,'title','type');
-    	 
-    	
-    
+
     	echo $this->render('editph', [
     			'model' => $model,
     			'arrTypelist'=> $arrTypelist,
@@ -1337,19 +1301,12 @@ class PondController extends BaseController {
     			$model->addError('pondId', 'ไม่ได้เลือก รุ่น และบ่อ');
     		}
     
-    		if (!$model->hasErrors()) {
-    			$model->save();
+    		if($model->save()) {
+    			//เซ็ตให้ status รุ่นเก่า เป็น 0 = ไม่ active  ให้หมด
+    			Ui::setMessage('บันทึกข้อมูลสำเร็จ');
     			return $this->redirect('temp');
-    		}
-    		else {
-    			$modelError = '';
-    			$errors = $model->getErrors(null);
-    			if (is_array($errors)) {
-    				foreach($errors as $field => $fieldError) {
-    					$modelError .= "\n$field: " . join(', ', $fieldError);
-    				}
-    			}
-    			UiMessage::setMessage('การบันทึกข้อมูลผิดพลาด:' . $modelError, 'warning');
+    		}else{
+    			Ui::setMessage(json_encode($model->getErrors(), JSON_UNESCAPED_UNICODE), 'warning');
     		}
     
     	}
@@ -1487,21 +1444,13 @@ class PondController extends BaseController {
     			$model->addError('pondId', 'ไม่ได้เลือก รุ่น และบ่อ');
     		}
     
-    		if (!$model->hasErrors()) {
-    			$model->save();
+    		if($model->save()) {
+    			//เซ็ตให้ status รุ่นเก่า เป็น 0 = ไม่ active  ให้หมด
+    			Ui::setMessage('บันทึกข้อมูลสำเร็จ');
     			return $this->redirect('ammonia');
+    		}else{
+    			Ui::setMessage(json_encode($model->getErrors(), JSON_UNESCAPED_UNICODE), 'warning');
     		}
-    		else {
-    			$modelError = '';
-    			$errors = $model->getErrors(null);
-    			if (is_array($errors)) {
-    				foreach($errors as $field => $fieldError) {
-    					$modelError .= "\n$field: " . join(', ', $fieldError);
-    				}
-    			}
-    			UiMessage::setMessage('การบันทึกข้อมูลผิดพลาด:' . $modelError, 'warning');
-    		}
-    
     	}
     
     	$query = Pond::find()->where("status = 1")->orderBy(['type'=>SORT_ASC])->groupBy(['type']);
@@ -1638,29 +1587,21 @@ class PondController extends BaseController {
     			$model->addError('pondId', 'ไม่ได้เลือก รุ่น และบ่อ');
     		}
     
-    		if (!$model->hasErrors()) {
-    			$model->save();
+    		if($model->save()) {
+    			//เซ็ตให้ status รุ่นเก่า เป็น 0 = ไม่ active  ให้หมด
+    			Ui::setMessage('บันทึกข้อมูลสำเร็จ');
     			return $this->redirect('nitrite');
+    		}else{
+    			Ui::setMessage(json_encode($model->getErrors(), JSON_UNESCAPED_UNICODE), 'warning');
     		}
-    		else {
-    			$modelError = '';
-    			$errors = $model->getErrors(null);
-    			if (is_array($errors)) {
-    				foreach($errors as $field => $fieldError) {
-    					$modelError .= "\n$field: " . join(', ', $fieldError);
-    				}
-    			}
-    			UiMessage::setMessage('การบันทึกข้อมูลผิดพลาด:' . $modelError, 'warning');
-    		}
+    	
     
     	}
     
     	$query = Pond::find()->where("status = 1")->orderBy(['type'=>SORT_ASC])->groupBy(['type']);
     	$arrTypelist = [0=>'กรุณาเลือกบ่อ  และรุ่นที่ต้องการ'];
     	$arrTypelist += \yii\helpers\ArrayHelper::map($query->all(), 'id' ,'title','type');
-    
-    
-    
+
     	echo $this->render('editnitrite', [
     			'model' => $model,
     			'arrTypelist'=> $arrTypelist,
@@ -1785,21 +1726,13 @@ class PondController extends BaseController {
     			$model->addError('pondId', 'ไม่ได้เลือก รุ่น และบ่อ');
     		}
     
-    		if (!$model->hasErrors()) {
-    			$model->save();
+    		if($model->save()) {
+    			//เซ็ตให้ status รุ่นเก่า เป็น 0 = ไม่ active  ให้หมด
+    			Ui::setMessage('บันทึกข้อมูลสำเร็จ');
     			return $this->redirect('other');
+    		}else{
+    			Ui::setMessage(json_encode($model->getErrors(), JSON_UNESCAPED_UNICODE), 'warning');
     		}
-    		else {
-    			$modelError = '';
-    			$errors = $model->getErrors(null);
-    			if (is_array($errors)) {
-    				foreach($errors as $field => $fieldError) {
-    					$modelError .= "\n$field: " . join(', ', $fieldError);
-    				}
-    			}
-    			UiMessage::setMessage('การบันทึกข้อมูลผิดพลาด:' . $modelError, 'warning');
-    		}
-    
     	}
     
     	$query = Pond::find()->where("status = 1")->orderBy(['type'=>SORT_ASC])->groupBy(['type']);
@@ -2083,21 +2016,13 @@ class PondController extends BaseController {
     			$model->addError('pondId', 'ไม่ได้เลือก รุ่น และบ่อ');
     		}
     
-    		if (!$model->hasErrors()) {
-    			$model->save();
+    		if($model->save()) {
+    			//เซ็ตให้ status รุ่นเก่า เป็น 0 = ไม่ active  ให้หมด
+    			Ui::setMessage('บันทึกข้อมูลสำเร็จ');
     			return $this->redirect('waterchange');
+    		}else{
+    			Ui::setMessage(json_encode($model->getErrors(), JSON_UNESCAPED_UNICODE), 'warning');
     		}
-    		else {
-    			$modelError = '';
-    			$errors = $model->getErrors(null);
-    			if (is_array($errors)) {
-    				foreach($errors as $field => $fieldError) {
-    					$modelError .= "\n$field: " . join(', ', $fieldError);
-    				}
-    			}
-    			UiMessage::setMessage('การบันทึกข้อมูลผิดพลาด:' . $modelError, 'warning');
-    		}
-    
     	}
     
     	$query = Pond::find()->where("status = 1")->orderBy(['type'=>SORT_ASC])->groupBy(['type']);
@@ -2231,20 +2156,14 @@ class PondController extends BaseController {
     			$model->addError('pondId', 'ไม่ได้เลือก รุ่น และบ่อ');
     		}
     
-    		if (!$model->hasErrors()) {
-    			$model->save();
+    		if($model->save()) {
+    			//เซ็ตให้ status รุ่นเก่า เป็น 0 = ไม่ active  ให้หมด
+    			Ui::setMessage('บันทึกข้อมูลสำเร็จ');
     			return $this->redirect('watertemp');
+    		}else{
+    			Ui::setMessage(json_encode($model->getErrors(), JSON_UNESCAPED_UNICODE), 'warning');
     		}
-    		else {
-    			$modelError = '';
-    			$errors = $model->getErrors(null);
-    			if (is_array($errors)) {
-    				foreach($errors as $field => $fieldError) {
-    					$modelError .= "\n$field: " . join(', ', $fieldError);
-    				}
-    			}
-    			UiMessage::setMessage('การบันทึกข้อมูลผิดพลาด:' . $modelError, 'warning');
-    		}
+
     
     	}
     
@@ -2377,21 +2296,14 @@ class PondController extends BaseController {
     			$model->addError('pondId', 'ไม่ได้เลือก รุ่น และบ่อ');
     		}
     
-    		if (!$model->hasErrors()) { 
-    			$model->save();
+    		if($model->save()) {
+    			//เซ็ตให้ status รุ่นเก่า เป็น 0 = ไม่ active  ให้หมด
+    			Ui::setMessage('บันทึกข้อมูลสำเร็จ');
     			return $this->redirect('weight');
+    		}else{
+    			Ui::setMessage(json_encode($model->getErrors(), JSON_UNESCAPED_UNICODE), 'warning');
     		}
-    		else {
-    			$modelError = '';
-    			$errors = $model->getErrors(null);
-    			if (is_array($errors)) {
-    				foreach($errors as $field => $fieldError) {
-    					$modelError .= "\n$field: " . join(', ', $fieldError);
-    				}
-    			}
-    			UiMessage::setMessage('การบันทึกข้อมูลผิดพลาด:' . $modelError, 'warning');
-    		}
-    
+    		
     	}
     
     	$query = Pond::find()->where("status = 1")->orderBy(['type'=>SORT_ASC])->groupBy(['type']);

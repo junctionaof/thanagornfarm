@@ -154,6 +154,25 @@ $this->registerJsFile($baseUrl  . '/assets/pages/scripts/components-select2.min.
                                                 <label class="control-label col-md-3">ปริมาณอาหารที่ให้</label>
                                                       <div class="input-group input-large" >
                                                        <?= Html::input('text', 'foodNum', $model->foodNum,['id'=>'foodNum','class' => 'form-control']);?>
+                                                  	   <span class="error" style="color: Red; display: none">*เฉพาะตัวเลขเท่านั้น</span>
+													<script type="text/javascript">
+													        var specialKeys = new Array();
+													        specialKeys.push(8);   //Backspace
+													        $(function () {
+													            $('input[name="foodNum"]').bind("keypress", function (e) {
+													                var keyCode = e.which ? e.which : e.keyCode
+													                var ret = ((keyCode >= 48 && keyCode <= 57) || specialKeys.indexOf(keyCode) != -1);
+													                $(".error").css("display", ret ? "none" : "inline");
+													                return ret;
+													            });
+													            $(".numeric").bind("paste", function (e) {
+													                return false;
+													            });
+													            $(".numeric").bind("drop", function (e) {
+													                return false;
+													            });
+													        });
+													    </script>
                                                   	<span class="input-group-addon">
                                                         <i class="fa"> กิโลกรัม</i>
                                                     </span>

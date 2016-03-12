@@ -118,6 +118,26 @@ $this->registerJsFile($baseUrl  . '/assets/pages/scripts/components-date-time-pi
                                                 <div class="form-group">
                                                     <label class="control-label">จำนวนลูกกุ้ง</label>
                                                    <?php echo Html::textInput('larvae', $pond->larvae,  array('id'=>'larvae','class' => 'form-control','placeholder'=>'ระบุจำนวน..'))?>	
+                                               	<span class="error" style="color: Red; display: none">*เฉพาะตัวเลขเท่านั้น</span>
+													 
+													<script type="text/javascript">
+													        var specialKeys = new Array();
+													        specialKeys.push(8);   //Backspace
+													        $(function () {
+													            $('input[name="larvae"]').bind("keypress", function (e) {
+													                var keyCode = e.which ? e.which : e.keyCode
+													                var ret = ((keyCode >= 48 && keyCode <= 57) || specialKeys.indexOf(keyCode) != -1);
+													                $(".error").css("display", ret ? "none" : "inline");
+													                return ret;
+													            });
+													            $(".numeric").bind("paste", function (e) {
+													                return false;
+													            });
+													            $(".numeric").bind("drop", function (e) {
+													                return false;
+													            });
+													        });
+													    </script>
                                                 </div>
                                                 <div class="form-group">
                                                     <label class="control-label">ชนิดของลูกกุ้ง</label>
