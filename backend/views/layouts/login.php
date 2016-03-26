@@ -145,7 +145,7 @@ $this->registerCss($str, [], 'css'); ?>
 	<!-- BEGIN LOGO -->
 	<div class="logo">
 		<!-- <img src="<?php echo $baseUrl?>assets/global/img/tpbs-org-logo.png" alt="" />  -->
-		<h1><span class="label label-info">THANAGORN</span><span class="label label-warning">FARM</span> </h1>
+		<h1><span class="label label-info"> THANAGORN </span><span class="label label-warning">FARM</span> </h1>
 	</div>
 	<!-- END LOGO -->
 	<!-- BEGIN LOGIN -->

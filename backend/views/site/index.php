@@ -26,7 +26,7 @@ $identity = \Yii::$app->user->getIdentity();
                             <i class="fa fa-circle"></i>
                         </li>
                         <li>
-                            <span class="active">บ่อทะเงหมดที่ปล่อยกุ้งลงไป</span>
+                            <span class="active">รายการบ่อ และรุ่นทั้งหมด</span>
                         </li>
                     </ul>
                     <!-- END PAGE BREADCRUMB -->

@@ -36,8 +36,8 @@ class Oxygen extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['pondId', 'oxygenNo','numberOf', 'createBy', 'lastUpdateBy'], 'integer'],
-        	[['oxygenNum'], 'number'],
+            [['pondId', 'oxygenNo', 'createBy', 'lastUpdateBy'], 'integer'],
+        	[['oxygenNum','numberOf'], 'number'],
             [['oxygenTime', 'createTime', 'lastUpdateTime'], 'safe'],
             [['age', 'name'], 'string', 'max' => 255]
         ];

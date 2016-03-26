@@ -36,8 +36,8 @@ class Alkalinity extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['pondId', 'alkalinityNo', 'numberOf', 'createBy', 'lastUpdateBy'], 'integer'],
-        	[['alkalinityNum'], 'number'],
+            [['pondId', 'alkalinityNo', 'createBy', 'lastUpdateBy'], 'integer'],
+        	[['alkalinityNum', 'numberOf'], 'number'],
             [['alkalinityTime', 'createTime', 'lastUpdateTime'], 'safe'],
             [['age', 'name'], 'string', 'max' => 255]
         ];

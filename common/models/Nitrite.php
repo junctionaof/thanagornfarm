@@ -36,8 +36,8 @@ class Nitrite extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['pondId', 'nitriteNo', 'numberOf', 'createBy', 'lastUpdateBy'], 'integer'],
-        	[['nitriteNum'], 'number'],
+            [['pondId', 'nitriteNo', 'createBy', 'lastUpdateBy'], 'integer'],
+        	[['nitriteNum', 'numberOf'], 'number'],
             [['nitriteTime', 'createTime', 'lastUpdateTime'], 'safe'],
             [['age', 'name'], 'string', 'max' => 255]
         ];

@@ -36,8 +36,8 @@ class Ammonia extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['pondId', 'ammoniaNo','numberOf', 'createBy', 'lastUpdateBy'], 'integer'],
-        	[['ammoniaNum'], 'number'],
+            [['pondId', 'ammoniaNo', 'createBy', 'lastUpdateBy'], 'integer'],
+        	[['ammoniaNum','numberOf'], 'number'],
             [['ammoniaTime', 'createTime', 'lastUpdateTime'], 'safe'],
             [['age', 'name'], 'string', 'max' => 255]
         ];

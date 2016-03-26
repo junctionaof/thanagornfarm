@@ -151,13 +151,7 @@ padding:10px;
 															    'type' => 'submit'
 																],
 															]);?>
-												<?= Button::widget([
-																'id' => 'btnCancel',
-															    'label' => 'ยกเลิก',
-																'options' => [
-																'type' => 'button',
-																],
-															]);?>	
+														 <a href="<?php echo Url::toRoute('user/list') ?>" class="btn default" >ยกเลิก </a>
 														</div>
 													</div>
 												</div>

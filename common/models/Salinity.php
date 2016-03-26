@@ -36,8 +36,8 @@ class Salinity extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['pondId', 'salinityNo', 'numberOf', 'createBy', 'lastUpdateBy'], 'integer'],
-        	[['salinityNum'], 'number'],
+            [['pondId', 'salinityNo', 'createBy', 'lastUpdateBy'], 'integer'],
+        	[['salinityNum', 'numberOf'], 'number'],
             [['salinityTime', 'createTime', 'lastUpdateTime'], 'safe'],
             [['age', 'name'], 'string', 'max' => 255]
         ];

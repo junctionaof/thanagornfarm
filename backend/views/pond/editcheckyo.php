@@ -77,7 +77,6 @@ $this->registerJsFile($baseUrl  . '/assets/pages/scripts/form-validation.min.js'
 $this->registerJsFile($baseUrl  . '/assets/global/plugins/select2/js/select2.full.min.js', ['position' => \yii\web\View::POS_END]);
 $this->registerJsFile($baseUrl  . '/assets/pages/scripts/components-select2.min.js', ['position' => \yii\web\View::POS_END]);
 
-
 ?>
 <?php echo UiMessage::widget(); ?>
 
@@ -87,7 +86,7 @@ $this->registerJsFile($baseUrl  . '/assets/pages/scripts/components-select2.min.
                             <div class="portlet box green">
                                 <div class="portlet-title">
                                     <div class="caption">
-                                        <i class="fa fa-gift"></i>บันทึกการเช็คยอ </div>
+                                        <i class="fa fa-gift"></i><?php echo $status; ?>การเช็คยอ </div>
                                     <div class="tools">
                                         <a href="javascript:;" class="collapse"> </a>
                                         <a href="#portlet-config" data-toggle="modal" class="config"> </a>
@@ -112,14 +111,14 @@ $this->registerJsFile($baseUrl  . '/assets/pages/scripts/components-select2.min.
                                             <div class="form-group">
                                             	<label class="control-label col-md-3">ข้อมูลบ่อ และรุ่น </label>
                                                       <div class="input-group input-large " >
-                                                      <?= Html::input('text','name', $model->name,['id'=>'name','class' => 'form-control', 'disabled' => 'true']);?>
+                                                      <?= Html::input('text','pond', $model->name,['id'=>'pond','class' => 'form-control', 'disabled' => 'true']);?>
                                                   	</div>
                                             </div>
                                             
                                             <div class="form-group">
                                            		<label class="control-label col-md-3">อายุลูกกุ้ง</label>
                                                       <div class="input-group input-large " >
-                                                       <?= Html::input('text', 'age', $model->age,['id'=>'age','class' => 'form-control']);?>
+                                                       <?= Html::input('text', 'age', $model->age,['id'=>'age','class' => 'form-control', 'disabled' => 'true']);?>
                                                   	</div>
                                             </div>
                                             

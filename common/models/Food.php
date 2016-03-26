@@ -36,8 +36,8 @@ class Food extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['pondId','foodNo','numberOf','createBy','lastUpdateBy'], 'integer'],
-        	[['foodNum'], 'number'],
+            [['pondId','foodNo','createBy','lastUpdateBy'], 'integer'],
+        	[['foodNum','numberOf'], 'number'],
             [['foodTime','createTime','lastUpdateTime'], 'safe'],
         	[['name','age'], 'string', 'max' => 100],
         ];

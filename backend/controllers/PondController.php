@@ -562,10 +562,12 @@ class PondController extends BaseController {
     	if ($id){
     		$query->where("id=".$id);
     		$model = $query->one();
+    		$status = "แก้ใข";
     	}else{
     		$model = new food();
     		$model->createTime = date('Y-m-d H:i:s', $currentTs);
     		$model->createBy = $identity->id;
+    		$status = "บันทึก";
     	}
     	
     	$foodTime = $request->get('foodTime', $request->post('foodTime', null));
@@ -606,6 +608,7 @@ class PondController extends BaseController {
     	echo $this->render('editfood', [
     			'model' => $model,
     			'arrTypelist'=> $arrTypelist,
+    			'status' => $status,
     	]);
     }
     // End of Foot
@@ -706,10 +709,12 @@ class PondController extends BaseController {
     	if ($id){
     		$query->where("id=".$id);
     		$model = $query->one();
+    		$status = "แก้ใข";
     	}else{
     		$model = new Alkalinity();
     		$model->createTime = date('Y-m-d H:i:s', $currentTs);
     		$model->createBy = $identity->id;
+    		$status = "บันทึก";
     	}
     	
     	$alkalinityTime = $request->get('alkalinityTime', $request->post('alkalinityTime', null));
@@ -750,6 +755,7 @@ class PondController extends BaseController {
     	echo $this->render('editalkalinity', [
     			'model' => $model,
     			'arrTypelist'=> $arrTypelist,
+    			'status' => $status,
     	]);
     }
     // End of alkalinity
@@ -843,15 +849,16 @@ class PondController extends BaseController {
     	$identity = \Yii::$app->user->getIdentity();
     	$request = \Yii::$app->request;
     	$id = $request->get('id', $request->post('id', null));
-    	$query = Typelist::find();
-    	
+    	$query = Checkyo::find();
     	if ($id){
     		$query->where("id=".$id);
     		$model = $query->one();
+    		$status = "แก้ใข";
     	}else{
     		$model = new Checkyo();
     		$model->createTime = date('Y-m-d H:i:s', $currentTs);
     		$model->createBy = $identity->id;
+    		$status = "บันทึก";
     	}
     	
     	$checkyoTime = $request->get('checkyoTime', $request->post('checkyoTime', null));
@@ -876,7 +883,6 @@ class PondController extends BaseController {
     			$model->addError('pondId', 'ไม่ได้เลือก รุ่น และบ่อ');
     		}
     
-    		
     		if($model->save()) {
     			//เซ็ตให้ status รุ่นเก่า เป็น 0 = ไม่ active  ให้หมด
     			Ui::setMessage('บันทึกข้อมูลสำเร็จ');
@@ -892,11 +898,11 @@ class PondController extends BaseController {
     	$arrTypelist = [0=>'กรุณาเลือกบ่อ  และรุ่นที่ต้องการ'];
     	$arrTypelist += \yii\helpers\ArrayHelper::map($query->all(), 'id' ,'title','type');
     	 
-    	
     
     	echo $this->render('editcheckyo', [
     			'model' => $model,
     			'arrTypelist'=> $arrTypelist,
+    			'status' => $status,
     	]);
     }
     // End of Checkyo
@@ -995,10 +1001,12 @@ class PondController extends BaseController {
     	if ($id){
     		$query->where("id=".$id);
     		$model = $query->one();
+    		$status = "แก้ใข";
     	}else{
     		$model = new Oxygen();
     		$model->createTime = date('Y-m-d H:i:s', $currentTs);
     		$model->createBy = $identity->id;
+    		$status = "บันทึก";
     	}
     	
     	$oxygenTime = $request->get('oxygenTime', $request->post('oxygenTime', null));
@@ -1043,6 +1051,7 @@ class PondController extends BaseController {
     			'model' => $model,
     			'arrTypelist'=> $arrTypelist,
     			'arrAllTypelist' => $arrAllTypelist,
+    			'status' => $status,
     	]);
     }
     // End of editoxygen
@@ -1141,10 +1150,12 @@ class PondController extends BaseController {
     	if ($id){
     		$query->where("id=".$id);
     		$model = $query->one();
+    		$status = "แก้ใข";
     	}else{
     		$model = new Ph();
     		$model->createTime = date('Y-m-d H:i:s', $currentTs);
     		$model->createBy = $identity->id;
+    		$status = "บันทึก";
     	}
     	
     	$phTime = $request->get('phTime', $request->post('phTime', null));
@@ -1180,6 +1191,7 @@ class PondController extends BaseController {
     	echo $this->render('editph', [
     			'model' => $model,
     			'arrTypelist'=> $arrTypelist,
+    			'status' => $status,
     	]);
     }
     // End of PH
@@ -1277,10 +1289,12 @@ class PondController extends BaseController {
     	if ($id){
     		$query->where("id=".$id);
     		$model = $query->one();
+    		$status = "แก้ใข";
     	}else{
     		$model = new temp();
     		$model->createTime = date('Y-m-d H:i:s', $currentTs);
     		$model->createBy = $identity->id;
+    		$status = "บันทึก";
     	}
     	
     	$tempTime = $request->get('tempTime', $request->post('tempTime', null));
@@ -1320,6 +1334,7 @@ class PondController extends BaseController {
     	echo $this->render('edittemp', [
     			'model' => $model,
     			'arrTypelist'=> $arrTypelist,
+    			'status' => $status,
     	]);
     }
     // End of Temp
@@ -1420,10 +1435,12 @@ class PondController extends BaseController {
     	if ($id){
     		$query->where("id=".$id);
     		$model = $query->one();
+    		$status = "แก้ใข";
     	}else{
     		$model = new Ammonia();
     		$model->createTime = date('Y-m-d H:i:s', $currentTs);
     		$model->createBy = $identity->id;
+    		$status = "บันทึก";
     	}
     	 
     	$ammoniaTime = $request->get('ammoniaTime', $request->post('ammoniaTime', null));
@@ -1462,6 +1479,7 @@ class PondController extends BaseController {
     	echo $this->render('editammonia', [
     			'model' => $model,
     			'arrTypelist'=> $arrTypelist,
+    			'status' => $status,
     	]);
     }
     // End of ammonia
@@ -1563,10 +1581,12 @@ class PondController extends BaseController {
     	if ($id){
     		$query->where("id=".$id);
     		$model = $query->one();
+    		$status = "แก้ใข";
     	}else{
     		$model = new Nitrite();
     		$model->createTime = date('Y-m-d H:i:s', $currentTs);
     		$model->createBy = $identity->id;
+    		$status = "บันทึก";
     	}
     
     	$nitriteTime = $request->get('nitriteTime', $request->post('nitriteTime', null));
@@ -1605,6 +1625,7 @@ class PondController extends BaseController {
     	echo $this->render('editnitrite', [
     			'model' => $model,
     			'arrTypelist'=> $arrTypelist,
+    			'status' => $status,
     	]);
     }
     // End of nitrite
@@ -1702,10 +1723,12 @@ class PondController extends BaseController {
     	if ($id){
     		$query->where("id=".$id);
     		$model = $query->one();
+    		$status = "แก้ใข";
     	}else{
     		$model = new Other();
     		$model->createTime = date('Y-m-d H:i:s', $currentTs);
     		$model->createBy = $identity->id;
+    		$status = "บันทึก";
     	}
     
     	$otherTime = $request->get('otherTime', $request->post('otherTime', null));
@@ -1744,6 +1767,7 @@ class PondController extends BaseController {
     	echo $this->render('editother', [
     			'model' => $model,
     			'arrTypelist'=> $arrTypelist,
+    			'status' => $status,
     	]);
     }
     // End of other
@@ -1843,10 +1867,12 @@ class PondController extends BaseController {
     	if ($id){
     		$query->where("id=".$id);
     		$model = $query->one();
+    		$status = "แก้ใข";
     	}else{
     		$model = new Salinity();
     		$model->createTime = date('Y-m-d H:i:s', $currentTs);
     		$model->createBy = $identity->id;
+    		$status = "บันทึก";
     	}
     
     	$salinityTime = $request->get('salinityTime', $request->post('salinityTime', null));
@@ -1893,6 +1919,7 @@ class PondController extends BaseController {
     	echo $this->render('editsalinity', [
     			'model' => $model,
     			'arrTypelist'=> $arrTypelist,
+    			'status' => $status,
     	]);
     }
     // End of salinity
@@ -1992,10 +2019,12 @@ class PondController extends BaseController {
     	if ($id){
     		$query->where("id=".$id);
     		$model = $query->one();
+    		$status = "แก้ใข";
     	}else{
     		$model = new waterchange();
     		$model->createTime = date('Y-m-d H:i:s', $currentTs);
     		$model->createBy = $identity->id;
+    		$status = "บันทึก";
     	}
     
     	$waterchangeTime = $request->get('waterchangeTime', $request->post('waterchangeTime', null));
@@ -2035,6 +2064,7 @@ class PondController extends BaseController {
     			'arrPond' => $arrPond,
     			'model' => $model,
     			'arrTypelist'=> $arrTypelist,
+    			'status' => $status,
     	]);
     }
     // End of waterchange
@@ -2132,10 +2162,12 @@ class PondController extends BaseController {
     	if ($id){
     		$query->where("id=".$id);
     		$model = $query->one();
+    		$status = "แก้ใข";
     	}else{
     		$model = new watertemp();
     		$model->createTime = date('Y-m-d H:i:s', $currentTs);
     		$model->createBy = $identity->id;
+    		$status = "บันทึก";
     	}
     	
     	$watertempTime = $request->get('watertempTime', $request->post('watertempTime', null));
@@ -2176,6 +2208,7 @@ class PondController extends BaseController {
     	echo $this->render('editwatertemp', [
     			'model' => $model,
     			'arrTypelist'=> $arrTypelist,
+    			'status' => $status,
     	]);
     }
     // End of watertemp
@@ -2272,10 +2305,12 @@ class PondController extends BaseController {
     	if ($id){
     		$query->where("id=".$id);
     		$model = $query->one();
+    		$status = "แก้ใข";
     	}else{
     		$model = new Weight();
     		$model->createTime = date('Y-m-d H:i:s', $currentTs);
     		$model->createBy = $identity->id;
+    		$status = "บันทึก";
     	}
     	
     	$weightTime = $request->get('weightTime', $request->post('weightTime', null));
@@ -2315,6 +2350,7 @@ class PondController extends BaseController {
     	echo $this->render('editweight', [
     			'model' => $model,
     			'arrTypelist'=> $arrTypelist,
+    			'status' => $status,
     	]);
     }
     // End of Weight

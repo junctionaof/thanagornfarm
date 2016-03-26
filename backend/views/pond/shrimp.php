@@ -257,7 +257,7 @@ $title = $pond->title ? $pond->title : 'ไม่ระบุ';
                                                 <a href="#tab_1_3" data-toggle="tab"> นํ้าหนักเฉลี่ย </a>
                                             </li>
                                             <li>
-                                                <a href="#tab_1_4" data-toggle="tab">  ออกซิเจนละลายนํ้า</a>
+                                                <a href="#tab_1_4" data-toggle="tab"> ออกซิเจนละลายนํ้า</a>
                                             </li>
                                             <li>
                                                 <a href="#tab_1_5" data-toggle="tab">ค่า ph </a>
@@ -266,7 +266,7 @@ $title = $pond->title ? $pond->title : 'ไม่ระบุ';
                                                 <a href="#tab_1_6" data-toggle="tab"> ค่าอัลคาไลน์นิติ</a>
                                             </li>
                                             <li>
-                                                <a href="#tab_1_7" data-toggle="tab"> ค่าอุณหภูมิขิงนํ้า</a>
+                                                <a href="#tab_1_7" data-toggle="tab"> ค่าอุณหภูมิของนํ้า</a>
                                             </li>
                                             </li>
                                             <li>
@@ -303,7 +303,7 @@ $title = $pond->title ? $pond->title : 'ไม่ระบุ';
                                                                     </div>
                                                                 </div>
                                                                 <div class="cont-col2">
-                                                                    <div class="desc"><?php echo DateUtil::th_date(DateUtil::LDT_FMT_TH, strtotime($lstfood->foodTime));?>
+                                                                    <div class="desc"><a href="<?= Url::toRoute(['pond/editfood'])?>?id=<?php echo $lstfood->id; ?>"><?php echo DateUtil::th_date(DateUtil::LDT_FMT_TH, strtotime($lstfood->foodTime));?></a>
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -342,7 +342,7 @@ $title = $pond->title ? $pond->title : 'ไม่ระบุ';
 			                                            <tbody>
 			                                             <?php foreach ($checkyo As $lstcheckyo): ?>
 			                                                <tr>
-			                                                    <td> <?php echo DateUtil::th_date(DateUtil::LDT_FMT_TH, strtotime($lstcheckyo->checkyoTime));?> </td>
+			                                                    <td><a href="<?= Url::toRoute(['pond/editcheckyo'])?>?id=<?php echo $lstcheckyo->id; ?>"> <?php echo DateUtil::th_date(DateUtil::LDT_FMT_TH, strtotime($lstcheckyo->checkyoTime));?> </a></td>
 			                                                    <td> <?php echo $lstcheckyo->yo01 ?>/4 </td>
 			                                                    <td> <?php echo $lstcheckyo->yo02 ?>/4 </td>                           
 			                                                    <td> <?php echo $lstcheckyo->yo03 ?>/4 </td>
@@ -384,7 +384,7 @@ $title = $pond->title ? $pond->title : 'ไม่ระบุ';
 			                                            <tbody>
 			                                             <?php foreach ($weight As $lstweight): ?>
 			                                                <tr>
-			                                                    <td> <?php echo DateUtil::th_date(DateUtil::LDT_FMT_TH, strtotime($lstweight->weightTime));?> </td>
+			                                                    <td> <a href="<?= Url::toRoute(['pond/editweight'])?>?id=<?php echo $lstweight->id; ?>"> <?php echo DateUtil::th_date(DateUtil::LDT_FMT_TH, strtotime($lstweight->weightTime));?> </a></td>
 			                                                    <td> <?php echo $lstweight->name ?> </td>
 			                                                    <td> <?php echo $lstweight->weightNo ?></td>                           
 			                                                    <td> <?php echo $lstweight->weightNum ?> </td>
@@ -408,7 +408,7 @@ $title = $pond->title ? $pond->title : 'ไม่ระบุ';
 			                                 </div>
 			                                </div>
                                         </div>
-                                        <div class="tab-pane" id="tab_1_4">
+                                       <div class="tab-pane" id="tab_1_4">
                                        <div class="portlet light ">
 			                                <div class="portlet-body">
 			                                    <div class="">
@@ -426,7 +426,7 @@ $title = $pond->title ? $pond->title : 'ไม่ระบุ';
 			                                            <tbody>
 			                                             <?php foreach ($oxygen As $lstoxygen): ?>
 			                                                <tr>
-			                                                    <td> <?php echo DateUtil::th_date(DateUtil::LDT_FMT_TH, strtotime($lstoxygen->oxygenTime));?> </td>
+			                                                    <td><a href="<?= Url::toRoute(['pond/editoxygen'])?>?id=<?php echo $lstoxygen->id; ?>"> <?php echo DateUtil::th_date(DateUtil::LDT_FMT_TH, strtotime($lstoxygen->oxygenTime));?> </a></td>
 			                                                    <td> <?php echo $lstoxygen->name ?> </td>
 			                                                    <td> <?php echo $lstoxygen->oxygenNo ?></td>                           
 			                                                    <td> <?php echo $lstoxygen->oxygenNum ?> </td>
@@ -468,7 +468,7 @@ $title = $pond->title ? $pond->title : 'ไม่ระบุ';
 			                                            <tbody>
 			                                             <?php foreach ($ph As $lstph): ?>
 			                                                <tr>
-			                                                    <td> <?php echo DateUtil::th_date(DateUtil::LDT_FMT_TH, strtotime($lstph->phTime));?> </td>
+			                                                    <td><a href="<?= Url::toRoute(['pond/editph'])?>?id=<?php echo $lstph->id; ?>"> <?php echo DateUtil::th_date(DateUtil::LDT_FMT_TH, strtotime($lstph->phTime));?> </a></td>
 			                                                    <td> <?php echo $lstph->age ?> </td>
 			                                                    <td> <?php echo $lstph->phNo ?></td>                           
 			                                                    <td> <?php echo $lstph->phNum ?> </td>
@@ -502,18 +502,18 @@ $title = $pond->title ? $pond->title : 'ไม่ระบุ';
 			                                                    <th> วัน เวลา วัด </th>
 			                                                    <th> บ่อ</th>
 			                                                    <th> มื้อที่  </th>
-			                                                    <th> ปริมาณอาหาร  </th>
-			                                                    <th> เบอร์อาหาร </th>
+			                                                    <th> ปริมาณ </th>
+			                                                    <th> เบอร์</th>
 			                                                    <th> อายุลูกกุ้ง</th>
 			                                                </tr>
 			                                            </thead>
 			                                            <tbody>
 			                                             <?php foreach ($alkalinity As $lstalkalinity): ?>
 			                                                <tr>
-			                                                    <td> <?php echo DateUtil::th_date(DateUtil::LDT_FMT_TH, strtotime($lstalkalinity->weightTime));?> </td>
+			                                                    <td><a href="<?= Url::toRoute(['pond/editalkalinity'])?>?id=<?php echo $lstalkalinity->id; ?>"> <?php echo DateUtil::th_date(DateUtil::LDT_FMT_TH, strtotime($lstalkalinity->alkalinityTime));?></a> </td>
 			                                                    <td> <?php echo $lstalkalinity->name ?> </td>
-			                                                    <td> <?php echo $lstalkalinity->weightNo ?></td>                           
-			                                                    <td> <?php echo $lstalkalinity->weightNum ?> </td>
+			                                                    <td> <?php echo $lstalkalinity->alkalinityNo ?></td>                           
+			                                                    <td> <?php echo $lstalkalinity->alkalinityNum ?> </td>
 			                                                    <td> <?php echo $lstalkalinity->numberOf ?> </td>
 			                                                    <td>
 			                                                        <span class="label label-sm label-success"><?php echo $lstalkalinity->age ?> </span>
@@ -552,7 +552,7 @@ $title = $pond->title ? $pond->title : 'ไม่ระบุ';
 			                                            <tbody>
 			                                             <?php foreach ($weight As $lstweight): ?>
 			                                                <tr>
-			                                                    <td> <?php echo DateUtil::th_date(DateUtil::LDT_FMT_TH, strtotime($lstweight->weightTime));?> </td>
+			                                                    <td> <a href="<?= Url::toRoute(['pond/editweight'])?>?id=<?php echo $lstweight->id; ?>"><?php echo DateUtil::th_date(DateUtil::LDT_FMT_TH, strtotime($lstweight->weightTime));?> </a></td>
 			                                                    <td> <?php echo $lstweight->name ?> </td>
 			                                                    <td> <?php echo $lstweight->weightNo ?></td>                           
 			                                                    <td> <?php echo $lstweight->weightNum ?> </td>
@@ -594,7 +594,7 @@ $title = $pond->title ? $pond->title : 'ไม่ระบุ';
 			                                            <tbody>
 			                                             <?php foreach ($weight As $lstweight): ?>
 			                                                <tr>
-			                                                    <td> <?php echo DateUtil::th_date(DateUtil::LDT_FMT_TH, strtotime($lstweight->weightTime));?> </td>
+			                                                    <td><a href="<?= Url::toRoute(['pond/editweight'])?>?id=<?php echo $lstweight->id; ?>"> <?php echo DateUtil::th_date(DateUtil::LDT_FMT_TH, strtotime($lstweight->weightTime));?> </a></td>
 			                                                    <td> <?php echo $lstweight->name ?> </td>
 			                                                    <td> <?php echo $lstweight->weightNo ?></td>                           
 			                                                    <td> <?php echo $lstweight->weightNum ?> </td>

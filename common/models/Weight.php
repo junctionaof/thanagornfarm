@@ -36,8 +36,8 @@ class Weight extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['pondId', 'weightNo', 'weightNum', 'numberOf', 'createBy', 'lastUpdateBy'], 'integer'],
-        	[['weightNum'], 'number'],
+            [['pondId', 'weightNo', 'createBy', 'lastUpdateBy'], 'integer'],
+        	[['weightNum', 'numberOf'], 'number'],
             [['weightTime', 'createTime', 'lastUpdateTime'], 'safe'],
             [['age','name'], 'string', 'max' => 255]
         ];

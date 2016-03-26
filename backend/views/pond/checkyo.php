@@ -98,7 +98,7 @@ ActiveForm::begin(['id' => 'dataTable-form']);
 		                            <input type="checkbox" class="group-checkable" data-set=".table-list .checkboxes"/>
 		                        </th>
 		                        <th>บ่อ-รุ่นที่ </th>
-		                        <th>วัน/เดือน/ปี ที่ให้อาหาร </th>
+		                        <th>วัน/เดือน/ปี ที่บันทึก </th>
 		                        <th>มื้อที่ </th>
 		                        <th>ยอ 1</th>
 		                        <th>ยอ 2</th>
@@ -115,7 +115,7 @@ ActiveForm::begin(['id' => 'dataTable-form']);
 					?>                
 				          <tr class="odd">
 				                 <td> <?php echo Html::checkbox('idCheck[]', false, ['value'=> $Content->id, 'class'=> 'checkboxes'])?></td>
-				                 <td><?php echo isset($arrPond[$Content->pondId])?$arrPond[$Content->pondId]:'ไม่ได้เลือกบ่อ รุ่น ';?></td>
+				                 <td><a href="<?= Url::toRoute(['pond/editcheckyo'])?>?id=<?=$Content->id?>"><?php echo isset($arrPond[$Content->pondId])?$arrPond[$Content->pondId]:'ไม่ได้เลือกบ่อ รุ่น ';?></a></td>
 				                 <td class="text-left"><?php echo DateUtil::th_date(DateUtil::LDT_FMT_TH, strtotime($Content->checkyoTime));?></td>
 				                 <td><?php echo $Content->checkyoNo;?> </td>
 				                 <td><?php echo $Content->yo01;?>   </td>

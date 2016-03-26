@@ -91,7 +91,7 @@ $this->registerJsFile($baseUrl  . '/assets/pages/scripts/components-select2.min.
                             <div class="portlet box green">
                                 <div class="portlet-title">
                                     <div class="caption">
-                                        <i class="fa fa-gift"></i>บันทึกการให้อาหารกุ้ง </div>
+                                        <i class="fa fa-gift"></i><?php echo $status; ?>การให้อาหารกุ้ง </div>
                                     <div class="tools">
                                         <a href="javascript:;" class="collapse"> </a>
                                         <a href="#portlet-config" data-toggle="modal" class="config"> </a>
@@ -123,7 +123,7 @@ $this->registerJsFile($baseUrl  . '/assets/pages/scripts/components-select2.min.
                                             <div class="form-group">
                                            		<label class="control-label col-md-3">อายุลูกกุ้ง</label>
                                                       <div class="input-group input-large " >
-                                                       <?= Html::input('text', 'age', $model->age,['id'=>'age','class' => 'form-control']);?>
+                                                       <?= Html::input('text', 'age', $model->age,['id'=>'age','class' => 'form-control','disabled'=>'true']);?>
                                                   	</div>
                                             </div>
                                             

@@ -36,8 +36,8 @@ class Watertemp extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['pondId', 'watertempNo', 'watertempNum', 'numberOf', 'createBy', 'lastUpdateBy'], 'integer'],
-        	[['watertempNum'], 'number'],
+            [['pondId', 'watertempNo', 'createBy', 'lastUpdateBy'], 'integer'],
+        	[['watertempNum', 'numberOf'], 'number'],
             [['watertempTime', 'createTime', 'lastUpdateTime'], 'safe'],
             [['age', 'name'], 'string', 'max' => 255]
         ];

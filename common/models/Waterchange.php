@@ -36,8 +36,8 @@ class Waterchange extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['pondId', 'waterchangeNo', 'waterchangeNum', 'numberOf', 'createBy', 'lastUpdateBy'], 'integer'],
-        	[['waterchangeNum'], 'number'],
+            [['pondId', 'waterchangeNo', 'createBy', 'lastUpdateBy'], 'integer'],
+        	[['waterchangeNum', 'numberOf'], 'number'],
             [['waterchangeTime', 'createTime', 'lastUpdateTime'], 'safe'],
             [['age', 'name'], 'string', 'max' => 255]
         ];

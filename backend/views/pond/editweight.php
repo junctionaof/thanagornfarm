@@ -1,11 +1,16 @@
 <?php
 
+use yii\bootstrap\ActiveForm;
 use yii\helpers\Url;
-use yii\web\View;
+use yii\widgets\LinkPager;
 use yii\helpers\Html;
+use yii\web\View;
+
+use app\Entity;
 use app\CategoryTree;
 use app\DateUtil;
 use app\Workflow;
+
 use backend\components\UserMessage;
 use backend\components\UiMessage;
 use backend\components\Portlet;
@@ -37,18 +42,53 @@ $(document).ready(function() {
 		var id = $(this).val();
 		var jqxhr = $.get( "finpond", {id:id}, function() {
 		  		console.log('success loading');
-			}).done(function(data) {
-			var json = $.parseJSON(data);
-			$('#pond').val(json.pond);
-		    $('#age').val(json.age);
-		 	}).fail(function() {
-		    	console.log('error loading');
-		  	});
-	});
-		$('#weightTime').datepicker();
-});
+				}).done(function(data) {
+				var json = $.parseJSON(data);
+				$('#pond').val(json.pond);
+			    $('#age').val(json.age);
+			 	}).fail(function() {
+			    	console.log('error loading');
+			  	});
+		});
+		
+		$("input[name='weightNo']").on("keyup",function()
+			{
+						var Weight;
+				 		Weight  = parseFloat(this.value);
+				  	 $('#weightNum').val(calculateWeight(Weight));
+			});		 
+
+		$('input[name=weightTime]').on("change", function(){
+			if($('input[name=expire_date]').val() != ""){
+				$('input[name=expire_time]').timepicker({
+		            autoclose: true,
+		            minuteStep: 1,
+		            showSeconds: true,
+		            showMeridian: false
+		        });
+			}
+		});
+		
+		
+	$('#weightNo').maxlength({
+        limitReachedClass: "label label-danger",
+        threshold: 5
+    });
+    
+    $('#maxlength_255').maxlength({
+        limitReachedClass: "label label-danger",
+        threshold: 55
+    });
 		
 
+});
+		
+ function calculateWeight(Weight) 
+		 {
+			 	var  total;
+				total = parseFloat(Weight)/1000;
+				return total.toFixed(2);
+		}
 
 EOT;
 $this->registerJs($str);
@@ -88,7 +128,7 @@ $this->registerJsFile($baseUrl  . '/assets/pages/scripts/components-select2.min.
                             <div class="portlet box green">
                                 <div class="portlet-title">
                                     <div class="caption">
-                                        <i class="fa fa-gift"></i> บันทึกนํ้าหนักเฉลี่ย </div>
+                                        <i class="fa fa-gift"></i> <?php echo $status; ?>นํ้าหนักเฉลี่ย </div>
                                     <div class="tools">
                                         <a href="javascript:;" class="collapse"> </a>
                                         <a href="#portlet-config" data-toggle="modal" class="config"> </a>
@@ -113,21 +153,22 @@ $this->registerJsFile($baseUrl  . '/assets/pages/scripts/components-select2.min.
                                             <div class="form-group">
                                             	<label class="control-label col-md-3">ข้อมูลบ่อ และรุ่น </label>
                                                       <div class="input-group input-large " >
-                                                       <?= Html::input('text','name', $model->name,['id'=>'pond','class' => 'form-control']);?>
+                                                       <?= Html::input('text','name', $model->name,['id'=>'pond','class' => 'form-control','disabled'=>'true']);?>
                                                   	</div>
                                             </div>
                                             
                                             <div class="form-group">
                                            		<label class="control-label col-md-3">อายุลูกกุ้ง</label>
                                                       <div class="input-group input-large " > 
-                                                       <?= Html::input('text', 'age', $model->age,['id'=>'age','class' => 'form-control']);?>
+                                                       <?= Html::input('text', 'age', $model->age,['id'=>'age','class' => 'form-control','disabled'=>'true']);?>
                                                   	</div>
                                             </div>
                                             
                                              <div class="form-group">
                                                 <label class="control-label col-md-3">วันที่สุ่มกุ้ง</label>
                                                       <div class="input-group input-large" data-date-format="dd-mm-yyyy" data-date-start-date="+0d">
-                                                       <?= Html::input('text', 'weightTime' ,$correntDate ,['id'=>'weightTime','class' => 'form-control']);?>
+                                                     <?php echo Html::textInput('weightTime', $correntDate, array('id'=>'weightTime','class'=>'form-control form-control-inline  date-picker'))?>
+													
                                                   	</div>
                                             </div>
                                                <div class="form-group">
@@ -146,7 +187,7 @@ $this->registerJsFile($baseUrl  . '/assets/pages/scripts/components-select2.min.
                                              <div class="form-group">
                                                 <label class="control-label col-md-3">เฉลี่ยตัวละ</label>
                                                       <div class="input-group input-large " >
-                                                       <?= Html::input('text', 'weightNum', $model->weightNum,['id'=>'weightNum','class' => 'form-control']);?>
+                                                       <?= Html::input('text', 'weightNum', $model->weightNum,['id'=>'weightNum','class' => 'form-control','disabled'=>'true']);?>
                                                   	<span class="input-group-addon">
                                                         <i class="fa"> กรัม</i>
                                                     </span>

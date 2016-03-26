@@ -36,8 +36,8 @@ class Other extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['pondId', 'otherNo', 'numberOf', 'createBy', 'lastUpdateBy'], 'integer'],
-        	[['otherNum'], 'number'],
+            [['pondId', 'otherNo', 'createBy', 'lastUpdateBy'], 'integer'],
+        	[['otherNum', 'numberOf'], 'number'],
             [['otherTime', 'createTime', 'lastUpdateTime'], 'safe'],
             [['age', 'name'], 'string', 'max' => 255]
         ];

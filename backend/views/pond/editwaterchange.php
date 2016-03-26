@@ -86,7 +86,7 @@ $this->registerJsFile($baseUrl  . '/assets/pages/scripts/components-select2.min.
                             <div class="portlet box green">
                                 <div class="portlet-title">
                                     <div class="caption">
-                                        <i class="fa fa-gift"></i>บันทึกการเปลี่ยนถ่ายนํ้า  </div>
+                                        <i class="fa fa-gift"></i><?php echo $status; ?>การเปลี่ยนถ่ายนํ้า  </div>
                                     <div class="tools">
                                         <a href="javascript:;" class="collapse"> </a>
                                         <a href="#portlet-config" data-toggle="modal" class="config"> </a>

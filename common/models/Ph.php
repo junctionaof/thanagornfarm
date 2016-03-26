@@ -36,8 +36,8 @@ class Ph extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['pondId', 'phNo', 'numberOf', 'createBy', 'lastUpdateBy'], 'integer'],
-            [['phNum'], 'number'],
+            [['pondId', 'phNo', 'createBy', 'lastUpdateBy'], 'integer'],
+            [['phNum'], 'number', 'numberOf'],
             [['phTime', 'createTime', 'lastUpdateTime'], 'safe'],
             [['age', 'name'], 'string', 'max' => 255]
         ];

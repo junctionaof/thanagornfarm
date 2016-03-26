@@ -174,18 +174,12 @@ padding:10px;
 										<div class="text-center">
 											  <?= Button::widget([
 															    'label' => 'บันทึก',
-															    'options' => [
+															    'options'  => [
 															    'class' => 'btn green',
 															    'type' => 'submit'
 																],
 															]);?>
-												<?= Button::widget([
-																'id' => 'btnCancel',
-															    'label' => 'ยกเลิก',
-																'options' => [
-																'type' => 'button',
-																],
-												]);?>	
+												<a href="<?php echo Url::toRoute('user/list') ?>" class="btn default" >ยกเลิก </a>
 										</div>
 									</div>
 								</div>

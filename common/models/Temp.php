@@ -36,8 +36,8 @@ class Temp extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['pondId', 'tempNo', 'tempNum', 'numberOf', 'createBy', 'lastUpdateBy'], 'integer'],
-        	[['tempNum'], 'number'],
+            [['pondId', 'tempNo',  'createBy', 'lastUpdateBy'], 'integer'],
+        	[['tempNum', 'numberOf'], 'number'],
             [['tempTime', 'createTime', 'lastUpdateTime'], 'safe'],
             [['age', 'name'], 'string', 'max' => 255]
         ];
