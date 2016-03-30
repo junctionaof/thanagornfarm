@@ -86,7 +86,7 @@ $(document).ready(function() {
  function calculateWeight(Weight) 
 		 {
 			 	var  total;
-				total = parseFloat(Weight)/1000;
+				total = 1000/parseFloat(Weight);
 				return total.toFixed(2);
 		}
 

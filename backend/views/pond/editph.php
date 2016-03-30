@@ -24,7 +24,6 @@ if($model->phTime == ''){
 }else {
 	$correntDate = $model->phTime;
 }
- 
 
 $contentDate = "";
 $contentTime = "";
