@@ -54,7 +54,7 @@ ActiveForm::begin(['id' => 'dataTable-form']);
     <div class="portlet box green">
         <div class="portlet-title">
             <div class="caption">
-                <i class="fa fa-table"></i> รายการบันทึกต่าออกซิเจนละลายนํ้า
+                <i class="fa fa-table"></i> รายการบันทึกค่าออกซิเจนละลายนํ้า
             </div>
             <div class="tools">
                 <a href="javascript:;" class="collapse">
@@ -68,7 +68,7 @@ ActiveForm::begin(['id' => 'dataTable-form']);
                         <div class="portlet-title">
                                 <div class="actions">
                                  	<a class="btn add" href="<?= Url::toRoute(['pond/editoxygen'])?>" title="เพิ่ม">
-                                        <i class="icon-plus">  บันทึกต่าออกซิเจนละลายนํ้า</i>
+                                        <i class="icon-plus">  บันทึกค่าออกซิเจนละลายนํ้า</i>
                                     </a>
                                 </div>
                         </div>
@@ -119,10 +119,11 @@ ActiveForm::begin(['id' => 'dataTable-form']);
 <?php 
 	if($lst):
 		foreach ($lst as $Content):
+		$pond = isset($arrPond[$Content->pondId])?$arrPond[$Content->pondId]:'ไม่ได้ระบุ';
 ?>                
                     <tr class="odd">
                         <td> <?php echo Html::checkbox('idCheck[]', false, ['value'=> $Content->id, 'class'=> 'checkboxes'])?></td>
-                        <td> <a href="<?= Url::toRoute(['pond/editoxygen'])?>?id=<?php echo $Content->id; ?>"><?php  echo $arrPond[$Content->pondId];?></a></td>
+                        <td> <a href="<?= Url::toRoute(['pond/editoxygen'])?>?id=<?php echo $Content->id; ?>"><?php  echo $pond;?></a></td>
                         <td class="text-left"><?php echo DateUtil::th_date(DateUtil::LDT_FMT_TH, strtotime($Content->oxygenTime));?></td>
                         <td><?php echo $Content->numberOf;?>   </td>
                         <td> <?php echo $Content->age;?>  </td>

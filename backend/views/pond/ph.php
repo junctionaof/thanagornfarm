@@ -118,10 +118,11 @@ ActiveForm::begin(['id' => 'dataTable-form']);
 <?php 
 	if($lst):
 		foreach ($lst as $Content):
+		$pond = isset($arrPond[$Content->pondId])?$arrPond[$Content->pondId]:'ไม่ได้ระบุ';
 ?>                
                     <tr class="odd">
-                        <td> <?php echo Html::checkbox('idCheck[]', false, ['value'=> $Content->id, 'class'=> 'checkboxes'])?></td>
-                        <td> <a href="<?= Url::toRoute(['pond/editph'])?>?id=<?php echo $Content->id; ?>"><?php echo $arrPond[$Content->pondId];?></a></td>
+                        <td> <?php echo Html::checkbox('idCheck[]',false, ['value'=> $Content->id, 'class'=> 'checkboxes'])?></td>
+                        <td> <a href="<?= Url::toRoute(['pond/editph'])?>?id=<?php echo $Content->id; ?>"><?php echo $pond;?></a></td>
                         <td class="text-left"><?php echo DateUtil::th_date(DateUtil::LDT_FMT_TH, strtotime($Content->phTime));?></td>
                         <td><?php echo $Content->phNum;?> </td>
                         <td> <?php echo $Content->age;?>  </td>
