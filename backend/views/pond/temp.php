@@ -91,7 +91,45 @@ ActiveForm::begin(['id' => 'dataTable-form']);
                     </div>
                 </div>
             </div>
- <table class="table table-striped table-bordered table-hover table-list" id="">
+                        <div id="datatable-toolbar" class="table-toolbar" style="padding: 20px;background: #E9ECF3;">
+			<div class="row" ">
+				<div class="col-md-12">
+					<div class="btn-group pull-right">
+						<button class="btn blue" id="search">ค้นหา</button>
+					</div>
+					<div class="col-md-3 pull-right" >
+					 <div class="input-group ">
+						 <select class="'select2_category form-control" id="ntype" name="ntype" value="">
+						<option value="0">โชว์ทั้งหมด</option>
+						<option value="1">ข่าว </option>
+						<option value="2">รายการ</option>
+						<option value="0">ไม่ได้ใส่รายกา-ข่าว</option>
+					</select>
+						</div>	
+					</div>
+					<div class="col-md-3 pull-right">
+					
+					<div class="input-group" id="ntype">
+					<select class="'select2_category form-control" id="ntype" name="ntype" value="">
+						<option value="0">โชว์ทั้งหมด</option>
+						<option value="1">ข่าว </option>
+						<option value="2">รายการ</option>
+						<option value="0">ไม่ได้ใส่รายกา-ข่าว</option>
+					</select>
+					 <span class="input-group-addon"><i class="glyphicon glyphicon-list-alt "></i></span>
+					</div>
+					</div>
+					<div class="col-md-5 pull-right" >
+						 <div class="input-group " >
+						 	<input type="text" name="title" id="title" class="form-control form-control-inline"  placeholder="ค้นหาตามหัวข้อข่าว">           				
+							<span class="input-group-addon"><i class="glyphicon glyphicon-list-alt "></i></span>
+						</div>
+					</div>
+
+				</div>
+			</div>
+            </div>
+ 			<table class="table table-striped table-bordered table-hover table-list" id="">
                 <thead>
                     <tr>
                      	<th class="table-checkbox">

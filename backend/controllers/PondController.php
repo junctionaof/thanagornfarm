@@ -479,9 +479,33 @@ class PondController extends BaseController {
     	$searchCategory = $request->post('type', $request->get('type', ''));
     	$searchStatus = $request->post('status', $request->get('status', ''));
     	$q = trim($request->post('q', $request->get('q', '')));
-    
+   		
     	$query = food::find();
     	$query->orderBy(['id'=>SORT_ASC]);
+    	
+    	$op = $request->post('op', $request->get('opss', ''));
+    	if ($op == "search") {
+    		if (!empty($_REQUEST['typep'])){
+    			$typep = $_REQUEST['typep'];
+    			if($typep != 0){
+    				$queryf = pond::find();
+    				$queryf->andWhere(['type'=> $typep]);
+    				$pondf = $queryf->all();
+    				foreach ($pondf as $obj){
+    					$arrId[] = $obj->id;
+    				}
+    				 
+    				if($arrId){
+    					$query->andWhere(['pondId'=> $arrId]);
+    				}
+    			}
+    		}
+    		 
+    		if (!empty($_REQUEST['q'])){
+    			$item = $_REQUEST['q'];
+    			$query->andWhere(['LIKE' ,'title','%'.$item.'%', false]);
+    		}
+    	}
     
     	if ($searchCategory)
     		$query->andWhere('type = :type',[':type' => $searchCategory]);
@@ -539,7 +563,13 @@ class PondController extends BaseController {
     					
     					}
     				}
-    				
+    				$query = Typelist::find();
+    				$query->orderBy(['id'=>SORT_ASC]);
+    				$objTypelist = $query->all();
+    				$arrTypelist = [];
+    				foreach ($objTypelist as $dataTypelist){
+    					$arrTypelist[$dataTypelist->id] = $dataTypelist->name;
+    				}
     				
     					
     echo $this->render('food', [
@@ -547,6 +577,7 @@ class PondController extends BaseController {
     		'arrPond' => $arrPond,
     		'pagination' => $pagination,
     		'arrUser' =>$arrUser,
+    		'arrTypelist' => $arrTypelist,
     		'q'=>$q,
     ]);
     }
@@ -630,6 +661,21 @@ class PondController extends BaseController {
     	$query = Alkalinity::find();
     	$query->orderBy(['id'=>SORT_ASC]);
     
+    	$op = $request->post('op', $request->get('opss', ''));
+    	if ($op == "search") {
+    		if (!empty($_REQUEST['type'])){
+    			$type = $_REQUEST['type'];
+    			if($type != 0){
+    				$query->andWhere('type=:type',[':type'=> $type]);
+    			}
+    		}
+    		 
+    		if (!empty($_REQUEST['q'])){
+    			$item = $_REQUEST['q'];
+    			$query->andWhere(['LIKE' ,'title','%'.$item.'%', false]);
+    		}
+    	}
+    	
     	if ($searchCategory)
     		$query->andWhere('type = :type',[':type' => $searchCategory]);
     		 
@@ -686,11 +732,18 @@ class PondController extends BaseController {
     					
     					}
     				}
-    				
+    				$query = Typelist::find();
+    				$query->orderBy(['id'=>SORT_ASC]);
+    				$objTypelist = $query->all();
+    				$arrTypelist = [];
+    				foreach ($objTypelist as $dataTypelist){
+    					$arrTypelist[$dataTypelist->id] = $dataTypelist->name;
+    				}
     				
     					
     echo $this->render('alkalinity', [
     		'lst' => $list,
+    		'arrTypelist'=>$arrTypelist,
     		'arrPond' => $arrPond,
     		'pagination' => $pagination,
     		'arrUser' =>$arrUser,
@@ -774,6 +827,22 @@ class PondController extends BaseController {
     	$query = Checkyo::find();
     	$query->orderBy(['id'=>SORT_ASC]);
     
+    	
+    	$op = $request->post('op', $request->get('opss', ''));
+    	if ($op == "search") {
+    		if (!empty($_REQUEST['type'])){
+    			$type = $_REQUEST['type'];
+    			if($type != 0){
+    				$query->andWhere('type=:type',[':type'=> $type]);
+    			}
+    		}
+    		 
+    		if (!empty($_REQUEST['q'])){
+    			$item = $_REQUEST['q'];
+    			$query->andWhere(['LIKE' ,'title','%'.$item.'%', false]);
+    		}
+    	}
+    	
     	if ($searchCategory)
     		$query->andWhere('type = :type',[':type' => $searchCategory]);
     		 
@@ -831,10 +900,17 @@ class PondController extends BaseController {
     					}
     				}
     				
-    				
+    				$query = Typelist::find();
+    				$query->orderBy(['id'=>SORT_ASC]);
+    				$objTypelist = $query->all();
+    				$arrTypelist = [];
+    				foreach ($objTypelist as $dataTypelist){
+    					$arrTypelist[$dataTypelist->id] = $dataTypelist->name;
+    				}
     					
 		    echo $this->render('checkyo', [
 		    		'lst' => $list,
+		    		'arrTypelist'=>$arrTypelist,
 		    		'arrPond' => $arrPond,
 		    		'pagination' => $pagination,
 		    		'arrUser' =>$arrUser,
@@ -922,7 +998,22 @@ class PondController extends BaseController {
     
     	$query = Oxygen::find();
     	$query->orderBy(['id'=>SORT_ASC]);
-    
+
+    	$op = $request->post('op', $request->get('opss', ''));
+    	if ($op == "search") {
+    		if (!empty($_REQUEST['type'])){
+    			$type = $_REQUEST['type'];
+    			if($type != 0){
+    				$query->andWhere('type=:type',[':type'=> $type]);
+    			}
+    		}
+    		 
+    		if (!empty($_REQUEST['q'])){
+    			$item = $_REQUEST['q'];
+    			$query->andWhere(['LIKE' ,'title','%'.$item.'%', false]);
+    		}
+    	}
+    	
     	if ($searchCategory)
     		$query->andWhere('type = :type',[':type' => $searchCategory]);
     		 
@@ -980,10 +1071,17 @@ class PondController extends BaseController {
     					}
     				}
     				
-    				
+    				$query = Typelist::find();
+    				$query->orderBy(['id'=>SORT_ASC]);
+    				$objTypelist = $query->all();
+    				$arrTypelist = [];
+    				foreach ($objTypelist as $dataTypelist){
+    					$arrTypelist[$dataTypelist->id] = $dataTypelist->name;
+    				}
     					
     echo $this->render('oxygen', [
     		'lst' => $list,
+    		'arrTypelist'=> $arrTypelist,
     		'arrPond' => $arrPond,
     		'pagination' => $pagination,
     		'arrUser' =>$arrUser,
@@ -1071,6 +1169,21 @@ class PondController extends BaseController {
     	$query = Ph::find();
     	$query->orderBy(['id'=>SORT_ASC]);
     
+    	$op = $request->post('op', $request->get('opss', ''));
+    	if ($op == "search") {
+    		if (!empty($_REQUEST['type'])){
+    			$type = $_REQUEST['type'];
+    			if($type != 0){
+    				$query->andWhere('type=:type',[':type'=> $type]);
+    			}
+    		}
+    		 
+    		if (!empty($_REQUEST['q'])){
+    			$item = $_REQUEST['q'];
+    			$query->andWhere(['LIKE' ,'title','%'.$item.'%', false]);
+    		}
+    	}
+    	
     	if ($searchCategory)
     		$query->andWhere('type = :type',[':type' => $searchCategory]);
     		 
@@ -1127,18 +1240,25 @@ class PondController extends BaseController {
     					
     					}
     				}
-    				
+    				$query = Typelist::find();
+    				$query->orderBy(['id'=>SORT_ASC]);
+    				$objTypelist = $query->all();
+    				$arrTypelist = [];
+    				foreach ($objTypelist as $dataTypelist){
+    					$arrTypelist[$dataTypelist->id] = $dataTypelist->name;
+    				}
     				
     					
     echo $this->render('ph', [
     		'lst' => $list,
     		'arrPond' => $arrPond,
+    		'$arrTypelist'=>$arrTypelist,
     		'pagination' => $pagination,
     		'arrUser' =>$arrUser,
     		'q'=>$q,
     ]);
     }
-    
+   
     public function actionEditph()
     {
     	$currentTs = time();
@@ -1210,6 +1330,21 @@ class PondController extends BaseController {
     	$query = Temp::find();
     	$query->orderBy(['id'=>SORT_ASC]);
     
+    	$op = $request->post('op', $request->get('opss', ''));
+    	if ($op == "search") {
+    		if (!empty($_REQUEST['type'])){
+    			$type = $_REQUEST['type'];
+    			if($type != 0){
+    				$query->andWhere('type=:type',[':type'=> $type]);
+    			}
+    		}
+    		 
+    		if (!empty($_REQUEST['q'])){
+    			$item = $_REQUEST['q'];
+    			$query->andWhere(['LIKE' ,'title','%'.$item.'%', false]);
+    		}
+    	}
+    	
     	if ($searchCategory)
     		$query->andWhere('type = :type',[':type' => $searchCategory]);
     		 
@@ -1267,11 +1402,18 @@ class PondController extends BaseController {
     					}
     				}
     				
-    				
+    				$query = Typelist::find();
+    				$query->orderBy(['id'=>SORT_ASC]);
+    				$objTypelist = $query->all();
+    				$arrTypelist = [];
+    				foreach ($objTypelist as $dataTypelist){
+    					$arrTypelist[$dataTypelist->id] = $dataTypelist->name;
+    				}
     					
     echo $this->render('temp', [
     		'lst' => $list,
     		'arrPond' => $arrPond,
+    		'arrTypelist'=>$arrTypelist,
     		'pagination' => $pagination,
     		'arrUser' =>$arrUser,
     		'q'=>$q,
@@ -1356,6 +1498,21 @@ class PondController extends BaseController {
     	$query = Ammonia::find();
     	$query->orderBy(['id'=>SORT_ASC]);
     
+    	$op = $request->post('op', $request->get('opss', ''));
+    	if ($op == "search") {
+    		if (!empty($_REQUEST['type'])){
+    			$type = $_REQUEST['type'];
+    			if($type != 0){
+    				$query->andWhere('type=:type',[':type'=> $type]);
+    			}
+    		}
+    		 
+    		if (!empty($_REQUEST['q'])){
+    			$item = $_REQUEST['q'];
+    			$query->andWhere(['LIKE' ,'title','%'.$item.'%', false]);
+    		}
+    	}
+    	
     	if ($searchCategory)
     		$query->andWhere('type = :type',[':type' => $searchCategory]);
     		 
@@ -1412,12 +1569,20 @@ class PondController extends BaseController {
     							
     					}
     				}
-    
+    				$query = Typelist::find();
+    				$query->orderBy(['id'=>SORT_ASC]);
+    				$objTypelist = $query->all();
+    				$arrTypelist = [];
+    				foreach ($objTypelist as $dataTypelist){
+    					$arrTypelist[$dataTypelist->id] = $dataTypelist->name;
+    				}
     
     					
     				echo $this->render('ammonia', [
     						'lst' => $list,
     						'arrPond' => $arrPond,
+    						'arrTypelist'=>$arrTypelist,
+    						'arrTypelist'=>$arrTypelist,
     						'pagination' => $pagination,
     						'arrUser' =>$arrUser,
     						'q'=>$q,
@@ -1499,6 +1664,21 @@ class PondController extends BaseController {
     	$query = Nitrite::find();
     	$query->orderBy(['id'=>SORT_ASC]);
     
+    	$op = $request->post('op', $request->get('opss', ''));
+    	if ($op == "search") {
+    		if (!empty($_REQUEST['type'])){
+    			$type = $_REQUEST['type'];
+    			if($type != 0){
+    				$query->andWhere('type=:type',[':type'=> $type]);
+    			}
+    		}
+    		 
+    		if (!empty($_REQUEST['q'])){
+    			$item = $_REQUEST['q'];
+    			$query->andWhere(['LIKE' ,'title','%'.$item.'%', false]);
+    		}
+    	}
+    	
     	if ($searchCategory)
     		$query->andWhere('type = :type',[':type' => $searchCategory]);
     		 
@@ -1559,11 +1739,18 @@ class PondController extends BaseController {
     					
     				}
     
-    
+    				$query = Typelist::find();
+    				$query->orderBy(['id'=>SORT_ASC]);
+    				$objTypelist = $query->all();
+    				$arrTypelist = [];
+    				foreach ($objTypelist as $dataTypelist){
+    					$arrTypelist[$dataTypelist->id] = $dataTypelist->name;
+    				}
     					
     				echo $this->render('nitrite', [
     						'lst' => $list,
     						'arrPond' => $arrPond,
+    						'arrTypelist'=>$arrTypelist,
     						'pagination' => $pagination,
     						'arrUser' =>$arrUser,
     						'q'=>$q,
@@ -1644,6 +1831,21 @@ class PondController extends BaseController {
     	$query = Other::find();
     	$query->orderBy(['id'=>SORT_ASC]);
     
+    	$op = $request->post('op', $request->get('opss', ''));
+    	if ($op == "search") {
+    		if (!empty($_REQUEST['type'])){
+    			$type = $_REQUEST['type'];
+    			if($type != 0){
+    				$query->andWhere('type=:type',[':type'=> $type]);
+    			}
+    		}
+    		 
+    		if (!empty($_REQUEST['q'])){
+    			$item = $_REQUEST['q'];
+    			$query->andWhere(['LIKE' ,'title','%'.$item.'%', false]);
+    		}
+    	}
+    	
     	if ($searchCategory)
     		$query->andWhere('type = :type',[':type' => $searchCategory]);
     		 
@@ -1701,11 +1903,18 @@ class PondController extends BaseController {
     					}
     				}
     
-    
+    				$query = Typelist::find();
+    				$query->orderBy(['id'=>SORT_ASC]);
+    				$objTypelist = $query->all();
+    				$arrTypelist = [];
+    				foreach ($objTypelist as $dataTypelist){
+    					$arrTypelist[$dataTypelist->id] = $dataTypelist->name;
+    				}
     					
     				echo $this->render('other', [
     						'lst' => $list,
     						'arrPond' => $arrPond,
+    						'arrTypelist'=>$arrTypelist,
     						'pagination' => $pagination,
     						'arrUser' =>$arrUser,
     						'q'=>$q,
@@ -1788,6 +1997,21 @@ class PondController extends BaseController {
     	$query = Salinity::find();
     	$query->orderBy(['id'=>SORT_ASC]);
     
+    	$op = $request->post('op', $request->get('opss', ''));
+    	if ($op == "search") {
+    		if (!empty($_REQUEST['type'])){
+    			$type = $_REQUEST['type'];
+    			if($type != 0){
+    				$query->andWhere('type=:type',[':type'=> $type]);
+    			}
+    		}
+    		 
+    		if (!empty($_REQUEST['q'])){
+    			$item = $_REQUEST['q'];
+    			$query->andWhere(['LIKE' ,'title','%'.$item.'%', false]);
+    		}
+    	}
+    	
     	if ($searchCategory)
     		$query->andWhere('type = :type',[':type' => $searchCategory]);
     		 
@@ -1845,10 +2069,18 @@ class PondController extends BaseController {
     					}
     				}
     
+    				$query = Typelist::find();
+    				$query->orderBy(['id'=>SORT_ASC]);
+    				$objTypelist = $query->all();
+    				$arrTypelist = [];
+    				foreach ($objTypelist as $dataTypelist){
+    					$arrTypelist[$dataTypelist->id] = $dataTypelist->name;
+    				}
     
     					
     				echo $this->render('salinity', [
     						'lst' => $list,
+    						'arrTypelist'=>$arrTypelist,
     						'arrPond' => $arrPond,
     						'pagination' => $pagination,
     						'arrUser' =>$arrUser,
@@ -1940,6 +2172,21 @@ class PondController extends BaseController {
     	$query = Waterchange::find();
     	$query->orderBy(['id'=>SORT_ASC]);
     
+    	$op = $request->post('op', $request->get('opss', ''));
+    	if ($op == "search") {
+    		if (!empty($_REQUEST['type'])){
+    			$type = $_REQUEST['type'];
+    			if($type != 0){
+    				$query->andWhere('type=:type',[':type'=> $type]);
+    			}
+    		}
+    		 
+    		if (!empty($_REQUEST['q'])){
+    			$item = $_REQUEST['q'];
+    			$query->andWhere(['LIKE' ,'title','%'.$item.'%', false]);
+    		}
+    	}
+    	
     	if ($searchCategory)
     		$query->andWhere('type = :type',[':type' => $searchCategory]);
     		 
@@ -1997,11 +2244,18 @@ class PondController extends BaseController {
     					}
     				}
     
-    
+    				$query = Typelist::find();
+    				$query->orderBy(['id'=>SORT_ASC]);
+    				$objTypelist = $query->all();
+    				$arrTypelist = [];
+    				foreach ($objTypelist as $dataTypelist){
+    					$arrTypelist[$dataTypelist->id] = $dataTypelist->name;
+    				}
     					
     				echo $this->render('waterchange', [
     						'lst' => $list,
     						'arrPond' => $arrPond,
+    						'arrTypelist'=>$arrTypelist,
     						'pagination' => $pagination,
     						'arrUser' =>$arrUser,
     						'q'=>$q,
@@ -2083,6 +2337,21 @@ class PondController extends BaseController {
     	$query = Watertemp::find();
     	$query->orderBy(['id'=>SORT_ASC]);
     
+    	$op = $request->post('op', $request->get('opss', ''));
+    	if ($op == "search") {
+    		if (!empty($_REQUEST['type'])){
+    			$type = $_REQUEST['type'];
+    			if($type != 0){
+    				$query->andWhere('type=:type',[':type'=> $type]);
+    			}
+    		}
+    		 
+    		if (!empty($_REQUEST['q'])){
+    			$item = $_REQUEST['q'];
+    			$query->andWhere(['LIKE' ,'title','%'.$item.'%', false]);
+    		}
+    	}
+    	
     	if ($searchCategory)
     		$query->andWhere('type = :type',[':type' => $searchCategory]);
     		 
@@ -2140,11 +2409,18 @@ class PondController extends BaseController {
     					}
     				}
     				
-    				
+    				$query = Typelist::find();
+    				$query->orderBy(['id'=>SORT_ASC]);
+    				$objTypelist = $query->all();
+    				$arrTypelist = [];
+    				foreach ($objTypelist as $dataTypelist){
+    					$arrTypelist[$dataTypelist->id] = $dataTypelist->name;
+    				}
     					
     echo $this->render('watertemp', [
     		'lst' => $list,
     		'arrPond' => $arrPond,
+    		'arrTypelist'=>$arrTypelist,
     		'pagination' => $pagination,
     		'arrUser' =>$arrUser,
     		'q'=>$q,
@@ -2227,6 +2503,21 @@ class PondController extends BaseController {
     	$query = Weight::find();
     	$query->orderBy(['id'=>SORT_ASC]);
     
+    	$op = $request->post('op', $request->get('opss', ''));
+    	if ($op == "search") {
+    		if (!empty($_REQUEST['type'])){
+    			$type = $_REQUEST['type'];
+    			if($type != 0){
+    				$query->andWhere('type=:type',[':type'=> $type]);
+    			}
+    		}
+    		 
+    		if (!empty($_REQUEST['q'])){
+    			$item = $_REQUEST['q'];
+    			$query->andWhere(['LIKE' ,'title','%'.$item.'%', false]);
+    		}
+    	}
+    	
     	if ($searchCategory)
     		$query->andWhere('type = :type',[':type' => $searchCategory]);
     		 
@@ -2284,11 +2575,18 @@ class PondController extends BaseController {
     					}
     				}
     				
-    				
+    				$query = Typelist::find();
+    				$query->orderBy(['id'=>SORT_ASC]);
+    				$objTypelist = $query->all();
+    				$arrTypelist = [];
+    				foreach ($objTypelist as $dataTypelist){
+    					$arrTypelist[$dataTypelist->id] = $dataTypelist->name;
+    				}
     					
     echo $this->render('weight', [
     		'lst' => $list,
     		'arrPond' => $arrPond,
+    		'arrTypelist'=> $arrTypelist,
     		'pagination' => $pagination,
     		'arrUser' =>$arrUser,
     		'q'=>$q,
@@ -2468,6 +2766,23 @@ class PondController extends BaseController {
     			$query->andWhere(['in', 'categoryId', $node->getChildren($type,true)]);
     	}
     	
+    	if ($op == "search") {
+    		if (!empty($_REQUEST['type'])){
+    			$type = $_REQUEST['type'];
+    			if($type != 0){
+    				$query->andWhere('type=:type',[':type'=> $type]);
+    			}
+    		}
+    	
+    		if (!empty($_REQUEST['q'])){
+    			$item = $_REQUEST['q'];
+    			$query->andWhere(['LIKE' ,'title','%'.$item.'%', false]);
+    		}	
+    	}
+    	
+    	
+    	
+    	
     	$query->orderBy('lastUpdateTime DESC');
     	
     	if(!empty($q)){
@@ -2498,6 +2813,7 @@ class PondController extends BaseController {
 		
 		$query = User::find();
 		
+		
 		if(!empty($arrUserId))
 			$query->andWhere(['in', 'id', $arrUserId]);
 
@@ -2508,7 +2824,14 @@ class PondController extends BaseController {
 			}
 		}
 		
-		
+		$query = Typelist::find();
+		$query->orderBy(['id'=>SORT_ASC]);
+		$objTypelist = $query->all();
+		$arrTypelist = [];
+		foreach ($objTypelist as $dataTypelist){
+			$arrTypelist[$dataTypelist->id] = $dataTypelist->name;
+		}
+		//var_dump($arrTypelist); exit();
 		
         echo $this->render(
         			'list', 
@@ -2522,6 +2845,7 @@ class PondController extends BaseController {
         				'q'=>$q,
         				'pagination'=>$pagination,
         				'canPublishNews'=>$canPublishNews,
+        				'arrTypelist'=>$arrTypelist,
 					]
 				);
     }

@@ -20,7 +20,7 @@ function postAction(action) {
 		$('#dataTable-form').submit();
 }
 
-$('#searchBtn').click(function() {
+$('#search').click(function() {
 		postAction('search');
 });
 
@@ -55,7 +55,6 @@ ActiveForm::begin(['id' => 'dataTable-form']);
             </div>
         </div>
         <div class="portlet-body">
-            <div class="table-toolbar">
                 <div class="row">
                     <div class="col-md-6">
                         <div class="portlet-title">
@@ -87,6 +86,29 @@ ActiveForm::begin(['id' => 'dataTable-form']);
 						</div>
                     </div>
                 </div>
+                            
+            <div id="datatable-toolbar" class="table-toolbar" style="padding: 20px;background: #E9ECF3;">
+			<div class="row" ">
+				<div class="col-md-12">
+					<div class="btn-group pull-right">
+						<button class="btn blue" id="search">ค้นหา</button>
+					</div>
+					<div class="col-md-4 pull-right">
+					
+					<div class="input-group" id="type">
+					<?php echo Html::dropDownList('type', '0', ['0'=>"เลือกบ่อที่ต้องการ"]+$arrTypelist , ['id'=>'type','class' => 'form-control pull-right input-medium'])?>	
+					 <span class="input-group-addon"><i class="glyphicon glyphicon-list-alt "></i></span>
+					</div>
+					</div>
+					<div class="col-md-7 pull-right" >
+						 <div class="input-group " >
+						 	<input type="text" name="q" id="q" class="form-control form-control-inline"  placeholder="ค้นหาตามชื่อรุ่น">           				
+							<span class="input-group-addon"><i class="glyphicon glyphicon-list-alt "></i></span>
+						</div>
+					</div>
+
+				</div>
+			</div>
             </div>
             <table class="table table-striped table-bordered table-hover table-list" id="">
                 <thead>

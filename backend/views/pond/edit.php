@@ -84,7 +84,7 @@ $this->registerJsFile($baseUrl  . '/assets/pages/scripts/components-date-time-pi
                                                 </div>
                                                 <div class="form-group">
 													<label class="control-label">เลือกบ่อ</label>
-													<?php echo Html::dropDownList('type', ' ', $arrTypelist , ['id'=>'type','class' => 'form-control input-medium'])?>	
+													<?php echo Html::dropDownList('type', ' ', $arrTypelist , ['id'=>'type','class' => 'form-control pull-right input-medium'])?>	
 												</div>
                                                 <div class="form-group">
                                                     <label class="control-label">คำอธิบาย ข้อมูลอื่นๆ ของรุ่นนี้</label>
