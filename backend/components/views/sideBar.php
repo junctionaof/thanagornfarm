@@ -47,6 +47,12 @@ $template = array(
                                 <span class="title">จัดการรุ่นในบ่อเลี้ยง</span>
                             </a>
                         </li>
+                        <li class="nav-item <?php echo $myUrl == Url::toRoute('pond/report') || $myUrl == Url::toRoute('pond/edit')?'active':'';?> ">
+                            <a href="<?php echo Url::toRoute('pond/report') ?>" class="nav-link nav-toggle">
+                                <i class="icon-puzzle"></i>
+                                <span class="title">ออกรายงาน</span>
+                            </a>
+                        </li>
                         <li class="heading">
                             <h3 class="uppercase">บันทึกค่าต่างๆ</h3>
                         </li>
@@ -128,6 +134,13 @@ $template = array(
                                         <span class="title">บันทึกอื่นๆ </span>
                                     </a>
                                 </li>
+                                <li class="nav-item <?php echo $myUrl == Url::toRoute('pond/analysis') || $myUrl == Url::toRoute('pond/editother') ?'active':'';?>  ">
+                                    <a href="<?php echo Url::toRoute('pond/analysis') ?>" class="nav-link ">
+                                    <i class="fa fa-angle-right"></i>
+                                        <span class="title">  บันทึกวิเคราะห์ผลการเลี้ยง </span>
+                                    </a>
+                                </li>
+                              
                         <li class="heading">
                             <h3 class="uppercase"> ข้อมูลฟาร์ม</h3>
                         </li>        
