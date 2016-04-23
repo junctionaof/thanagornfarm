@@ -53,7 +53,7 @@ ActiveForm::begin(['id' => 'dataTable-form']);
     	<div class="portlet box green">
         	<div class="portlet-title">
             <div class="caption">
-                <i class="fa fa-table"></i>รายการบันทึกการเช็คยอ
+                <i class="fa fa-table"></i>รายการบันทึกวิเคราะห์ผลการเลี้ยง 
             </div>
             <div class="tools">
                 <a href="javascript:;" class="collapse">
@@ -67,7 +67,7 @@ ActiveForm::begin(['id' => 'dataTable-form']);
                         <div class="portlet-title">
                                 <div class="actions">
                                  	<a class="btn add" href="<?= Url::toRoute(['pond/editanalysis'])?>" title="เพิ่ม">
-                                        <i class="icon-plus"> บันทึกการเช็คยอ</i>
+                                        <i class="icon-plus"> บันทึกวิเคราะห์ผลการเลี้ยง </i>
                                     </a>
                                 </div>
                         </div>
@@ -121,13 +121,11 @@ ActiveForm::begin(['id' => 'dataTable-form']);
 		                            <input type="checkbox" class="group-checkable" data-set=".table-list .checkboxes"/>
 		                        </th>
 		                        <th>บ่อ-รุ่นที่ </th>
-		                        <th>วัน/เดือน/ปี ที่บันทึก </th>
-		                        <th>มื้อที่ </th>
-		                        <th>ยอ 1</th>
-		                        <th>ยอ 2</th>
-		                        <th>ยอ 3</th>
-		                        <th>ยอ 4</th>
-		                        <th>อายุลูกกุ้ง </th>
+		                        <th>อายุลูกกุ้ง</th>
+		                        <th>วันที่จับกุ้ง</th>
+		                        <th>รายรับ</th>
+		                        <th>กำไรขั้นต้น</th>
+		                        <th>ผลผลิตต่อไร่</th>
 		                        <th>ผู้บันทึก </th>	
                     	</tr>
                 </thead>
@@ -139,14 +137,12 @@ ActiveForm::begin(['id' => 'dataTable-form']);
 				          <tr class="odd">
 				                 <td> <?php echo Html::checkbox('idCheck[]', false, ['value'=> $Content->id, 'class'=> 'checkboxes'])?></td>
 				                 <td><a href="<?= Url::toRoute(['pond/editanalysis'])?>?id=<?=$Content->id?>"><?php echo isset($arrPond[$Content->pondId])?$arrPond[$Content->pondId]:'ไม่ได้เลือกบ่อ รุ่น ';?></a></td>
-				                 <td class="text-left"><?php echo DateUtil::th_date(DateUtil::LDT_FMT_TH, strtotime($Content->analysisTime));?></td>
-				                 <td><?php echo $Content->analysisNo;?> </td>
-				                 <td><?php echo $Content->yo01;?>   </td>
-				                 <td> <?php echo $Content->yo02;?>  </td>
-				                 <td> <?php echo $Content->yo03;?>  </td>
-				                 <td> <?php echo $Content->yo04;?>  </td>
 				                 <td> <?php echo $Content->age;?>  </td>
-				                 <td class="center"><?php echo  isset($arrUser[$Content->createBy]) ? $arrUser[$Content->createBy] : 'anonymous'; ?>  </td>
+				                 <td class="text-left"><?php echo DateUtil::th_date(DateUtil::LDT_FMT_TH, strtotime($Content->pickDate));?></td>
+				                 <td><?php echo $Content->receipts; ?> </td>
+				                 <td><?php echo $Content->profits; ?>   </td>
+				                 <td> <?php echo $Content->yields; ?>  </td>
+				                 <td class="center"><?php echo  isset($arrUser[$Content->lastUpdateBy]) ? $arrUser[$Content->lastUpdateBy] : 'anonymous'; ?>  </td>
 				         </tr>
 					<?php 
 					endforeach;

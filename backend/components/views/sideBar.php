@@ -56,6 +56,12 @@ $template = array(
                         <li class="heading">
                             <h3 class="uppercase">บันทึกค่าต่างๆ</h3>
                         </li>
+                                <li class="nav-item <?php echo $myUrl == Url::toRoute('pond/analysis') || $myUrl == Url::toRoute('pond/editother') ?'active':'';?>  ">
+                                    <a href="<?php echo Url::toRoute('pond/analysis') ?>" class="nav-link ">
+                                    <i class="fa fa-angle-right"></i>
+                                        <span class="title">  บันทึกวิเคราะห์ผลการเลี้ยง </span>
+                                    </a>
+                                </li>
                                 <li class="nav-item <?php echo $myUrl == Url::toRoute('pond/food') || $myUrl == Url::toRoute('pond/editfood')?'active':'';?>  ">
                                     <a href="<?php echo Url::toRoute('pond/food') ?>" class="nav-link ">
                                     	<i class="fa fa-angle-right"></i>
@@ -134,12 +140,7 @@ $template = array(
                                         <span class="title">บันทึกอื่นๆ </span>
                                     </a>
                                 </li>
-                                <li class="nav-item <?php echo $myUrl == Url::toRoute('pond/analysis') || $myUrl == Url::toRoute('pond/editother') ?'active':'';?>  ">
-                                    <a href="<?php echo Url::toRoute('pond/analysis') ?>" class="nav-link ">
-                                    <i class="fa fa-angle-right"></i>
-                                        <span class="title">  บันทึกวิเคราะห์ผลการเลี้ยง </span>
-                                    </a>
-                                </li>
+
                               
                         <li class="heading">
                             <h3 class="uppercase"> ข้อมูลฟาร์ม</h3>

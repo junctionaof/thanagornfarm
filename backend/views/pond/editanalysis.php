@@ -86,7 +86,7 @@ $this->registerJsFile($baseUrl  . '/assets/pages/scripts/components-select2.min.
                             <div class="portlet box green">
                                 <div class="portlet-title">
                                     <div class="caption">
-                                        <i class="fa fa-gift"></i><?php echo $status; ?>การเช็คยอ </div>
+                                        <i class="fa fa-gift"></i><?php echo $status; ?>วิเคราะห์ผลการเลี้ยง </div>
                                     <div class="tools">
                                         <a href="javascript:;" class="collapse"> </a>
                                         <a href="#portlet-config" data-toggle="modal" class="config"> </a>
@@ -111,57 +111,138 @@ $this->registerJsFile($baseUrl  . '/assets/pages/scripts/components-select2.min.
                                             <div class="form-group">
                                             	<label class="control-label col-md-3">ข้อมูลบ่อ และรุ่น </label>
                                                       <div class="input-group input-large " >
-                                                      <?= Html::input('text','pond', $model->name,['id'=>'pond','class' => 'form-control', 'disabled' => 'true']);?>
+                                                      <?= Html::input('text','name', $model->name,['id'=>'pond','class' => 'form-control']);?>
                                                   	</div>
                                             </div>
                                             
                                             <div class="form-group">
                                            		<label class="control-label col-md-3">อายุลูกกุ้ง</label>
                                                       <div class="input-group input-large " >
-                                                       <?= Html::input('text', 'age', $model->age,['id'=>'age','class' => 'form-control', 'disabled' => 'true']);?>
+                                                       <?= Html::input('text', 'age', $model->age,['id'=>'age','class' => 'form-control']);?>
                                                   	</div>
                                             </div>
-                                            
+                                                                                        
                                              <div class="form-group">
-                                                <label class="control-label col-md-3">วันที่เช็คยอ</label>
+                                                <label class="control-label col-md-3">วันที่จับกุ้ง</label>
                                                       <div class="input-group input-large" data-date-format="dd-mm-yyyy" data-date-start-date="+0d">
-                                                       <?= Html::input('text', 'analysisTime' ,$correntDate ,['id'=>'analysisTime','class' => 'form-control']);?>
+                                                       <?= Html::input('text', 'pickDate' ,$model->pickDate ,['id'=>'analysisTime','class' => 'form-control']);?>
                                                   	</div>
                                             </div>
-                                               <div class="form-group">
-                                                <label class="control-label col-md-3">เช็คยอมื้อที่</label>
+                                                                                        
+                                        
+                                            <div class="form-group">
+                                                <label class="control-label col-md-3">ผลผลิตที่ได้</label>
                                                       <div class="input-group input-large ">
-                                                        <?php echo Html::dropDownList('analysisNo',$model->analysisNo, analysis::$arrMeal , ['id'=>'analysisNo','class' => 'select2 form-control'])?>	
-                                                  	</div>
+                                                        <?= Html::input('text', 'results', $model->results,['id'=>'results','class' => 'form-control']);?>
+                                                  	<span class="input-group-addon">
+                                                        <i class="fa">กิโลกรัม</i>
+                                                    </span>
+                                                  </div>	
+                                            </div>
+                                              <div class="form-group">
+                                                <label class="control-label col-md-3">ขนาดกุ้งที่จับ</label>
+                                                      <div class="input-group input-large ">
+                                                        <?= Html::input('text', 'size', $model->size,['id'=>'size','class' => 'form-control']);?>
+                                                  	<span class="input-group-addon">
+                                                        <i class="fa">ตัว / กิโลกรัม</i>
+                                                    </span>
+                                                  </div>	
+                                            </div>
+                                              <div class="form-group">
+                                                <label class="control-label col-md-3">ความหนาแน่น</label>
+                                                      <div class="input-group input-large ">
+                                                        <?= Html::input('text', 'density', $model->density,['id'=>'density','class' => 'form-control']);?>
+                                                  	<span class="input-group-addon">
+                                                        <i class="fa">ตัว / ตารางเมตร</i>
+                                                    </span>
+                                                  </div>	
+                                            </div>
+                                              <div class="form-group">
+                                                <label class="control-label col-md-3">อัตรารอด</label>
+                                                      <div class="input-group input-large ">
+                                                        <?= Html::input('text', 'survivalRate', $model->survivalRate,['id'=>'survivalRate','class' => 'form-control']);?>
+                                                  	<span class="input-group-addon">
+                                                        <i class="fa"> % </i>
+                                                    </span>
+                                                  </div>	
+                                            </div>
+                                              <div class="form-group">
+                                                <label class="control-label col-md-3">ปริมาณอาหารที่ใช้รวม</label>
+                                                      <div class="input-group input-large ">
+                                                        <?= Html::input('text', 'quantity', $model->quantity,['id'=>'quantity','class' => 'form-control']);?>
+                                                  	<span class="input-group-addon">
+                                                        <i class="fa">กิโลกรัม</i>
+                                                    </span>
+                                                  </div>	
                                             </div>
                                             
-
-                                            
-                                             <div class="form-group">
-                                                <label class="control-label col-md-3">ยอที่ 1</label>
+                                          <div class="form-group">
+                                           		<label class="control-label col-md-3">อัตราแลกเนื้อ (FCR)</label>
                                                       <div class="input-group input-large " >
-                                                       <?php echo Html::dropDownList('yo01',$model->yo01, analysis::$arrCheck , ['id'=>'yo01','class' => 'select2 form-control'])?>	
+                                                       <?= Html::input('text', 'fcr', $model->fcr,['id'=>'fcr','class' => 'form-control']);?>
                                                   	</div>
                                             </div>
                                             
                                             <div class="form-group">
-                                                <label class="control-label col-md-3">ยอที่ 2</label>
-                                                      <div class="input-group input-large" >
-                                                      <?php echo Html::dropDownList('yo02',$model->yo02, analysis::$arrCheck , ['id'=>'yo02','class' => 'select2 form-control'])?>	
+                                           		<label class="control-label col-md-3">รายรับ</label>
+                                                      <div class="input-group input-large " >
+                                                       <?= Html::input('text', 'receipts', $model->receipts,['id'=>'receipts','class' => 'form-control']);?>
+                                                  	</div>
+                                            </div>
+                                    <div class="note note-info">
+                                        <strong>วิเคราะห์ต้นทุนการผลิต </strong>
+                                    </div>
+                                      <div class="form-group">
+                                           		<label class="control-label col-md-3">ต้นทุนลูกกุ้ง</label>
+                                                      <div class="input-group input-large " >
+                                                       <?= Html::input('text', 'costShrimp', $model->costShrimp,['id'=>'costShrimp','class' => 'form-control']);?>
+                                                  	</div>
+                                            </div>
+                                              <div class="form-group">
+                                           		<label class="control-label col-md-3">ต้นทุนอาหาร</label>
+                                                      <div class="input-group input-large " >
+                                                       <?= Html::input('text', 'costFood', $model->costFood,['id'=>'costFood','class' => 'form-control']);?>
+                                                  	</div>
+                                            </div>
+                                              <div class="form-group">
+                                           		<label class="control-label col-md-3">ต้นทุนค่าจ้างพนักงาน</label>
+                                                      <div class="input-group input-large " >
+                                                       <?= Html::input('text', 'costWage', $model->costWage,['id'=>'costWage','class' => 'form-control']);?>
+                                                  	</div>
+                                            </div>
+                                              <div class="form-group">
+                                           		<label class="control-label col-md-3">ต้นทุนค่าพลังงาน</label>
+                                                      <div class="input-group input-large " >
+                                                       <?= Html::input('text', 'costEnergy', $model->costEnergy,['id'=>'costEnergy','class' => 'form-control']);?>
                                                   	</div>
                                             </div>
                                             <div class="form-group">
-                                                <label class="control-label col-md-3">ยอที่ 3</label>
-                                                      <div class="input-group input-large" >
-													<?php echo Html::dropDownList('yo03',$model->yo03, analysis::$arrCheck , ['id'=>'yo03','class' => 'select2 form-control'])?>	
+                                           		<label class="control-label col-md-3">ต้นทุนอื่นๆ</label>
+                                                      <div class="input-group input-large " >
+                                                       <?= Html::input('text', 'costOther', $model->costOther,['id'=>'costOther','class' => 'form-control']);?>
                                                   	</div>
                                             </div>
                                             <div class="form-group">
-                                                <label class="control-label col-md-3">ยอที่ 4</label>
-                                                      <div class="input-group input-large" >
-                                                      <?php echo Html::dropDownList('yo04',$model->yo04, analysis::$arrCheck , ['id'=>'yo04','class' => 'select2 form-control'])?>	
+                                           		<label class="control-label col-md-3">กำไรขั้นต้น</label>
+                                                      <div class="input-group input-large " >
+                                                       <?= Html::input('text', 'profits', $model->profits,['id'=>'costOther','class' => 'form-control']);?>
                                                   	</div>
                                             </div>
+                                            <div class="form-group">
+                                           		<label class="control-label col-md-3">ผลผลิตต่อไร่</label>
+                                                      <div class="input-group input-large " >
+                                                       <?= Html::input('text', 'yields', $model->yields,['id'=>'costOther','class' => 'form-control']);?>
+                                                  	</div>
+                                            </div>
+                                            <div class="form-group">
+                                           		<label class="control-label col-md-3">ข้อเสนอแนะ</label>
+                                                      <div class="input-group input-large " >
+                                                        <textarea name = "suggestion" id="suggestion" class="form-control" rows="3" placeholder=""></textarea>
+                                                  	</div>
+                                            </div>
+                                          
+                                            
+                                            
                                         </div>
                                         <div class="form-actions">
                                             <div class="row">

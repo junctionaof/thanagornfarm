@@ -23,6 +23,7 @@ use common\models\Nitrite;
 use common\models\Salinity;
 use common\models\Waterchange;
 use common\models\Other;
+use common\models\analysis;
 
 use app\Workflow;
 use app\JsonPackage;
@@ -1110,20 +1111,25 @@ class PondController extends BaseController {
     	$analysisTimeIn = date('Y-m-d H:i:s', strtotime($analysisTime));
     	 
     	if($request->isPost){
-    		$model->name  = $request->get('name', $request->post('name', null));
     		$model->pondId  = $request->get('pondId', $request->post('pondId', null));
-    		$model->analysisNo  = $request->get('analysisNo', $request->post('analysisNo', null));
+    		$model->name  = $request->get('name', $request->post('name', null));
     		$model->age  = $request->get('age', $request->post('age', null));
-    		$model->analysisNum  = $request->get('analysisNum', $request->post('analysisNum', null));
-    		$model->analysisTime  = $analysisTimeIn;
-    		$model->numberOf  = $request->get('numberOf', $request->post('numberOf', null));
-    		$model->yo01  = $request->get('yo01', $request->post('yo01', null));
-    		$model->yo02  = $request->get('yo02', $request->post('yo02', null));
-    		$model->yo03  = $request->get('yo03', $request->post('yo03', null));
-    		$model->yo04  = $request->get('yo04', $request->post('yo04', null));
+    		$model->pickDate  = $request->get('pickDate', $request->post('pickDate', null));
+    		$model->results  = $request->get('results', $request->post('results', null));
+    		$model->size  = $request->get('size', $request->post('size', null));
+    		$model->survivalRate  = $request->get('survivalRate', $request->post('survivalRate', null));
+    		$model->quantity  = $request->get('quantity', $request->post('quantity', null));
+    		$model->fcr  = $request->get('fcr', $request->post('fcr', null));
+    		$model->receipts  = $request->get('receipts', $request->post('receipts', null));
+    		$model->costShrimp  = $request->get('costShrimp', $request->post('costShrimp', null));
+    		$model->costWage = $request->get('costWage', $request->post('costWage', null));
+    		$model->costEnergy = $request->get('costEnergy', $request->post('costEnergy', null));
+    		$model->costOther  = $request->get('costOther', $request->post('costOther', null));
+    		$model->profits  = $request->get('profits', $request->post('profits', null));
+    		$model->yields  = $request->get('yields', $request->post('yields', null));
+    		$model->suggestion  = $request->get('suggestion', $request->post('suggestion', null));
     		$model->lastUpdateBy = $identity->id;
     		$model->lastUpdateTime = date('Y-m-d H:i:s', $currentTs);
-    
     		if (trim($model->pondId) == ''){
     			$model->addError('pondId', 'ไม่ได้เลือก รุ่น และบ่อ');
     		}
