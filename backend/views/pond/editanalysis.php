@@ -213,7 +213,7 @@ $this->registerJsFile($baseUrl  . '/assets/pages/scripts/components-select2.min.
                                                     </span>
                                                     <span class="input-group-btn">
                                                         <button id="checkSurvivalRate" class="btn btn-success" type="button">
-                                                        <i class="fa fa-arrow-left fa-fw"></i> คำนวน</button>
+                                                        <i class="fa fa-arrow-left fa-fw"></i> คำนวณ</button>
                                                     </span>
                                                   </div>
                                                     </div>
@@ -226,7 +226,7 @@ $this->registerJsFile($baseUrl  . '/assets/pages/scripts/components-select2.min.
                                                     </span>
                                                      <span class="input-group-btn">
                                                         <button id="checkSurvivalRate" class="btn btn-success" type="button">
-                                                        <i class="fa fa-arrow-left fa-fw"></i> คำนวน</button>
+                                                        <i class="fa fa-arrow-left fa-fw"></i> คำนวณ</button>
                                                     </span>
                                                   </div>	
                                             </div>
@@ -244,7 +244,7 @@ $this->registerJsFile($baseUrl  . '/assets/pages/scripts/components-select2.min.
                                                        <?= Html::input('text', 'receipts', $model->receipts,['id'=>'receipts','class' => 'form-control']);?>
                                                   	 <span class="input-group-btn">
                                                         <button id="checkSurvivalRate" class="btn btn-success" type="button">
-                                                        <i class="fa fa-arrow-left fa-fw"></i> คำนวน</button>
+                                                        <i class="fa fa-arrow-left fa-fw"></i> คำนวณ</button>
                                                     </span>
                                                   	</div>
                                                   	
@@ -258,7 +258,7 @@ $this->registerJsFile($baseUrl  . '/assets/pages/scripts/components-select2.min.
                                                        <?= Html::input('text', 'costShrimp', $model->costShrimp,['id'=>'costShrimp','class' => 'form-control']);?>
                                                   	<span class="input-group-btn">
                                                         <button id="checkSurvivalRate" class="btn btn-success" type="button">
-                                                        <i class="fa fa-arrow-left fa-fw"></i> คำนวน</button>
+                                                        <i class="fa fa-arrow-left fa-fw"></i> คำนวณ</button>
                                                     </span>
                                                   	</div>
                                             </div>
@@ -292,7 +292,7 @@ $this->registerJsFile($baseUrl  . '/assets/pages/scripts/components-select2.min.
                                                        <?= Html::input('text', 'profits', $model->profits,['id'=>'costOther','class' => 'form-control']);?>
                                                   	<span class="input-group-btn">
                                                         <button id="checkSurvivalRate" class="btn btn-success" type="button">
-                                                        <i class="fa fa-arrow-left fa-fw"></i> คำนวน</button>
+                                                        <i class="fa fa-arrow-left fa-fw"></i> คำนวณ</button>
                                                     </span>
                                                   	</div>
                                             </div>
@@ -302,7 +302,7 @@ $this->registerJsFile($baseUrl  . '/assets/pages/scripts/components-select2.min.
                                                        <?= Html::input('text', 'yields', $model->yields,['id'=>'costOther','class' => 'form-control']);?>
                                                   	<span class="input-group-btn">
                                                         <button id="checkSurvivalRate" class="btn btn-success" type="button">
-                                                        <i class="fa fa-arrow-left fa-fw"></i> คำนวน</button>
+                                                        <i class="fa fa-arrow-left fa-fw"></i> คำนวณ</button>
                                                     </span>
                                                   	</div>
                                             </div>
