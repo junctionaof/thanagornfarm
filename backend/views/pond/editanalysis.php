@@ -1,5 +1,4 @@
 <?php
-
 use yii\helpers\Url;
 use yii\web\View;
 use yii\helpers\Html;
@@ -40,12 +39,50 @@ $(document).ready(function() {
 			var json = $.parseJSON(data);
 			$('#pond').val(json.pond);
 		    $('#age').val(json.age);
+		 	$('#larvae').val(json.larvae);
 		 	}).fail(function() {
 		    	console.log('error loading');
 		  	});
 	});
-		$('#analysisTime').datepicker();
+
+
+		$('input[name=weightTime]').on("change", function(){
+			if($('input[name=expire_date]').val() != ""){
+				$('input[name=expire_time]').timepicker({
+		            autoclose: true,
+		            minuteStep: 1,
+		            showSeconds: true,
+		            showMeridian: false
+		        });
+			}
+		});
+		
+		$("#checkSurvivalRate").click(function()
+			{
+				  	$('input[name=survivalRate]').val(calculateSurvivalRate());
+			});		
+		
+		
+ 		function calculateSurvivalRate() 
+		 {
+				var results;
+				var size;
+				var larvae;
+				var total
+				larvae = $('input[name=larvae]').val();
+				size = $('input[name=size]').val();
+				results =$('input[name=results]').val();
+				total = ((results * 1000)/size)/larvae
+				return total.toFixed(2);
+		
+		}	
+
 });
+
+
+		
+		
+
 		
 
 
@@ -119,6 +156,7 @@ $this->registerJsFile($baseUrl  . '/assets/pages/scripts/components-select2.min.
                                            		<label class="control-label col-md-3">อายุลูกกุ้ง</label>
                                                       <div class="input-group input-large " >
                                                        <?= Html::input('text', 'age', $model->age,['id'=>'age','class' => 'form-control']);?>
+                                                       <?= Html::input('hidden', 'larvae','',['id'=>'larvae','class' => 'form-control' ,'value' => '6000']);?>
                                                   	</div>
                                             </div>
                                                                                         
@@ -148,8 +186,17 @@ $this->registerJsFile($baseUrl  . '/assets/pages/scripts/components-select2.min.
                                                     </span>
                                                   </div>	
                                             </div>
+                                            <div class="form-group">
+                                                <label class="control-label col-md-3">ราคาที่ขาย</label>
+                                                      <div class="input-group input-large ">
+                                                        <?= Html::input('text', 'price', $model->price,['id'=>'price','class' => 'form-control']);?>
+                                                  	<span class="input-group-addon">
+                                                        <i class="fa">บาท / กิโลกรัม</i>
+                                                    </span>
+                                                  </div>	
+                                            </div>
                                               <div class="form-group">
-                                                <label class="control-label col-md-3">ความหนาแน่น</label>
+                                                <label class="control-label col-md-3">ความหนาแน่นตัว/ตร.ม.</label>
                                                       <div class="input-group input-large ">
                                                         <?= Html::input('text', 'density', $model->density,['id'=>'density','class' => 'form-control']);?>
                                                   	<span class="input-group-addon">
@@ -164,14 +211,22 @@ $this->registerJsFile($baseUrl  . '/assets/pages/scripts/components-select2.min.
                                                   	<span class="input-group-addon">
                                                         <i class="fa"> % </i>
                                                     </span>
-                                                  </div>	
-                                            </div>
+                                                    <span class="input-group-btn">
+                                                        <button id="checkSurvivalRate" class="btn btn-success" type="button">
+                                                        <i class="fa fa-arrow-left fa-fw"></i> คำนวน</button>
+                                                    </span>
+                                                  </div>
+                                                    </div>
                                               <div class="form-group">
                                                 <label class="control-label col-md-3">ปริมาณอาหารที่ใช้รวม</label>
                                                       <div class="input-group input-large ">
                                                         <?= Html::input('text', 'quantity', $model->quantity,['id'=>'quantity','class' => 'form-control']);?>
                                                   	<span class="input-group-addon">
                                                         <i class="fa">กิโลกรัม</i>
+                                                    </span>
+                                                     <span class="input-group-btn">
+                                                        <button id="checkSurvivalRate" class="btn btn-success" type="button">
+                                                        <i class="fa fa-arrow-left fa-fw"></i> คำนวน</button>
                                                     </span>
                                                   </div>	
                                             </div>
@@ -187,7 +242,12 @@ $this->registerJsFile($baseUrl  . '/assets/pages/scripts/components-select2.min.
                                            		<label class="control-label col-md-3">รายรับ</label>
                                                       <div class="input-group input-large " >
                                                        <?= Html::input('text', 'receipts', $model->receipts,['id'=>'receipts','class' => 'form-control']);?>
+                                                  	 <span class="input-group-btn">
+                                                        <button id="checkSurvivalRate" class="btn btn-success" type="button">
+                                                        <i class="fa fa-arrow-left fa-fw"></i> คำนวน</button>
+                                                    </span>
                                                   	</div>
+                                                  	
                                             </div>
                                     <div class="note note-info">
                                         <strong>วิเคราะห์ต้นทุนการผลิต </strong>
@@ -196,6 +256,10 @@ $this->registerJsFile($baseUrl  . '/assets/pages/scripts/components-select2.min.
                                            		<label class="control-label col-md-3">ต้นทุนลูกกุ้ง</label>
                                                       <div class="input-group input-large " >
                                                        <?= Html::input('text', 'costShrimp', $model->costShrimp,['id'=>'costShrimp','class' => 'form-control']);?>
+                                                  	<span class="input-group-btn">
+                                                        <button id="checkSurvivalRate" class="btn btn-success" type="button">
+                                                        <i class="fa fa-arrow-left fa-fw"></i> คำนวน</button>
+                                                    </span>
                                                   	</div>
                                             </div>
                                               <div class="form-group">
@@ -226,12 +290,20 @@ $this->registerJsFile($baseUrl  . '/assets/pages/scripts/components-select2.min.
                                            		<label class="control-label col-md-3">กำไรขั้นต้น</label>
                                                       <div class="input-group input-large " >
                                                        <?= Html::input('text', 'profits', $model->profits,['id'=>'costOther','class' => 'form-control']);?>
+                                                  	<span class="input-group-btn">
+                                                        <button id="checkSurvivalRate" class="btn btn-success" type="button">
+                                                        <i class="fa fa-arrow-left fa-fw"></i> คำนวน</button>
+                                                    </span>
                                                   	</div>
                                             </div>
                                             <div class="form-group">
                                            		<label class="control-label col-md-3">ผลผลิตต่อไร่</label>
                                                       <div class="input-group input-large " >
                                                        <?= Html::input('text', 'yields', $model->yields,['id'=>'costOther','class' => 'form-control']);?>
+                                                  	<span class="input-group-btn">
+                                                        <button id="checkSurvivalRate" class="btn btn-success" type="button">
+                                                        <i class="fa fa-arrow-left fa-fw"></i> คำนวน</button>
+                                                    </span>
                                                   	</div>
                                             </div>
                                             <div class="form-group">

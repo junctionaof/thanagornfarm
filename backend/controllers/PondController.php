@@ -1128,6 +1128,7 @@ class PondController extends BaseController {
     		$model->profits  = $request->get('profits', $request->post('profits', null));
     		$model->yields  = $request->get('yields', $request->post('yields', null));
     		$model->suggestion  = $request->get('suggestion', $request->post('suggestion', null));
+    		$model->price = $request->get('price', $request->post('price', null));
     		$model->lastUpdateBy = $identity->id;
     		$model->lastUpdateTime = date('Y-m-d H:i:s', $currentTs);
     		if (trim($model->pondId) == ''){
@@ -3530,9 +3531,10 @@ class PondController extends BaseController {
     	$h = ($subTime/(60*60))%24;
     	$m = ($subTime/60)%60;
     	$age = 'อายุ  '.$d.' วัน '.$h.' ชั่วโมง '.$m.' นาที ';
-
+    	$larvae = $pond->larvae;
     	$items['pond'] = $Typelist->name.' '.$pond->title;
     	$items['age'] = $age;
+    	$items['larvae'] = $larvae;
 
     	header('Content-Type: application/json');
     	//var_dump($items); exit();
