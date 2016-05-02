@@ -232,125 +232,12 @@ $this->registerCss($css);
 	</table>
 	<br><br><br><br>
 								
-								 <table border="0" width="100%">
-								 <tr>
-								 <td width="25%" align = "center"> 
-								  <h5 class = "text-center">
-								 ---------------------------------------- <br />
-											
-											   ผู้ส่ง <br />
-								  </h5></td>
-								 <td width="45%">   </td>
-								 <td width="30%"  align = "center" ">   
-								 <h5 class = "text-center"> 
-								----------------------------------------- <br>
-								
-								ผู้รับ<br /> </h5>
-								 </td>
-								 </tr> 
-								 </table>
+								 
 								
 								<br><br><br><br><br>
 	<br /> <br />
 	</div>
 	<!---------------  for print -->
 	<div id="for-print">
-	<!--  ใบปะหน้าของ รายงานค่าใช้จ่ายอื่นๆๆ -->
-
-<?php 
-		/* $pageSet = 1;
-		$page = 1;	
-		$max = 34; //จำนวน row สูงสุดใน 1 หน้าที่จะปริ้น
-		$start = 0;
-		$no = 1;
-		$i = 1;
-		$total = 0;
-		$maxPage = ceil(count($data)/$max);
-		$mpage = $maxPage;
-		//$st = DateUtil::th_date('F Y', strtotime($itemDatefrom));
-		while($arrTmp = array_slice($data, $start, $max)){	 */
-	?>
-<div class="<? //= ($page!=$maxPage)?'page-scope':''?> pulsate-regular" id="pulsate-regular" align="center" style="page-break-after: always;"  >
-<div align="center">
-<div class="col-md-12 text-center"><h3>รายงานส่งเงินธนาคาร</h3></div>
-    <h5><br>ธนาคารกรุงเทพจำกัด สาขาบางซื่อ วันที่โอน   <?//=date('d/m/Y', strtotime($tranferday))?></h5> 
-  <h5  class="centor"> พิมพ์รายงาน ณ. วันที่   <?//=$cureday?> </h5>
-  <br>
-</div>
-<table border="1" cellpadding="5" width ="95%" id="fortable" align="center" >
-	<thead>
-		<tr style="font-weight:bold;color:#FFFFFF;" bgcolor="#666666">
-			<th class="smail" align="center" width="8%">ลำดับที่</th>
-			<th class="smail" align="center" width="25%">ชื่อ - นามสกุล ขทร.</th>
-			<th class="smail" align="center" width="15%">เลขที่บัญชี</th>
-			<th class="smail" align="right" class="right" width="15%">  จำนวนเงิน</th>
-			<th class="smail" align="right" class="right" width="15%">  ค่าธรรมเนียม</th>
-			<th class="smail" align="right" class="right" width="18%"><div class ="smail">  ยอดเงินสุทธิ</div></th>
-		</tr>
-	</thead>
-<tbody>
- <?php // $total= 0 ; $sum = 0; if (!empty($arrTmp)): foreach ($arrTmp as $lst): ?>
- <?php 
- //$allamount = [];
- //$allamountItem = [];
-
- ?>
-		<tr>
-			<td align="center"> <?php // echo $i; ?> </td>
-			<td align="left"><?php //echo $arrPayee[$lst["payment"]["payTo"]]["name"];?></td>
-			<td align="left"><?php //echo $lst['bankAccount'] ; ?></td>
-			<td align="right"><?php
-			/* $amounts = sprintf("%01.2f",$lst['amountPayee']+$lst['salary']);
-			echo  number_format($amounts,2, '.', ','); */ ?></td>
-			<td align="right"><?php //echo $lst['charge'];?></td>
-			<td align="right"><?php //echo number_format($lst['amountPayee']+$lst['salary']-$lst['charge'],2) ?></td>
-		</tr>
-		<?php  
-		/* $arrtotalp[] = $lst['charge'];
-		$arrsump[] = sprintf("%01.2f",$lst['amountPayee'])+$lst['salary'] ;
-		$i++;
-		endforeach; endif;
-		$allsump = array_sum($arrsum);
-		$alltotalp = array_sum($arrtotal);
-		$fullSump = $allsum - $alltotal  ; */
-		?>
-	</tbody>
-	</table>
-	<?php //	if($pageSet == $mpage){ ?>
-	<table border="0" cellpadding="3" width ="95%">
-					<tr>
-						<td colspan="3" class="text-right">รวม </td>
-						<td width="15.8%"  align="right" class="text-right border"> <?php // echo number_format($allsump,2)?></td>
-						<td width="15.7%"  align="right" class="text-right border"> <?php //echo number_format($alltotalp,2)?></td>
-						<td width="18.9%" class="text-right border"><?php // echo number_format($fullSump,2)?> </td>
-					</tr>
-
-	</table>
-	<br><br><br><br>
-								
-								 <table border="0" width="100%">
-								 <tr>
-								 <td width="25%" align = "center"> 
-								  <h5 class = "text-center">
-								 ---------------------------------- <br />
-											
-											   ผู้ส่ง <br />
-								  </h5></td>
-								 <td width="45%">   </td>
-								 <td width="30%"  align = "center" ">   
-								 <h5 class = "text-center"> 
-								------------------------------------ <br>
-								
-								ผู้รับ<br /> </h5>
-								 </td>
-								 </tr> 
-								 </table>
-	<?php // }?>
+	
 	</div>
-			<?php
-			/* $pageSet ++;
-			$number[] = $i;
-			$start += $max;
-			$page++; */
-		//}?>
-</div>
