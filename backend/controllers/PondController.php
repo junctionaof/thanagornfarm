@@ -412,6 +412,9 @@ class PondController extends BaseController {
     		]);
     }
     
+    
+    
+    
     public function actionEdittype()
     {
 
@@ -3541,9 +3544,19 @@ class PondController extends BaseController {
     	echo json_encode($items);
     }
     
+    public function actionReport()
+    {
+
+    
+	    echo $this->render('report', [
+	    		
+	    ]);
+    
+	}
+    
+    
     public function init() {
         parent::init();
         $this->layout = 'layoutstyle';
     }
-
 }
