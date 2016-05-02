@@ -203,7 +203,7 @@ $this->registerCss($css);
 		
 	</thead>
 <tbody>
- <?php // $total= 0 ; $sum = 0; $i =1; if (!empty($data)): foreach ($data as $lst): ?>
+ <?php $data = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20];  foreach ($data as $lst): ?>
  <?php 
  // $allamount = [];
  // $allamountItem = [];
@@ -211,22 +211,44 @@ $this->registerCss($css);
  //var_dump($lst); exit();
  ?>
 		<tr>
-			<td align="center"> <?php// echo $i; ?> </td>
-			<td align="left"><a href=""><?php // echo $arrPayee[$lst["payment"]["payTo"]]["name"] ?></a></td>
-			<td align="left"><?php // echo  $lst['bankAccount'] ; ?></td>
-			<td align="right"><?php // $amounts = sprintf("%01.2f",$lst['amountPayee'])+$lst['salary'];
-			//echo  number_format($amounts,2, '.', ','); ?></td>
-			<td align="right"><?php // echo $lst['charge'];?></td>
-			<td align="right"><?php // echo number_format($lst['amountPayee']+$lst['salary'] - $lst['charge'],2) ?></td>
+			<td> <?php// echo $i; ?> . </td>
+			<td> <?php// echo $i; ?> .</td>
+			<td> <?php// echo $i; ?> .</td>
+			<td> <?php// echo $i; ?> .</td>
+			<td> <?php// echo $i; ?> .</td>
+			<td> <?php// echo $i; ?> .</td>
+			<td> <?php// echo $i; ?> .</td>
+			<td> <?php// echo $i; ?> .</td>
+			<td> <?php// echo $i; ?> .</td>
+			<td> <?php// echo $i; ?> .</td>
+			<td> <?php// echo $i; ?> .</td>
+			<td> <?php// echo $i; ?> .</td>
+			<td> <?php// echo $i; ?> .</td>
+			<td> <?php// echo $i; ?> .</td>
+			<td> <?php// echo $i; ?> .</td>
+			<td> <?php// echo $i; ?> .</td>
+			<td> <?php// echo $i; ?> .</td>
+			<td> <?php// echo $i; ?> .</td>
+			<td> <?php// echo $i; ?> .</td>
+			<td> <?php// echo $i; ?> .</td>
+			<td> <?php// echo $i; ?> .</td>
+			<td> <?php// echo $i; ?> .</td>
+			<td> <?php// echo $i; ?> .</td>
+			<td> <?php// echo $i; ?> .</td>
+			<td> <?php// echo $i; ?> .</td>
+			<td> <?php// echo $i; ?> .</td>
+			<td> <?php// echo $i; ?> .</td>
+			
 		</tr>
 		<?php  
 /* 		$arrtotal[] = $lst['charge'];
 		$arrsum[] = sprintf("%01.2f", $lst['amountPayee'])+$lst['salary'] ;
 		$i++;
-		endforeach; endif;
+		 endif;
 		$allsum = array_sum($arrsum);
 		$alltotal = array_sum($arrtotal);
 		$fullSum = $allsum - $alltotal  ; */
+		endforeach;
 		?>
 	</tbody>
 	</table>
