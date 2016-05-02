@@ -155,18 +155,18 @@ $this->registerCss($css);
 			<th align="center" rowspan="3" width="5%">อายุ(วัน)</th>
 			<th align="center" colspan="7"  width="20%">การให้อาหาร</th>
 			<th align="center" colspan="6"  width="20%">การเช็คยอ</th>
-			<th align="center" width="5%">นํ้าหนักเฉลี่ย</th>
-			<th align="center" width="20%"><div class ="smail">คุณภาพนํ้า</div></th>
-			<th align="center" width="10%"><div class ="smail">บันทึกอื่นๆ</div></th>
+			<th align="center" rowspan="3"  width="5%">นํ้าหนักเฉลี่ย/กรัม</th>
+			<th colspan="10" rowspan="2" align="center" width="20%"><div class ="smail">คุณภาพนํ้า</div></th>
+			<th rowspan="3" align="center" width="10%"><div class ="smail">บันทึกอื่นๆ</div></th>
 		</tr>
 		<tr style="font-weight:bold;color:#000;" >
 			
 			<th rowspan="2"  align="center" width="5%">เบอร์อาหาร</th>
 			<th colspan="6" align="center" width="20%">อาหาร/มื้อที่</th>
 			<th colspan="6" align="center" width="20%">อาหาร/มื้อที่</th>
-			<th align="center" width="5%">นํ้าหนักเฉลี่ย</th>
-			<th align="center" width="20%"><div class ="smail">คุณภาพนํ้า</div></th>
-			<th align="center" width="10%"><div class ="smail">บันทึกอื่นๆ</div></th>
+			
+		
+			
 		</tr>
 		
 			<tr style="font-weight:bold;color:#000;" >
@@ -186,10 +186,19 @@ $this->registerCss($css);
 			<th align="center" width="2%">5</th>
 			<th align="center" width="2%">6</th>
 			
-			<th align="center" width="2%">การเช็คยอ</th>
-			<th align="center" width="2%">นํ้าหนักเฉลี่ย</th>
-			<th align="center" width="20%"><div class ="smail">คุณภาพนํ้า</div></th>
-			<th align="center" width="10%"><div class ="smail">บันทึกอื่นๆ</div></th>
+			
+			
+			<th align="center" width="2%">เช้า</th>
+			<th align="center" width="2%">บ่าย</th>
+			<th align="center" width="2%">ออกซิเจน</th>
+			<th align="center" width="2%">อัลคาไลน์</th>
+			<th align="center" width="2%">อุณหภูมินํ้า</th>
+			<th align="center" width="2%">อุณหภูมิ</th>
+			<th align="center" width="2%">แอมโมเนีย</th>
+			<th align="center" width="2%">ไนเตรรท์</th>
+			<th align="center" width="2%">เปลี่ยนนํ้า</th>
+			<th align="center" width="2%">ความเค็ม</th>
+
 		</tr>
 		
 	</thead>
@@ -221,15 +230,7 @@ $this->registerCss($css);
 		?>
 	</tbody>
 	</table>
-	<table border="0" cellpadding="3" width ="100%">
-					<tr>
-						<td colspan="3" class="text-right">รวม </td>
-						<td width="21.6%"  align="right" class="text-right border"> <?php // echo number_format($allsum,2)?></td>
-						<td width="10.8%"  align="right" class="text-right border"> <?php // echo number_format($alltotal,2)?></td>
-						<td width="19.5%" class="text-right border"><?php // echo number_format($fullSum,2)?> </td>
-					</tr>
 
-	</table>
 	<br><br><br><br>
 								
 								 
