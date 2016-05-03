@@ -718,6 +718,7 @@ class PondController extends BaseController {
     				//get users
     				$arrId = [];
     				$arrUser = [];
+    				$arrPond = [];
     				if (!empty($list)){
     					foreach ($list as $obj){
     						$arrId[] = $obj->createBy;
@@ -885,6 +886,7 @@ class PondController extends BaseController {
     				//get users
     				$arrId = [];
     				$arrUser = [];
+    				$arrPond = [];
     				if (!empty($list)){
     					foreach ($list as $obj){
     						$arrId[] = $obj->createBy;
