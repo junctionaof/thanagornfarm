@@ -547,6 +547,7 @@ class PondController extends BaseController {
     				//get users
     				$arrId = [];
     				$arrUser = [];
+    				$arrPond = [];
     				if (!empty($list)){
     					foreach ($list as $obj){
     						$arrId[] = $obj->createBy;
@@ -559,10 +560,11 @@ class PondController extends BaseController {
     					}
 
     					$objPond = Pond::find()->orderBy(['id'=>SORT_ASC])->all();
+    				
     					foreach ($objPond as $dataPond){
     						$objTypelist = Typelist::find()->where(['id'=>$dataPond->type])->all();
     						foreach ($objTypelist as $obj){
-    						$arrPond[$dataPond->id] = $obj->name.' '.$dataPond->title;
+    						$arrPond[$dataPond->id] = isset($obj)?$obj->name.' '.$dataPond->title:'ไม่ระบุ';
     						}
     					
     					}
@@ -575,7 +577,7 @@ class PondController extends BaseController {
     					$arrTypelist[$dataTypelist->id] = $dataTypelist->name;
     				}
     				
-    					
+    				
     echo $this->render('food', [
     		'lst' => $list,
     		'arrPond' => $arrPond,
@@ -1052,6 +1054,7 @@ class PondController extends BaseController {
     				//get users
     				$arrId = [];
     				$arrUser = [];
+    				$arrPond = [];
     				if (!empty($list)){
     					foreach ($list as $obj){
     						$arrId[] = $obj->createBy;
@@ -1229,6 +1232,7 @@ class PondController extends BaseController {
     				//get users
     				$arrId = [];
     				$arrUser = [];
+    				$arrPond = [];
     				if (!empty($list)){
     					foreach ($list as $obj){
     						$arrId[] = $obj->createBy;
@@ -1399,6 +1403,7 @@ class PondController extends BaseController {
     				//get users
     				$arrId = [];
     				$arrUser = [];
+    				$arrPond = [];
     				if (!empty($list)){
     					foreach ($list as $obj){
     						$arrId[] = $obj->createBy;
@@ -1560,6 +1565,7 @@ class PondController extends BaseController {
     				//get users
     				$arrId = [];
     				$arrUser = [];
+    				$arrPond = [];
     				if (!empty($list)){
     					foreach ($list as $obj){
     						$arrId[] = $obj->createBy;
@@ -1728,6 +1734,7 @@ class PondController extends BaseController {
     				//get users
     				$arrId = [];
     				$arrUser = [];
+    				$arrPond = [];
     				if (!empty($list)){
     					foreach ($list as $obj){
     						$arrId[] = $obj->createBy;
@@ -1894,6 +1901,7 @@ class PondController extends BaseController {
     				//get users
     				$arrId = [];
     				$arrUser = [];
+    				$arrPond = [];
     				if (!empty($list)){
     					foreach ($list as $obj){
     						$arrId[] = $obj->createBy;
@@ -2061,6 +2069,7 @@ class PondController extends BaseController {
     				//get users
     				$arrId = [];
     				$arrUser = [];
+    				$arrPond = [];
     				if (!empty($list)){
     					foreach ($list as $obj){
     						$arrId[] = $obj->createBy;
@@ -2227,6 +2236,7 @@ class PondController extends BaseController {
     				//get users
     				$arrId = [];
     				$arrUser = [];
+    				$arrPond = [];
     				if (!empty($list)){
     					foreach ($list as $obj){
     						$arrId[] = $obj->createBy;
@@ -2402,6 +2412,7 @@ class PondController extends BaseController {
     				//get users
     				$arrId = [];
     				$arrUser = [];
+    				$arrPond = [];
     				if (!empty($list)){
     					foreach ($list as $obj){
     						$arrId[] = $obj->createBy;
@@ -2567,6 +2578,7 @@ class PondController extends BaseController {
     				//get users
     				$arrId = [];
     				$arrUser = [];
+    				$arrPond = [];
     				if (!empty($list)){
     					foreach ($list as $obj){
     						$arrId[] = $obj->createBy;
@@ -2733,6 +2745,7 @@ class PondController extends BaseController {
     				//get users
     				$arrId = [];
     				$arrUser = [];
+    				$arrPond = [];
     				if (!empty($list)){
     					foreach ($list as $obj){
     						$arrId[] = $obj->createBy;
@@ -2981,6 +2994,7 @@ class PondController extends BaseController {
     	
 		$arrUserId = [];
 		$arrUser = [];
+		$arrPond = [];
 		if($lst){
 			foreach ($lst as $fields){
 				if($fields->lastUpdateBy)
@@ -3398,6 +3412,32 @@ class PondController extends BaseController {
     
     			foreach ($arrIds as $lst){
     				$queryUser = Salinity::find();
+    				$Food = $queryUser->where(['id' => $lst])->one()->delete();
+    				$deleted = $deleted + 1;
+    			}
+    
+    			if ($deleted > 0) {
+    				Ui::setMessage("ลบข้อมูลจำนวน  $deleted รายการ" + "บันทึกข้อมูลสำเร็จ");
+    					
+    			}
+    			else {
+    				Ui::setMessage('ไม่มีข้อมูลถูกลบ');
+    			}
+    		}
+    }
+    
+     private function analysisDelete(){
+    	$identity = \Yii::$app->user->getIdentity();
+    	$currentTs =time();
+    	$deleted = 0;
+    	$arrIds = \Yii::$app->request->post('idCheck', NULL);
+    	if(empty($arrIds))
+    		$arrIds = \Yii::$app->request->get('idCheck', NULL);
+    
+    		if (is_array($arrIds) && !empty($arrIds)) {
+    
+    			foreach ($arrIds as $lst){
+    				$queryUser = Analysis::find();
     				$Food = $queryUser->where(['id' => $lst])->one()->delete();
     				$deleted = $deleted + 1;
     			}
