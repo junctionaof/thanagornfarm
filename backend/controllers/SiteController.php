@@ -100,7 +100,8 @@ class SiteController extends Controller
 
     public function actionIndex()
     {
-    	       $objTypelist = Typelist::find()->all();
+    			$arrPorn = [];
+    	       	$objTypelist = Typelist::find()->all();
     				foreach ($objTypelist as $dataTypelist){
     						//$arrTypelist[] = 
     					    $objPond = Pond::find()->andwhere("status = 1")->andwhere(['type'=>$dataTypelist->id])->all();
