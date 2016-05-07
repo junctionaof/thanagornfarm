@@ -1134,8 +1134,10 @@ class PondController extends BaseController {
     		$model->survivalRate  = $request->get('survivalRate', $request->post('survivalRate', null));
     		$model->quantity  = $request->get('quantity', $request->post('quantity', null));
     		$model->fcr  = $request->get('fcr', $request->post('fcr', null));
+    		$model->density = $request->get('density', $request->post('density', null));
     		$model->receipts  = $request->get('receipts', $request->post('receipts', null));
     		$model->costShrimp  = $request->get('costShrimp', $request->post('costShrimp', null));
+    		$model->costFood = $request->get('costFood', $request->post('costFood', null));
     		$model->costWage = $request->get('costWage', $request->post('costWage', null));
     		$model->costEnergy = $request->get('costEnergy', $request->post('costEnergy', null));
     		$model->costOther  = $request->get('costOther', $request->post('costOther', null));
@@ -3574,7 +3576,7 @@ class PondController extends BaseController {
     	$pond = pond::findOne(['id'=> $id]);
     	$Typelist = Typelist::findOne(['id'=>$pond->type]);
     	
-    	$foot = Food::find(['pondId'=>$id])->all();
+    	$foot = Food::find()->where(['pondId'=>$id])->all();
     	$arrFood = [];
     	
     	foreach ($foot as $footlst){
