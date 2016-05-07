@@ -122,7 +122,7 @@ ActiveForm::begin(['id' => 'dataTable-form']);
 		                        </th>
 		                        <th>บ่อ-รุ่นที่ </th>
 		                        <th>อายุลูกกุ้ง</th>
-		                        <th>วันที่จับกุ้ง</th>
+		                        
 		                        <th>รายรับ</th>
 		                        <th>กำไรขั้นต้น</th>
 		                        <th>ผลผลิตต่อไร่</th>
@@ -138,7 +138,7 @@ ActiveForm::begin(['id' => 'dataTable-form']);
 				                 <td> <?php echo Html::checkbox('idCheck[]', false, ['value'=> $Content->id, 'class'=> 'checkboxes'])?></td>
 				                 <td><a href="<?= Url::toRoute(['pond/editanalysis'])?>?id=<?=$Content->id?>"><?php echo isset($arrPond[$Content->pondId])?$arrPond[$Content->pondId]:'ไม่ได้เลือกบ่อ รุ่น ';?></a></td>
 				                 <td> <?php echo $Content->age;?>  </td>
-				                 <td class="text-left"><?php echo DateUtil::th_date(DateUtil::LDT_FMT_TH, strtotime($Content->pickDate));?></td>
+				                
 				                 <td><?php echo $Content->receipts; ?> </td>
 				                 <td><?php echo $Content->profits; ?>   </td>
 				                 <td> <?php echo $Content->yields; ?>  </td>

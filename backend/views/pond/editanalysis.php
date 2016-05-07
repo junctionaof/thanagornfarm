@@ -41,11 +41,12 @@ $(document).ready(function() {
 		    $('#age').val(json.age);
 		 	$('#larvae').val(json.larvae);
 			$('#foods').val(json.foods);
+			$('#typesize').val(json.typesize);
+		
 		 	}).fail(function() {
 		    	console.log('error loading');
 		  	});
 	});
-
 		
 		$("#checkSurvivalRate").click(function()
 			{
@@ -160,15 +161,10 @@ $(document).ready(function() {
 		
 		function calculateYields() 
 		 {
-				var results;
-				var size;
-				var larvae;
-				var total
-				larvae = $('input[name=larvae]').val();
-				size = $('input[name=size]').val();
-				results =$('input[name=results]').val();
-				total = ((results * 1000)/size)/larvae
-				return total.toFixed(2);
+				var profits = $('input[name=profits]').val();
+				var typesize = $('input[name=typesize]').val();
+				total = profits/typesize;
+				return total;
 		
 		}	
 		
@@ -319,6 +315,7 @@ $this->registerJsFile($baseUrl  . '/assets/pages/scripts/components-select2.min.
                                                       <div class="input-group input-large ">
                                                         <?= Html::input('text', 'quantity', $model->quantity,['id'=>'quantity','class' => 'form-control','readonly'=>'readonly']);?>
                                                   		<?= Html::input('hidden', 'foods','',['id'=>'foods','class' => 'form-control' ,'value' => '0']);?>
+                                                  		<?= Html::input('hidden', 'typesize','',['id'=>'typesize','class' => 'form-control' ,'value' => '0']);?>
                                                   	<span class="input-group-addon">
                                                         <i class="fa">กิโลกรัม</i>
                                                     </span>

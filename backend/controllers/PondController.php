@@ -3593,6 +3593,7 @@ class PondController extends BaseController {
     	$age = 'อายุ  '.$d.' วัน '.$h.' ชั่วโมง '.$m.' นาที ';
     	$larvae = $pond->larvae;
     	$items['pond'] = $Typelist->name.' '.$pond->title;
+    	$items['typesize'] = $Typelist->size;
     	$items['age'] = $age;
     	$items['foods'] = $foods;
     	$items['larvae'] = $larvae;
