@@ -59,6 +59,7 @@ class PondController extends BaseController {
     	$params = \Yii::$app->params;
     	$id = $request->get('id', $request->post('id', null));
     	
+    	
     	$query = Typelist::find();
     	if ($id){ 
     		$query->where("id=".$id);
@@ -66,11 +67,16 @@ class PondController extends BaseController {
     	}
     	
     	$pond = Pond::find()->andwhere('type='.$id)->andwhere('status=1')->one();
-
     	
+    	$objweightavg = [];
+    	$weightavg = 0;
     	// นั้าหนักเฉลี่ยกุ้ง 
-    	$objweightavg = Weight::find()->andwhere('pondId='.$pond->id)->one(); 
-    	$weightavg = isset($objweightavg->weightNum)?$objweightavg->weightNum : 0 ;
+    	if(isset($pond)){
+    		$objweightavg = Weight::find()->andwhere('pondId='.$pond->id)->one();
+    		 
+    		$weightavg = isset($objweightavg->weightNum)?$objweightavg->weightNum : 0 ;
+    		 
+    	}
     	
     	
     	
@@ -3567,7 +3573,16 @@ class PondController extends BaseController {
     	
     	$pond = pond::findOne(['id'=> $id]);
     	$Typelist = Typelist::findOne(['id'=>$pond->type]);
-
+    	
+    	$foot = Food::find(['pondId'=>$id])->all();
+    	$arrFood = [];
+    	
+    	foreach ($foot as $footlst){
+    		$arrFood[] = $footlst->foodNum;
+    	}
+    	
+    	$foods = array_sum($arrFood);
+    	
     	$date1 = strtotime($pond->releaseTime);
     	$date2 = time();
     	$subTime = $date2 - $date1;
@@ -3579,6 +3594,7 @@ class PondController extends BaseController {
     	$larvae = $pond->larvae;
     	$items['pond'] = $Typelist->name.' '.$pond->title;
     	$items['age'] = $age;
+    	$items['foods'] = $foods;
     	$items['larvae'] = $larvae;
 
     	header('Content-Type: application/json');

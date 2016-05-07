@@ -37,7 +37,7 @@ class Ph extends \yii\db\ActiveRecord
     {
         return [
             [['pondId', 'phNo', 'createBy', 'lastUpdateBy'], 'integer'],
-            [['phNum'], 'number', 'numberOf'],
+            [['phNum', 'numberOf'], 'number'],
             [['phTime', 'createTime', 'lastUpdateTime'], 'safe'],
             [['age', 'name'], 'string', 'max' => 255]
         ];

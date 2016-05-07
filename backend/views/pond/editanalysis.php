@@ -40,28 +40,48 @@ $(document).ready(function() {
 			$('#pond').val(json.pond);
 		    $('#age').val(json.age);
 		 	$('#larvae').val(json.larvae);
+			$('#foods').val(json.foods);
 		 	}).fail(function() {
 		    	console.log('error loading');
 		  	});
 	});
 
-
-		$('input[name=weightTime]').on("change", function(){
-			if($('input[name=expire_date]').val() != ""){
-				$('input[name=expire_time]').timepicker({
-		            autoclose: true,
-		            minuteStep: 1,
-		            showSeconds: true,
-		            showMeridian: false
-		        });
-			}
-		});
 		
 		$("#checkSurvivalRate").click(function()
 			{
 				  	$('input[name=survivalRate]').val(calculateSurvivalRate());
-			});		
+			});	
 		
+		$("#checkQuantity").click(function()
+			{
+				  	$('input[name=quantity]').val(calculateQuantity());
+			});
+		
+		$("#checkFcr").click(function()
+			{
+				  	$('input[name=fcr]').val(calculateFcr());
+			});	
+		
+		$("#checkReceipts").click(function()
+			{
+				  	$('input[name=receipts]').val(calculateReceipts());
+			});	
+		
+		$("#checkCostShrimp").click(function()
+			{
+				  	$('input[name=costShrimp]').val(calculateCostShrimp());
+			});	
+		
+		$("#checkProfits").click(function()
+			{
+				  	$('input[name=profits]').val(calculateProfits());
+			});	
+		
+		
+		$("#checkYields").click(function()
+			{
+				  	$('input[name=yields]').val(calculateYields());
+			});	
 		
  		function calculateSurvivalRate() 
 		 {
@@ -76,6 +96,83 @@ $(document).ready(function() {
 				return total.toFixed(2);
 		
 		}	
+		
+		function calculateQuantity() 
+		 {
+				var foods;
+				foods = $('input[name=foods]').val();
+				return foods;
+		
+		}	
+		
+		function calculateFcr() 
+		 {
+				var results;
+				var quantity;
+
+				quantity = $('input[name=quantity]').val();
+				results =$('input[name=results]').val();
+				total = quantity/results;
+				return total ;
+		
+		}	
+		
+		function calculateReceipts() 
+		 {
+				var results;
+				var price;
+				var total;
+		
+				price = $('input[name=price]').val();
+				results =$('input[name=results]').val();
+				total = price*results;
+				return total ;
+		
+		}	
+		
+		function calculateCostShrimp() 
+		 {
+				var price;
+				var larvae;
+				var total
+		
+				larvae = $('input[name=larvae]').val();
+				price = $('input[name=price]').val();
+				
+				total = (larvae * price)/100;
+				return total;
+		
+		}	
+		
+		 function calculateProfits() 
+		 {
+				var receipts = $('input[name=receipts]').val();
+				var costShrimp = $('input[name=costShrimp]').val();
+				var costFood =$('input[name=costFood]').val();
+				var costWage =$('input[name=costWage]').val();
+				var costEnergy =$('input[name=costEnergy]').val();
+				var costOther =$('input[name=costOther]').val();
+				var totala =  Number(costShrimp) + Number(costFood) + Number(costWage) + Number(costEnergy) + Number(costOther);
+				var total = receipts - totala ;
+				return total;
+		
+		}	
+		
+		function calculateYields() 
+		 {
+				var results;
+				var size;
+				var larvae;
+				var total
+				larvae = $('input[name=larvae]').val();
+				size = $('input[name=size]').val();
+				results =$('input[name=results]').val();
+				total = ((results * 1000)/size)/larvae
+				return total.toFixed(2);
+		
+		}	
+		
+		
 
 });
 
@@ -207,7 +304,7 @@ $this->registerJsFile($baseUrl  . '/assets/pages/scripts/components-select2.min.
                                               <div class="form-group">
                                                 <label class="control-label col-md-3">อัตรารอด</label>
                                                       <div class="input-group input-large ">
-                                                        <?= Html::input('text', 'survivalRate', $model->survivalRate,['id'=>'survivalRate','class' => 'form-control']);?>
+                                                        <?= Html::input('text', 'survivalRate', $model->survivalRate,['id'=>'survivalRate','class' => 'form-control','readonly'=>'readonly']);?>
                                                   	<span class="input-group-addon">
                                                         <i class="fa"> % </i>
                                                     </span>
@@ -220,12 +317,13 @@ $this->registerJsFile($baseUrl  . '/assets/pages/scripts/components-select2.min.
                                               <div class="form-group">
                                                 <label class="control-label col-md-3">ปริมาณอาหารที่ใช้รวม</label>
                                                       <div class="input-group input-large ">
-                                                        <?= Html::input('text', 'quantity', $model->quantity,['id'=>'quantity','class' => 'form-control']);?>
+                                                        <?= Html::input('text', 'quantity', $model->quantity,['id'=>'quantity','class' => 'form-control','readonly'=>'readonly']);?>
+                                                  		<?= Html::input('hidden', 'foods','',['id'=>'foods','class' => 'form-control' ,'value' => '0']);?>
                                                   	<span class="input-group-addon">
                                                         <i class="fa">กิโลกรัม</i>
                                                     </span>
                                                      <span class="input-group-btn">
-                                                        <button id="checkSurvivalRate" class="btn btn-success" type="button">
+                                                        <button id="checkQuantity" class="btn btn-success" type="button">
                                                         <i class="fa fa-arrow-left fa-fw"></i> คำนวณ</button>
                                                     </span>
                                                   </div>	
@@ -234,16 +332,23 @@ $this->registerJsFile($baseUrl  . '/assets/pages/scripts/components-select2.min.
                                           <div class="form-group">
                                            		<label class="control-label col-md-3">อัตราแลกเนื้อ (FCR)</label>
                                                       <div class="input-group input-large " >
-                                                       <?= Html::input('text', 'fcr', $model->fcr,['id'=>'fcr','class' => 'form-control']);?>
+                                                       <?= Html::input('text', 'fcr', $model->fcr,['id'=>'fcr','class' => 'form-control','readonly'=>'readonly']);?>
+                                                  	  <span class="input-group-btn">
+                                                        <button id="checkFcr" class="btn btn-success" type="button">
+                                                        <i class="fa fa-arrow-left fa-fw"></i> คำนวณ</button>
+                                                    </span>
                                                   	</div>
                                             </div>
                                             
                                             <div class="form-group">
                                            		<label class="control-label col-md-3">รายรับ</label>
                                                       <div class="input-group input-large " >
-                                                       <?= Html::input('text', 'receipts', $model->receipts,['id'=>'receipts','class' => 'form-control']);?>
+                                                       <?= Html::input('text', 'receipts', $model->receipts,['id'=>'receipts','class' => 'form-control','readonly'=>'readonly']);?>
+                                                  	<span class="input-group-addon">
+                                                        <i class="fa">บาท</i>
+                                                    </span>
                                                   	 <span class="input-group-btn">
-                                                        <button id="checkSurvivalRate" class="btn btn-success" type="button">
+                                                        <button id="checkReceipts" class="btn btn-success" type="button">
                                                         <i class="fa fa-arrow-left fa-fw"></i> คำนวณ</button>
                                                     </span>
                                                   	</div>
@@ -255,9 +360,9 @@ $this->registerJsFile($baseUrl  . '/assets/pages/scripts/components-select2.min.
                                       <div class="form-group">
                                            		<label class="control-label col-md-3">ต้นทุนลูกกุ้ง</label>
                                                       <div class="input-group input-large " >
-                                                       <?= Html::input('text', 'costShrimp', $model->costShrimp,['id'=>'costShrimp','class' => 'form-control']);?>
+                                                       <?= Html::input('text', 'costShrimp', $model->costShrimp,['id'=>'costShrimp','class' => 'form-control','readonly'=>'readonly']);?>
                                                   	<span class="input-group-btn">
-                                                        <button id="checkSurvivalRate" class="btn btn-success" type="button">
+                                                        <button id="checkCostShrimp" class="btn btn-success" type="button">
                                                         <i class="fa fa-arrow-left fa-fw"></i> คำนวณ</button>
                                                     </span>
                                                   	</div>
@@ -289,9 +394,9 @@ $this->registerJsFile($baseUrl  . '/assets/pages/scripts/components-select2.min.
                                             <div class="form-group">
                                            		<label class="control-label col-md-3">กำไรขั้นต้น</label>
                                                       <div class="input-group input-large " >
-                                                       <?= Html::input('text', 'profits', $model->profits,['id'=>'costOther','class' => 'form-control']);?>
+                                                       <?= Html::input('text', 'profits', $model->profits,['id'=>'profits','class' => 'form-control','readonly'=>'readonly']);?>
                                                   	<span class="input-group-btn">
-                                                        <button id="checkSurvivalRate" class="btn btn-success" type="button">
+                                                        <button id="checkProfits" class="btn btn-success" type="button">
                                                         <i class="fa fa-arrow-left fa-fw"></i> คำนวณ</button>
                                                     </span>
                                                   	</div>
@@ -299,9 +404,9 @@ $this->registerJsFile($baseUrl  . '/assets/pages/scripts/components-select2.min.
                                             <div class="form-group">
                                            		<label class="control-label col-md-3">ผลผลิตต่อไร่</label>
                                                       <div class="input-group input-large " >
-                                                       <?= Html::input('text', 'yields', $model->yields,['id'=>'costOther','class' => 'form-control']);?>
+                                                       <?= Html::input('text', 'yields', $model->yields,['id'=>'yields','class' => 'form-control','readonly'=>'readonly']);?>
                                                   	<span class="input-group-btn">
-                                                        <button id="checkSurvivalRate" class="btn btn-success" type="button">
+                                                        <button id="checkYields" class="btn btn-success" type="button">
                                                         <i class="fa fa-arrow-left fa-fw"></i> คำนวณ</button>
                                                     </span>
                                                   	</div>
