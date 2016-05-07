@@ -3592,6 +3592,7 @@ class PondController extends BaseController {
     	$m = ($subTime/60)%60;
     	$age = 'อายุ  '.$d.' วัน '.$h.' ชั่วโมง '.$m.' นาที ';
     	$larvae = $pond->larvae;
+    	$items['larvaePrice'] = $pond->larvaePrice;
     	$items['pond'] = $Typelist->name.' '.$pond->title;
     	$items['typesize'] = $Typelist->size;
     	$items['age'] = $age;

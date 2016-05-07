@@ -40,6 +40,7 @@ $(document).ready(function() {
 			$('#pond').val(json.pond);
 		    $('#age').val(json.age);
 		 	$('#larvae').val(json.larvae);
+			$('#larvaePrice').val(json.larvaePrice);
 			$('#foods').val(json.foods);
 			$('#typesize').val(json.typesize);
 		
@@ -86,15 +87,12 @@ $(document).ready(function() {
 		
  		function calculateSurvivalRate() 
 		 {
-				var results;
-				var size;
-				var larvae;
-				var total
-				larvae = $('input[name=larvae]').val();
-				size = $('input[name=size]').val();
-				results =$('input[name=results]').val();
-				total = ((results * 1000)/size)/larvae
-				return total.toFixed(2);
+			
+				var larvae = $('input[name=larvae]').val();
+				var size = $('input[name=size]').val();
+				var results =$('input[name=results]').val();
+				var total = (((results * 1000)/size)/larvae)*100
+				return total;
 		
 		}	
 		
@@ -133,14 +131,15 @@ $(document).ready(function() {
 		
 		function calculateCostShrimp() 
 		 {
-				var price;
+				var larvaePrice;
 				var larvae;
 				var total
 		
 				larvae = $('input[name=larvae]').val();
-				price = $('input[name=price]').val();
+				larvaePrice = $('input[name=larvaePrice]').val();
 				
-				total = (larvae * price)/100;
+				total = (larvae * larvaePrice)/100;
+		
 				return total;
 		
 		}	
@@ -358,6 +357,7 @@ $this->registerJsFile($baseUrl  . '/assets/pages/scripts/components-select2.min.
                                            		<label class="control-label col-md-3">ต้นทุนลูกกุ้ง</label>
                                                       <div class="input-group input-large " >
                                                        <?= Html::input('text', 'costShrimp', $model->costShrimp,['id'=>'costShrimp','class' => 'form-control','readonly'=>'readonly']);?>
+                                                  	<?= Html::input('hidden', 'larvaePrice','',['id'=>'larvaePrice','class' => 'form-control' ,'value' => '0']);?>
                                                   	<span class="input-group-btn">
                                                         <button id="checkCostShrimp" class="btn btn-success" type="button">
                                                         <i class="fa fa-arrow-left fa-fw"></i> คำนวณ</button>
