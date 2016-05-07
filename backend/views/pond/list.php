@@ -23,6 +23,11 @@ function postAction(action) {
 $('#search').click(function() {
 		postAction('search');
 });
+		
+$('#print').click(function() {
+		$('#data-print').submit();
+		
+		});	
 
 $('.actions .dropdown-menu a[data-action]').click(function() {
 		 if ($('[name^=idCheck]:checked').length > 0)
@@ -146,6 +151,9 @@ ActiveForm::begin(['id' => 'dataTable-form']);
                          <th>
                                                                          ผู้สร้าง
                         </th>
+                       <th>
+                                                                      จัดการ
+                        </th>
 
                     </tr>
                 </thead>
@@ -195,7 +203,9 @@ ActiveForm::begin(['id' => 'dataTable-form']);
                          <td class="center">
                             <?php echo  isset($arrUser[$Pond->createBy]) ?$arrUser[$Pond->createBy] : 'anonymous'; ?>
                         </td>
-
+                         <td class="center">
+                          <a class="btn btn-default btn-sm" href="<?= Url::toRoute(['pond/report'])?>?id=<?= $Pond->id?>" ><i class="fa fa-print"></i> PRINT</a>    
+                        </td>
                         
                     </tr>
 <?php 

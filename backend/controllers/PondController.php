@@ -3608,7 +3608,11 @@ class PondController extends BaseController {
     
     public function actionReport()
     {
-
+    	$identity = \Yii::$app->user->getIdentity();
+    	$request = \Yii::$app->request;
+    	$params = \Yii::$app->params;
+    	
+    	$id = $request->get('id');
     
 	    echo $this->render('report', [
 	    		

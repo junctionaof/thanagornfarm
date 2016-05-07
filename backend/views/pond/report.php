@@ -138,7 +138,7 @@ $this->registerCss($css);
 
 <div id="for-screen" style="margin-top:20px;" >
 <a class="btn default doPrint right"><i class="fa fa-print" style=" font-size: 18px; color: #FF3F3F;"></i></a>
-<a class="btn default left" href="<?php // echo $baseUrl?>/payment/newspaperlist"><i class="fa fa-arrow-circle-o-left" style=" font-size: 18px; color: #FF3F3F;"></i></a>
+<a class="btn default left" href="<?php  echo $baseUrl?>/pond/list"><i class="fa fa-arrow-circle-o-left" style=" font-size: 18px; color: #FF3F3F;"></i></a>
 <div id="pulsate-regular" align="center" style=" padding-top: 30px;">
 <div class="col-md-12 text-center"><h3>ข้อมูลพื้นฐานการเลี้ยง</h3></div>
    <h5><br><br>ธนากรฟาร์ม บ่อที่........... ขนาด.........ไร่ รุ่นที่........จำนวนกุ้งที่ปล่อย.................ตัว วันที่ปล่อย............. </h5> 
