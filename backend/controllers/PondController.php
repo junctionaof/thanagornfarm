@@ -3625,6 +3625,7 @@ class PondController extends BaseController {
     		foreach ($objfootday as $footlstday){
     			$arrFoodday[] = $footlstday;
     		}
+    		$objFood = ['Foodday'=>$arrFoodday];
     		
     		$objCheckyoDay = Checkyo::find()->andWhere(['checkyoTime'=>$footlst['foodTime']])->all();
     		$arrCheckyoday = [];
@@ -3632,9 +3633,18 @@ class PondController extends BaseController {
     			$arrCheckyoday[] = $Checkyolstday;
     		}
     		$objCheckyo = ['Checkyoday'=>$arrCheckyoday];
-    		$objFood = ['Foodday'=>$arrFoodday];
-    		$arrObjListAll[$footlst['foodTime']]= ['objFood'=>$objFood ,'objCheckyo'=>$objCheckyo,'age'=>$footlst['age'],'numberOf'=>$footlst['numberOf']];
+    		
+    		$objWeightDay = Weight::find()->andWhere(['weightTime'=>$footlst['foodTime']])->one();
+    		
+    		
+    		$WeightDay = isset($objWeightDay->weightNo)?$objWeightDay->weightNo:'-';
+    		
+    		
+    		$arrObjListAll[$footlst['foodTime']]= ['objFood'=>$objFood ,'objCheckyo'=>$objCheckyo,'WeightDay'=>$WeightDay,'age'=>$footlst['age'],'numberOf'=>$footlst['numberOf']];
     	}
+    	
+    	
+    	
     	
 	    echo $this->render('report', [
         								'pond'=> $pond,
@@ -3643,6 +3653,7 @@ class PondController extends BaseController {
        						]);
     
 	}
+    
     
     public function init() {
         parent::init();
