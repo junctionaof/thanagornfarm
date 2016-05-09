@@ -227,25 +227,22 @@ $this->registerCss($css);
 			<td align="center"> <?php echo isset($FoodNo[1]['foodNum'])?$FoodNo[1]['foodNum']:'-'; ?></td>
 			<td align="center"> <?php echo isset($FoodNo[2]['foodNum'])?$FoodNo[2]['foodNum']:'-'; ?></td>
 			<td align="center"> <?php echo isset($FoodNo[3]['foodNum'])?$FoodNo[3]['foodNum']:'-'; ?></td>
-			<td> <?php echo $CheckyoNo[0]['yo01']; ?></td>
-			<td> <?php echo $CheckyoNo[0]['yo02']; ?></td>
-			<td> <?php echo $CheckyoNo[0]['yo03']; ?></td>
-			<td> <?php echo $CheckyoNo[0]['yo04']; ?></td>
-			<td> <?php// echo $i; ?> .</td>
-			<td> <?php// echo $i; ?> .</td>
-			<td> <?php// echo $i; ?> .</td>
-			<td> <?php// echo $i; ?> .</td>
-			<td> <?php// echo $i; ?> .</td>
-			<td> <?php// echo $i; ?> .</td>
-			<td> <?php// echo $i; ?> .</td>
-			<td> <?php// echo $i; ?> .</td>
-			<td> <?php// echo $i; ?> .</td>
-			<td> <?php// echo $i; ?> .</td>
-			<td> <?php// echo $i; ?> .</td>
-			<td> <?php// echo $i; ?> .</td>
-			<td> <?php// echo $i; ?> .</td>
-			<td> <?php// echo $i; ?> .</td>
-			
+			<td> <?php echo isset($CheckyoNo[0]['yo01'])?$CheckyoNo[0]['yo01']:''; ?></td>
+			<td> <?php echo isset($CheckyoNo[0]['yo02'])?$CheckyoNo[0]['yo01']:''; ?></td>
+			<td> <?php echo isset($CheckyoNo[0]['yo03'])?$CheckyoNo[0]['yo01']:''; ?></td>
+			<td> <?php echo isset($CheckyoNo[0]['yo04'])?$CheckyoNo[0]['yo01']:''; ?></td>
+			<td> <?php// echo $i; ?> </td>
+			<td> <?php// echo $i; ?> </td>
+			<td> <?php// echo $i; ?> </td>
+			<td> <?php// echo $i; ?> </td>
+			<td> <?php// echo $i; ?> </td>
+			<td> <?php// echo $i; ?> </td>
+			<td> <?php// echo $i; ?> </td>
+			<td> <?php// echo $i; ?> </td>
+			<td> <?php// echo $i; ?> </td>
+			<td> <?php// echo $i; ?> </td>
+			<td> <?php// echo $i; ?> </td>
+			<td> <?php// echo $i; ?> </td>
 		</tr>
 		<?php  
 /* 		$arrtotal[] = $lst['charge'];
