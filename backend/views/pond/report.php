@@ -154,8 +154,8 @@ $this->registerCss($css);
 		<tr style="font-weight:bold;color:#000; text-align: center;" >
 			<th  align="center"  rowspan="3"  width="5%">วันที่</th>
 			<th align="center" rowspan="3" width="10%">อายุ(วัน)</th>
-			<th align="center" colspan="7"  width="20%">การให้อาหาร</th>
-			<th align="center" colspan="6"  width="20%">การเช็คยอ</th>
+			<th align="center" colspan="5"  width="20%">การให้อาหาร</th>
+			<th align="center" colspan="4"  width="20%">การเช็คยอ</th>
 			<th align="center" rowspan="3"  width="5%">นํ้าหนักเฉลี่ย/กรัม</th>
 			<th colspan="10" rowspan="2" align="center" width="20%"><div class ="smail">คุณภาพนํ้า</div></th>
 			<th rowspan="3" align="center" width="10%"><div class ="smail">บันทึกอื่นๆ</div></th>
@@ -163,8 +163,8 @@ $this->registerCss($css);
 		<tr style="font-weight:bold;color:#000;" >
 			
 			<th rowspan="2"  align="center" width="1%">เบอร์อาหาร</th>
-			<th colspan="6" align="center" width="20%">อาหาร/มื้อที่</th>
-			<th colspan="6" align="center" width="20%">เช็คยอ/ยอที่</th>
+			<th colspan="4" align="center" width="20%">อาหาร/มื้อที่</th>
+			<th colspan="4" align="center" width="20%">เช็คยอ/ยอที่</th>
 			
 		
 			
@@ -177,15 +177,11 @@ $this->registerCss($css);
 			<th align="center" width="2%">2</th>
 			<th align="center" width="2%">3</th>
 			<th align="center" width="2%">4</th>
-			<th align="center" width="2%">5</th>
-			<th align="center" width="2%">6</th>
 			
 			<th align="center" width="2%">1</th>
 			<th align="center" width="2%">2</th>
 			<th align="center" width="2%">3</th>
 			<th align="center" width="2%">4</th>
-			<th align="center" width="2%">5</th>
-			<th align="center" width="2%">6</th>
 			
 			
 			
@@ -204,15 +200,19 @@ $this->registerCss($css);
 		
 	</thead>
 <tbody>
- <?php   foreach ($arrObjFood as $index => $lstFood): ?>
+ <?php   foreach ($arrObjListAll as $index => $lstFood): ?>
  <?php 
 
 		
 		foreach ($lstFood['objFood']['Foodday'] as $a => $lstFoodday ){
 			$FoodNo[$a] = ['foodNum'=>$lstFoodday->foodNum,'numberOf'=>$lstFoodday->numberOf];
 		}
+		
+		foreach ($lstFood['objCheckyo']['Checkyoday'] as $a => $lstCheckyoday ){
+			$CheckyoNo[$a] = ['yo01'=>$lstCheckyoday->yo01,'yo02'=>$lstCheckyoday->yo02,'yo03'=>$lstCheckyoday->yo03,'yo04'=>$lstCheckyoday->yo04];
+		}
 	
-
+		//var_dump($CheckyoNo[0]['yo01']); exit();
 
  // $allamount = [];
  // $allamountItem = [];
@@ -227,12 +227,10 @@ $this->registerCss($css);
 			<td align="center"> <?php echo isset($FoodNo[1]['foodNum'])?$FoodNo[1]['foodNum']:'-'; ?></td>
 			<td align="center"> <?php echo isset($FoodNo[2]['foodNum'])?$FoodNo[2]['foodNum']:'-'; ?></td>
 			<td align="center"> <?php echo isset($FoodNo[3]['foodNum'])?$FoodNo[3]['foodNum']:'-'; ?></td>
-			<td align="center"> <?php echo isset($FoodNo[4]['foodNum'])?$FoodNo[4]['foodNum']:'-'; ?></td>
-			<td align="center"> <?php echo isset($FoodNo[5]['foodNum'])?$FoodNo[5]['foodNum']:'-'; ?></td>
-			<td> <?php// echo $i; ?> .</td>
-			<td> <?php// echo $i; ?> .</td>
-			<td> <?php// echo $i; ?> .</td>
-			<td> <?php// echo $i; ?> .</td>
+			<td> <?php echo $CheckyoNo[0]['yo01']; ?></td>
+			<td> <?php echo $CheckyoNo[0]['yo02']; ?></td>
+			<td> <?php echo $CheckyoNo[0]['yo03']; ?></td>
+			<td> <?php echo $CheckyoNo[0]['yo04']; ?></td>
 			<td> <?php// echo $i; ?> .</td>
 			<td> <?php// echo $i; ?> .</td>
 			<td> <?php// echo $i; ?> .</td>
