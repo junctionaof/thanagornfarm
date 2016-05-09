@@ -212,19 +212,17 @@ $this->registerCss($css);
  //var_dump($lst); exit();
  ?>
 		<tr>
-			<td> <?php// echo $i; ?> . </td>
-			<td> <?php// echo $i; ?> .</td>
-			<td> <?php// echo $i; ?> .</td>
-			<td> <?php// echo $i; ?> .</td>
-			<td> <?php// echo $i; ?> .</td>
-			<td> <?php// echo $i; ?> .</td>
-			<td> <?php// echo $i; ?> .</td>
-			<td> <?php// echo $i; ?> .</td>
-			<td> <?php// echo $i; ?> .</td>
-			<td> <?php// echo $i; ?> .</td>
-			<td> <?php// echo $i; ?> .</td>
-			<td> <?php// echo $i; ?> .</td>
-			<td> <?php// echo $i; ?> .</td>
+			<td align="center" > <?php echo $index; ?> </td>
+			<td align="center" > <?php echo isset($lstFood['age'])?$lstFood['age']:'ไม่มีข้อมูล'; ?></td>
+			<td align="center" > <?php echo $lstFood['numberOf']; ?></td>
+			<td align="center"> <?php echo isset($FoodNo[0]['foodNum'])?$FoodNo[0]['foodNum']:'-'; ?></td>
+			<td align="center"> <?php echo isset($FoodNo[1]['foodNum'])?$FoodNo[1]['foodNum']:'-'; ?></td>
+			<td align="center"> <?php echo isset($FoodNo[2]['foodNum'])?$FoodNo[2]['foodNum']:'-'; ?></td>
+			<td align="center"> <?php echo isset($FoodNo[3]['foodNum'])?$FoodNo[3]['foodNum']:'-'; ?></td>
+			<td> <?php echo $CheckyoNo[0]['yo01']; ?></td>
+			<td> <?php echo $CheckyoNo[0]['yo02']; ?></td>
+			<td> <?php echo $CheckyoNo[0]['yo03']; ?></td>
+			<td> <?php echo $CheckyoNo[0]['yo04']; ?></td>
 			<td> <?php// echo $i; ?> .</td>
 			<td> <?php// echo $i; ?> .</td>
 			<td> <?php// echo $i; ?> .</td>
