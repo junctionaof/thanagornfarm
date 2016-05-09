@@ -152,8 +152,8 @@ $this->registerCss($css);
 <table border="1" cellpadding="5" width ="100%" id="fortable" >
 	<thead>
 		<tr style="font-weight:bold;color:#000; text-align: center;" >
-			<th align="center" rowspan="3"  width="5%">วันที่</th>
-			<th align="center" rowspan="3" width="5%">อายุ(วัน)</th>
+			<th  align="center"  rowspan="3"  width="5%">วันที่</th>
+			<th align="center" rowspan="3" width="10%">อายุ(วัน)</th>
 			<th align="center" colspan="7"  width="20%">การให้อาหาร</th>
 			<th align="center" colspan="6"  width="20%">การเช็คยอ</th>
 			<th align="center" rowspan="3"  width="5%">นํ้าหนักเฉลี่ย/กรัม</th>
@@ -162,9 +162,9 @@ $this->registerCss($css);
 		</tr>
 		<tr style="font-weight:bold;color:#000;" >
 			
-			<th rowspan="2"  align="center" width="5%">เบอร์อาหาร</th>
+			<th rowspan="2"  align="center" width="1%">เบอร์อาหาร</th>
 			<th colspan="6" align="center" width="20%">อาหาร/มื้อที่</th>
-			<th colspan="6" align="center" width="20%">อาหาร/มื้อที่</th>
+			<th colspan="6" align="center" width="20%">เช็คยอ/ยอที่</th>
 			
 		
 			
@@ -204,23 +204,31 @@ $this->registerCss($css);
 		
 	</thead>
 <tbody>
- <?php   foreach ($arrObjFood as $index => $ObjFood): ?>
+ <?php   foreach ($arrObjFood as $index => $lstFood): ?>
  <?php 
+
+		
+		foreach ($lstFood['objFood']['Foodday'] as $a => $lstFoodday ){
+			$FoodNo[$a] = ['foodNum'=>$lstFoodday->foodNum,'numberOf'=>$lstFoodday->numberOf];
+		}
+	
+
+
  // $allamount = [];
  // $allamountItem = [];
  
  //var_dump($lst); exit();
  ?>
 		<tr>
-			<td> <?php echo $index; ?> </td>
-			<td> <?php echo $ObjFood->age; ?> .</td>
-			<td> <?php// echo $i; ?> .</td>
-			<td> <?php// echo $i; ?> .</td>
-			<td> <?php// echo $i; ?> .</td>
-			<td> <?php// echo $i; ?> .</td>
-			<td> <?php// echo $i; ?> .</td>
-			<td> <?php// echo $i; ?> .</td>
-			<td> <?php// echo $i; ?> .</td>
+			<td align="center" > <?php echo $index; ?> </td>
+			<td align="center" > <?php echo isset($lstFood['age'])?$lstFood['age']:'ไม่มีข้อมูล'; ?></td>
+			<td align="center" > <?php echo $lstFood['numberOf']; ?></td>
+			<td align="center"> <?php echo isset($FoodNo[0]['foodNum'])?$FoodNo[0]['foodNum']:'-'; ?></td>
+			<td align="center"> <?php echo isset($FoodNo[1]['foodNum'])?$FoodNo[1]['foodNum']:'-'; ?></td>
+			<td align="center"> <?php echo isset($FoodNo[2]['foodNum'])?$FoodNo[2]['foodNum']:'-'; ?></td>
+			<td align="center"> <?php echo isset($FoodNo[3]['foodNum'])?$FoodNo[3]['foodNum']:'-'; ?></td>
+			<td align="center"> <?php echo isset($FoodNo[4]['foodNum'])?$FoodNo[4]['foodNum']:'-'; ?></td>
+			<td align="center"> <?php echo isset($FoodNo[5]['foodNum'])?$FoodNo[5]['foodNum']:'-'; ?></td>
 			<td> <?php// echo $i; ?> .</td>
 			<td> <?php// echo $i; ?> .</td>
 			<td> <?php// echo $i; ?> .</td>
