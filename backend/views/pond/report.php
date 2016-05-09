@@ -15,6 +15,7 @@ use app\DateUtil;
 use app\Ui;
 use yii\rest\IndexAction;
 use backend\controllers\PaymentController;
+use common\models\Pond;
 $baseUrl = \Yii::getAlias('@web');
 
 
@@ -141,8 +142,8 @@ $this->registerCss($css);
 <a class="btn default left" href="<?php  echo $baseUrl?>/pond/list"><i class="fa fa-arrow-circle-o-left" style=" font-size: 18px; color: #FF3F3F;"></i></a>
 <div id="pulsate-regular" align="center" style=" padding-top: 30px;">
 <div class="col-md-12 text-center"><h3>ข้อมูลพื้นฐานการเลี้ยง</h3></div>
-   <h5><br><br>ธนากรฟาร์ม บ่อที่........... ขนาด.........ไร่ รุ่นที่........จำนวนกุ้งที่ปล่อย.................ตัว วันที่ปล่อย............. </h5> 
-  <h5  class="centor"> ชนิดลูกกุ้ง............ ราคาตัวละ.......สตางค์   ฟาร์ม/บริษัทที่รับลูกกุ้ง..............................   </h5>
+   <h5><br><br>ธนากรฟาร์ม  <strong><?php echo $Typelist->name;?></strong> ขนาด  <strong><?php echo $Typelist->size;?></strong> ไร่  <strong><?php echo $pond->title;?></strong> จำนวนกุ้งที่ปล่อย  <strong><?php echo $pond->larvae;?></strong> ตัว วันที่ปล่อย  <strong><?php echo $pond->releaseTime;?></strong>  </h5> 
+  <h5  class="centor"> ชนิดลูกกุ้ง  <strong><?php echo Pond::$larvaeType[$pond->larvaeType];?></strong>  ราคาตัวละ  <strong><?php echo $pond->larvaePrice;?></strong> สตางค์   ฟาร์ม/บริษัทที่รับลูกกุ้ง    <strong><?php echo $pond->larvaeCompany;?></strong>   </h5>
   <br>
  
 </div>

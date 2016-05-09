@@ -20,7 +20,7 @@ $csrfParam = Yii::$app->request->csrfParam;
 $csrfToken = Yii::$app->request->csrfToken;
 
 if(!isset($model->foodTime)){
-	$correntDate =  date( "Y-m-d H:i:s",strtotime("now"));
+	$correntDate =  date( "Y-m-d",strtotime("now"));
 }else {
 	$correntDate = $model->foodTime;
 }

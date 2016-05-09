@@ -3614,9 +3614,41 @@ class PondController extends BaseController {
     	
     	$id = $request->get('id');
     
+    	$pond = pond::findOne(['id'=> $id]);
+    	$Typelist = Typelist::findOne(['id'=>$pond->type]);
+    	 
+    	
+    	
+    	
+    	$objfoot = Food::find();
+    	$objfoot->andWhere(['pondId'=>$id]);
+    	$objfoot->groupBy('foodTime');
+    	$objfoot->all();
+    	$arrFood = [];
+    	 
+    	foreach ($objfoot as $footlst){
+    		$objfootday = Food::find();
+    		$objfootday->andWhere(['foodTime'=>$footlst[foodTime]]);
+    		$objfootday->all();
+    		$arrFoodday = [];
+    		foreach ($objfootday as $footlstday){
+    			$arrFoodday[] = $footlstday;
+    		}
+    			
+    		$arrFood[] = $footlst->foodNum;
+    	}
+    	
+    	var_dump($arrFood); exit();
+    	
+    	
+    	
+    	
+    	
 	    echo $this->render('report', [
-	    		
-	    ]);
+        								'pond'=> $pond,
+	    								'Typelist'=> $Typelist,
+        								'arrFood'=>$arrFood,
+       						]);
     
 	}
     
