@@ -152,7 +152,7 @@ $this->registerCss($css);
 <table border="1" cellpadding="5" width ="100%" id="fortable" >
 	<thead>
 		<tr style="font-weight:bold;color:#000; text-align: center;" >
-			<th align="center" rowspan="3"  width="2%">วันที่</th>
+			<th align="center" rowspan="3"  width="5%">วันที่</th>
 			<th align="center" rowspan="3" width="5%">อายุ(วัน)</th>
 			<th align="center" colspan="7"  width="20%">การให้อาหาร</th>
 			<th align="center" colspan="6"  width="20%">การเช็คยอ</th>
@@ -204,7 +204,7 @@ $this->registerCss($css);
 		
 	</thead>
 <tbody>
- <?php $data = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20];  foreach ($data as $lst): ?>
+ <?php   foreach ($arrObjFood as $index => $ObjFood): ?>
  <?php 
  // $allamount = [];
  // $allamountItem = [];
@@ -212,8 +212,8 @@ $this->registerCss($css);
  //var_dump($lst); exit();
  ?>
 		<tr>
-			<td> <?php// echo $i; ?> . </td>
-			<td> <?php// echo $i; ?> .</td>
+			<td> <?php echo $index; ?> </td>
+			<td> <?php echo $ObjFood->age; ?> .</td>
 			<td> <?php// echo $i; ?> .</td>
 			<td> <?php// echo $i; ?> .</td>
 			<td> <?php// echo $i; ?> .</td>
