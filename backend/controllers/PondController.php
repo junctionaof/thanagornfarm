@@ -3644,7 +3644,6 @@ class PondController extends BaseController {
     
 	}
     
-    
     public function init() {
         parent::init();
         $this->layout = 'layoutstyle';
