@@ -79,6 +79,7 @@ margin-top: 100px;
 	   	  	  @page { 
 				 font-size:12px ;
 			  		margin:.5cm .5cm 1cm 1cm;
+		          size : landscape;
 			  }
 			  th{
 			  	line-height: 70% ;
@@ -103,6 +104,13 @@ margin-top: 100px;
 			  .footer{
 			  	display:none;
 			  }
+			.page-head{
+			  	display:none;
+			  }
+		    .hid{
+				display:none;
+				}
+			
 			   #for-print{
 			  	display:true;
 			  }
@@ -152,12 +160,12 @@ $this->registerCss($css);
 <table border="1" cellpadding="5" width ="100%" id="fortable" >
 	<thead>
 		<tr style="font-weight:bold;color:#000; text-align: center;" >
-			<th  align="center"  rowspan="3"  width="5%">วันที่</th>
-			<th align="center" rowspan="3" width="10%">อายุ(วัน)</th>
+			<th  align="center"  rowspan="3"  width="7%">วันที่</th>
+			<th align="center" rowspan="3" width="7%">อายุ(วัน)</th>
 			<th align="center" colspan="5"  width="20%">การให้อาหาร</th>
 			<th align="center" colspan="4"  width="20%">การเช็คยอ</th>
 			<th align="center" rowspan="3"  width="5%">นํ้าหนักเฉลี่ย/กรัม</th>
-			<th colspan="10" rowspan="2" align="center" width="20%"><div class ="smail">คุณภาพนํ้า</div></th>
+			<th colspan="8" rowspan="2" align="center" width="20%"><div class ="smail">คุณภาพนํ้า</div></th>
 			<th rowspan="3" align="center" width="10%"><div class ="smail">บันทึกอื่นๆ</div></th>
 		</tr>
 		<tr style="font-weight:bold;color:#000;" >
@@ -178,23 +186,19 @@ $this->registerCss($css);
 			<th align="center" width="2%">3</th>
 			<th align="center" width="2%">4</th>
 			
-			<th align="center" width="2%">1</th>
-			<th align="center" width="2%">2</th>
-			<th align="center" width="2%">3</th>
-			<th align="center" width="2%">4</th>
+			<th align="center" width="5%">1</th>
+			<th align="center" width="5%">2</th>
+			<th align="center" width="5%">3</th>
+			<th align="center" width="5%">4</th>
 			
-			
-			
-			<th align="center" width="2%">เช้า</th>
-			<th align="center" width="2%">บ่าย</th>
-			<th align="center" width="2%">ออกซิเจน</th>
-			<th align="center" width="2%">อัลคาไลน์</th>
-			<th align="center" width="2%">อุณหภูมินํ้า</th>
-			<th align="center" width="2%">อุณหภูมิ</th>
-			<th align="center" width="2%">แอมโมเนีย</th>
-			<th align="center" width="2%">ไนเตรรท์</th>
-			<th align="center" width="2%">เปลี่ยนนํ้า</th>
-			<th align="center" width="2%">ความเค็ม</th>
+			<th align="center" width="3%">ออกซิเจน</th>
+			<th align="center" width="3%">อัลคาไลน์</th>
+			<th align="center" width="3%">อุณหภูมินํ้า</th>
+			<th align="center" width="3%">อุณหภูมิ</th>
+			<th align="center" width="3%">แอมโมเนีย</th>
+			<th align="center" width="3%">ไนเตรรท์</th>
+			<th align="center" width="3%">เปลี่ยนนํ้า</th>
+			<th align="center" width="3%">ความเค็ม</th>
 
 		</tr>
 		
@@ -212,6 +216,29 @@ $this->registerCss($css);
 			$CheckyoNo[$a] = ['yo01'=>$lstCheckyoday->yo01,'yo02'=>$lstCheckyoday->yo02,'yo03'=>$lstCheckyoday->yo03,'yo04'=>$lstCheckyoday->yo04];
 		}
 	
+		
+		$tranyo = function($yo) {
+			switch ($yo) {
+				case 1:
+					return "หมด";
+				case 2:
+					return "เหลือ  1/4";
+				case 3:
+					return "เหลือ  2/4";
+				case 4:
+					return "เหลือ  4/4";
+				case 5:
+					return "เหลือ  4/4";
+				default:
+					return "-";
+			}
+		};
+			
+		$yo1 = $tranyo(isset($CheckyoNo[0]['yo01'])?$CheckyoNo[0]['yo01']:'');
+		$yo2 = $tranyo(isset($CheckyoNo[0]['yo02'])?$CheckyoNo[0]['yo02']:'');
+		$yo3 = $tranyo(isset($CheckyoNo[0]['yo03'])?$CheckyoNo[0]['yo03']:'');
+		$yo4 = $tranyo(isset($CheckyoNo[0]['yo04'])?$CheckyoNo[0]['yo04']:'');
+
 		//var_dump($CheckyoNo[0]['yo01']); exit();
 
  // $allamount = [];
@@ -227,22 +254,20 @@ $this->registerCss($css);
 			<td align="center"> <?php echo isset($FoodNo[1]['foodNum'])?$FoodNo[1]['foodNum']:'-'; ?></td>
 			<td align="center"> <?php echo isset($FoodNo[2]['foodNum'])?$FoodNo[2]['foodNum']:'-'; ?></td>
 			<td align="center"> <?php echo isset($FoodNo[3]['foodNum'])?$FoodNo[3]['foodNum']:'-'; ?></td>
-			<td align="center"> <?php echo isset($CheckyoNo[0]['yo01'])?$CheckyoNo[0]['yo01']:''; ?></td>
-			<td align="center"> <?php echo isset($CheckyoNo[0]['yo02'])?$CheckyoNo[0]['yo01']:''; ?></td>
-			<td align="center"><?php echo isset($CheckyoNo[0]['yo03'])?$CheckyoNo[0]['yo01']:''; ?></td>
-			<td align="center"> <?php echo isset($CheckyoNo[0]['yo04'])?$CheckyoNo[0]['yo01']:''; ?></td>
+			<td align="center"> <?php echo $yo1; ?></td>
+			<td align="center"> <?php echo $yo2; ?></td>
+			<td align="center">	<?php echo $yo3; ?></td>
+			<td align="center"> <?php echo $yo4; ?></td>
 			<td align="center"> <?php echo $lstFood['WeightDay']; ?> </td>
-			<td> <?php// echo $i; ?> </td>
-			<td> <?php// echo $i; ?> </td>
-			<td> <?php// echo $i; ?> </td>
-			<td> <?php// echo $i; ?> </td>
-			<td> <?php// echo $i; ?> </td>
-			<td> <?php// echo $i; ?> </td>
-			<td> <?php// echo $i; ?> </td>
-			<td> <?php// echo $i; ?> </td>
-			<td> <?php// echo $i; ?> </td>
-			<td> <?php// echo $i; ?> </td>
-			<td> <?php// echo $i; ?> </td>
+			<td align="center"> <?php echo isset($lstFood['OxygenDay'])?$lstFood['OxygenDay']:'-';  ?> </td>
+			<td align="center"> <?php echo isset($lstFood['AlkalinityDay'])?$lstFood['AlkalinityDay']:'-'; ?> </td>
+			<td align="center"> <?php echo isset($lstFood['WatertempDay'])?$lstFood['WatertempDay']:'-'; ?> </td>
+			<td align="center"> <?php echo isset($lstFood['TempDay'])?$lstFood['TempDay']:'-'; ?> </td>
+			<td align="center"> <?php echo isset($lstFood['AmmoniaDay'])?$lstFood['AmmoniaDay']:'-'; ?> </td>
+			<td align="center" > <?php echo isset($lstFood['NitriteDay'])?$lstFood['NitriteDay']:'-'; ?> </td>
+			<td align="center"> <?php echo isset($lstFood['WaterchangeDay'])?$lstFood['WaterchangeDay']:'-'; ?> </td>
+			<td align="center"> <?php echo isset($lstFood['SalinityDay'])?$lstFood['SalinityDay']:'-'; ?> </td>
+			<td align="center"> <?php echo strip_tags(isset($lstFood['OtherDay'])?$lstFood['OtherDay']:'-'); ?> </td>
 		</tr>
 		<?php  
 /* 		$arrtotal[] = $lst['charge'];
@@ -266,5 +291,146 @@ $this->registerCss($css);
 	</div>
 	<!---------------  for print -->
 	<div id="for-print">
+	<a class="btn hid default doPrint right"><i class="fa fa-print" style=" font-size: 18px; color: #FF3F3F;"></i></a>
+<a class=" hid btn default left" href="<?php  echo $baseUrl?>/pond/list"><i class="fa fa-arrow-circle-o-left" style=" font-size: 18px; color: #FF3F3F;"></i></a>
+<div id="pulsate-regular" align="center" style=" padding-top: 30px;">
+<div class="col-md-12 text-center"><h3>ข้อมูลพื้นฐานการเลี้ยง</h3></div>
+   <h5><br><br>ธนากรฟาร์ม  <strong><?php echo $Typelist->name;?></strong> ขนาด  <strong><?php echo $Typelist->size;?></strong> ไร่  <strong><?php echo $pond->title;?></strong> จำนวนกุ้งที่ปล่อย  <strong><?php echo $pond->larvae;?></strong> ตัว วันที่ปล่อย  <strong><?php echo $pond->releaseTime;?></strong>  </h5> 
+  <h5  class="centor"> ชนิดลูกกุ้ง  <strong><?php echo Pond::$larvaeType[$pond->larvaeType];?></strong>  ราคาตัวละ  <strong><?php echo $pond->larvaePrice;?></strong> สตางค์   ฟาร์ม/บริษัทที่รับลูกกุ้ง    <strong><?php echo $pond->larvaeCompany;?></strong>   </h5>
+  <br>
+ 
+</div>
+
+ <h5 class="left"> <?php //  if (!empty(\Yii::$app->params['region'][$key])) { echo \Yii::$app->params['region'][$key]; }?> </h5> 
+<table border="1" cellpadding="5" width ="100%" id="fortable" >
+	<thead>
+		<tr style="font-weight:bold;color:#000; text-align: center;" >
+			<th  align="center"  rowspan="3"  width="7%">วันที่</th>
+			<th align="center" rowspan="3" width="7%">อายุ(วัน)</th>
+			<th align="center" colspan="5"  width="20%">การให้อาหาร</th>
+			<th align="center" colspan="4"  width="20%">การเช็คยอ</th>
+			<th align="center" rowspan="3"  width="5%">นํ้าหนักเฉลี่ย/กรัม</th>
+			<th colspan="8" rowspan="2" align="center" width="20%"><div class ="smail">คุณภาพนํ้า</div></th>
+			<th rowspan="3" align="center" width="10%"><div class ="smail">บันทึกอื่นๆ</div></th>
+		</tr>
+		<tr style="font-weight:bold;color:#000;" >
+			
+			<th rowspan="2"  align="center" width="1%">เบอร์อาหาร</th>
+			<th colspan="4" align="center" width="20%">อาหาร/มื้อที่</th>
+			<th colspan="4" align="center" width="20%">เช็คยอ/ยอที่</th>
+			
+		
+			
+		</tr>
+		
+			<tr style="font-weight:bold;color:#000;" >
+			
+			
+			<th align="center" width="2%">1</th>
+			<th align="center" width="2%">2</th>
+			<th align="center" width="2%">3</th>
+			<th align="center" width="2%">4</th>
+			
+			<th align="center" width="5%">1</th>
+			<th align="center" width="5%">2</th>
+			<th align="center" width="5%">3</th>
+			<th align="center" width="5%">4</th>
+			
+			<th align="center" width="3%">ออกซิเจน</th>
+			<th align="center" width="3%">อัลคาไลน์</th>
+			<th align="center" width="3%">อุณหภูมินํ้า</th>
+			<th align="center" width="3%">อุณหภูมิ</th>
+			<th align="center" width="3%">แอมโมเนีย</th>
+			<th align="center" width="3%">ไนเตรรท์</th>
+			<th align="center" width="3%">เปลี่ยนนํ้า</th>
+			<th align="center" width="3%">ความเค็ม</th>
+
+		</tr>
+		
+	</thead>
+<tbody>
+ <?php   foreach ($arrObjListAll as $index => $lstFood): ?>
+ <?php 
+
+		
+		foreach ($lstFood['objFood']['Foodday'] as $a => $lstFoodday ){
+			$FoodNo[$a] = ['foodNum'=>$lstFoodday->foodNum,'numberOf'=>$lstFoodday->numberOf];
+		}
+		
+		foreach ($lstFood['objCheckyo']['Checkyoday'] as $a => $lstCheckyoday ){
+			$CheckyoNo[$a] = ['yo01'=>$lstCheckyoday->yo01,'yo02'=>$lstCheckyoday->yo02,'yo03'=>$lstCheckyoday->yo03,'yo04'=>$lstCheckyoday->yo04];
+		}
 	
+		
+		$tranyo = function($yo) {
+			switch ($yo) {
+				case 1:
+					return "หมด";
+				case 2:
+					return "เหลือ  1/4";
+				case 3:
+					return "เหลือ  2/4";
+				case 4:
+					return "เหลือ  4/4";
+				case 5:
+					return "เหลือ  4/4";
+				default:
+					return "-";
+			}
+		};
+			
+		$yo1 = $tranyo(isset($CheckyoNo[0]['yo01'])?$CheckyoNo[0]['yo01']:'');
+		$yo2 = $tranyo(isset($CheckyoNo[0]['yo02'])?$CheckyoNo[0]['yo02']:'');
+		$yo3 = $tranyo(isset($CheckyoNo[0]['yo03'])?$CheckyoNo[0]['yo03']:'');
+		$yo4 = $tranyo(isset($CheckyoNo[0]['yo04'])?$CheckyoNo[0]['yo04']:'');
+
+		//var_dump($CheckyoNo[0]['yo01']); exit();
+
+ // $allamount = [];
+ // $allamountItem = [];
+ 
+ //var_dump($lst); exit();
+ ?>
+		<tr>
+			<td align="center" > <?php echo $index; ?> </td>
+			<td align="center" > <?php echo isset($lstFood['age'])?$lstFood['age']:'ไม่มีข้อมูล'; ?></td>
+			<td align="center" > <?php echo $lstFood['numberOf']; ?></td>
+			<td align="center"> <?php echo isset($FoodNo[0]['foodNum'])?$FoodNo[0]['foodNum']:'-'; ?></td>
+			<td align="center"> <?php echo isset($FoodNo[1]['foodNum'])?$FoodNo[1]['foodNum']:'-'; ?></td>
+			<td align="center"> <?php echo isset($FoodNo[2]['foodNum'])?$FoodNo[2]['foodNum']:'-'; ?></td>
+			<td align="center"> <?php echo isset($FoodNo[3]['foodNum'])?$FoodNo[3]['foodNum']:'-'; ?></td>
+			<td align="center"> <?php echo $yo1; ?></td>
+			<td align="center"> <?php echo $yo2; ?></td>
+			<td align="center">	<?php echo $yo3; ?></td>
+			<td align="center"> <?php echo $yo4; ?></td>
+			<td align="center"> <?php echo $lstFood['WeightDay']; ?> </td>
+			<td align="center"> <?php echo isset($lstFood['OxygenDay'])?$lstFood['OxygenDay']:'-';  ?> </td>
+			<td align="center"> <?php echo isset($lstFood['AlkalinityDay'])?$lstFood['AlkalinityDay']:'-'; ?> </td>
+			<td align="center"> <?php echo isset($lstFood['WatertempDay'])?$lstFood['WatertempDay']:'-'; ?> </td>
+			<td align="center"> <?php echo isset($lstFood['TempDay'])?$lstFood['TempDay']:'-'; ?> </td>
+			<td align="center"> <?php echo isset($lstFood['AmmoniaDay'])?$lstFood['AmmoniaDay']:'-'; ?> </td>
+			<td align="center" > <?php echo isset($lstFood['NitriteDay'])?$lstFood['NitriteDay']:'-'; ?> </td>
+			<td align="center"> <?php echo isset($lstFood['WaterchangeDay'])?$lstFood['WaterchangeDay']:'-'; ?> </td>
+			<td align="center"> <?php echo isset($lstFood['SalinityDay'])?$lstFood['SalinityDay']:'-'; ?> </td>
+			<td align="center"> <?php echo strip_tags(isset($lstFood['OtherDay'])?$lstFood['OtherDay']:'-'); ?> </td>
+		</tr>
+		<?php  
+/* 		$arrtotal[] = $lst['charge'];
+		$arrsum[] = sprintf("%01.2f", $lst['amountPayee'])+$lst['salary'] ;
+		$i++;
+		 endif;
+		$allsum = array_sum($arrsum);
+		$alltotal = array_sum($arrtotal);
+		$fullSum = $allsum - $alltotal  ; */
+		endforeach;
+		?>
+	</tbody>
+	</table>
+
+	<br><br><br><br>
+								
+								 
+								
+								<br><br><br><br><br>
+	<br /> <br />
 	</div>

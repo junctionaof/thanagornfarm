@@ -116,14 +116,14 @@ $this->registerJsFile($baseUrl  . '/assets/pages/scripts/components-select2.min.
                                             <div class="form-group">
                                             	<label class="control-label col-md-3">ข้อมูลบ่อ และรุ่น </label>
                                                       <div class="input-group input-large " >
-                                                      <?= Html::input('text','pond', $model->name,['id'=>'pond','class' => 'form-control', 'disabled' => 'true']);?>
+                                                      <?= Html::input('text','pond', $model->name,['id'=>'pond','class' => 'form-control', 'readonly' => 'true']);?>
                                                   	</div>
                                             </div>
                                             
                                             <div class="form-group">
                                            		<label class="control-label col-md-3">อายุลูกกุ้ง</label>
                                                       <div class="input-group input-large " >
-                                                       <?= Html::input('text', 'age', $model->age,['id'=>'age','class' => 'form-control','disabled'=>'true']);?>
+                                                       <?= Html::input('text', 'age', $model->age,['id'=>'age','class' => 'form-control','readonly'=>'true']);?>
                                                   	</div>
                                             </div>
                                             

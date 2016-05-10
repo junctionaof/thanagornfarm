@@ -615,7 +615,7 @@ class PondController extends BaseController {
     	
     	$foodTime = $request->get('foodTime', $request->post('foodTime', null));
     	$foodTimeIn = date('Y-m-d H:i:s', strtotime($foodTime));
-    	
+    	//var_dump($request->get('age', $request->post('age', null))); exit();
     	if($request->isPost){
     		$model->name  = $request->get('name', $request->post('name', null));
     		$model->pondId  = $request->get('pondId', $request->post('pondId', null));
@@ -3620,27 +3620,68 @@ class PondController extends BaseController {
     	$arrFood = [];
     	 
     	foreach ($objfoot as $footlst){
-    		$objfootday = Food::find()->andWhere(['foodTime'=>$footlst['foodTime']])->all();
+    		$objfootday = Food::find()->andWhere(['foodTime'=>$footlst['foodTime']])->andWhere(['pondId'=>$id])->all();
     		$arrFoodday = [];
     		foreach ($objfootday as $footlstday){
     			$arrFoodday[] = $footlstday;
     		}
     		$objFood = ['Foodday'=>$arrFoodday];
     		
-    		$objCheckyoDay = Checkyo::find()->andWhere(['checkyoTime'=>$footlst['foodTime']])->all();
+    		$objCheckyoDay = Checkyo::find()->andWhere(['checkyoTime'=>$footlst['foodTime']])->andWhere(['pondId'=>$id])->all();
     		$arrCheckyoday = [];
     		foreach ($objCheckyoDay as $Checkyolstday){
     			$arrCheckyoday[] = $Checkyolstday;
     		}
     		$objCheckyo = ['Checkyoday'=>$arrCheckyoday];
     		
-    		$objWeightDay = Weight::find()->andWhere(['weightTime'=>$footlst['foodTime']])->one();
-    		
-    		
+    		$objWeightDay = Weight::find()->andWhere(['weightTime'=>$footlst['foodTime']])->andWhere(['pondId'=>$id])->one();
     		$WeightDay = isset($objWeightDay->weightNo)?$objWeightDay->weightNo:'-';
     		
+    		$objOxygenDay = Oxygen::find()->andWhere(['oxygenTime'=>$footlst['foodTime']])->andWhere(['pondId'=>$id])->one();
+    		$OxygenDay = isset($objOxygenDay->weightNo)?$objOxygenDay->weightNo:'-';
     		
-    		$arrObjListAll[$footlst['foodTime']]= ['objFood'=>$objFood ,'objCheckyo'=>$objCheckyo,'WeightDay'=>$WeightDay,'age'=>$footlst['age'],'numberOf'=>$footlst['numberOf']];
+    		$objAlkalinityDay = Alkalinity::find()->andWhere(['alkalinityTime'=>$footlst['foodTime']])->andWhere(['pondId'=>$id])->one();
+    		$AlkalinityDay = isset($objAlkalinityDay->alkalinityNum)?$objAlkalinityDay->alkalinityNum:'-';
+    		
+    		$objWatertempDay = Watertemp::find()->andWhere(['watertempTime'=>$footlst['foodTime']])->andWhere(['pondId'=>$id])->one();
+    		$WatertempDay = isset($objWatertempDay->watertempNum)?$objWatertempDay->watertempNum:'-';
+    		
+    		$objTempDay = Temp::find()->andWhere(['tempTime'=>$footlst['foodTime']])->andWhere(['pondId'=>$id])->one();
+    		$TempDay = isset($objTempDay->tempNum)?$objTempDay->tempNum:'-';
+    		
+    		$objAmmoniaDay = Ammonia::find()->andWhere(['ammoniaTime'=>$footlst['foodTime']])->andWhere(['pondId'=>$id])->one();
+    		$AmmoniaDay = isset($objAmmoniaDay->ammoniaNum)?$objAmmoniaDay->ammoniaNum:'-';
+    		
+    		$objNitriteDay = Nitrite::find()->andWhere(['nitriteTime'=>$footlst['foodTime']])->andWhere(['pondId'=>$id])->one();
+    		$NitriteDay = isset($objNitriteDay->nitriteNum)?$objNitriteDay->nitriteNum:'-';
+    		
+    		$objWaterchange = Waterchange::find()->andWhere(['waterchangeTime'=>$footlst['foodTime']])->andWhere(['pondId'=>$id])->one();
+    		$WaterchangeDay = isset($objWaterchange->weightNo)?'เปลี่ยนเข้า':'-';
+    		
+    		$objSalinityDay = Salinity::find()->andWhere(['salinityTime'=>$footlst['foodTime']])->andWhere(['pondId'=>$id])->one();
+    		$SalinityDay = isset($objSalinityDay->salinityNum)?$objSalinityDay->salinityNum:'-';
+    		
+    		$objOtherDay = other::find()->andWhere(['otherTime'=>$footlst['foodTime']])->andWhere(['pondId'=>$id])->one();
+    		$OtherDay = isset($objOtherDay->name)?$objOtherDay->name:'-';
+    		
+    		$arrObjListAll[$footlst['foodTime']]= [
+    				'objFood'=>$objFood ,
+    				'objCheckyo'=>$objCheckyo,
+    				'WeightDay'=>$WeightDay,
+    				'age'=>$footlst['age'],
+    				'numberOf'=>$footlst['numberOf'],
+    				'WeightDay'=>$WeightDay,
+    				'OxygenDay'=>$OxygenDay,
+    				'AlkalinityDay'=>$AlkalinityDay,
+    				'WatertempDay'=>$WatertempDay,
+    				'TempDay'=>$TempDay,
+    				'AmmoniaDay'=>$AmmoniaDay,
+    				'NitriteDay'=>$NitriteDay,
+    				'WaterchangeDay'=>$WaterchangeDay,
+    				'SalinityDay'=>$SalinityDay,
+    				'OtherDay' => $OtherDay,
+    				
+    		];
     	}
     	
     	
