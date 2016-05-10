@@ -47,12 +47,6 @@ $template = array(
                                 <span class="title">จัดการรุ่นในบ่อเลี้ยง</span>
                             </a>
                         </li>
-                        <li class="nav-item <?php echo $myUrl == Url::toRoute('pond/report') || $myUrl == Url::toRoute('pond/edit')?'active':'';?> ">
-                            <a href="<?php echo Url::toRoute('pond/report') ?>" class="nav-link nav-toggle">
-                                <i class="icon-puzzle"></i>
-                                <span class="title">ออกรายงาน</span>
-                            </a>
-                        </li>
                         <li class="heading">
                             <h3 class="uppercase">บันทึกค่าต่างๆ</h3>
                         </li>

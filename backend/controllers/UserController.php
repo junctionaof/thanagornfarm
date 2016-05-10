@@ -52,7 +52,7 @@ class UserController extends BaseController{
 					$modelauth->userid =  $user['username'];
 					$modelauth->data = 'N;';
 					if($modelauth->save()){
-						AuthController::reassign();
+						//AuthController::reassign();
 					}else {
 						Ui::setMessage('ไม่สามารถ กำหนนดสิทธิ์ ได้','warning');
 					}
@@ -94,7 +94,7 @@ class UserController extends BaseController{
 					$model->generateAuthKey();
 				}
 				if($model->save()){		
-					if (\Yii::$app->request->post('type')){
+/* 					if (\Yii::$app->request->post('type')){
 						switch (\Yii::$app->request->post('type')){
 							case 1:
 								$auth = 'tpbs.role.admin';
@@ -118,7 +118,7 @@ class UserController extends BaseController{
 						}else {
 							Ui::setMessage('ไม่สามารถ กำหนนดสิทธิ์ ได้','warning');
 						}
-					}
+					} */
 					Ui::setMessage("บันทึกข้อมูลเสร็จเรียบร้อย", 'success');
 					return $this->redirect(Url::toRoute('user/list'));
 				}else{

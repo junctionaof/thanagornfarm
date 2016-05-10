@@ -23,7 +23,6 @@ use yii\web\IdentityInterface;
  * @property string $section
  * @property string $phone
  * @property string $email
- * @property string $bankAccount
  * @property string $address
  * @property string $provinceId
  * @property integer $createBy
@@ -60,7 +59,6 @@ class User extends ActiveRecord implements IdentityInterface
             [['password', 'auth_key'], 'string', 'max' => 36],
             [['password_hash'], 'string', 'max' => 100],
             [['firstName', 'lastName', 'nickName', 'phone', 'email'], 'string', 'max' => 45],
-            [['bankAccount'], 'string', 'max' => 20],
             [['username'], 'unique']
         ];
     }
@@ -85,7 +83,6 @@ class User extends ActiveRecord implements IdentityInterface
             'section' => 'สังกัด',
             'phone' => 'Phone',
             'email' => 'Email',
-            'bankAccount' => 'Bank Account',
             'address' => 'Address',
             'provinceId' => 'Province ID',
             'createBy' => 'Create By',
