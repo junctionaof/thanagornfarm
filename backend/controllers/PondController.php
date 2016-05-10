@@ -337,20 +337,12 @@ class PondController extends BaseController {
     		$request = Yii::$app->request;
     		$identity = \Yii::$app->user->getIdentity();
     	
-    		$searchCategory = $request->post('type', $request->get('type', ''));
-    		$searchStatus = $request->post('status', $request->get('status', ''));
-    		$q = trim($request->post('q', $request->get('q', '')));
+ 		$q = trim($request->post('q', $request->get('q', '')));
     	
     		$query = Typelist::find();
     		$query->orderBy(['id'=>SORT_ASC]);
     	
-    		if ($searchCategory)
-    			$query->andWhere('type = :type',[':type' => $searchCategory]);
-    			
-    	
-    		if ($searchStatus)
-    			$query->andWhere('status = :status',[':status' => $searchStatus]);
-    			
+
     		if ($q)
     			$query->andWhere(['LIKE' ,'name','%'.$q.'%', false]);
     	
@@ -376,8 +368,7 @@ class PondController extends BaseController {
     				'defaultPageSize' => \Yii::$app->params['ui']['defaultPageSize'],
     				'totalCount' => $query->count(),
     		]);
-    		$pagination->params = ['status'=>$searchStatus,
-    				'categoryId'=>$searchCategory,
+    		$pagination->params = [
     				'q'=>$q,
     				'page'=>$pagination->page,
     		];
@@ -486,9 +477,7 @@ class PondController extends BaseController {
     	$request = Yii::$app->request;
     	$identity = \Yii::$app->user->getIdentity();
     
-    	$searchCategory = $request->post('type', $request->get('type', ''));
-    	$searchStatus = $request->post('status', $request->get('status', ''));
-    	$q = trim($request->post('q', $request->get('q', '')));
+   	$q = trim($request->post('q', $request->get('q', '')));
    		
     	$query = food::find();
     	$query->orderBy(['id'=>SORT_ASC]);
@@ -517,13 +506,7 @@ class PondController extends BaseController {
     		}
     	}
     
-    	if ($searchCategory)
-    		$query->andWhere('type = :type',[':type' => $searchCategory]);
-    		 
-    		 
-    		if ($searchStatus)
-    			$query->andWhere('status = :status',[':status' => $searchStatus]);
-    
+
     			if ($q)
     				$query->andWhere(['LIKE' ,'name','%'.$q.'%', false]);
     					
@@ -540,8 +523,7 @@ class PondController extends BaseController {
     						'defaultPageSize' => \Yii::$app->params['ui']['defaultPageSize'],
     						'totalCount' => $query->count(),
     				]);
-    				$pagination->params = ['status'=>$searchStatus,
-    						'categoryId'=>$searchCategory,
+    				$pagination->params = [
     						'q'=>$q,
     						'page'=>$pagination->page,
     				];
@@ -666,19 +648,26 @@ class PondController extends BaseController {
     	$request = Yii::$app->request;
     	$identity = \Yii::$app->user->getIdentity();
     
-    	$searchCategory = $request->post('type', $request->get('type', ''));
-    	$searchStatus = $request->post('status', $request->get('status', ''));
-    	$q = trim($request->post('q', $request->get('q', '')));
+   	$q = trim($request->post('q', $request->get('q', '')));
     
     	$query = Alkalinity::find();
     	$query->orderBy(['id'=>SORT_ASC]);
     
     	$op = $request->post('op', $request->get('opss', ''));
     	if ($op == "search") {
-    		if (!empty($_REQUEST['type'])){
+    	    		if (!empty($_REQUEST['type'])){
     			$type = $_REQUEST['type'];
     			if($type != 0){
-    				$query->andWhere('type=:type',[':type'=> $type]);
+    				$queryf = pond::find();
+    				$queryf->andWhere(['type'=> $type]);
+    				$pondf = $queryf->all();
+    				foreach ($pondf as $obj){
+    					$arrId[] = $obj->id;
+    				}
+    				 
+    				if($arrId){
+    					$query->andWhere(['pondId'=> $arrId]);
+    				}
     			}
     		}
     		 
@@ -688,14 +677,7 @@ class PondController extends BaseController {
     		}
     	}
     	
-    	if ($searchCategory)
-    		$query->andWhere('type = :type',[':type' => $searchCategory]);
-    		 
-    		 
-    		if ($searchStatus)
-    			$query->andWhere('status = :status',[':status' => $searchStatus]);
-    
-    			if ($q)
+	if ($q)
     				$query->andWhere(['LIKE' ,'name','%'.$q.'%', false]);
     					
     					
@@ -711,8 +693,7 @@ class PondController extends BaseController {
     						'defaultPageSize' => \Yii::$app->params['ui']['defaultPageSize'],
     						'totalCount' => $query->count(),
     				]);
-    				$pagination->params = ['status'=>$searchStatus,
-    						'categoryId'=>$searchCategory,
+    				$pagination->params = [
     						'q'=>$q,
     						'page'=>$pagination->page,
     				];
@@ -833,8 +814,6 @@ class PondController extends BaseController {
     	$request = Yii::$app->request;
     	$identity = \Yii::$app->user->getIdentity();
     
-    	$searchCategory = $request->post('type', $request->get('type', ''));
-    	$searchStatus = $request->post('status', $request->get('status', ''));
     	$q = trim($request->post('q', $request->get('q', '')));
     
     	$query = Checkyo::find();
@@ -843,10 +822,19 @@ class PondController extends BaseController {
     	
     	$op = $request->post('op', $request->get('opss', ''));
     	if ($op == "search") {
-    		if (!empty($_REQUEST['type'])){
+    	    if (!empty($_REQUEST['type'])){
     			$type = $_REQUEST['type'];
     			if($type != 0){
-    				$query->andWhere('type=:type',[':type'=> $type]);
+    				$queryf = pond::find();
+    				$queryf->andWhere(['type'=> $type]);
+    				$pondf = $queryf->all();
+    				foreach ($pondf as $obj){
+    					$arrId[] = $obj->id;
+    				}
+    				 
+    				if($arrId){
+    					$query->andWhere(['pondId'=> $arrId]);
+    				}
     			}
     		}
     		 
@@ -856,13 +844,6 @@ class PondController extends BaseController {
     		}
     	}
     	
-    	if ($searchCategory)
-    		$query->andWhere('type = :type',[':type' => $searchCategory]);
-    		 
-    		 
-    		if ($searchStatus)
-    			$query->andWhere('status = :status',[':status' => $searchStatus]);
-    
     			if ($q)
     				$query->andWhere(['LIKE' ,'name','%'.$q.'%', false]);
     					
@@ -879,8 +860,7 @@ class PondController extends BaseController {
     						'defaultPageSize' => \Yii::$app->params['ui']['defaultPageSize'],
     						'totalCount' => $query->count(),
     				]);
-    				$pagination->params = ['status'=>$searchStatus,
-    						'categoryId'=>$searchCategory,
+    				$pagination->params = [
     						'q'=>$q,
     						'page'=>$pagination->page,
     				];
@@ -1003,9 +983,7 @@ class PondController extends BaseController {
     	$request = Yii::$app->request;
     	$identity = \Yii::$app->user->getIdentity();
     
-    	$searchCategory = $request->post('type', $request->get('type', ''));
-    	$searchStatus = $request->post('status', $request->get('status', ''));
-    	$q = trim($request->post('q', $request->get('q', '')));
+   	$q = trim($request->post('q', $request->get('q', '')));
     
     	$query = analysis::find();
     	$query->orderBy(['id'=>SORT_ASC]);
@@ -1013,10 +991,19 @@ class PondController extends BaseController {
     	 
     	$op = $request->post('op', $request->get('opss', ''));
     	if ($op == "search") {
-    		if (!empty($_REQUEST['type'])){
+    	    if (!empty($_REQUEST['type'])){
     			$type = $_REQUEST['type'];
     			if($type != 0){
-    				$query->andWhere('type=:type',[':type'=> $type]);
+    				$queryf = pond::find();
+    				$queryf->andWhere(['type'=> $type]);
+    				$pondf = $queryf->all();
+    				foreach ($pondf as $obj){
+    					$arrId[] = $obj->id;
+    				}
+    				 
+    				if($arrId){
+    					$query->andWhere(['pondId'=> $arrId]);
+    				}
     			}
     		}
     		 
@@ -1025,14 +1012,7 @@ class PondController extends BaseController {
     			$query->andWhere(['LIKE' ,'title','%'.$item.'%', false]);
     		}
     	}
-    	 
-    	if ($searchCategory)
-    		$query->andWhere('type = :type',[':type' => $searchCategory]);
-    		 
-    		 
-    		if ($searchStatus)
-    			$query->andWhere('status = :status',[':status' => $searchStatus]);
-    
+
     			if ($q)
     				$query->andWhere(['LIKE' ,'name','%'.$q.'%', false]);
     					
@@ -1049,8 +1029,7 @@ class PondController extends BaseController {
     						'defaultPageSize' => \Yii::$app->params['ui']['defaultPageSize'],
     						'totalCount' => $query->count(),
     				]);
-    				$pagination->params = ['status'=>$searchStatus,
-    						'categoryId'=>$searchCategory,
+    				$pagination->params = [
     						'q'=>$q,
     						'page'=>$pagination->page,
     				];
@@ -1183,36 +1162,35 @@ class PondController extends BaseController {
     	$currentTs = time();
     	$request = Yii::$app->request;
     	$identity = \Yii::$app->user->getIdentity();
-    
-    	$searchCategory = $request->post('type', $request->get('type', ''));
-    	$searchStatus = $request->post('status', $request->get('status', ''));
-    	$q = trim($request->post('q', $request->get('q', '')));
+      	$q = trim($request->post('q', $request->get('q', '')));
     
     	$query = Oxygen::find();
     	$query->orderBy(['id'=>SORT_ASC]);
 
     	$op = $request->post('op', $request->get('opss', ''));
     	if ($op == "search") {
-    		if (!empty($_REQUEST['type'])){
+    	    if (!empty($_REQUEST['type'])){
     			$type = $_REQUEST['type'];
     			if($type != 0){
-    				$query->andWhere('type=:type',[':type'=> $type]);
+    				$queryf = pond::find();
+    				$queryf->andWhere(['type'=> $type]);
+    				$pondf = $queryf->all();
+    				foreach ($pondf as $obj){
+    					$arrId[] = $obj->id;
+    				}
+    				 
+    				if($arrId){
+    					$query->andWhere(['pondId'=> $arrId]);
+    				}
     			}
     		}
     		 
     		if (!empty($_REQUEST['q'])){
     			$item = $_REQUEST['q'];
-    			$query->andWhere(['LIKE' ,'title','%'.$item.'%', false]);
+    			$query->andWhere(['LIKE' ,'name','%'.$item.'%', false]);
     		}
     	}
-    	
-    	if ($searchCategory)
-    		$query->andWhere('type = :type',[':type' => $searchCategory]);
-    		 
-    		 
-    		if ($searchStatus)
-    			$query->andWhere('status = :status',[':status' => $searchStatus]);
-    
+
     			if ($q)
     				$query->andWhere(['LIKE' ,'name','%'.$q.'%', false]);
     					
@@ -1229,8 +1207,7 @@ class PondController extends BaseController {
     						'defaultPageSize' => \Yii::$app->params['ui']['defaultPageSize'],
     						'totalCount' => $query->count(),
     				]);
-    				$pagination->params = ['status'=>$searchStatus,
-    						'categoryId'=>$searchCategory,
+    				$pagination->params = [
     						'q'=>$q,
     						'page'=>$pagination->page,
     				];
@@ -1355,19 +1332,26 @@ class PondController extends BaseController {
     	$request = Yii::$app->request;
     	$identity = \Yii::$app->user->getIdentity();
     
-    	$searchCategory = $request->post('type', $request->get('type', ''));
-    	$searchStatus = $request->post('status', $request->get('status', ''));
-    	$q = trim($request->post('q', $request->get('q', '')));
+   	$q = trim($request->post('q', $request->get('q', '')));
     
     	$query = Ph::find();
     	$query->orderBy(['id'=>SORT_ASC]);
     
     	$op = $request->post('op', $request->get('opss', ''));
     	if ($op == "search") {
-    		if (!empty($_REQUEST['type'])){
+    	    if (!empty($_REQUEST['type'])){
     			$type = $_REQUEST['type'];
     			if($type != 0){
-    				$query->andWhere('type=:type',[':type'=> $type]);
+    				$queryf = pond::find();
+    				$queryf->andWhere(['type'=> $type]);
+    				$pondf = $queryf->all();
+    				foreach ($pondf as $obj){
+    					$arrId[] = $obj->id;
+    				}
+    				 
+    				if($arrId){
+    					$query->andWhere(['pondId'=> $arrId]);
+    				}
     			}
     		}
     		 
@@ -1377,13 +1361,7 @@ class PondController extends BaseController {
     		}
     	}
     	
-    	if ($searchCategory)
-    		$query->andWhere('type = :type',[':type' => $searchCategory]);
-    		 
-    		 
-    		if ($searchStatus)
-    			$query->andWhere('status = :status',[':status' => $searchStatus]);
-    
+
     			if ($q)
     				$query->andWhere(['LIKE' ,'name','%'.$q.'%', false]);
     					
@@ -1400,8 +1378,7 @@ class PondController extends BaseController {
     						'defaultPageSize' => \Yii::$app->params['ui']['defaultPageSize'],
     						'totalCount' => $query->count(),
     				]);
-    				$pagination->params = ['status'=>$searchStatus,
-    						'categoryId'=>$searchCategory,
+    				$pagination->params = [
     						'q'=>$q,
     						'page'=>$pagination->page,
     				];
@@ -1517,19 +1494,26 @@ class PondController extends BaseController {
     	$request = Yii::$app->request;
     	$identity = \Yii::$app->user->getIdentity();
     
-    	$searchCategory = $request->post('type', $request->get('type', ''));
-    	$searchStatus = $request->post('status', $request->get('status', ''));
-    	$q = trim($request->post('q', $request->get('q', '')));
+  	$q = trim($request->post('q', $request->get('q', '')));
     
     	$query = Temp::find();
     	$query->orderBy(['id'=>SORT_ASC]);
     
     	$op = $request->post('op', $request->get('opss', ''));
     	if ($op == "search") {
-    		if (!empty($_REQUEST['type'])){
+    	    if (!empty($_REQUEST['type'])){
     			$type = $_REQUEST['type'];
     			if($type != 0){
-    				$query->andWhere('type=:type',[':type'=> $type]);
+    				$queryf = pond::find();
+    				$queryf->andWhere(['type'=> $type]);
+    				$pondf = $queryf->all();
+    				foreach ($pondf as $obj){
+    					$arrId[] = $obj->id;
+    				}
+    				 
+    				if($arrId){
+    					$query->andWhere(['pondId'=> $arrId]);
+    				}
     			}
     		}
     		 
@@ -1538,14 +1522,7 @@ class PondController extends BaseController {
     			$query->andWhere(['LIKE' ,'title','%'.$item.'%', false]);
     		}
     	}
-    	
-    	if ($searchCategory)
-    		$query->andWhere('type = :type',[':type' => $searchCategory]);
-    		 
-    		 
-    		if ($searchStatus)
-    			$query->andWhere('status = :status',[':status' => $searchStatus]);
-    
+
     			if ($q)
     				$query->andWhere(['LIKE' ,'name','%'.$q.'%', false]);
     					
@@ -1562,8 +1539,7 @@ class PondController extends BaseController {
     						'defaultPageSize' => \Yii::$app->params['ui']['defaultPageSize'],
     						'totalCount' => $query->count(),
     				]);
-    				$pagination->params = ['status'=>$searchStatus,
-    						'categoryId'=>$searchCategory,
+    				$pagination->params = [
     						'q'=>$q,
     						'page'=>$pagination->page,
     				];
@@ -1686,19 +1662,26 @@ class PondController extends BaseController {
     	$identity = \Yii::$app->user->getIdentity();
     	$arrPond = [];
     
-    	$searchCategory = $request->post('type', $request->get('type', ''));
-    	$searchStatus = $request->post('status', $request->get('status', ''));
-    	$q = trim($request->post('q', $request->get('q', '')));
+   	$q = trim($request->post('q', $request->get('q', '')));
     
     	$query = Ammonia::find();
     	$query->orderBy(['id'=>SORT_ASC]);
     
     	$op = $request->post('op', $request->get('opss', ''));
     	if ($op == "search") {
-    		if (!empty($_REQUEST['type'])){
+    	    	    if (!empty($_REQUEST['type'])){
     			$type = $_REQUEST['type'];
     			if($type != 0){
-    				$query->andWhere('type=:type',[':type'=> $type]);
+    				$queryf = pond::find();
+    				$queryf->andWhere(['type'=> $type]);
+    				$pondf = $queryf->all();
+    				foreach ($pondf as $obj){
+    					$arrId[] = $obj->id;
+    				}
+    				 
+    				if($arrId){
+    					$query->andWhere(['pondId'=> $arrId]);
+    				}
     			}
     		}
     		 
@@ -1707,14 +1690,7 @@ class PondController extends BaseController {
     			$query->andWhere(['LIKE' ,'title','%'.$item.'%', false]);
     		}
     	}
-    	
-    	if ($searchCategory)
-    		$query->andWhere('type = :type',[':type' => $searchCategory]);
-    		 
-    		 
-    		if ($searchStatus)
-    			$query->andWhere('status = :status',[':status' => $searchStatus]);
-    
+
     			if ($q)
     				$query->andWhere(['LIKE' ,'name','%'.$q.'%', false]);
     					
@@ -1731,8 +1707,7 @@ class PondController extends BaseController {
     						'defaultPageSize' => \Yii::$app->params['ui']['defaultPageSize'],
     						'totalCount' => $query->count(),
     				]);
-    				$pagination->params = ['status'=>$searchStatus,
-    						'categoryId'=>$searchCategory,
+    				$pagination->params = [
     						'q'=>$q,
     						'page'=>$pagination->page,
     				];
@@ -1853,19 +1828,26 @@ class PondController extends BaseController {
     	$identity = \Yii::$app->user->getIdentity();
     	$arrPond = [];
     
-    	$searchCategory = $request->post('type', $request->get('type', ''));
-    	$searchStatus = $request->post('status', $request->get('status', ''));
-    	$q = trim($request->post('q', $request->get('q', '')));
+ 	$q = trim($request->post('q', $request->get('q', '')));
     
     	$query = Nitrite::find();
     	$query->orderBy(['id'=>SORT_ASC]);
     
     	$op = $request->post('op', $request->get('opss', ''));
     	if ($op == "search") {
-    		if (!empty($_REQUEST['type'])){
+    	     if (!empty($_REQUEST['type'])){
     			$type = $_REQUEST['type'];
     			if($type != 0){
-    				$query->andWhere('type=:type',[':type'=> $type]);
+    				$queryf = pond::find();
+    				$queryf->andWhere(['type'=> $type]);
+    				$pondf = $queryf->all();
+    				foreach ($pondf as $obj){
+    					$arrId[] = $obj->id;
+    				}
+    				 
+    				if($arrId){
+    					$query->andWhere(['pondId'=> $arrId]);
+    				}
     			}
     		}
     		 
@@ -1875,13 +1857,6 @@ class PondController extends BaseController {
     		}
     	}
     	
-    	if ($searchCategory)
-    		$query->andWhere('type = :type',[':type' => $searchCategory]);
-    		 
-    		 
-    		if ($searchStatus)
-    			$query->andWhere('status = :status',[':status' => $searchStatus]);
-    
     			if ($q)
     				$query->andWhere(['LIKE' ,'name','%'.$q.'%', false]);
     					
@@ -1898,8 +1873,7 @@ class PondController extends BaseController {
     						'defaultPageSize' => \Yii::$app->params['ui']['defaultPageSize'],
     						'totalCount' => $query->count(),
     				]);
-    				$pagination->params = ['status'=>$searchStatus,
-    						'categoryId'=>$searchCategory,
+    				$pagination->params = [
     						'q'=>$q,
     						'page'=>$pagination->page,
     				];
@@ -2021,7 +1995,6 @@ class PondController extends BaseController {
     	$identity = \Yii::$app->user->getIdentity();
     	$arrPond = [];
     
-    	$searchCategory = $request->post('type', $request->get('type', ''));
     	$searchStatus = $request->post('status', $request->get('status', ''));
     	$q = trim($request->post('q', $request->get('q', '')));
     
@@ -2030,10 +2003,19 @@ class PondController extends BaseController {
     
     	$op = $request->post('op', $request->get('opss', ''));
     	if ($op == "search") {
-    		if (!empty($_REQUEST['type'])){
+    	    if (!empty($_REQUEST['type'])){
     			$type = $_REQUEST['type'];
     			if($type != 0){
-    				$query->andWhere('type=:type',[':type'=> $type]);
+    				$queryf = pond::find();
+    				$queryf->andWhere(['type'=> $type]);
+    				$pondf = $queryf->all();
+    				foreach ($pondf as $obj){
+    					$arrId[] = $obj->id;
+    				}
+    				 
+    				if($arrId){
+    					$query->andWhere(['pondId'=> $arrId]);
+    				}
     			}
     		}
     		 
@@ -2043,12 +2025,6 @@ class PondController extends BaseController {
     		}
     	}
     	
-    	if ($searchCategory)
-    		$query->andWhere('type = :type',[':type' => $searchCategory]);
-    		 
-    		 
-    		if ($searchStatus)
-    			$query->andWhere('status = :status',[':status' => $searchStatus]);
     
     			if ($q)
     				$query->andWhere(['LIKE' ,'name','%'.$q.'%', false]);
@@ -2066,8 +2042,7 @@ class PondController extends BaseController {
     						'defaultPageSize' => \Yii::$app->params['ui']['defaultPageSize'],
     						'totalCount' => $query->count(),
     				]);
-    				$pagination->params = ['status'=>$searchStatus,
-    						'categoryId'=>$searchCategory,
+    				$pagination->params = [
     						'q'=>$q,
     						'page'=>$pagination->page,
     				];
@@ -2188,8 +2163,6 @@ class PondController extends BaseController {
     	$identity = \Yii::$app->user->getIdentity();
     	$arrPond = [];
     
-    	$searchCategory = $request->post('type', $request->get('type', ''));
-    	$searchStatus = $request->post('status', $request->get('status', ''));
     	$q = trim($request->post('q', $request->get('q', '')));
     
     	$query = Salinity::find();
@@ -2197,10 +2170,19 @@ class PondController extends BaseController {
     
     	$op = $request->post('op', $request->get('opss', ''));
     	if ($op == "search") {
-    		if (!empty($_REQUEST['type'])){
+    	   if (!empty($_REQUEST['type'])){
     			$type = $_REQUEST['type'];
     			if($type != 0){
-    				$query->andWhere('type=:type',[':type'=> $type]);
+    				$queryf = pond::find();
+    				$queryf->andWhere(['type'=> $type]);
+    				$pondf = $queryf->all();
+    				foreach ($pondf as $obj){
+    					$arrId[] = $obj->id;
+    				}
+    				 
+    				if($arrId){
+    					$query->andWhere(['pondId'=> $arrId]);
+    				}
     			}
     		}
     		 
@@ -2209,14 +2191,7 @@ class PondController extends BaseController {
     			$query->andWhere(['LIKE' ,'title','%'.$item.'%', false]);
     		}
     	}
-    	
-    	if ($searchCategory)
-    		$query->andWhere('type = :type',[':type' => $searchCategory]);
-    		 
-    		 
-    		if ($searchStatus)
-    			$query->andWhere('status = :status',[':status' => $searchStatus]);
-    
+
     			if ($q)
     				$query->andWhere(['LIKE' ,'name','%'.$q.'%', false]);
     					
@@ -2233,8 +2208,7 @@ class PondController extends BaseController {
     						'defaultPageSize' => \Yii::$app->params['ui']['defaultPageSize'],
     						'totalCount' => $query->count(),
     				]);
-    				$pagination->params = ['status'=>$searchStatus,
-    						'categoryId'=>$searchCategory,
+    				$pagination->params = [
     						'q'=>$q,
     						'page'=>$pagination->page,
     				];
@@ -2363,9 +2337,7 @@ class PondController extends BaseController {
     	$request = Yii::$app->request;
     	$identity = \Yii::$app->user->getIdentity();
     	$arrPond = [];
-    
-    	$searchCategory = $request->post('type', $request->get('type', ''));
-    	$searchStatus = $request->post('status', $request->get('status', ''));
+
     	$q = trim($request->post('q', $request->get('q', '')));
     
     	$query = Waterchange::find();
@@ -2373,10 +2345,19 @@ class PondController extends BaseController {
     
     	$op = $request->post('op', $request->get('opss', ''));
     	if ($op == "search") {
-    		if (!empty($_REQUEST['type'])){
+    	    if (!empty($_REQUEST['type'])){
     			$type = $_REQUEST['type'];
     			if($type != 0){
-    				$query->andWhere('type=:type',[':type'=> $type]);
+    				$queryf = pond::find();
+    				$queryf->andWhere(['type'=> $type]);
+    				$pondf = $queryf->all();
+    				foreach ($pondf as $obj){
+    					$arrId[] = $obj->id;
+    				}
+    				 
+    				if($arrId){
+    					$query->andWhere(['pondId'=> $arrId]);
+    				}
     			}
     		}
     		 
@@ -2385,14 +2366,7 @@ class PondController extends BaseController {
     			$query->andWhere(['LIKE' ,'title','%'.$item.'%', false]);
     		}
     	}
-    	
-    	if ($searchCategory)
-    		$query->andWhere('type = :type',[':type' => $searchCategory]);
-    		 
-    		 
-    		if ($searchStatus)
-    			$query->andWhere('status = :status',[':status' => $searchStatus]);
-    
+
     			if ($q)
     				$query->andWhere(['LIKE' ,'name','%'.$q.'%', false]);
     					
@@ -2409,8 +2383,7 @@ class PondController extends BaseController {
     						'defaultPageSize' => \Yii::$app->params['ui']['defaultPageSize'],
     						'totalCount' => $query->count(),
     				]);
-    				$pagination->params = ['status'=>$searchStatus,
-    						'categoryId'=>$searchCategory,
+    				$pagination->params = [
     						'q'=>$q,
     						'page'=>$pagination->page,
     				];
@@ -2529,9 +2502,6 @@ class PondController extends BaseController {
     	$currentTs = time();
     	$request = Yii::$app->request;
     	$identity = \Yii::$app->user->getIdentity();
-    
-    	$searchCategory = $request->post('type', $request->get('type', ''));
-    	$searchStatus = $request->post('status', $request->get('status', ''));
     	$q = trim($request->post('q', $request->get('q', '')));
     
     	$query = Watertemp::find();
@@ -2539,10 +2509,19 @@ class PondController extends BaseController {
     
     	$op = $request->post('op', $request->get('opss', ''));
     	if ($op == "search") {
-    		if (!empty($_REQUEST['type'])){
+    	    	    if (!empty($_REQUEST['type'])){
     			$type = $_REQUEST['type'];
     			if($type != 0){
-    				$query->andWhere('type=:type',[':type'=> $type]);
+    				$queryf = pond::find();
+    				$queryf->andWhere(['type'=> $type]);
+    				$pondf = $queryf->all();
+    				foreach ($pondf as $obj){
+    					$arrId[] = $obj->id;
+    				}
+    				 
+    				if($arrId){
+    					$query->andWhere(['pondId'=> $arrId]);
+    				}
     			}
     		}
     		 
@@ -2552,13 +2531,7 @@ class PondController extends BaseController {
     		}
     	}
     	
-    	if ($searchCategory)
-    		$query->andWhere('type = :type',[':type' => $searchCategory]);
-    		 
-    		 
-    		if ($searchStatus)
-    			$query->andWhere('status = :status',[':status' => $searchStatus]);
-    
+
     			if ($q)
     				$query->andWhere(['LIKE' ,'name','%'.$q.'%', false]);
     					
@@ -2575,8 +2548,7 @@ class PondController extends BaseController {
     						'defaultPageSize' => \Yii::$app->params['ui']['defaultPageSize'],
     						'totalCount' => $query->count(),
     				]);
-    				$pagination->params = ['status'=>$searchStatus,
-    						'categoryId'=>$searchCategory,
+    				$pagination->params = [
     						'q'=>$q,
     						'page'=>$pagination->page,
     				];
@@ -2697,19 +2669,26 @@ class PondController extends BaseController {
     	$request = Yii::$app->request;
     	$identity = \Yii::$app->user->getIdentity();
     
-    	$searchCategory = $request->post('type', $request->get('type', ''));
-    	$searchStatus = $request->post('status', $request->get('status', ''));
-    	$q = trim($request->post('q', $request->get('q', '')));
+   	$q = trim($request->post('q', $request->get('q', '')));
     
     	$query = Weight::find();
     	$query->orderBy(['id'=>SORT_ASC]);
     
     	$op = $request->post('op', $request->get('opss', ''));
     	if ($op == "search") {
-    		if (!empty($_REQUEST['type'])){
+    	    if (!empty($_REQUEST['type'])){
     			$type = $_REQUEST['type'];
     			if($type != 0){
-    				$query->andWhere('type=:type',[':type'=> $type]);
+    				$queryf = pond::find();
+    				$queryf->andWhere(['type'=> $type]);
+    				$pondf = $queryf->all();
+    				foreach ($pondf as $obj){
+    					$arrId[] = $obj->id;
+    				}
+    				 
+    				if($arrId){
+    					$query->andWhere(['pondId'=> $arrId]);
+    				}
     			}
     		}
     		 
@@ -2719,13 +2698,7 @@ class PondController extends BaseController {
     		}
     	}
     	
-    	if ($searchCategory)
-    		$query->andWhere('type = :type',[':type' => $searchCategory]);
-    		 
-    		 
-    		if ($searchStatus)
-    			$query->andWhere('status = :status',[':status' => $searchStatus]);
-    
+
     			if ($q)
     				$query->andWhere(['LIKE' ,'name','%'.$q.'%', false]);
     					
@@ -2742,8 +2715,7 @@ class PondController extends BaseController {
     						'defaultPageSize' => \Yii::$app->params['ui']['defaultPageSize'],
     						'totalCount' => $query->count(),
     				]);
-    				$pagination->params = ['status'=>$searchStatus,
-    						'categoryId'=>$searchCategory,
+    				$pagination->params = [
     						'q'=>$q,
     						'page'=>$pagination->page,
     				];

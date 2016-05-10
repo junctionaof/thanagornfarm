@@ -153,14 +153,14 @@ $this->registerJsFile($baseUrl  . '/assets/pages/scripts/components-select2.min.
                                             <div class="form-group">
                                             	<label class="control-label col-md-3">ข้อมูลบ่อ และรุ่น </label>
                                                       <div class="input-group input-large " >
-                                                       <?= Html::input('text','name', $model->name,['id'=>'pond','class' => 'form-control','disabled'=>'true']);?>
+                                                       <?= Html::input('text','name', $model->name,['id'=>'pond','class' => 'form-control','readonly'=>'true']);?>
                                                   	</div>
                                             </div>
                                             
                                             <div class="form-group">
                                            		<label class="control-label col-md-3">อายุลูกกุ้ง</label>
                                                       <div class="input-group input-large " > 
-                                                       <?= Html::input('text', 'age', $model->age,['id'=>'age','class' => 'form-control','disabled'=>'true']);?>
+                                                       <?= Html::input('text', 'age', $model->age,['id'=>'age','class' => 'form-control','readonly'=>'true']);?>
                                                   	</div>
                                             </div>
                                             
@@ -187,7 +187,7 @@ $this->registerJsFile($baseUrl  . '/assets/pages/scripts/components-select2.min.
                                              <div class="form-group">
                                                 <label class="control-label col-md-3">เฉลี่ยตัวละ</label>
                                                       <div class="input-group input-large " >
-                                                       <?= Html::input('text', 'weightNum', $model->weightNum,['id'=>'weightNum','class' => 'form-control','disabled'=>'true']);?>
+                                                       <?= Html::input('text', 'weightNum', $model->weightNum,['id'=>'weightNum','class' => 'form-control','readonly'=>'true']);?>
                                                   	<span class="input-group-addon">
                                                         <i class="fa"> กรัม</i>
                                                     </span>
